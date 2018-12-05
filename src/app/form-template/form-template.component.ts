@@ -1,6 +1,6 @@
 //constructor() { }
 import { Component, OnInit } from '@angular/core';
-import { Phenomenon }    from '../hero';
+import { Phenomenon }    from '../phenomenon';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -28,8 +28,9 @@ export class FormTemplateComponent implements OnInit {
     // });
   }
   onSubmit() { 
-    console.log(this.model);
-      this.api.updatePhenomenon(this.model).subscribe(res => {console.log(res)});
+    // console.log(this.route);
+    // console.log(this.model);
+    this.api.updatePhenomenon(this.model).subscribe(res => {console.log(res)});
   }
 
   // TODO: Remove this when we're done

@@ -18,6 +18,9 @@ import { DevicesDetailComponent } from './devices-detail/devices-detail.componen
 import { SensorsFormComponent } from './sensors-form/sensors-form.component';
 import { DevicesFormComponent } from './devices-form/devices-form.component';
 import { FormTemplateComponent } from './form-template/form-template.component';
+import { DomainsComponent } from './domains/domains.component';
+import { DomainsDetailComponent } from './domains-detail/domains-detail.component';
+import { DomainsFormComponent } from './domains-form/domains-form.component';
 
 let routes = [
   {path: '', component: LandingpageComponent},
@@ -29,7 +32,10 @@ let routes = [
   {path: 'sensorupdate/:iri', component: SensorsFormComponent},
   {path: 'devices', component: DevicesComponent},
   {path: 'device/:iri', component: DevicesDetailComponent},
-  {path: 'deviceupdate/:iri', component: DevicesFormComponent}
+  {path: 'deviceupdate/:iri', component: DevicesFormComponent},
+  {path: 'domains', component: DomainsComponent},
+  {path: 'domain/:iri', component: DomainsDetailComponent},
+  {path: 'domainupdate/:iri', component: DomainsFormComponent}
 ];
 
 @NgModule({
@@ -46,7 +52,10 @@ let routes = [
     DevicesDetailComponent,
     SensorsFormComponent,
     DevicesFormComponent,
-    FormTemplateComponent
+    FormTemplateComponent,
+    DomainsComponent,
+    DomainsDetailComponent,
+    DomainsFormComponent
   ],
   imports: [
     BrowserModule,
