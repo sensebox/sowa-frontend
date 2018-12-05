@@ -33,7 +33,7 @@
         <label for="description">Description</label>
         <input type="text" class="form-control" id="description"
                required
-               [(ngModel)]="model.description.label" name="description"
+               [(ngModel)]="model.description.comment" name="description"
                #description="ngModel">
         <div [hidden]="description.valid || description.pristine"
              class="alert alert-danger">

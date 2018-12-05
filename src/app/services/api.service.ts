@@ -17,8 +17,8 @@ export class ApiService {
     return this.http.get(this.APIURL + '/queries/phenomenon/' + iri);
    }
 
-  updatePhenomenon(iri, phenomenon){
-    return this.http.post(this.APIURL + '/update/phenomenon/' + iri, phenomenon);
+  updatePhenomenon(phenomenon){
+    return this.http.post(this.APIURL + '/queries/phenomenon/update' , phenomenon);
   }
 
   getSensors() {
