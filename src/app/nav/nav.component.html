@@ -1,3 +1,47 @@
-<p>
-  nav works!
-</p>
+<div class="example-container">
+  <mat-toolbar style="background-color: #ffd63f;" class="example-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <h1 class="example-app-name">SENPH Ontology Web Application</h1>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="example-sidenav-container">
+    <mat-sidenav #snav [mode]="over">
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let nav of fillerNav" routerLink={{nav.path}} routerLinkActive="active">{{nav.title}}</a>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+
+<!-- <senph-nav>loading test 678797860960</senph-nav> -->
+
+<!-- <div class="container">
+  <div class="col-sm-4">
+    <div class="col-sm-4">
+      <h2>Menu</h2>
+   
+      <ul class="nav">
+          <li class="nav-item">
+              <a routerLink="phenomena" routerLinkActive="active" class="btn btn-light" role="button">All phenomena</a>
+          </li>
+          <li class="nav-item">
+              <a routerLink ="devices" routerLinkActive="active" class="btn btn-light" role="button">All devices</a>
+          </li>
+          <li class="nav-item">
+              <a routerLink="domains" routerLinkActive="active" class="btn btn-light" role="button">All domains</a>
+          </li>
+          <li class="nav-item">
+              <a routerLink ="sensors" routerLinkActive="active" class="btn btn-light" role="button">All sensors</a>
+          </li>
+      </ul>
+      <hr>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  </div> -->
+  
