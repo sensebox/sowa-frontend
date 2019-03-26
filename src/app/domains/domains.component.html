@@ -1,3 +1,17 @@
-<p>
-  domains works!
-</p>
+<h1 class="headline-border">Domain List</h1>
+<table style="margin: 20px 0">
+    <tbody>
+      <tr>     
+        <th style="width:45%">NAME:</th>
+        <th style="width:55%"> URI:</th>
+      </tr>
+      <tr *ngFor='let domain of domainArray'>
+        <td class="table-entry">
+          {{domain.label[0]?.value}}
+        </td>
+        <td>
+          {{domain.domain.value}}
+        </td>
+      </tr>
+    </tbody>
+  </table>

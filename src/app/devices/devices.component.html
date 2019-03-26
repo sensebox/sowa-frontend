@@ -1,6 +1,22 @@
-<h1>Device List</h1>
-<ul>
+<h1 class="headline-border">Device List</h1>
+<table style="margin: 20px 0">
+    <tbody>
+      <tr>     
+        <th style="width:45%">NAME:</th>
+        <th style="width:55%"> URI:</th>
+      </tr>
+      <tr *ngFor='let device of devicesArray'>
+        <td class="table-entry">
+          {{device.label[0]?.value}}
+        </td>
+        <td>
+          {{device.device.value}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<!-- <ul>
   <li *ngFor='let device of devicesArray'>
     {{device.label[0].value}}
   </li>
-</ul>
+</ul> -->

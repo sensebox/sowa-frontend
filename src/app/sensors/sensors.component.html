@@ -1,6 +1,23 @@
-<h1>Sensors List</h1>
-<ul>
+<h1 class="headline-border">Sensors List</h1>
+<table style="margin: 20px 0">
+  <tbody>
+    <tr>     
+      <th style="width:25%">NAME:</th>
+      <th> URI:</th>
+    </tr>
+    <tr *ngFor='let sensors of sensorsArray'>
+      <td style="width:25%">
+        {{sensors.label[0].value}}
+      </td>
+      <td>
+        {{sensors.sensor.value}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- <ul>
   <li *ngFor='let sensors of sensorsArray'>
-    {{sensors.label[0].value}}
+    
+  {{log(sensors)}}
   </li>
-</ul>
+</ul> -->

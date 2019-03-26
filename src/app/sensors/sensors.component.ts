@@ -15,6 +15,10 @@ export class SensorsComponent implements OnInit {
   ngOnInit() {
     this.api.getSensors().subscribe(res => {
       this.sensorsArray=res;
+      console.dir(this.sensorsArray);
     });
+  }
+  log(sensors) {
+    console.dir(sensors);
   }
 }

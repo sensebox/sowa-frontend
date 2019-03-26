@@ -1,6 +1,23 @@
-<h1>Phenomena List</h1>
-<ul>
+<h1 class="headline-border">Phenomena List</h1>
+
+<table style="margin: 20px 0">
+    <tbody>
+      <tr>     
+        <th style="width:45%">NAME:</th>
+        <th style="width:55%"> URI:</th>
+      </tr>
+      <tr *ngFor='let phenomena of phenomenaArray'>
+        <td class="table-entry">
+          {{phenomena.label[0].value}}
+        </td>
+        <td>
+          {{phenomena.phenomenon.value}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+<!-- <ul>
   <li *ngFor='let phenomena of phenomenaArray'>
     {{phenomena.label[0].value}}
   </li>
-</ul>
+</ul> -->

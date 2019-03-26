@@ -15,6 +15,7 @@ export class DevicesComponent implements OnInit {
   ngOnInit() {
     this.api.getDevices().subscribe(res => {
       this.devicesArray=res;
+      console.dir(res);
     });
   }
 

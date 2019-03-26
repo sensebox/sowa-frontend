@@ -15,6 +15,7 @@ export class PhenomenaComponent implements OnInit {
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
       this.phenomenaArray=res;
+      console.log(res);
     });
   }
 
