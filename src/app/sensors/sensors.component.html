@@ -7,9 +7,9 @@
     </tr>
     <tr *ngFor='let sensors of sensorsArray'>
       <td style="width:25%">
-        {{sensors.label[0].value}}
+        {{sensors.label[0]?.value}}
       </td>
-      <td>
+      <td *ngIf='sensors.sensor.type === "uri"'>
         {{sensors.sensor.value}}
       </td>
     </tr>

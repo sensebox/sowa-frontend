@@ -5,12 +5,12 @@
         <th style="width:45%">NAME:</th>
         <th style="width:55%"> URI:</th>
       </tr>
-      <tr *ngFor='let device of devicesArray'>
+      <tr *ngFor='let devices of devicesArray'>
         <td class="table-entry">
-          {{device.label[0]?.value}}
+          {{devices.label[0]?.value}}
         </td>
-        <td>
-          {{device.device.value}}
+        <td *ngIf='devices.device.type === "uri"'>
+          {{devices.device.value}}
         </td>
       </tr>
     </tbody>

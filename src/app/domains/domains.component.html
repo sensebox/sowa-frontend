@@ -5,12 +5,12 @@
         <th style="width:45%">NAME:</th>
         <th style="width:55%"> URI:</th>
       </tr>
-      <tr *ngFor='let domain of domainArray'>
+      <tr *ngFor='let domains of domainArray'>
         <td class="table-entry">
-          {{domain.label[0]?.value}}
+          {{domains.label[0]?.value}}
         </td>
-        <td>
-          {{domain.domain.value}}
+        <td *ngIf='domains.domain.type === "uri"'>
+          {{domains.domain.value}}
         </td>
       </tr>
     </tbody>
