@@ -1,6 +1,6 @@
 //constructor() { }
 import { Component, OnInit } from '@angular/core';
-import { Phenomenon }    from '../phenomenon';
+import { Phenomenon, Sensor }    from '../phenomenon';
 import { ApiService } from '../services/api.service';
 import { ActivatedRoute } from '@angular/router';
 
@@ -16,10 +16,18 @@ export class FormTemplateComponent implements OnInit {
     private api:ApiService
   ) { }
     // iri;
-  languageTags = ['en', 'de',
-            'es', 'it'];
+  languageTags = [{name: 'english', short: 'en'}, {name: 'german', short: 'de'},
+  {name: 'spanish', short: 'es'}, {name: 'italian', short: 'it'}];
 
-  model = new Phenomenon({label:"", lang: this.languageTags[0]}, {comment: "", lang: this.languageTags[0]}, "" ,"");
+  phenoModel = new Phenomenon({label:"", lang: this.languageTags[0].short}, {comment: "", lang: this.languageTags[0].short}, "" ,"");
+  sensorModel = new Sensor(
+    { label: "",
+      lang: this.languageTags[0].short},
+    { comment: "",
+      lang: this.languageTags[0].short},
+    [{ phenomenon: "",
+       uoa: 0}],
+    "", 0, "", 0);  
 
   submitted = false;
   ngOnInit(){
@@ -30,9 +38,15 @@ export class FormTemplateComponent implements OnInit {
   onSubmit() { 
     // console.log(this.route);
     // console.log(this.model);
-    this.api.updatePhenomenon(this.model).subscribe(res => {console.log(res)});
+    this.api.updatePhenomenon(this.phenoModel).subscribe(res => {console.log(res)});
+  }
+  
+  onSensorSubmit() { 
+    // console.log(this.route);
+    // console.log(this.model);
+    this.api.updateSensor(this.sensorModel).subscribe(res => {console.log(res)});
   }
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.model); }
+  get diagnostic() { return JSON.stringify(this.phenoModel); }
 }

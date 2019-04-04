@@ -6,7 +6,7 @@
         <label for="name">Name</label>
         <input type="text" class="form-control" id="name"
                required
-               [(ngModel)]="model.name.label" name="name"
+               [(ngModel)]="phenoModel.name.label" name="name"
                #name="ngModel">
         <div [hidden]="name.valid || name.pristine"
              class="alert alert-danger">
@@ -18,9 +18,9 @@
         <label for="power">Language</label>
         <select class="form-control" id="labelLang"
                 required
-                [(ngModel)]="model.name.lang" name="labelLang"
+                [(ngModel)]="phenoModel.name.lang" name="labelLang"
                 #labelLang="ngModel">
-          <option *ngFor="let llang of languageTags" [value]="llang">{{llang}}</option>
+          <option *ngFor="let llang of languageTags" [value]="llang.short">{{llang.name}}</option>
         </select>
         <div [hidden]="labelLang.valid || labelLang.pristine" class="alert alert-danger">
           Language is required
@@ -33,7 +33,7 @@
         <label for="description">Description</label>
         <input type="text" class="form-control" id="description"
                required
-               [(ngModel)]="model.description.comment" name="description"
+               [(ngModel)]="phenoModel.description.comment" name="description"
                #description="ngModel">
         <div [hidden]="description.valid || description.pristine"
              class="alert alert-danger">
@@ -46,9 +46,9 @@
         <label for="power">Language</label>
         <select class="form-control" id="commentLang"
                 required
-                [(ngModel)]="model.description.lang" name="commentLang"
+                [(ngModel)]="phenoModel.description.lang" name="commentLang"
                 #commentLang="ngModel">
-          <option *ngFor="let clang of languageTags" [value]="clang">{{clang}}</option>
+          <option *ngFor="let clang of languageTags" [value]="clang.short">{{clang.name}}</option>
         </select>
         <div [hidden]="commentLang.valid || commentLang.pristine" class="alert alert-danger">
           Language is required
@@ -59,7 +59,7 @@
         <label for="unit">Unit</label>
         <input type="text" class="form-control" id="unit"
               required
-              [(ngModel)]="model.unit" name="unit"
+              [(ngModel)]="phenoModel.unit" name="unit"
               #unit="ngModel">
         <div [hidden]="unit.valid || unit.pristine"
              class="alert alert-danger">
@@ -70,7 +70,7 @@
       <div class="form-group">
         <label for="domain">Domain</label>
         <input type="text" class="form-control" id="domain"
-               [(ngModel)]="model.domain" name="domain">
+               [(ngModel)]="phenoModel.domain" name="domain">
       </div>
 
 
@@ -83,17 +83,147 @@
     <h2>You submitted the following:</h2>
     <div class="row">
       <div class="col-xs-3">Name</div>
-      <div class="col-xs-9">{{ model.name.label }}</div>
+      <div class="col-xs-9">{{ phenoModel.name.label }}</div>
     </div>
     <div class="row">
       <div class="col-xs-3">Description</div>
-      <div class="col-xs-9">{{ model.description.comment }}</div>
+      <div class="col-xs-9">{{ phenoModel.description.comment }}</div>
     </div>
     <div class="row">
       <div class="col-xs-3">Unit</div>
-      <div class="col-xs-9">{{ model.unit }}</div>
+      <div class="col-xs-9">{{ phenoModel.unit }}</div>
     </div>
     <br>
     <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+
+
+
+
+    
+ <!-- //////////////////////////////////// -->
+
+
+
+ <form (ngSubmit)="onSensorSubmit()" #sensorForm="ngForm">
+  <div class="form-group">
+    <label for="nameS">Name</label>
+    <input type="text" class="form-control" id="nameS"
+           required
+           [(ngModel)]="phenoModel.name.label" name="nameS"
+           #nameS="ngModel">
+    <div [hidden]="nameS.valid || nameS.pristine"
+         class="alert alert-danger">
+      Name is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="power">Language</label>
+    <select class="form-control" id="labelLangS"
+            required
+            [(ngModel)]="phenoModel.name.lang" name="labelLangS"
+            #labelLangS="ngModel">
+      <option *ngFor="let llangS of languageTags" [value]="llangS.short">{{llangS.name}}</option>
+    </select>
+    <div [hidden]="labelLangS.valid || labelLangS.pristine" class="alert alert-danger">
+      Language is required
+    </div>
+  </div>
+
+
+
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" class="form-control" id="descriptionS"
+           required
+           [(ngModel)]="phenoModel.description.comment" name="descriptionS"
+           #descriptionS="ngModel">
+    <div [hidden]="descriptionS.valid || descriptionS.pristine"
+         class="alert alert-danger">
+      Description is required
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="power">Language</label>
+    <select class="form-control" id="commentLangS"
+            required
+            [(ngModel)]="phenoModel.description.lang" name="commentLangS"
+            #commentLangS="ngModel">
+      <option *ngFor="let clangS of languageTags" [value]="clangS.short">{{clangS.name}}</option>
+    </select>
+    <div [hidden]="commentLangS.valid || commentLangS.pristine" class="alert alert-danger">
+      Language is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="phenomena">Phenomena</label>
+    <input type="text" class="form-control" id="phenomenaS"
+           required
+           [(ngModel)]="phenoModel.sensorElement.phenomenon" name="phenomenaS"
+           #phenomenaS="ngModel">
+    <div [hidden]="phenomenaS.valid || phenomenaS.pristine"
+         class="alert alert-danger">
+      URI is required
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="manu">Manufacturer</label>
+    <input type="text" class="form-control" id="manu"
+          required
+          [(ngModel)]="phenoModel.manufacturer" name="manu"
+          #manu="ngModel">
+    <div [hidden]="manu.valid || manu.pristine"
+         class="alert alert-danger">
+      Manufacturer is required
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="price">Price</label>
+    <input type="text" class="form-control" id="price"
+           [(ngModel)]="phenoModel.price" name="price">
+  </div>
+  <div class="form-group">
+    <label for="dataSheet">Data sheet</label>
+    <input type="text" class="form-control" id="dataSheet"
+           [(ngModel)]="phenoModel.dataSheet" name="dataSheet">
+  </div>
+  <div class="form-group">
+    <label for="lifePeriod">Life period</label>
+    <input type="text" class="form-control" id="lifePeriod"
+           [(ngModel)]="phenoModel.lifePeriod" name="lifePeriod">
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="!sensorForm.form.valid">Submit</button>
+  <button type="button" class="btn btn-default" (click)="sensorForm.reset()">New Sensor</button>
+</form>
+</div>
+
+<div [hidden]="!submitted">
+<h2>You submitted the following:</h2>
+<div class="row">
+  <div class="col-xs-3">Name</div>
+  <div class="col-xs-9">{{ phenoModel.name.label }}</div>
+</div>
+<div class="row">
+  <div class="col-xs-3">Description</div>
+  <div class="col-xs-9">{{ phenoModel.description.comment }}</div>
+</div>
+<div class="row">
+  <div class="col-xs-3">Unit</div>
+  <div class="col-xs-9">{{ phenoModel.unit }}</div>
+</div>
+<br>
+<button class="btn btn-primary" (click)="submitted=false">Edit</button>
+
+
+
+
+
   </div>
 </div>
