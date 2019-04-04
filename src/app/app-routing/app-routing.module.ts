@@ -16,6 +16,7 @@ import { DevicesFormComponent } from '../devices-form/devices-form.component';
 import { DomainsComponent } from '../domains/domains.component';
 import { DomainsDetailComponent } from '../domains-detail/domains-detail.component';
 import { DomainsFormComponent } from '../domains-form/domains-form.component';
+import { FormTemplateComponent } from '../form-template/form-template.component';
 
 const routes: Routes = [
   {
@@ -57,7 +58,10 @@ const routes: Routes = [
     component: DomainsDetailComponent},
   {
     path: 'domainupdate/:iri', 
-    component: DomainsFormComponent}
+    component: DomainsFormComponent},
+  {
+    path: 'form',
+    component: FormTemplateComponent}
 ];
 
 @NgModule({
