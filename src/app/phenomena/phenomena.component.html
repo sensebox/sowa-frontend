@@ -8,9 +8,9 @@
       </tr>
       <tr *ngFor='let phenomena of phenomenaArray'>
         <td class="table-entry">
-          {{phenomena.label[0].value}}
+          {{phenomena.label[0]?.value}}
         </td>
-        <td>
+        <td *ngIf='phenomena.phenomenon.type === "uri"'>
           {{phenomena.phenomenon.value}}
         </td>
       </tr>
