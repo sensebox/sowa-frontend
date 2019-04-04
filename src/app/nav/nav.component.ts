@@ -1,5 +1,6 @@
 import {MediaMatcher} from '@angular/cdk/layout';
 import {ChangeDetectorRef, Component, OnDestroy,  OnInit} from '@angular/core';
+import {FormControl} from '@angular/forms';
 
 @Component({
   selector: 'senph-nav',
@@ -13,17 +14,19 @@ export class NavComponent implements OnInit, OnDestroy {
   fillerNav: Array<{path: string, title: any}> = [
     {
       path: 'phenomena', 
-      title: 'All phenomena'},
+      title: 'Phenomena'},
     {
       path: 'sensors',
-      title: 'All sensors'},
+      title: 'Sensors'},
     {
       path: 'devices',
-      title: 'All devices'},
+      title: 'Devices'},
     {
       path: 'domains',
-      title: 'All domains'}
+      title: 'Domains'}
   ];
+
+  mode = 'push';
 
   private _mobileQueryListener: () => void;
 
