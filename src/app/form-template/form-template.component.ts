@@ -27,7 +27,7 @@ export class FormTemplateComponent implements OnInit {
       lang: this.languageTags[0].short},
     [{ phenomenon: "",
        uoa: 0}],
-    "", 0, "", 0);  
+    "", 0, "", 0, "");  
 
   submitted = false;
   ngOnInit(){
@@ -38,15 +38,17 @@ export class FormTemplateComponent implements OnInit {
   onSubmit() { 
     // console.log(this.route);
     // console.log(this.model);
-    this.api.updatePhenomenon(this.phenoModel).subscribe(res => {console.log(res)});
+    // this.api.updatePhenomenon(this.phenoModel).subscribe(res => {console.log(res)});
+    this.diagnostic(this.phenoModel);
   }
   
   onSensorSubmit() { 
     // console.log(this.route);
     // console.log(this.model);
     this.api.updateSensor(this.sensorModel).subscribe(res => {console.log(res)});
+    this.diagnostic(this.sensorModel);
   }
 
   // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.phenoModel); }
+  diagnostic(model) { console.log(model); }
 }

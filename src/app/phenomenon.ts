@@ -32,7 +32,8 @@ export class Phenomenon {
         public manufacturer: string,
         public price: number,
         public dataSheet: string,
-        public lifePeriod: number       
+        public lifePeriod: number,
+        public device: string       
     ) {  }
   
   }

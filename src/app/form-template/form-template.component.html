@@ -95,21 +95,21 @@
     </div>
     <br>
     <button class="btn btn-primary" (click)="submitted=false">Edit</button>
-
+  </div>
 
 
 
     
  <!-- //////////////////////////////////// -->
 
-
-
+<div>
+ <h1>Add Sensor Form</h1>
  <form (ngSubmit)="onSensorSubmit()" #sensorForm="ngForm">
   <div class="form-group">
     <label for="nameS">Name</label>
     <input type="text" class="form-control" id="nameS"
            required
-           [(ngModel)]="phenoModel.name.label" name="nameS"
+           [(ngModel)]="sensorModel.name.label" name="nameS"
            #nameS="ngModel">
     <div [hidden]="nameS.valid || nameS.pristine"
          class="alert alert-danger">
@@ -121,7 +121,7 @@
     <label for="power">Language</label>
     <select class="form-control" id="labelLangS"
             required
-            [(ngModel)]="phenoModel.name.lang" name="labelLangS"
+            [(ngModel)]="sensorModel.name.lang" name="labelLangS"
             #labelLangS="ngModel">
       <option *ngFor="let llangS of languageTags" [value]="llangS.short">{{llangS.name}}</option>
     </select>
@@ -136,7 +136,7 @@
     <label for="description">Description</label>
     <input type="text" class="form-control" id="descriptionS"
            required
-           [(ngModel)]="phenoModel.description.comment" name="descriptionS"
+           [(ngModel)]="sensorModel.description.comment" name="descriptionS"
            #descriptionS="ngModel">
     <div [hidden]="descriptionS.valid || descriptionS.pristine"
          class="alert alert-danger">
@@ -149,7 +149,7 @@
     <label for="power">Language</label>
     <select class="form-control" id="commentLangS"
             required
-            [(ngModel)]="phenoModel.description.lang" name="commentLangS"
+            [(ngModel)]="sensorModel.description.lang" name="commentLangS"
             #commentLangS="ngModel">
       <option *ngFor="let clangS of languageTags" [value]="clangS.short">{{clangS.name}}</option>
     </select>
@@ -162,12 +162,15 @@
     <label for="phenomena">Phenomena</label>
     <input type="text" class="form-control" id="phenomenaS"
            required
-           [(ngModel)]="phenoModel.sensorElement.phenomenon" name="phenomenaS"
+           [(ngModel)]="sensorModel.sensorElement[0].phenomenon" name="phenomenaS"
            #phenomenaS="ngModel">
     <div [hidden]="phenomenaS.valid || phenomenaS.pristine"
          class="alert alert-danger">
       URI is required
     </div>
+    <label for="phenomenaUnit">Unit of accuracy</label>
+    <input type="text" class="form-control" id="phenomenaSUnit"
+           [(ngModel)]="sensorModel.sensorElement[0].uoa" name="phenomenaSUnit">
   </div>
 
 
@@ -175,7 +178,7 @@
     <label for="manu">Manufacturer</label>
     <input type="text" class="form-control" id="manu"
           required
-          [(ngModel)]="phenoModel.manufacturer" name="manu"
+          [(ngModel)]="sensorModel.manufacturer" name="manu"
           #manu="ngModel">
     <div [hidden]="manu.valid || manu.pristine"
          class="alert alert-danger">
@@ -186,17 +189,22 @@
   <div class="form-group">
     <label for="price">Price</label>
     <input type="text" class="form-control" id="price"
-           [(ngModel)]="phenoModel.price" name="price">
+           [(ngModel)]="sensorModel.price" name="price">
   </div>
   <div class="form-group">
     <label for="dataSheet">Data sheet</label>
     <input type="text" class="form-control" id="dataSheet"
-           [(ngModel)]="phenoModel.dataSheet" name="dataSheet">
+           [(ngModel)]="sensorModel.dataSheet" name="dataSheet">
   </div>
   <div class="form-group">
     <label for="lifePeriod">Life period</label>
     <input type="text" class="form-control" id="lifePeriod"
-           [(ngModel)]="phenoModel.lifePeriod" name="lifePeriod">
+           [(ngModel)]="sensorModel.lifePeriod" name="lifePeriod">
+  </div>
+  <div class="form-group">
+    <label for="device">Device</label>
+    <input type="text" class="form-control" id="device"
+           [(ngModel)]="sensorModel.device" name="device">
   </div>
 
   <button type="submit" class="btn btn-success" [disabled]="!sensorForm.form.valid">Submit</button>
@@ -208,15 +216,15 @@
 <h2>You submitted the following:</h2>
 <div class="row">
   <div class="col-xs-3">Name</div>
-  <div class="col-xs-9">{{ phenoModel.name.label }}</div>
+  <div class="col-xs-9">{{ sensorModel.name.label }}</div>
 </div>
 <div class="row">
   <div class="col-xs-3">Description</div>
-  <div class="col-xs-9">{{ phenoModel.description.comment }}</div>
+  <div class="col-xs-9">{{ sensorModel.description.comment }}</div>
 </div>
 <div class="row">
   <div class="col-xs-3">Unit</div>
-  <div class="col-xs-9">{{ phenoModel.unit }}</div>
+  <div class="col-xs-9">{{ sensorModel.unit }}</div>
 </div>
 <br>
 <button class="btn btn-primary" (click)="submitted=false">Edit</button>
