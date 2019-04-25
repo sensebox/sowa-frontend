@@ -1,16 +1,21 @@
 <h1 class="headline-border">Sensors List</h1>
 <table style="margin: 20px 0">
-  <tbody>
+  <thead>
     <tr>     
       <th style="width:25%">NAME:</th>
       <th> URI:</th>
     </tr>
+  </thead>
+  <tbody>
     <tr *ngFor='let sensors of sensorsArray'>
-      <td style="width:25%">
+      
+      <td class="table-entry">
         {{sensors.label[0]?.value}}
       </td>
       <td *ngIf='sensors.sensor.type === "uri"'>
-        {{sensors.sensor.value}}
+        <button [routerLink]="['/sensor', sensors.sensor.value]"> 
+          {{sensors.sensor.value}}
+        </button>
       </td>
     </tr>
   </tbody>
