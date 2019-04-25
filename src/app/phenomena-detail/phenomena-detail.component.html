@@ -1,9 +1,51 @@
-<div *ngIf='uri != undefined && sensors != undefined  && domains != undefined && units != undefined && phenomenon != undefined'></div>   
-
+<!-- <div *ngIf='uri != undefined && sensors != undefined  && domains != undefined && units != undefined && phenomenon != undefined'></div>   
     <h1 *ngFor= 'let field of uri.labels; let i = index'>
       {{field.value}}
        <span class="lang-tag" *ngIf='field["xml:lang"]'>{{field["xml:lang"]}}</span>
-    </h1>
+    </h1> -->
+<h1 *ngIf='uri.labels[0] != undefined'>{{uri.labels[0].value}}</h1>
+<table *ngIf='uri.labels[0] != undefined'>
+<thead>    
+  <tr>
+        <th>
+          URI
+        </th>
+        <th>
+          Label
+        </th>
+        <th>      
+          Description        
+        </th>
+        <th>
+          Unit
+        </th>
+        <th>      
+            Sensor-URI
+        </th>
+  </tr>
+  <tbody>
+  <tr >
+    <td>
+      <tr>
+        {{uri.iri[0]}}
+      </tr>
+    </td>
+    <td>
+        {{uri.labels[0].value}}
+    </td>
+    <td>      
+        {{uri.descriptions[0]}}
+    </td>
+    <td>
+      {{units.iri[0]}}
+    </td>
+    <td>      
+        {{sensors.iri[0]}}
+    </td>
+  </tr>
+</tbody>
+</table>
+    
     <!-- <div *ngIf='field.iri != undefined'>
         <div *ngIf='i != 0'> Alternative labels:
           <ul>

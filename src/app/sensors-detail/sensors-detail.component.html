@@ -1,3 +1,70 @@
-<p>
-  sensors-detail works!
-</p>
+<h1 *ngIf='uri.labels[0] != undefined'>{{uri.labels[0]}}</h1>
+<table *ngIf='uri.labels[0] != undefined'>
+<thead>    
+  <tr>
+        <th class="mat-h-cell">
+          URI
+        </th >
+        <th class="mat-h-cell">
+          Label
+        </th >
+        <th class="mat-h-cell">      
+          Description        
+        </th>
+        <th class="mat-h-cell">
+          Price
+        </th>
+        <th class="mat-h-cell">      
+          Manufacturer
+        </th>
+        <th class="mat-h-cell">
+          Life period
+        </th>
+        <th class="mat-h-cell">
+          Image
+        </th>
+        <th class="mat-h-cell">
+          Datasheet
+        </th>
+        <th class="mat-h-cell">
+          Phenomena URIs
+        </th>
+        <th class="mat-h-cell">
+          Phenomena Units
+        </th>
+  </tr>
+  <tbody>
+  <tr *ngFor="let number of max; let i = index">
+    <td class="mat-cell">
+        {{uri.iri[i]}}
+    </td>
+    <td class="mat-cell">
+        {{uri.labels[i]}}
+    </td>
+    <td class="mat-cell">      
+        {{uri.descriptions[i]}}
+    </td>
+    <td class="mat-cell">
+      {{price.value[i]}}
+    </td>
+    <td class="mat-cell">
+      {{manufacturer.value[i]}}
+    </td>
+    <td class="mat-cell">
+      {{lifeperiod.value[i]}}
+    </td>
+    <td class="mat-cell">
+      {{image.value[i]}}
+    </td>
+    <td class="mat-cell">
+      {{datasheet.value[i]}}
+    </td>
+    <td class="mat-cell">      
+        {{phenomena.uri[i]}}
+    </td>
+    <td class="mat-cell">      
+      {{phenomena.unit[i]}}
+  </td>
+  </tr>
+</tbody>
+</table>

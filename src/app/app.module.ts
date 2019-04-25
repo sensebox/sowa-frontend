@@ -25,6 +25,7 @@ import { MaterialModule } from "./material/material.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { from } from 'rxjs';
+import { FiltersComponent } from './filters/filters.component';
 
 
 
@@ -45,7 +46,8 @@ import { from } from 'rxjs';
     FormTemplateComponent,
     DomainsComponent,
     DomainsDetailComponent,
-    DomainsFormComponent
+    DomainsFormComponent,
+    FiltersComponent
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,10 @@ export class ApiService {
     return this.http.get(this.APIURL + '/queries/phenomenon/' + iri);
    }
 
+  getPhenomenonIRI(iri) {
+    return this.http.get(this.APIURL + '/queries/phenomenonIRI/' + iri);
+   }
+
   updatePhenomenon(phenomenon){
     return this.http.post(this.APIURL + '/queries/phenomenon/update' , phenomenon);
   }
@@ -30,6 +34,10 @@ export class ApiService {
 
   getSensor(iri) {
     return this.http.get(this.APIURL + '/queries/sensor/' + iri);
+   }
+
+   getSensorIRI(iri) {
+    return this.http.get(this.APIURL + '/queries/sensorIRI/' + iri);
    }
 
   updateSensor(sensor){
