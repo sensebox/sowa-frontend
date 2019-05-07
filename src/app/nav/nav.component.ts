@@ -23,7 +23,16 @@ export class NavComponent implements OnInit, OnDestroy {
       title: 'Devices'},
     {
       path: 'domains',
-      title: 'Domains'}
+      title: 'Domains'},
+    {
+      path: 'form',
+      title: 'Upload Form'},
+    {
+      path: 'sensorform',
+      title: 'Add New Sensor'},
+    {
+      path: 'phenomenonform',
+      title: 'Add New Phenomenon'}
   ];
 
   mode = 'push';

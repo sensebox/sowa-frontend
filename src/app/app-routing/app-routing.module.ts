@@ -17,6 +17,8 @@ import { DomainsComponent } from '../domains/domains.component';
 import { DomainsDetailComponent } from '../domains-detail/domains-detail.component';
 import { DomainsFormComponent } from '../domains-form/domains-form.component';
 import { FormTemplateComponent } from '../form-template/form-template.component';
+import { FormPhenomenonComponent } from '../form-phenomenon/form-phenomenon.component';
+import { FormSensorComponent } from '../form-sensor/form-sensor.component';
 
 const routes: Routes = [
   {
@@ -61,7 +63,13 @@ const routes: Routes = [
     component: DomainsFormComponent},
   {
     path: 'form',
-    component: FormTemplateComponent}
+    component: FormTemplateComponent},
+  {
+    path: 'phenomenonform',
+    component: FormPhenomenonComponent},
+  {
+    path: 'sensorform',
+    component: FormSensorComponent}  
 ];
 
 @NgModule({

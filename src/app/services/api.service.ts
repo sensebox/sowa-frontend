@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+    })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +31,7 @@ export class ApiService {
    }
 
   updatePhenomenon(phenomenon){
-    return this.http.post(this.APIURL + '/queries/phenomenon/update' , phenomenon);
+    return this.http.post(this.APIURL + '/queries/phenomenon/update' , phenomenon, httpOptions);
   }
 
 

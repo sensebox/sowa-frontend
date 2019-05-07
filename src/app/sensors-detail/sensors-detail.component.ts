@@ -30,52 +30,65 @@ export class SensorsDetailComponent implements OnInit {
   this.route.params.subscribe(res => {
     var q = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
     this.api.getSensorIRI(q).subscribe((res:Array<any>) => {
-      console.log(res);
       res.forEach(element => {
-        if(element.price != undefined){
+        switch (Object.getOwnPropertyNames(element)[0]) {
+          
+          case "price" : {
             this.price.value.push(element.price.value);
-        }
-        else{
-          if(element.manufacturer != undefined){
-              this.manufacturer.value.push(element.manufacturer.value);
+             break;
           }
-          else{
-            if(element.lifeperiod != undefined){
-                this.lifeperiod.value.push(element.lifeperiod.value);
+         
+          case "manufacturer" : {
+            this.manufacturer.value.push(element.manufacturer.value);
+            break;
+          }
+          
+          case "lifeperiod" : {
+            this.lifeperiod.value.push(element.lifeperiod.value);
+            break;            
+          }
+
+          case "image" : {
+            this.image.value.push(element.image.value);
+            break;
+          }
+
+          case "description" : {
+              this.uri.descriptions.push(element.description.value);
+              break;
+          }
+          
+          case "datasheet" : {
+              this.datasheet.value.push(element.datasheet.value);
+              break;
+          }
+
+          case "phenomena" : {
+            this.phenomena.uri.push(element.phenomena.value);
+
+            if(element.unit != undefined){
+              this.phenomena.unit.push(element.unit.value);
             }
             else{
-              if(element.image != undefined){
-                  this.image.value.push(element.image.value);
-              }
-              else{
-                if(element.datasheet != undefined){
-                    this.datasheet.value.push(element.datasheet.value);
-                }
-                else{
-                  if(element.iri != undefined){
-                      this.uri.iri.push(element.iri.value);
-                      this.uri.labels.push(element.label.value);
-                  } 
-                  else{
-                    if(element.description != undefined){
-                        this.uri.descriptions.push(element.description.value);
-                    }
-                    else{
-                      if(element.phenomena != undefined){
-                          this.phenomena.uri.push(element.phenomena.value);
-                          this.phenomena.unit.push(element.unit.value);
-                      }
-                    }
-                  }
-                }
-              }
-            } 
+              this.phenomena.unit.push("unknown");
+            }
+            break;
           }
-        }  
+
+          case "iri" : {
+            this.uri.iri.push(element.iri.value);
+            this.uri.labels.push(element.label.value);
+            break;
+          }
+         
+          default: {
+             console.log("Invalid attribute");
+             break;
+          }
+       }
+
       });
-      console.log(this.uri);
       this.max = this.getMaxArrayLength();
-      console.log(this.max);  
       })
     });
 

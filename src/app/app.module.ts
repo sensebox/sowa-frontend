@@ -26,6 +26,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { from } from 'rxjs';
 import { FiltersComponent } from './filters/filters.component';
+import { FormSensorComponent } from './form-sensor/form-sensor.component';
+import { FormPhenomenonComponent } from './form-phenomenon/form-phenomenon.component';
+import { environment } from '../environments/environment';
 
 
 
@@ -47,7 +50,9 @@ import { FiltersComponent } from './filters/filters.component';
     DomainsComponent,
     DomainsDetailComponent,
     DomainsFormComponent,
-    FiltersComponent
+    FiltersComponent,
+    FormSensorComponent,
+    FormPhenomenonComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,7 @@ import { FiltersComponent } from './filters/filters.component';
     FormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [],
   bootstrap: [
