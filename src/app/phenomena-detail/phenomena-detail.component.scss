@@ -1,4 +1,11 @@
-.lang-tag{
-    padding-left: 1em;
-    opacity: 0.7;
-}
+    .mat-cell,
+    .mat-footer-cell,
+    .mat-h-cell {
+        padding: 0.75rem !important;
+    }
+    .capitalize {
+        text-transform: capitalize;
+    }
+
+
+    

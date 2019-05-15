@@ -1,227 +1,74 @@
-<!-- <div *ngIf='uri != undefined && sensors != undefined  && domains != undefined && units != undefined && phenomenon != undefined'></div>   
-    <h1 *ngFor= 'let field of uri.labels; let i = index'>
-      {{field.value}}
-       <span class="lang-tag" *ngIf='field["xml:lang"]'>{{field["xml:lang"]}}</span>
-    </h1> -->
-<h1 *ngIf='uri.labels[0] != undefined'>{{uri.labels[0].value}}</h1>
-<table *ngIf='uri.labels[0] != undefined'>
-<thead>    
-  <tr>
-        <th>
-          URI
-        </th>
-        <th>
-          Label
-        </th>
-        <th>      
-          Description        
-        </th>
-        <th>
-          Unit
-        </th>
-        <th>      
-            Sensor-URI
-        </th>
-  </tr>
-  <tbody>
-  <tr >
-    <td>
-      <tr>
-        {{uri.iri[0]}}
-      </tr>
-    </td>
-    <td>
-        {{uri.labels[0].value}}
-    </td>
-    <td>      
-        {{uri.descriptions[0]}}
-    </td>
-    <td>
-      {{units.iri[0]}}
-    </td>
-    <td>      
-        {{sensors.iri[0]}}
-    </td>
-  </tr>
-</tbody>
-</table>
-    
-    <!-- <div *ngIf='field.iri != undefined'>
-        <div *ngIf='i != 0'> Alternative labels:
+<mat-toolbar style="background-color: #0000006b;" class="example-toolbar">
+    <h1 class="example-app-name capitalize" style="color: #ffd63e;">{{labels[0]?.iri}}</h1>
+</mat-toolbar>
+<div class="content">
+  <table>
+  <thead>    
+    <tr>
+          <th class="mat-h-cell">
+            URI
+          </th >
+          <th class="mat-h-cell">
+            Label
+          </th >
+          <th class="mat-h-cell">      
+            Description        
+          </th>
+          <th class="mat-h-cell">
+            Unit
+          </th>
+          <th class="mat-h-cell">      
+            Sensor URI
+          </th>
+          <th class="mat-h-cell">
+            Domain
+          </th>
+    </tr>
+    <tbody>
+    <tr>
+      <td class="mat-cell">
           <ul>
-            <li>
-            {{field.label.value}}
-              <span class="lang-tag" *ngIf='field.label["xml:lang"]'>{{field.label["xml:lang"]}}</span> 
+            <li *ngFor='let iri of uri'>
+                {{iri.iri}}
             </li>
           </ul>
-        </div>
-    </div> 
-  
-    <ng-template #sen>
-          <div *ngIf='field.sensors != undefined; else dom'>
-          <h2>Can be measured by:</h2>
-          
+      </td>
+      <td class="mat-cell">
           <ul>
-              IRI:  
-            <li>
-              <a [routerLink]="'/sensor/' + field.sensors.value.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{field.sensors.value}}</a>
-              <p>
-                Label:
-                {{field.sensorsLabel.value}} <span class="lang-tag" *ngIf='field.sensorsLabel["xml:lang"]'>{{field.sensorsLabel["xml:lang"]}}</span>
-              </p>
-          </li>
+              <li *ngFor='let iri of labels'>
+                  {{iri.iri}}
+              </li>
+            </ul>
+      </td>
+      <td class="mat-cell">
+        <ul>
+            <li *ngFor='let iri of descriptions'>
+                {{iri.iri}}
+            </li>
+          </ul>      
+      </td>
+      <td class="mat-cell">
+        <ul>
+            <li *ngFor='let iri of units'>
+                {{iri.iri}}
+            </li>
           </ul>
-        </div>
-    </ng-template>
-  
-    <ng-template #dom>
-        <div *ngIf='field.domains != undefined; else uni'>
-          <h2>Has domain:</h2>
-          <ul>
-          <li>
-            IRI:
-              <a [routerLink]="'/domain/' + field.domains.value.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{field.domains.value}}</a> 
-              <p>Labels:  {{field.domainsLabel.value}} 
-                <span class="lang-tag" *ngIf='field.domainsLabel["xml:lang"]'>{{field.domainsLabel["xml:lang"]}}</span>
-              </p>
-          </li>
+      </td>
+      <td class="mat-cell">
+        <ul>
+            <li *ngFor='let iri of sensors'>
+                {{iri.iri}}
+            </li>
           </ul>
-        </div>
-    </ng-template>
-    <ng-template #uni>
-        <div *ngIf='field.units != undefined'>
-          <h2>Described with unit:</h2>
-          <ul>
-          <li>
-            IRI: <a href="{{field.units.value}}" target="_blank">{{field.units.value}}</a>
-              
-          </li>
+      </td>
+      <td class="mat-cell">
+        <ul>
+            <li *ngFor='let iri of domains'>
+                {{iri.iri}}
+            </li>
           </ul>
-        </div>
-    </ng-template> -->
-
-<!-- <div *ngFor= 'let field of phenomenon; let i = index'>
-   
-
-
-  <h1 *ngIf='field.iri != undefined; else sen'>{{field.label.value}}
-     <span class="lang-tag" *ngIf='field.label["xml:lang"]'>{{field.label["xml:lang"]}}</span>
-  </h1>
-  <div *ngIf='field.iri != undefined'>
-      <div *ngIf='i != 0'> Alternative labels:
-        <ul>
-          <li>
-          {{field.label.value}}
-            <span class="lang-tag" *ngIf='field.label["xml:lang"]'>{{field.label["xml:lang"]}}</span> 
-          </li>
-        </ul>
-      </div>
-  </div> 
-
-  <ng-template #sen>
-        <div *ngIf='field.sensors != undefined; else dom'>
-        <h2>Can be measured by:</h2>
-        
-        <ul>
-            IRI:  
-          <li>
-            <a [routerLink]="'/sensor/' + field.sensors.value.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{field.sensors.value}}</a>
-            <p>
-              Label:
-              {{field.sensorsLabel.value}} <span class="lang-tag" *ngIf='field.sensorsLabel["xml:lang"]'>{{field.sensorsLabel["xml:lang"]}}</span>
-            </p>
-        </li>
-        </ul>
-      </div>
-  </ng-template>
-
-  <ng-template #dom>
-      <div *ngIf='field.domains != undefined; else uni'>
-        <h2>Has domain:</h2>
-        <ul>
-        <li>
-          IRI:
-            <a [routerLink]="'/domain/' + field.domains.value.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{field.domains.value}}</a> 
-            <p>Labels:  {{field.domainsLabel.value}} 
-              <span class="lang-tag" *ngIf='field.domainsLabel["xml:lang"]'>{{field.domainsLabel["xml:lang"]}}</span>
-            </p>
-        </li>
-        </ul>
-      </div>
-  </ng-template>
-  <ng-template #uni>
-      <div *ngIf='field.units != undefined'>
-        <h2>Described with unit:</h2>
-        <ul>
-        <li>
-          IRI: <a href="{{field.units.value}}" target="_blank">{{field.units.value}}</a>
-        </li>
-        </ul>
-      </div>
-  </ng-template>
-</div> -->
-  <!-- <div *ngFor= 'let desc of phenomenon.descriptions'>
-    <p>{{desc["value"]}}<span class="lang-tag" *ngIf='desc["xml:lang"]'>{{desc["xml:lang"]}}</span></p>
-  </div> -->
-  <!-- <div *ngFor= 'let unit of phenomenon.units'>
-      <a href="{{unit.value}}" target="_blank">{{unit.value}}</a>
-  </div> -->
-  <!-- <div *ngFor= 'let domain of phenomenon.domains; let i = index'>
-      <a [routerLink]="'/domain/' + domain.value.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{phenomenon.domainsLabel[i].value}}</a>
-  </div> -->
-
-
-  <!-- <h1 *ngIf='labels'>{{labels[0].value}}
-    <span class="lang-tag" *ngIf='labels[0]["xml:lang"]'>{{labels[0]["xml:lang"]}}</span>
- </h1>
- <div *ngFor='let eachlabel of labels;let i = index' >
-     <div *ngIf='i != 0'> Alternative labels:
-       <ul>
-         <li>
-         {{eachlabel.value}}
-           <span class="lang-tag" *ngIf='eachlabel["xml:lang"]'>{{eachlabel["xml:lang"]}}</span> 
-         </li>
-       </ul>
-     </div>
- </div> 
- <h2>Can be measured by:</h2>
- <ul>
-   <li *ngFor='let eachsensor of sensors.iri;let i = index'>
-   IRI: 
-     <a [routerLink]="'/sensor/' + eachsensor.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{eachsensor}}</a>
-   <p *ngFor = 'let eachlabel of sensors.labels[i]'>Labels  {{eachlabel.value}} 
-     <span class="lang-tag" *ngIf='eachlabel["xml:lang"]'>{{eachlabel["xml:lang"]}}</span>
-   </p>
- </li>
- </ul>
-
- <h2>Has domain:</h2>
- <ul>
- <li *ngFor='let eachdomain of domains.iri;let j = index'>
-     IRI:
-     <a [routerLink]="'/domain/' + eachdomain.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{eachdomain}}</a> 
-     <p *ngFor = 'let eachlabel of domains.labels[j]'>Labels:  {{eachlabel.value}} 
-       <span class="lang-tag" *ngIf='eachlabel["xml:lang"]'>{{eachlabel["xml:lang"]}}</span>
-     </p>
- </li>
- </ul>
- 
-
- <h2>Described with unit:</h2>
- <li *ngFor= 'let unit of units.iri'>
-   IRI: <a href="{{unit}}" target="_blank">{{unit}}</a>
-   <p>{{sensor.sensors.value}}</p> -->
-   <!-- <p>Label: {{unit.unitsLabel.value}}</p> -->
- <!-- <div *ngFor= 'let desc of phenomenon.descriptions'>
-   <p>{{desc["value"]}}<span class="lang-tag" *ngIf='desc["xml:lang"]'>{{desc["xml:lang"]}}</span></p>
- </div> -->
- <!-- <div *ngFor= 'let unit of phenomenon.units'>
-     <a href="{{unit.value}}" target="_blank">{{unit.value}}</a>
- </div> -->
- <!-- <div *ngFor= 'let domain of phenomenon.domains; let i = index'>
-     <a [routerLink]="'/domain/' + domain.value.replace('http://www.opensensemap.org/SENPH#','')" target="_blank">{{phenomenon.domainsLabel[i].value}}</a>
- </div> -->
-
-
- 
-  
+      </td>
+    </tr>
+  </tbody>
+  </table>
+</div>
