@@ -15,10 +15,10 @@ import { SensorsFormComponent } from '../sensors-form/sensors-form.component';
 import { DevicesFormComponent } from '../devices-form/devices-form.component';
 import { DomainsComponent } from '../domains/domains.component';
 import { DomainsDetailComponent } from '../domains-detail/domains-detail.component';
-import { DomainsFormComponent } from '../domains-form/domains-form.component';
 import { FormTemplateComponent } from '../form-template/form-template.component';
 import { FormPhenomenonComponent } from '../form-phenomenon/form-phenomenon.component';
 import { FormSensorComponent } from '../form-sensor/form-sensor.component';
+import { FormDomainComponent } from '../form-domain/form-domain.component';
 
 const routes: Routes = [
   {
@@ -59,9 +59,6 @@ const routes: Routes = [
     path: 'domain/:iri', 
     component: DomainsDetailComponent},
   {
-    path: 'domainupdate/:iri', 
-    component: DomainsFormComponent},
-  {
     path: 'form',
     component: FormTemplateComponent},
   {
@@ -69,13 +66,19 @@ const routes: Routes = [
     component: FormPhenomenonComponent},
   {
     path: 'sensorform',
-    component: FormSensorComponent}  
+    component: FormSensorComponent},
+  {
+    path: 'domainform',
+    component: FormDomainComponent}  
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-     RouterModule.forRoot(routes) ],
+     RouterModule.forRoot(routes, {
+       scrollPositionRestoration: 'enabled',
+       anchorScrolling: 'enabled'
+     }) ],
   exports: [ RouterModule ],
   declarations: []
 })

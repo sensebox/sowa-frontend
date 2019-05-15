@@ -18,8 +18,6 @@ import { DevicesFormComponent } from './devices-form/devices-form.component';
 import { FormTemplateComponent } from './form-template/form-template.component';
 import { DomainsComponent } from './domains/domains.component';
 import { DomainsDetailComponent } from './domains-detail/domains-detail.component';
-import { DomainsFormComponent } from './domains-form/domains-form.component';
-
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { MaterialModule } from "./material/material.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,6 +27,7 @@ import { FiltersComponent } from './filters/filters.component';
 import { FormSensorComponent } from './form-sensor/form-sensor.component';
 import { FormPhenomenonComponent } from './form-phenomenon/form-phenomenon.component';
 import { environment } from '../environments/environment';
+import { FormDomainComponent } from './form-domain/form-domain.component';
 
 
 
@@ -49,10 +48,10 @@ import { environment } from '../environments/environment';
     FormTemplateComponent,
     DomainsComponent,
     DomainsDetailComponent,
-    DomainsFormComponent,
     FiltersComponent,
     FormSensorComponent,
-    FormPhenomenonComponent
+    FormPhenomenonComponent,
+    FormDomainComponent
   ],
   imports: [
     BrowserModule,

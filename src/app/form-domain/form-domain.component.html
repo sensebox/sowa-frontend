@@ -1,0 +1,82 @@
+<div class="container">
+    <div>
+      <h1>Add Domain Form</h1>
+      <form (ngSubmit)="onSubmit()" #domainForm="ngForm">
+      <div class="form-group">
+        <label for="nameS">Name</label>
+        <input type="text" class="form-control" id="nameS"
+                required
+                [(ngModel)]="domainModel.name.label" name="nameS"
+                #nameS="ngModel">
+        <div [hidden]="nameS.valid || nameS.pristine"
+              class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <label for="power">Language</label>
+        <select class="form-control" id="labelLangS"
+                required
+                [(ngModel)]="domainModel.name.lang" name="labelLangS"
+                #labelLangS="ngModel">
+          <option *ngFor="let llangS of languageTags" [value]="llangS.short">{{llangS.name}}</option>
+        </select>
+        <div [hidden]="labelLangS.valid || labelLangS.pristine" class="alert alert-danger">
+          Language is required
+        </div>
+      </div>
+    
+    
+    
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="descriptionS"
+                required
+                [(ngModel)]="domainModel.description.comment" name="descriptionS"
+                #descriptionS="ngModel">
+        <div [hidden]="descriptionS.valid || descriptionS.pristine"
+              class="alert alert-danger">
+          Description is required
+        </div>
+      </div>
+    
+    
+      <div class="form-group">
+        <label for="power">Language</label>
+        <select class="form-control" id="commentLangS"
+                required
+                [(ngModel)]="domainModel.description.lang" name="commentLangS"
+                #commentLangS="ngModel">
+          <option *ngFor="let clangS of languageTags" [value]="clangS.short">{{clangS.name}}</option>
+        </select>
+        <div [hidden]="commentLangS.valid || commentLangS.pristine" class="alert alert-danger">
+          Language is required
+        </div>
+      </div>
+    
+      <button type="submit" class="btn btn-success" [disabled]="!domainForm.form.valid">Submit</button>
+      <button type="button" class="btn btn-default" (click)="domainForm.reset()">New Domain</button>
+    </form>
+    </div>
+    
+    <div [hidden]="!submitted">
+    <h2>You submitted the following:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9">{{ domainModel.name.label }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Description</div>
+      <div class="col-xs-9">{{ domainModel.description.comment }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+    
+    
+    
+    
+    
+    </div>
+  </div>
+  
