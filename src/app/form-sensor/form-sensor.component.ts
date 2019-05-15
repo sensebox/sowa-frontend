@@ -24,7 +24,13 @@ export class FormSensorComponent implements OnInit {
       lang: this.languageTags[0].short},
     [{ phenomenon: "",
        uoa: 0}],
-    "", 0, "", 0, "");  
+    "", 0, "", "", "", "");
+    
+  prices = [
+    {value: 1, viewValue: "$ (less than 20$)"},
+    {value: 2, viewValue: "$$ (20 to 100$)"},
+    {value: 3, viewValue: "$$$ (more than 100$)"},
+  ]
 
   submitted = false;
   ngOnInit(){

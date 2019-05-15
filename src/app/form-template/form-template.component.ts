@@ -27,7 +27,7 @@ export class FormTemplateComponent implements OnInit {
       lang: this.languageTags[0].short},
     [{ phenomenon: "",
        uoa: 0}],
-    "", 0, "", 0, "");  
+    "", 0, "", "", "","");  
 
   submitted = false;
   ngOnInit(){

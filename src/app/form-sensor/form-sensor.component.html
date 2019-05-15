@@ -85,9 +85,16 @@
   
     <div class="form-group">
       <label for="price">Price</label>
-      <input type="text" class="form-control" id="price"
-              [(ngModel)]="sensorModel.price" name="price">
+      <br>
+      <mat-form-field>
+        <mat-select [(ngModel)]="sensorModel.price" name="price">
+          <mat-option *ngFor="let price of prices" [value]="price.value">
+            {{price.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
+
     <div class="form-group">
       <label for="dataSheet">Data sheet</label>
       <input type="text" class="form-control" id="dataSheet"
@@ -99,8 +106,13 @@
               [(ngModel)]="sensorModel.lifePeriod" name="lifePeriod">
     </div>
     <div class="form-group">
-      <label for="device">Device</label>
-      <input type="text" class="form-control" id="device"
+      <label for="image">Image-Link</label>
+      <input type="text" class="form-control" id="image"
+              [(ngModel)]="sensorModel.image" name="image">
+    </div>
+    <div class="form-group">
+        <label for="device">Device</label>
+        <input type="text" class="form-control" id="device"
               [(ngModel)]="sensorModel.device" name="device">
     </div>
   
