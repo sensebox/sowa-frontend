@@ -4,7 +4,7 @@ import { ApiService } from '../services/api.service';
 @Component({
   selector: 'senph-devices',
   templateUrl: './devices.component.html',
-  styleUrls: ['./devices.component.scss']
+  styleUrls: ['./devices.component.scss', '../app.component.scss']
 })
 export class DevicesComponent implements OnInit {
 

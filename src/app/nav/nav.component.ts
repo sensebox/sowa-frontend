@@ -5,7 +5,7 @@ import {FormControl} from '@angular/forms';
 @Component({
   selector: 'senph-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.scss']
+  styleUrls: ['./nav.component.scss', '../app.component.scss']
 })
 export class NavComponent implements OnInit, OnDestroy {
 
@@ -32,7 +32,11 @@ export class NavComponent implements OnInit, OnDestroy {
       title: 'Add New Sensor'},
     {
       path: 'phenomenonform',
-      title: 'Add New Phenomenon'}
+      title: 'Add New Phenomenon'},
+    {
+      path: 'domainform',
+      title: 'Add New Domain'}
+      
   ];
 
   mode = 'push';

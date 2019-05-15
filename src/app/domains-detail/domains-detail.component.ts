@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'senph-domains-detail',
   templateUrl: './domains-detail.component.html',
-  styleUrls: ['./domains-detail.component.scss']
+  styleUrls: ['./domains-detail.component.scss', '../app.component.scss']
 })
 export class DomainsDetailComponent implements OnInit {
 
