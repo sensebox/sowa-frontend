@@ -1,5 +1,8 @@
-<h1 class="headline-border">Sensors List</h1>
-<table style="margin: 20px 0">
+<mat-toolbar style="background-color: #0000006b;" class="example-toolbar">
+    <h1 class="example-app-name capitalize" style="color: #ffd63e;">Sensors List</h1>
+</mat-toolbar>
+<h1 class="headline-border"></h1>
+<!-- <table style="margin: 20px 0">
   <thead>
     <tr>     
       <th style="width:25%">NAME:</th>
@@ -19,10 +22,22 @@
       </td>
     </tr>
   </tbody>
-</table>
+</table> -->
 <!-- <ul>
   <li *ngFor='let sensors of sensorsArray'>
     
   {{log(sensors)}}
   </li>
 </ul> -->
+<input matInput #myInput placeholder="Sensor name..." [(ngModel)]="sensors" (input)="filterItem(myInput.value)">
+
+
+<ul class="heroes">
+    <li>
+    <span class="badge">No.</span> <span class="badge t">Label</span> URI </li>
+    <li *ngFor="let sensors of sensorsArrayFiltered;let i = index"
+      [class.selected]="sensors === selectedSensor"
+      (click)="onSelect(sensors)" [hidden]='sensors.sensor.type != "uri"' [routerLink]="createRoute(i)" >
+      <span class="badge">{{i+1}}</span> <span class="badge t" >{{sensors.label[0]?.value}}</span> {{sensors.sensor.value}}
+    </li>
+  </ul>

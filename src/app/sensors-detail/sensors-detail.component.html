@@ -1,70 +1,170 @@
-<h1 *ngIf='uri.labels[0] != undefined'>{{uri.labels[0]}}</h1>
-<table *ngIf='uri.labels[0] != undefined'>
-<thead>    
-  <tr>
-        <th class="mat-h-cell">
-          URI
-        </th >
-        <th class="mat-h-cell">
-          Label
-        </th >
-        <th class="mat-h-cell">      
-          Description        
-        </th>
-        <th class="mat-h-cell">
-          Price
-        </th>
-        <th class="mat-h-cell">      
-          Manufacturer
-        </th>
-        <th class="mat-h-cell">
-          Life period
-        </th>
-        <th class="mat-h-cell">
-          Image
-        </th>
-        <th class="mat-h-cell">
-          Datasheet
-        </th>
-        <th class="mat-h-cell">
-          Phenomena URIs
-        </th>
-        <th class="mat-h-cell">
-          Phenomena Units
-        </th>
-  </tr>
-  <tbody>
-  <tr *ngFor="let number of max; let i = index">
-    <td class="mat-cell">
-        {{uri.iri[i]}}
-    </td>
-    <td class="mat-cell">
-        {{uri.labels[i]}}
-    </td>
-    <td class="mat-cell">      
-        {{uri.descriptions[i]}}
-    </td>
-    <td class="mat-cell">
-      {{price.value[i]}}
-    </td>
-    <td class="mat-cell">
-      {{manufacturer.value[i]}}
-    </td>
-    <td class="mat-cell">
-      {{lifeperiod.value[i]}}
-    </td>
-    <td class="mat-cell">
-      {{image.value[i]}}
-    </td>
-    <td class="mat-cell">
-      {{datasheet.value[i]}}
-    </td>
-    <td class="mat-cell">      
-        {{phenomena.uri[i]}}
-    </td>
-    <td class="mat-cell">      
-      {{phenomena.unit[i]}}
-  </td>
-  </tr>
-</tbody>
-</table>
+<mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
+    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{uri.labels[0]}}</h4>
+</mat-toolbar>
+<h1 class="headline-border"></h1>
+<div>
+  <!-- <table *ngIf='uri.labels[0] != undefined'>
+    <thead>    
+      <tr>
+          <th class="mat-h-cell">
+            URI
+          </th >
+          <th class="mat-h-cell">
+            Label
+          </th >
+          <th class="mat-h-cell">      
+            Description        
+          </th>
+          <th class="mat-h-cell">
+            Price
+          </th>
+          <th class="mat-h-cell">      
+            Manufacturer
+          </th>
+          <th class="mat-h-cell">
+            Life period
+          </th>
+          <th class="mat-h-cell">
+            Image
+          </th>
+          <th class="mat-h-cell">
+            Datasheet
+          </th>
+          <th class="mat-h-cell">
+            Phenomena URIs
+          </th>
+          <th class="mat-h-cell">
+            Phenomena Units
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let number of max; let i = index">
+        <td class="mat-cell">
+            {{uri.iri[i]}}
+        </td>
+        <td class="mat-cell">
+            {{uri.labels[i]}}
+        </td>
+        <td class="mat-cell">      
+            {{uri.descriptions[i]}}
+        </td>
+        <td class="mat-cell">
+          {{price.value[i]}}
+        </td>
+        <td class="mat-cell">
+          {{manufacturer.value[i]}}
+        </td>
+        <td class="mat-cell">
+          {{lifeperiod.value[i]}}
+        </td>
+        <td class="mat-cell">
+          {{image.value[i]}}
+        </td>
+        <td class="mat-cell">
+          {{datasheet.value[i]}}
+        </td>
+        <td class="mat-cell">      
+            {{phenomena.uri[i]}}
+        </td>
+        <td class="mat-cell">      
+          {{phenomena.unit[i]}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <h3>Description</h3>
+    <p>{{uri.descriptions[0]}}</p>
+  </div> -->
+      <div class="article">
+        <!-- <h1>{{uri.labels[0]}}</h1> -->
+        <p class="siteSub">From Wikipedia, the free encyclopedia</p>
+        <p class="roleNote">This article is about the {{uri.labels[0]}}. For equivalent sensors, see <a href="/sensor/sameAs/{{uri.labels[0]}}">{{uri.labels[0]}}-Equivalents.</a></p>
+
+        <div class="articleRight">
+          <div class="articleRightInner">
+            <img src="{{image.value[0]}}" alt="{{uri.labels[0]}}" />
+          </div>
+          The {{uri.labels[0]}}
+        </div>
+        <p>{{uri.descriptions[0]}}</p>
+          <div class="contentsPanel">
+          <div class="contentsHeader">Contents</div>
+          <ul>
+                <li><span>1</span><a href="/sensor/{{uri.short[0]}}#uri">URI</a> </li>
+                <li><span>2</span><a href="/sensor/{{uri.short[0]}}#labels">Labels</a> </li>
+                <li><span>3</span><a href="/sensor/{{uri.short[0]}}#price">Price Category</a></li>
+                <li><span>4</span><a href="/sensor/{{uri.short[0]}}#manufacturer">Manufacturer</a></li>
+                <li><span>5</span><a href="/sensor/{{uri.short[0]}}#lifeperiod">Life period</a></li>							
+                <li><span>6</span><a href="/sensor/{{uri.short[0]}}#datasheet">Data sheet</a></li>							
+                <li><span>7</span><a href="/sensor/{{uri.short[0]}}#phenomena">Measurable phenomena</a>
+                  <ul>
+                    <li><span>7.1</span><a href="#phenomena">URIs</a></li>
+                    <li><span>7.2</span><a href="#phenomena">Units</a></li>
+                  </ul>
+                </li>	
+          </ul>
+        </div>
+        <h2 id="uri">URI</h2>
+          <p>The URI of the {{uri.labels[0]}} is: </p> 
+          <b>{{uri.iri[0]}}</b>
+        <h2 id="labels">Labels</h2>
+          <p>These are the available labels for the {{uri.labels[0]}} Sensor:</p>
+          <ul>
+            <li *ngFor="let label of uri.labels">
+                <b>{{label}}</b>
+            </li>
+          </ul>
+        <h2 id="price">Price Category</h2>
+        <p>The price category of the {{uri.labels[0]}} is:</p>
+          <b>{{price.value[0]}}</b>
+
+        <h2 id="manufacturer">Manufacturer</h2>
+        <p>The manufacturer of the {{uri.labels[0]}} is:</p>
+          <b>{{manufacturer.value[0]}}</b>
+
+        <h2 id="lifeperiod">Life period</h2>
+        <p>The life period of the {{uri.labels[0]}} is:</p>
+          <b>{{lifeperiod.value[0]}}</b>
+
+        <h2 id="datasheet">Datasheet</h2>
+        <p>The datasheet of the {{uri.labels[0]}} is:</p>
+          <b><a href="{{datasheet.value[0]}}">{{datasheet.value[0]}}</a></b>
+
+
+        <h2 id="phenomena">Measurable Phenomena</h2>
+        <p>These are the phenomena that can be measured using the {{uri.labels[0]}} Sensor:</p>
+        <table>
+          <thead>
+            <th class="mat-h-cell">Phenomenon URI</th>
+            <th class="mat-h-cell">Unit</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let phenomenon of phenomena">
+              <td class="mat-h-cell">
+                  <a href="/phenomenon/{{phenomenon.short}}">{{phenomenon.uri}}</a>
+              </td>
+              <td class="mat-h-cell">
+                 {{phenomenon.unit}}
+              </td>
+            </tr>
+          </tbody>
+          </table>
+        
+        <div class="categories">
+          <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
+        </div>
+        
+      </div>
+      <div class="pagefooter">
+        This page was last edited on 15.05.2019
+        <div class="footerlinks">
+          <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie statement</a> <a href="#">Developers</a>
+        </div>
+    
+    	
+  </div>
+</div>
+
