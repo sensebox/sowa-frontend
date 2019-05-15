@@ -1,6 +1,8 @@
-<h1 class="headline-border">Phenomena List</h1>
-
-<table style="margin: 20px 0">
+<mat-toolbar style="background-color: #0000006b;" class="example-toolbar">
+    <h1 class="example-app-name capitalize" style="color: #ffd63e;">Phenomena List</h1>
+</mat-toolbar>
+<h1 class="headline-border"></h1>
+<!-- <table style="margin: 20px 0">
     <thead>
       <tr>     
         <th style="width:35%">NAME:</th>
@@ -16,7 +18,7 @@
           <button [routerLink]="['/phenomenon', phenomena.phenomenon.value]"> {{phenomena.phenomenon.value}}</button>
         </td>
       </tr>
-          <!-- <tr *ngFor= 'let field of uri.labels; let i = index' >
+          <tr *ngFor= 'let field of uri.labels; let i = index' >
             <td>
                 {{field.value}}
             </td>
@@ -24,10 +26,26 @@
               {{field["xml:lang"]}}
             </td>
           </tr> -->
-    </tbody>
-  </table>
+    <!-- </tbody>
+  </table> -->
 <!-- <ul>
   <li *ngFor='let phenomena of phenomenaArray'>
     {{phenomena.label[0].value}}
   </li>
 </ul> -->
+<div class="content">
+
+<input matInput #myInput placeholder="Type to filter phenomena..." [(ngModel)]="phenomena" (input)="filterItem(myInput.value)">
+
+
+<ul class="heroes">
+    <li>
+    <span class="badge">No.</span> <span class="badge t">Label</span> URI </li>
+    <li *ngFor="let phenomena of phenomenaArrayFiltered;let i = index"
+      [class.selected]="phenomena === selectedPhenomenon"
+      (click)="onSelect(phenomena)" [hidden]='phenomena.phenomenon.type != "uri"' [routerLink]="['/phenomenon', phenomena.phenomenon.value]" >
+      <span class="badge">{{i+1}}</span> <span class="badge t" >{{phenomena.label[0]?.value}}</span> {{phenomena.phenomenon.value}}
+    </li>
+  </ul>
+
+</div>

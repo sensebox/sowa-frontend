@@ -4,12 +4,13 @@ import { ApiService } from '../services/api.service';
 @Component({
   selector: 'senph-phenomena',
   templateUrl: './phenomena.component.html',
-  styleUrls: ['./phenomena.component.scss']
+  styleUrls: ['./phenomena.component.scss', '../app.component.scss']
 })
 export class PhenomenaComponent implements OnInit {
 
   phenomenaArray;
-  
+  phenomenaArrayFiltered;
+  selectedPhenomenon;
   phenomenon;
 
   constructor( private api:ApiService) { }
@@ -18,6 +19,7 @@ export class PhenomenaComponent implements OnInit {
     this.api.getPhenomena().subscribe(res => {
       this.phenomenaArray=res;
       console.log(res);
+      this.assignCopy();
     });
   }
 
@@ -28,5 +30,21 @@ export class PhenomenaComponent implements OnInit {
       this.phenomenon=res;
       console.log(res);
     });
+  }
+
+  onSelect(phenomenon){
+    this.selectedPhenomenon = phenomenon; 
+  }
+
+  assignCopy(){
+    this.phenomenaArrayFiltered = Object.assign([], this.phenomenaArray);
+ }
+  filterItem(value){
+      if(!value){
+          this.assignCopy();
+      } // when nothing has typed
+      this.phenomenaArrayFiltered = Object.assign([], this.phenomenaArray).filter(
+        sensors => JSON.stringify(sensors).toLowerCase().indexOf(value.toLowerCase()) > -1
+      )
   }
 }
