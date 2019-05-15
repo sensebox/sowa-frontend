@@ -32,8 +32,24 @@ export class Phenomenon {
         public manufacturer: string,
         public price: number,
         public dataSheet: string,
-        public lifePeriod: number,
-        public device: string       
+        public lifePeriod: string,
+        public device: string,
+        public image: string       
+    ) {  }
+  
+  }
+
+  export class Domain {
+
+    constructor(
+        public name: {
+          label: string,
+          lang: string
+        },
+        public description: {
+                comment:string,
+                lang: string
+        }
     ) {  }
   
   }
