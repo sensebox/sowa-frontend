@@ -43,19 +43,24 @@ export class PhenomenaDetailComponent implements OnInit {
       console.log(res);
       res.forEach(element => {
         if(element.sensors != undefined){
-          this.sensors.push({ iri: element.sensors.value});
+          this.sensors.push({ iri: element.sensors.value, label: element.sensorlabel.value, short: element.sensors.value.slice(34)});
         }
         else{
           if(element.domains != undefined){
-              this.domains.push({ iri: element.domains.value});
+            if(element.domainLabel != undefined){
+              this.domains.push({ iri: element.domains.value, label: element.domainLabel.value});
+            }
+            else{
+              this.domains.push({ iri: element.domains.value, label: "unkown"});
+            }
           }
           else{
-            if(element.units != undefined){
+            if(element.units != undefined && element.units.type == "uri"){
                 this.units.push({ iri: element.units.value});
             }
             else{
               if(element.iri != undefined){
-                  this.uri.push({ iri: element.iri.value});
+                  this.uri.push({ iri: element.iri.value, short: element.iri.value.slice(34)});
                   this.labels.push({ iri: element.label.value});
               } 
               else{

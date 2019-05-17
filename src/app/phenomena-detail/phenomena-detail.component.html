@@ -1,8 +1,8 @@
-<mat-toolbar style="background-color: #0000006b;" class="example-toolbar">
-    <h1 class="example-app-name capitalize" style="color: #ffd63e;">{{labels[0]?.iri}}</h1>
+<mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
+    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{labels[0]?.iri}}</h4>
 </mat-toolbar>
 <div class="content">
-  <table>
+  <!-- <table>
   <thead>    
     <tr>
           <th class="mat-h-cell">
@@ -71,4 +71,98 @@
     </tr>
   </tbody>
   </table>
+</div> -->
+
+<div class="article">
+    <!-- <h1>{{uri.labels[0]?}}</h1> -->
+    <p class="siteSub">From SOWA, the free SensorWiki</p>
+    <p class="roleNote">This article is about <b>{{labels[0]?.iri}}</b>. For equivalent phenomena, see <a href="/phenomenon/sameAs/{{labels[0]?.iri}}">{{labels[0]?.iri}}-Equivalents.</a></p>
+
+    <!-- <div class="articleRight">
+      <div class="articleRightInner">
+        <img src="{{image.value[0]?.iri}}" alt="{{labels[0]?.iri}}" />
+      </div>
+      The {{labels[0]?.iri}}
+    </div> -->
+    <p>{{descriptions[0]?.iri}}</p>
+      <div class="contentsPanel">
+      <div class="contentsHeader">Contents</div>
+      <ul>
+            <li><span>1</span><a href="/phenomenon/{{uri[0]?.short}}#uri">URI</a> </li>
+            <li><span>2</span><a href="/phenomenon/{{uri[0]?.short}}#labels">Labels</a> </li>
+            <li><span>3</span><a href="/phenomenon/{{uri[0]?.short}}#units">Units</a></li>
+            <li><span>4</span><a href="/phenomenon/{{uri[0]?.short}}#sensors">Sensors</a></li>
+            <li><span>5</span><a href="/phenomenon/{{uri[0]?.short}}#domains">Domains</a></li>							
+      </ul>
+    </div>
+    <h2 id="uri">URI</h2>
+      <p>The URI of the {{labels[0]?.iri}} is: </p> 
+      <b>{{uri[0]?.iri}}</b>
+    <h2 id="labels">Labels</h2>
+      <p>These are the available labels for the {{labels[0]?.iri}} Phenomenon:</p>
+      <ul>
+        <li *ngFor="let label of labels">
+            <b>{{label.iri}}</b>
+        </li>
+      </ul>
+    <h2 id="units">Units</h2>
+    <p>The units of measurement for {{labels[0]?.iri}} are:</p>
+    <ul>
+        <li *ngFor="let unit of units">
+            <b>{{unit.iri}}</b>
+        </li>
+    </ul>
+
+    <h2 id="sensors">Sensors</h2>
+    <p>The following sensors can measure {{labels[0]?.iri}}:</p>
+    <table>
+        <thead>
+          <th class="mat-h-cell">Label</th>
+          <th class="mat-h-cell">Sensor URI</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sensor of sensors">
+            <td class="mat-h-cell">
+              {{sensor.label}}
+            </td>
+            <td class="mat-h-cell">
+              <a href="/sensor/{{sensor.short}}">{{sensor.iri}}</a>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+
+    <h2 id="domains">Domains</h2>
+    <p>{{labels[0]?.iri}} belongs to the following domains:</p>
+    <table>
+        <thead>
+          <th class="mat-h-cell">Label</th>
+          <th class="mat-h-cell">Domain URI</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let domain of domains">
+            <td class="mat-h-cell">
+              {{domain.label}}
+            </td>
+            <td class="mat-h-cell">
+              <a href="/domain/{{domain.short}}">{{domain.iri}}</a>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+    
+    <div class="categories">
+      <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
+    </div>
+    
+  </div>
+  <div class="pagefooter">
+    This page was last edited on 15.05.2019
+    <div class="footerlinks">
+      <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie statement</a> <a href="#">Developers</a>
+    </div>
+
+  
 </div>
+</div>
+
