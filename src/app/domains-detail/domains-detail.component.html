@@ -1,3 +1,61 @@
-<p>
-  domains-detail works!
-</p>
+<mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
+    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{uri[0]?.label}}</h4>
+</mat-toolbar>
+<div class="content">
+<div class="article">
+    <p class="siteSub">From SOWA, the free SensorWiki</p>
+    <p class="roleNote">This article is about <b>{{uri[0]?.label}}</b>. For equivalent phenomena, see <a href="/phenomenon/sameAs/{{uri[0]?.label}}">{{uri[0]?.label}}-Equivalents.</a></p>
+    <p>{{descriptions[0]?.value}}</p>
+      <div class="contentsPanel">
+      <div class="contentsHeader">Contents</div>
+      <ul>
+            <li><span>1</span><a href="/phenomenon/{{uri[0]?.short}}#uri">URI</a> </li>
+            <li><span>2</span><a href="/phenomenon/{{uri[0]?.short}}#labels">Labels</a> </li>
+            <li><span>3</span><a href="/phenomenon/{{uri[0]?.short}}#phenomena">Phenomena</a></li>
+      </ul>
+    </div>
+    <h2 id="uri">URI</h2>
+      <p>The URI of the {{uri[0]?.label}} is: </p> 
+      <b>{{uri[0]?.iri}}</b>
+    <h2 id="labels">Labels</h2>
+      <p>These are the available labels for the {{uri[0]?.label}} Phenomenon:</p>
+      <ul>
+        <li *ngFor="let label of labels">
+            <b>{{label.iri}}</b>
+        </li>
+      </ul>
+
+    <h2 id="phenomena">Phenomena</h2>
+    <p>These Phenomena are part of the domain: {{uri[0]?.label}}</p>
+    <table>
+        <thead>
+          <th class="mat-h-cell">Label</th>
+          <th class="mat-h-cell">Phenomenon URI</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let phenomenon of phenomena">
+            <td class="mat-h-cell">
+              {{phenomenon.label}}
+            </td>
+            <td class="mat-h-cell">
+              <a href="/phenomenon/{{phenomenon.short}}">{{phenomenon.iri}}</a>
+            </td>
+          </tr>
+        </tbody>
+        </table>
+    
+    <div class="categories">
+      <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
+    </div>
+    
+  </div>
+  <div class="pagefooter">
+    This page was last edited on 15.05.2019
+    <div class="footerlinks">
+      <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie statement</a> <a href="#">Developers</a>
+    </div>
+
+  
+</div>
+</div>
+

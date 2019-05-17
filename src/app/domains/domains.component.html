@@ -3,20 +3,17 @@
 </mat-toolbar>
 <h1 class="headline-border"></h1>
 <div class="content">
-  <table style="margin: 20px 0">
-    <tbody>
-      <tr>     
-        <th style="width:45%">NAME:</th>
-        <th style="width:55%"> URI:</th>
-      </tr>
-      <tr *ngFor='let domains of domainArray'>
-        <td class="table-entry">
-          {{domains.label[0]?.value}}
-        </td>
-        <td *ngIf='domains.domain.type === "uri"'>
-          {{domains.domain.value}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+<input matInput #myInput placeholder="Type to filter phenomena..." [(ngModel)]="domain" (input)="filterItem(myInput.value)">
+
+<ul class="heroes">
+    <li>
+    <span class="badge">No.</span> <span class="badge t">Label</span> URI </li>
+    <li *ngFor="let domain of domainsArrayFiltered;let i = index"
+      [class.selected]="domain === selectedDomain"
+      (click)="onSelect(domain)" [hidden]='domain.domain.type != "uri"' [routerLink]="createRoute(i)" >
+      <span class="badge">{{i+1}}</span> <span class="badge t" >{{domain.label[0]?.value}}</span> {{domain.domain.value}}
+    </li>
+  </ul>
+
 </div>
