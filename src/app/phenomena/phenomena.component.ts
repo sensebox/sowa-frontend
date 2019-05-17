@@ -11,7 +11,6 @@ export class PhenomenaComponent implements OnInit {
   phenomenaArray;
   phenomenaArrayFiltered;
   selectedPhenomenon;
-  phenomenon;
 
   constructor( private api:ApiService) { }
 
@@ -20,15 +19,6 @@ export class PhenomenaComponent implements OnInit {
       this.phenomenaArray=res;
       console.log(res);
       this.assignCopy();
-    });
-  }
-
-  getPhenomenon(iri) {
-    var q = iri.replace("http://www.opensensemap.org/SENPH#", "");
-    console.log(q);
-    this.api.getPhenomenon(q).subscribe(res => {
-      this.phenomenon=res;
-      console.log(res);
     });
   }
 
