@@ -7,11 +7,9 @@ import { PhenomenaComponent } from '../phenomena/phenomena.component';
 import { SensorsComponent } from '../sensors/sensors.component';
 import { DevicesComponent } from '../devices/devices.component';
 import { PhenomenaDetailComponent } from '../phenomena-detail/phenomena-detail.component';
-import { PhenomenaFormComponent } from '../phenomena-form/phenomena-form.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SensorsDetailComponent } from '../sensors-detail/sensors-detail.component';
 import { DevicesDetailComponent } from '../devices-detail/devices-detail.component';
-import { SensorsFormComponent } from '../sensors-form/sensors-form.component';
 import { DevicesFormComponent } from '../devices-form/devices-form.component';
 import { DomainsComponent } from '../domains/domains.component';
 import { DomainsDetailComponent } from '../domains-detail/domains-detail.component';
@@ -31,18 +29,18 @@ const routes: Routes = [
   {
     path: 'phenomenon/:iri',
     component: PhenomenaDetailComponent},
-  {
-    path: 'phenomenonupdate/:iri',
-    component: PhenomenaFormComponent},
+  // {
+  //   path: 'phenomenonupdate/:iri',
+  //   component: PhenomenaFormComponent},
   {
     path: 'sensors',
     component: SensorsComponent},
   {
     path: 'sensor/:iri',
     component: SensorsDetailComponent},
-  {
-    path: 'sensorupdate/:iri',
-    component: SensorsFormComponent},
+  // {
+  //   path: 'sensorupdate/:iri',
+  //   component: SensorsFormComponent},
   {
     path: 'devices',
     component: DevicesComponent},
