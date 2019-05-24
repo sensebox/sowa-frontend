@@ -109,7 +109,7 @@
     <p>The units of measurement for {{labels[0]?.iri}} are:</p>
     <ul>
         <li *ngFor="let unit of units">
-            <b>{{unit.iri}}</b>
+          <b><a href="https://bioportal.bioontology.org/ontologies/UO/?p=classes&conceptid={{unit.iri}}" target="_blank">{{unit.iri}}</a></b>  
         </li>
     </ul>
 
