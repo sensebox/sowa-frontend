@@ -34,6 +34,9 @@ export class ApiService {
     return this.http.post(this.APIURL + '/queries/phenomenon/update' , phenomenon, httpOptions);
   }
 
+  getPhenomenonForSensor(sensor){
+    return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, httpOptions);
+  }
 
     /**--------------Sensors------------------------ */
   getSensors() {
