@@ -20,10 +20,15 @@ export class FormPhenomenonComponent implements OnInit {
   {name: 'spanish', short: 'es'}, {name: 'italian', short: 'it'}];
 
   phenoModel = new Phenomenon(
-    {label:"", 
-      lang: this.languageTags[0].short}, 
-    {comment: "", 
-      lang: this.languageTags[0].short},
+    "",
+    {
+      label:"", 
+      lang: this.languageTags[0].short
+    }, 
+    {
+      comment: "", 
+      lang: this.languageTags[0].short
+    },
     "" ,
     ""
   );
