@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
-
 @Component({
   selector: 'senph-phenomena-detail',
   templateUrl: './phenomena-detail.component.html',
@@ -16,10 +15,12 @@ export class PhenomenaDetailComponent implements OnInit {
   uri = []; 
   labels = []; 
   descriptions = [];
+  URL = "";
 
   constructor(
     private route:ActivatedRoute,
-    private api:ApiService
+    private api:ApiService,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -38,6 +39,7 @@ export class PhenomenaDetailComponent implements OnInit {
   
   getPhenomenon() {
   this.route.params.subscribe(res => {
+    URL = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
     var q = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
     this.api.getPhenomenonIRI(q).subscribe((res:Array<any>) => {
       console.log(res);
@@ -99,6 +101,14 @@ export class PhenomenaDetailComponent implements OnInit {
       })
     });
   } 
+
+  showUrl() {
+    console.log(URL);
+  }
+
+  editButton(id) {
+    this.router.navigate(['/edit', id]);
+  }
 
 
 
