@@ -17,6 +17,7 @@ import { FormTemplateComponent } from '../form-template/form-template.component'
 import { FormPhenomenonComponent } from '../form-phenomenon/form-phenomenon.component';
 import { FormSensorComponent } from '../form-sensor/form-sensor.component';
 import { FormDomainComponent } from '../form-domain/form-domain.component';
+import { PhenomenaEditComponent } from '../phenomena-edit/phenomena-edit.component';
 
 const routes: Routes = [
   {
@@ -27,8 +28,26 @@ const routes: Routes = [
     path: 'phenomena', 
     component: PhenomenaComponent},
   {
-    path: 'phenomenon/:iri',
-    component: PhenomenaDetailComponent},
+    path: 'phenomenon',
+    children: [
+      {
+        path: '',
+        children: [
+          { path: ':iri', component: PhenomenaDetailComponent },
+          { path: 'edit',
+            children: [
+              { 
+                path: '',
+                children: [
+                  { path: ':id', component: PhenomenaEditComponent } 
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   // {
   //   path: 'phenomenonupdate/:iri',
   //   component: PhenomenaFormComponent},
@@ -44,11 +63,34 @@ const routes: Routes = [
   {
     path: 'devices',
     component: DevicesComponent},
+  // {
+  //   path: 'device/:iri', 
+  //   component: DevicesDetailComponent},
+
   {
-    path: 'device/:iri', 
-    component: DevicesDetailComponent},
+    path: 'device',
+    children: [
+      {
+        path: '',
+        children: [
+          { path: ':iri', component: DevicesDetailComponent },
+          { path: 'edit',
+            children: [
+              { 
+                path: '',
+                children: [
+                  { path: ':id', component: DevicesFormComponent } 
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
   {
-    path: 'deviceupdate/:iri', 
+    path: 'deviceupdate', 
     component: DevicesFormComponent},
   {
     path: 'domains',

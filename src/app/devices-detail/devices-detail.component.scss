@@ -89,7 +89,7 @@ bottom: -0.25em;
 }
 img {
 border: 0;
-max-width: 100%;
+max-width:100%;
 }
 svg:not(:root) {
 overflow: hidden;
@@ -377,8 +377,11 @@ font-size: 94%;
 margin: 0 0 5px 15px;
 text-align: left;
 color: #ffd63e;
-
+width: auto;
+position: relative;
+max-width: 40%;
 }
+
 div.articleRightInner {
 border: 1px solid #c8ccd1;
 padding: 3px;
@@ -508,6 +511,7 @@ font-size: 95%;
 position: relative;
 line-height: 1.7em;
 width: 280px;
+max-width: 60%;
 }
 .contentsHeader {
 color: #ffd63e;
@@ -644,5 +648,8 @@ margin-right: 1em;
     display: none;
 }
 }
-
-
+.example-fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
+  }
