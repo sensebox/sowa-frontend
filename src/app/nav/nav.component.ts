@@ -28,6 +28,10 @@ export class NavComponent implements OnInit, OnDestroy {
       path: 'form',
       title: 'Add New Device'},
     {
+      path: 'deviceupdate',
+      title: 'Edit Device'},
+      
+    {
       path: 'sensorform',
       title: 'Add New Sensor'},
     {
