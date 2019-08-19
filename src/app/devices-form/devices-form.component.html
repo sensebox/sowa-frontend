@@ -1,3 +1,131 @@
-<p>
-  devices-form works!
-</p>
+<form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="deviceForm">
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        Edit Device
+      </h3>
+    </div>
+    <div class="panel-body">
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.uri}">
+        <label class="col-sm-2 control-label" for="uri">URI</label>
+        <div class="col-sm-8">
+          <input type="text" id="uri" formControlName="uri" class="form-control" (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.uri">
+            {{formErrors.uri}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.name}">
+        <label class="col-sm-2 control-label" for="name">Name</label>
+        <div class="col-sm-8">
+          <input type="text" id="name" formControlName="name" class="form-control" (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.name">
+            {{formErrors.name}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.description}">
+        <label class="col-sm-2 control-label" for="description">Description</label>
+        <div class="col-sm-8">
+          <input type="text" id="description" formControlName="description" class="form-control"
+            (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.description">
+            {{formErrors.description}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.website}">
+        <label class="col-sm-2 control-label" for="website">Website</label>
+        <div class="col-sm-8">
+          <input type="text" id="website" formControlName="website" class="form-control" (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.website">
+            {{formErrors.website}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.image}">
+        <label class="col-sm-2 control-label" for="image">Image</label>
+        <div class="col-sm-8">
+          <input type="text" id="image" formControlName="image" class="form-control" (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.image">
+            {{formErrors.image}}
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.contact}">
+        <label class="col-sm-2 control-label" for="contact">Contact</label>
+        <div class="col-sm-8">
+          <input type="text" id="contact" formControlName="contact" class="form-control" (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.contact">
+            {{formErrors.contact}}
+          </span>
+        </div>
+      </div> 
+
+
+      <div >
+        
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="btn btn-primary" (click)="addSensorButtonClick()" [disabled]="deviceForm.get('sensor').invalid">Add sensor</button>
+          </div>
+        </div>
+
+        <div formArrayName="sensor" *ngFor="let sens of deviceForm.get('sensor').controls; let i = index">
+          <hr *ngIf="i>0">
+          <div class="well" [formGroupName]="i">
+
+            <div class="form-group" [ngClass]="{'has-error' : sens.get('sensorUri').invalid &&
+                                                              sens.get('sensorUri').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'sensorUri' + i">
+                Sensor URI
+              </label>
+              <div class="col-sm-4">
+                <input type="text" [id]="'sensorUri' + i" placeholder="sensorName" formControlName="sensorUri"
+                  class="form-control">
+                <span class="help-block" *ngIf="sens.get('sensorUri').errors?.required && 
+                                                sens.get('sensorUri').touched ">
+                  Sensor URI is required
+                </span>
+              </div>
+              <div class="col-sm-6">
+                <button *ngIf="deviceForm.get('sensor').length>1" class="btn btn-danger btn-sm pull-right" title="Delete Sensor" 
+                  (click)="removeSensorButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error' : sens.get('sensorLabel').invalid &&
+                                                              sens.get('sensorLabel').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'sensorLabel' + i">
+                Sensor Name
+              </label>
+              <div class="col-sm-4">
+                <input type="text" [id]="'sensorLabel' + i" placeholder="sensorLabel" formControlName="sensorLabel"
+                  class="form-control">
+                <span class="help-block" *ngIf="sens.get('sensorLabel').errors?.required && 
+                                                sens.get('sensorLabel').touched ">
+                  Sensor name is required
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="panel-footer">
+      <div class="btn-toolbar">
+        <button class="btn btn-primary" type="submit" [disabled]="deviceForm.invalid">Save Changes</button>
+        <button class="btn btn-primary" type="button" (click)="onLoadButtonClick()">Load data</button>
+      </div>
+    </div>
+  </div>
+</form>
