@@ -18,6 +18,7 @@ constructor( private api:ApiService) { }
 ngOnInit() {
   this.api.getDevices().subscribe(res => {
     this.devicesArray=res;
+    (err) => console.log(err);
     console.dir(res);
     this.assignCopy();
   });

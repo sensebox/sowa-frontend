@@ -2,7 +2,25 @@
     <div>
       <h1>Add Domain Form</h1>
       <form (ngSubmit)="onSubmit()" #domainForm="ngForm">
-      <div class="form-group">
+
+          <div class="form-group row">
+            <label class="col-sm-12" for="uriInput">URI-Tag (URL is added automatically as shown, please provide tag only)</label>  
+            <div class="uriInput col-sm-6">
+              <input class="form-control" value="http://www.opensensemap.org/SENPH#" readonly>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="uri"
+                required
+                [(ngModel)]="domainModel.uri" name="uri"
+                #uri="ngModel" placeholder="simple_domain_identifier">
+                <div [hidden]="uri.valid || uri.pristine"
+                      class="alert alert-danger">
+                  URI-Tag is required
+                </div>              
+            </div>
+          </div>
+
+      <div class="form-group  col-sm-12">
         <label for="nameS">Name</label>
         <input type="text" class="form-control" id="nameS"
                 required
@@ -14,7 +32,7 @@
         </div>
       </div>
     
-      <div class="form-group">
+      <div class="form-group col-sm-12">
         <label for="power">Language</label>
         <select class="form-control" id="labelLangS"
                 required
@@ -29,7 +47,7 @@
     
     
     
-      <div class="form-group">
+      <div class="form-group col-sm-12">
         <label for="description">Description</label>
         <input type="text" class="form-control" id="descriptionS"
                 required
@@ -42,7 +60,7 @@
       </div>
     
     
-      <div class="form-group">
+      <div class="form-group col-sm-12">
         <label for="power">Language</label>
         <select class="form-control" id="commentLangS"
                 required

@@ -19,12 +19,16 @@ export class FormDomainComponent implements OnInit {
   {name: 'spanish', short: 'es'}, {name: 'italian', short: 'it'}];
 
   domainModel = new Domain(
-    { label: "",
+    "",
+    { 
+      label: "",
       lang: this.languageTags[0].short
     },
-    { comment: "",
+    { 
+      comment: "",
       lang: this.languageTags[0].short
-    });
+    }
+  );
 
   submitted = false;
   ngOnInit(){

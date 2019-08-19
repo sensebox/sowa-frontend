@@ -2,6 +2,24 @@
     <div [hidden]="submitted">
       <h1>Add Phenomenon Form</h1>
       <form (ngSubmit)="onSubmit()" #phenomenonForm="ngForm">
+        
+        <div class="form-group row">
+          <label class="col-sm-12" for="uriInput">URI-Tag (URL is added automatically as shown, please provide tag only)</label>  
+          <div class="uriInput col-sm-6">
+            <input class="form-control" value="http://www.opensensemap.org/SENPH#" readonly>
+          </div>
+          <div class="col-sm-6">
+              <input type="text" class="form-control" id="uri"
+              required
+              [(ngModel)]="phenoModel.uri" name="uri"
+              #uri="ngModel" placeholder="simple_phenomenon_identifier">
+              <div [hidden]="uri.valid || uri.pristine"
+                    class="alert alert-danger">
+                URI-Tag is required
+              </div>              
+          </div>
+        </div>
+        
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" class="form-control" id="name"
