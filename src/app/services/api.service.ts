@@ -4,6 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { IDevice } from '../interfaces/IDevice';
 import { IIri } from '../interfaces/IIri';
+import { IPhenomenon } from '../interfaces/IPhenomenon';
 
 
 
@@ -30,12 +31,79 @@ export class ApiService {
     return this.http.get(this.APIURL + '/queries/phenomena');
    }
 
-  getPhenomenon(iri) {
-    return this.http.get(this.APIURL + '/queries/phenomenon/' + iri);
-   }
 
-  getPhenomenonIRI(iri) {
-    return this.http.get(this.APIURL + '/queries/phenomenonIRI/' + iri);
+  getPhenomenon(iri):  Observable<any> {
+      let I2Phenomenon = {
+        iri: '',
+        labels: [],
+        description: '',
+        units: [],
+        domains: [],
+      };
+      let unit = {
+        unit: '',
+        unitLabel: ''
+      };
+      let domain = {
+        domain: '',
+        domainsLabel: ''
+      };
+      let label = {
+        label: ''
+      };
+
+      return this.http.get(this.APIURL + '/queries/phenomenon/' + iri).pipe(
+        map((res:Array <any>) => {
+          console.log(res);
+          res.forEach((element: any) => {
+            console.log(element);
+            switch (Object.getOwnPropertyNames(element)[0]) {
+    
+                  case "description" : {
+                    Object.assign(I2Phenomenon, element);
+                    break;
+                  }
+      
+                  case "iri" : {
+                    Object.assign(I2Phenomenon, element);
+                    break;
+                  }
+                  
+                  case "label" : {  
+                    I2Phenomenon.labels.push(element);
+                    break;
+                  }
+      
+                  case "unit" : {
+                    I2Phenomenon.units.push(element);
+                    break;
+                  }
+
+                  case "domain" : {
+                    I2Phenomenon.domains.push(element);
+                    break;
+                  }
+              
+                  default: {
+                     console.log("Invalid attribute", element);
+                     break;
+                  }
+              }
+            })
+          let phenomenon = new IPhenomenon(I2Phenomenon);
+          console.log(phenomenon);
+          return phenomenon;
+          })
+        )
+  } 
+
+
+  // getPhenomenon(iri) {
+  //   return this.http.get(this.APIURL + '/queries/phenomenon/' + iri);
+  //  }
+
+  getPhenomenonDEPRECATED(iri) {
+    return this.http.get(this.APIURL + '/queries/phenomenonDEPRECATED/' + iri);
    }
 
   updatePhenomenon(phenomenon){
@@ -78,7 +146,7 @@ export class ApiService {
       image: '',
       description: '',
       contact: '',
-      iris: '',
+      iri: '',
       sensors:[]
     };
     let sensor = {

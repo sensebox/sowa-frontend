@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { IPhenomenon } from '../interfaces/IPhenomenon';
+
 @Component({
   selector: 'senph-phenomena-detail',
   templateUrl: './phenomena-detail.component.html',
@@ -8,72 +10,74 @@ import { ApiService } from '../services/api.service';
 })
 export class PhenomenaDetailComponent implements OnInit {
 
-  phenomenon;
-  sensors = [];
-  domains = [];
-  units = [];
-  uri = []; 
-  labels = []; 
-  descriptions = [];
-  URL = "";
+  phenomenon: IPhenomenon;
+
+  // sensors = [];
+  // domains = [];
+  // units = [];
+  uri;
+  // labels = []; 
+  // descriptions = [];
+  // URL = "";
 
   constructor(
     private route:ActivatedRoute,
     private api:ApiService,
-    private router:Router
+    private _routerService:Router
   ) { }
 
   ngOnInit() {
-    // this.route.params.subscribe(res => {
-    //   var q = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
-    //   console.log(q);
-    //   this.api.getPhenomenonIRI(q).subscribe(res => {
-    //     this.phenomenon=res;
-    //     console.log(this.phenomenon);
-
-    //   })
-    // });
-    this.getPhenomenon();
+    this.getPhenomenonDetails();
   }
 
-  
-  getPhenomenon() {
-  this.route.params.subscribe(res => {
-    URL = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
-    var q = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
-    this.api.getPhenomenonIRI(q).subscribe((res:Array<any>) => {
-      console.log(res);
-      res.forEach(element => {
-        if(element.sensors != undefined){
-          this.sensors.push({ iri: element.sensors.value, label: element.sensorlabel.value, short: element.sensors.value.slice(34)});
-        }
-        else{
-          if(element.domains != undefined){
-            if(element.domainLabel != undefined){
-              this.domains.push({ iri: element.domains.value, label: element.domainLabel.value});
-            }
-            else{
-              this.domains.push({ iri: element.domains.value, label: "unkown"});
-            }
-          }
-          else{
-            if(element.units != undefined && element.units.type == "uri"){
-                this.units.push({ iri: element.units.value});
-            }
-            else{
-              if(element.iri != undefined){
-                  this.uri.push({ iri: element.iri.value, short: element.iri.value.slice(34)});
-                  this.labels.push({ iri: element.label.value});
-              } 
-              else{
-                if(element.description != undefined){
-                    this.descriptions.push({ iri: element.description.value});
-                }
-              }
-            } 
-          }
-        }  
+
+  getPhenomenonDetails() {
+    return this.route.params.subscribe( res => {
+      this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
+        this.phenomenon = response;
+        this.uri = this.phenomenon.iri.value.slice(34);
+        console.log(this.uri);
       });
+    })
+  }
+  
+  // getPhenomenon() {
+  // this.route.params.subscribe(res => {
+  //   URL = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
+  //   var q = res.iri.replace("http://www.opensensemap.org/SENPH#", "");
+  //   this.api.getPhenomenon(q).subscribe((res:Array<any>) => {
+  //     console.log(res);
+  //     res.forEach(element => {
+  //       if(element.sensors != undefined){
+  //         this.sensors.push({ iri: element.sensors.value, label: element.sensorlabel.value, short: element.sensors.value.slice(34)});
+  //       }
+  //       else{
+  //         if(element.domains != undefined){
+  //           if(element.domainLabel != undefined){
+  //             this.domains.push({ iri: element.domains.value, label: element.domainLabel.value});
+  //           }
+  //           else{
+  //             this.domains.push({ iri: element.domains.value, label: "unkown"});
+  //           }
+  //         }
+  //         else{
+  //           if(element.units != undefined && element.units.type == "uri"){
+  //               this.units.push({ iri: element.units.value});
+  //           }
+  //           else{
+  //             if(element.iri != undefined){
+  //                 this.uri.push({ iri: element.iri.value, short: element.iri.value.slice(34)});
+  //                 this.labels.push({ iri: element.label.value});
+  //             } 
+  //             else{
+  //               if(element.description != undefined){
+  //                   this.descriptions.push({ iri: element.description.value});
+  //               }
+  //             }
+  //           } 
+  //         }
+  //       }  
+  //     });
       //this.labels=JSON.parse(res[0].labels.value);
       //console.dir(this.labels); 
       // console.log(res);
@@ -96,19 +100,25 @@ export class PhenomenaDetailComponent implements OnInit {
       // });
       // this.labels=JSON.parse(res[0].labels.value);
       // console.dir(this.labels); 
-      console.log(this.domains);
-      this.phenomenon=res; 
-      })
-    });
-  } 
+  //     console.log(this.domains);
+  //     this.phenomenon=res; 
+  //     })
+  //   });
+  // } 
 
-  showUrl() {
-    console.log(URL);
+  // showUrl() {
+  //   console.log(URL);
+  // }
+  redirectDomain(longURI) {
+    this._routerService.navigate(['/domain/', longURI.slice(34)]);
   }
 
-  editButton(id) {
-    this.router.navigate(['/edit', id]);
+  editButtonClick(shortUri) {
+    this._routerService.navigate(['/phenomenon/edit', shortUri]);
   }
+  // editButton(id) {
+  //   this.router.navigate(['/edit', id]);
+  // }
 
 
 

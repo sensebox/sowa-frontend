@@ -1,49 +1,50 @@
-<mat-toolbar style="background-color: #000000c6;" class="example-toolbar row">
-    <h4 class="example-app-name capitalize col-sm-10" style="color: #ffd63e;">{{labels[0]?.iri}}</h4>
-    <a href="/phenomenon/edit/{{URL}}"><button (click)="showUrl()" class="btn btn-success pull-right col-sm-2" >Edit</button></a></mat-toolbar>
-<div class="content">
+<mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
+    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{phenomenon?.labels[0].label.value}}</h4>
+    <span class="example-fill-remaining-space"></span>
+    <button class="btn btn-primary"  (click)="editButtonClick(uri)">Edit</button>
+</mat-toolbar>
+<div class="content" *ngIf="phenomenon">
 <div class="article">
-    <!-- <h1>{{uri.labels[0]?}}</h1> -->
     <p class="siteSub">From SOWA, the free SensorWiki</p>
-    <p class="roleNote">This article is about <b>{{labels[0]?.iri}}</b>. For equivalent phenomena, see <a href="/phenomenon/sameAs/{{labels[0]?.iri}}">{{labels[0]?.iri}}-Equivalents.</a></p>
-
-    <!-- <div class="articleRight">
+    <p class="roleNote">This article is about <b>{{phenomenon?.labels[0].label.value}}</b>. For equivalent phenomena, see <a href="/phenomenon/sameAs/{{phenomenon?.labels[0].label.value}}">{{phenomenon?.labels[0].label.value}}-Equivalents.</a></p>
+<!-- 
+    <div class="articleRight">
       <div class="articleRightInner">
-        <img src="{{image.value[0]?.iri}}" alt="{{labels[0]?.iri}}" />
+        <img src="{{image?.value[0]?.iri}}" alt="{{phenomenon?.labels[0].label.value}}" />
       </div>
-      The {{labels[0]?.iri}}
+      The {{phenomenon?.labels[0].label.value}}
     </div> -->
-    <p>{{descriptions[0]?.iri}}</p>
+    <p>{{phenomenon.description.value}}</p>
       <div class="contentsPanel">
       <div class="contentsHeader">Contents</div>
       <ul>
-            <li><span>1</span><a href="/phenomenon/{{uri[0]?.short}}#uri">URI</a> </li>
-            <li><span>2</span><a href="/phenomenon/{{uri[0]?.short}}#labels">Labels</a> </li>
-            <li><span>3</span><a href="/phenomenon/{{uri[0]?.short}}#units">Units</a></li>
-            <li><span>4</span><a href="/phenomenon/{{uri[0]?.short}}#sensors">Sensors</a></li>
-            <li><span>5</span><a href="/phenomenon/{{uri[0]?.short}}#domains">Domains</a></li>							
+            <li><span>1</span><a href="/phenomenon/{{uri}}#uri">URI</a> </li>
+            <li><span>2</span><a href="/phenomenon/{{uri}}#labels">Labels</a> </li>
+            <li><span>3</span><a href="/phenomenon/{{uri}}#units">Units</a></li>
+            <li><span>4</span><a href="/phenomenon/{{uri}}#sensors">Sensors</a></li>
+            <li><span>5</span><a href="/phenomenon/{{uri}}#domains">Domains</a></li>							
       </ul>
     </div>
     <h2 id="uri">URI</h2>
-      <p>The URI of the {{labels[0]?.iri}} is: </p> 
-      <b>{{uri[0]?.iri}}</b>
+      <p>The URI of the {{phenomenon?.labels[0].label.value}} is: </p> 
+      <b>{{phenomenon.iri.value}}</b>
     <h2 id="labels">Labels</h2>
-      <p>These are the available labels for the {{labels[0]?.iri}} Phenomenon:</p>
+      <p>These are the available labels for the {{phenomenon?.labels[0].label.value}} Phenomenon:</p>
       <ul>
-        <li *ngFor="let label of labels">
-            <b>{{label.iri}}</b>
+        <li *ngFor="let name of phenomenon.labels">
+            <b>{{name.label.value}}</b>
         </li>
       </ul>
     <h2 id="units">Units</h2>
-    <p>The units of measurement for {{labels[0]?.iri}} are:</p>
+    <p>The units of measurement for {{phenomenon?.labels[0].label.value}} are:</p>
     <ul>
-        <li *ngFor="let unit of units">
-          <b><a href="https://bioportal.bioontology.org/ontologies/UO/?p=classes&conceptid={{unit.iri}}" target="_blank">{{unit.iri}}</a></b>  
+        <li *ngFor="let unit of phenomenon.units">
+          {{unit.unitLabel?.value}} || <b><a href="https://bioportal.bioontology.org/ontologies/UO/?p=classes&conceptid={{unit.unit.value}}" target="_blank">{{unit.unit.value}}</a></b>  
         </li>
     </ul>
 
-    <h2 id="sensors">Sensors</h2>
-    <p>The following sensors can measure {{labels[0]?.iri}}:</p>
+    <!-- <h2 id="sensors">Sensors</h2>
+    <p>The following sensors can measure {{phenomenon?.labels[0].label.value}}:</p>
     <table>
         <thead>
           <th class="mat-h-cell">Label</th>
@@ -59,22 +60,22 @@
             </td>
           </tr>
         </tbody>
-        </table>
+        </table> -->
 
     <h2 id="domains">Domains</h2>
-    <p>{{labels[0]?.iri}} belongs to the following domains:</p>
+    <p>{{phenomenon?.labels[0].label.value}} belongs to the following domains:</p>
     <table>
         <thead>
           <th class="mat-h-cell">Label</th>
           <th class="mat-h-cell">Domain URI</th>
         </thead>
         <tbody>
-          <tr *ngFor="let domain of domains">
+          <tr *ngFor="let domain of phenomenon.domains">
             <td class="mat-h-cell">
-              {{domain.label}}
+              {{domain.domainLabel.value}}
             </td>
             <td class="mat-h-cell">
-              <a href="/domain/{{domain.short}}">{{domain.iri}}</a>
+              <button class="btn btn-link" (click)="redirectDomain(domain.domain.value)">{{domain.domain.value}}</button>
             </td>
           </tr>
         </tbody>
