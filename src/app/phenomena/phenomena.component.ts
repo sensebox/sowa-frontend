@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'senph-phenomena',
@@ -12,7 +13,10 @@ export class PhenomenaComponent implements OnInit {
   phenomenaArrayFiltered;
   selectedPhenomenon;
 
-  constructor( private api:ApiService) { }
+  constructor( 
+      private api:ApiService,
+      private _routerService:Router
+    ) { }
 
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
@@ -23,7 +27,8 @@ export class PhenomenaComponent implements OnInit {
   }
 
   onSelect(phenomenon){
-    this.selectedPhenomenon = phenomenon; 
+    this.selectedPhenomenon = phenomenon;
+    this._routerService.navigate(['/phenomenon/', phenomenon.phenomenon.value.slice(34)]);
   }
 
   assignCopy(){

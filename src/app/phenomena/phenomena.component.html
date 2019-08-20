@@ -12,7 +12,7 @@
     <span class="badge">No.</span> <span class="badge t">Label</span> URI </li>
     <li *ngFor="let phenomena of phenomenaArrayFiltered;let i = index"
       [class.selected]="phenomena === selectedPhenomenon"
-      (click)="onSelect(phenomena)" [hidden]='phenomena.phenomenon.type != "uri"' [routerLink]="['/phenomenon', phenomena.phenomenon.value]" >
+      (click)="onSelect(phenomena)" [hidden]='phenomena.phenomenon.type != "uri"' >
       <span class="badge">{{i+1}}</span> <span class="badge t" >{{phenomena.label[0]?.value}}</span> {{phenomena.phenomenon.value}}
     </li>
   </ul>
