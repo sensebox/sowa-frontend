@@ -1,13 +1,16 @@
 <mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
-    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{phenomenon?.labels[0].label.value}}</h4>
-    <span class="example-fill-remaining-space"></span>
-    <button class="btn btn-primary"  (click)="editButtonClick(uri)">Edit</button>
+  <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{phenomenon?.labels[0].label.value}}</h4>
+  <span class="example-fill-remaining-space"></span>
+  <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button>
 </mat-toolbar>
 <div class="content" *ngIf="phenomenon">
-<div class="article">
+  <div class="article">
     <p class="siteSub">From SOWA, the free SensorWiki</p>
-    <p class="roleNote">This article is about <b>{{phenomenon?.labels[0].label.value}}</b>. For equivalent phenomena, see <a href="/phenomenon/sameAs/{{phenomenon?.labels[0].label.value}}">{{phenomenon?.labels[0].label.value}}-Equivalents.</a></p>
-<!-- 
+    <p class="roleNote">This article is about <b>{{phenomenon?.labels[0].label.value}}</b>. For equivalent phenomena,
+      see <a
+        href="/phenomenon/sameAs/{{phenomenon?.labels[0].label.value}}">{{phenomenon?.labels[0].label.value}}-Equivalents.</a>
+    </p>
+    <!-- 
     <div class="articleRight">
       <div class="articleRightInner">
         <img src="{{image?.value[0]?.iri}}" alt="{{phenomenon?.labels[0].label.value}}" />
@@ -15,33 +18,47 @@
       The {{phenomenon?.labels[0].label.value}}
     </div> -->
     <p>{{phenomenon.description.value}}</p>
-      <div class="contentsPanel">
+    <div class="contentsPanel">
       <div class="contentsHeader">Contents</div>
       <ul>
-            <li><span>1</span><a href="/phenomenon/{{uri}}#uri">URI</a> </li>
-            <li><span>2</span><a href="/phenomenon/{{uri}}#labels">Labels</a> </li>
-            <li><span>3</span><a href="/phenomenon/{{uri}}#units">Units</a></li>
-            <li><span>4</span><a href="/phenomenon/{{uri}}#sensors">Sensors</a></li>
-            <li><span>5</span><a href="/phenomenon/{{uri}}#domains">Domains</a></li>							
+        <li><span>1</span><a href="/phenomenon/{{uri}}#uri">URI</a> </li>
+        <li><span>2</span><a href="/phenomenon/{{uri}}#labels">Labels</a> </li>
+        <li><span>3</span><a href="/phenomenon/{{uri}}#units">Units</a></li>
+        <li><span>4</span><a href="/phenomenon/{{uri}}#sensors">Sensors</a></li>
+        <li><span>5</span><a href="/phenomenon/{{uri}}#domains">Domains</a></li>
       </ul>
     </div>
     <h2 id="uri">URI</h2>
-      <p>The URI of the {{phenomenon?.labels[0].label.value}} is: </p> 
-      <b>{{phenomenon.iri.value}}</b>
+    <p>The URI of the {{phenomenon?.labels[0].label.value}} is: </p>
+    <b>{{phenomenon.iri.value}}</b>
+
     <h2 id="labels">Labels</h2>
-      <p>These are the available labels for the {{phenomenon?.labels[0].label.value}} Phenomenon:</p>
-      <ul>
-        <li *ngFor="let name of phenomenon.labels">
-            <b>{{name.label.value}}</b>
-        </li>
-      </ul>
+    <p>These are the available labels for the {{phenomenon?.labels[0].label.value}} Phenomenon:</p>
+    <ul>
+      <li *ngFor="let name of phenomenon.labels">
+        <b>{{name.label.value}}</b>
+      </li>
+    </ul>
+
     <h2 id="units">Units</h2>
     <p>The units of measurement for {{phenomenon?.labels[0].label.value}} are:</p>
-    <ul>
-        <li *ngFor="let unit of phenomenon.units">
-          {{unit.unitLabel?.value}} || <b><a href="https://bioportal.bioontology.org/ontologies/UO/?p=classes&conceptid={{unit.unit.value}}" target="_blank">{{unit.unit.value}}</a></b>  
-        </li>
-    </ul>
+    <table>
+      <thead>
+        <th class="mat-h-cell">Label</th>
+        <th class="mat-h-cell">Unit URI</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let unit of phenomenon.units">
+          <td class="mat-h-cell">
+            {{unit.unitLabel?.value}}
+          </td>
+          <td class="mat-h-cell">
+            <b><a href="https://bioportal.bioontology.org/ontologies/UO/?p=classes&conceptid={{unit.unit.value}}"
+                target="_blank">{{unit.unit.value}}</a></b>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- <h2 id="sensors">Sensors</h2>
     <p>The following sensors can measure {{phenomenon?.labels[0].label.value}}:</p>
@@ -65,34 +82,34 @@
     <h2 id="domains">Domains</h2>
     <p>{{phenomenon?.labels[0].label.value}} belongs to the following domains:</p>
     <table>
-        <thead>
-          <th class="mat-h-cell">Label</th>
-          <th class="mat-h-cell">Domain URI</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let domain of phenomenon.domains">
-            <td class="mat-h-cell">
-              {{domain.domainLabel.value}}
-            </td>
-            <td class="mat-h-cell">
-              <button class="btn btn-link" (click)="redirectDomain(domain.domain.value)">{{domain.domain.value}}</button>
-            </td>
-          </tr>
-        </tbody>
-        </table>
-    
+      <thead>
+        <th class="mat-h-cell">Label</th>
+        <th class="mat-h-cell">Domain URI</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let domain of phenomenon.domains">
+          <td class="mat-h-cell">
+            {{domain.domainLabel?.value}}
+          </td>
+          <td class="mat-h-cell">
+            <button class="btn btn-link" (click)="redirectDomain(domain.domain.value)">{{domain.domain.value}}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
     <div class="categories">
       <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
     </div>
-    
+
   </div>
   <div class="pagefooter">
     This page was last edited on 15.05.2019
     <div class="footerlinks">
-      <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie statement</a> <a href="#">Developers</a>
+      <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie
+        statement</a> <a href="#">Developers</a>
     </div>
 
-  
-</div>
-</div>
 
+  </div>
+</div>
