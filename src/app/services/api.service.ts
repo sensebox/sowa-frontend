@@ -106,8 +106,12 @@ export class ApiService {
     return this.http.get(this.APIURL + '/queries/phenomenonDEPRECATED/' + iri);
    }
 
-  updatePhenomenon(phenomenon){
+   updatePhenomenon(phenomenon){
     return this.http.post(this.APIURL + '/queries/phenomenon/update' , phenomenon, httpOptions);
+  }
+
+  editPhenomenon(phenomenon){
+    return this.http.post(this.APIURL + '/queries/phenomenon/edit' , phenomenon);
   }
 
   getPhenomenonForSensor(sensor){
