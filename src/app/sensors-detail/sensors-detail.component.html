@@ -1,89 +1,125 @@
-<mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
-    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{uri.labels[0]}}</h4>
-</mat-toolbar>
-<h1 class="headline-border"></h1>
-<div>
-      <div class="article">
-        <p class="siteSub">From Wikipedia, the free encyclopedia</p>
-        <p class="roleNote">This article is about the {{uri.labels[0]}}. For equivalent sensors, see <a href="/sensor/sameAs/{{uri.labels[0]}}">{{uri.labels[0]}}-Equivalents.</a></p>
+<div *ngIf="sensor != undefined">
+  <mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
+    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{sensor.labels[0].value}}</h4>
+  </mat-toolbar>
+  <h1 class="headline-border"></h1>
+  <div>
+    <div class="article">
+      <p class="siteSub">From Wikipedia, the free encyclopedia</p>
+      <p class="roleNote">This article is about the {{sensor.labels[0].value}}. For equivalent sensors, see <a
+          href="/sensor/sameAs/{{sensor.labels[0].value}}">{{sensor.labels[0].value}}-Equivalents.</a></p>
 
-        <div class="articleRight">
-          <div class="articleRightInner">
-            <img src="{{image.value[0]}}" alt="{{uri.labels[0]}}" />
-          </div>
-          The {{uri.labels[0]}}
+      <div *ngIf="sensor.image[0] != undefined" class="articleRight">
+        <div class="articleRightInner">
+          <img src="{{sensor.image[0].value}}" alt="{{sensor.labels[0].value}}" />
         </div>
-        <p>{{uri.descriptions[0]}}</p>
-          <div class="contentsPanel">
-          <div class="contentsHeader">Contents</div>
-          <ul>
-                <li><span>1</span><a href="/sensor/{{uri.short[0]}}#uri">URI</a> </li>
-                <li><span>2</span><a href="/sensor/{{uri.short[0]}}#labels">Labels</a> </li>
-                <li><span>3</span><a href="/sensor/{{uri.short[0]}}#price">Price Category</a></li>
-                <li><span>4</span><a href="/sensor/{{uri.short[0]}}#manufacturer">Manufacturer</a></li>
-                <li><span>5</span><a href="/sensor/{{uri.short[0]}}#lifeperiod">Life period</a></li>							
-                <li><span>6</span><a href="/sensor/{{uri.short[0]}}#datasheet">Data sheet</a></li>							
-                <li><span>7</span><a href="/sensor/{{uri.short[0]}}#phenomena">Measurable phenomena</a></li>	
-          </ul>
-        </div>
-        <h2 id="uri">URI</h2>
-          <p>The URI of the {{uri.labels[0]}} is: </p> 
-          <b>{{uri.iri[0]}}</b>
-        <h2 id="labels">Labels</h2>
-          <p>These are the available labels for the {{uri.labels[0]}} Sensor:</p>
-          <ul>
-            <li *ngFor="let label of uri.labels">
-                <b>{{label}}</b>
-            </li>
-          </ul>
+        The {{sensor.labels[0].value}}
+      </div>
+      <p>{{sensor.description[0].value}}</p>
+      <div class="contentsPanel">
+        <div class="contentsHeader">Contents</div>
+        <ul>
+          <li><span>1</span><a href="/sensor/{{uri}}#uri">URI</a> </li>
+          <li><span>2</span><a href="/sensor/{{uri}}#labels">Labels</a> </li>
+          <li><span>3</span><a href="/sensor/{{uri}}#price">Price Category</a></li>
+          <li><span>4</span><a href="/sensor/{{uri}}#manufacturer">Manufacturer</a></li>
+          <li><span>5</span><a href="/sensor/{{uri}}#lifeperiod">Life period</a></li>
+          <li><span>6</span><a href="/sensor/{{uri}}#datasheet">Data sheet</a></li>
+          <li><span>7</span><a href="/sensor/{{uri}}#phenomena">Measurable phenomena</a></li>
+        </ul>
+      </div>
+      <h2 id="uri">URI</h2>
+      <p>The URI of the {{sensor.labels[0].value}} is: </p>
+      <b>{{sensor.iri[0].value}}</b>
+      <h2 id="labels">Labels</h2>
+      <p>These are the available labels for the {{sensor.labels[0].value}} Sensor:</p>
+      <ul>
+        <li *ngFor="let label of sensor.labels">
+          <b>{{label.value}}</b>
+        </li>
+      </ul>
+      <div *ngIf="sensor.price[0] != undefined">
         <h2 id="price">Price Category</h2>
-        <p>The price category of the {{uri.labels[0]}} is:</p>
-          <b>{{price.value[0]}}</b>
+        <p>The price category of the {{sensor.labels[0].value}} is:</p>
+        <div [ngSwitch]="sensor.price[0].value">
+          <div *ngSwitchCase="1">
+            <b>
+              €
+            </b>
+          </div>
+          <div *ngSwitchCase="2">
+            <b>
+              €€
+            </b>
+          </div>
+          <div *ngSwitchCase="3">
+            <b>
+              €€€
+            </b>
+          </div>
+          <div *ngSwitchDefault>
+            The price category of this sensor is currently unknown.
+          </div>
+        </div>
+      </div>
 
+      <div *ngIf="sensor.manufacturer[0] != undefined">
         <h2 id="manufacturer">Manufacturer</h2>
-        <p>The manufacturer of the {{uri.labels[0]}} is:</p>
-          <b>{{manufacturer.value[0]}}</b>
+        <p>The manufacturer of the {{sensor.labels[0].value}} is:</p>
+        <b>{{sensor.manufacturer[0].value}}</b>
+      </div>
 
+      <div *ngIf="sensor.lifeperiod[0] != undefined">
         <h2 id="lifeperiod">Life period</h2>
-        <p>The life period of the {{uri.labels[0]}} is:</p>
-          <b>{{lifeperiod.value[0]}}</b>
+        <p>The life period of the {{sensor.labels[0].value}} is:</p>
+        <b>{{sensor.lifeperiod[0].value}}</b>
+      </div>
 
+      <div *ngIf="sensor.datasheet[0] != undefined">
         <h2 id="datasheet">Datasheet</h2>
-        <p>The datasheet of the {{uri.labels[0]}} is:</p>
-          <b><a href="{{datasheet.value[0]}}" target="_blank">{{datasheet.value[0]}}</a></b>
+        <p>The datasheet of the {{sensor.labels[0].value}} is:</p>
+        <b><a href="{{sensor.datasheet[0].value}}" target="_blank">{{sensor.datasheet[0].value}}</a></b>
+      </div>
 
-
+      <div *ngIf="sensor.sensorElements[0] != undefined">
         <h2 id="phenomena">Measurable Phenomena</h2>
-        <p>These are the phenomena that can be measured using the {{uri.labels[0]}} Sensor:</p>
+        <p>These are the phenomena that can be measured using the {{sensor.labels[0].value}} Sensor:</p>
         <table>
           <thead>
             <th class="mat-h-cell">Phenomenon URI</th>
             <th class="mat-h-cell">Unit</th>
+            <th class="mat-h-cell">Accuracy</th>
           </thead>
           <tbody>
-            <tr *ngFor="let phenomenon of phenomena">
+            <tr *ngFor="let selem of sensor.sensorElements">
               <td class="mat-h-cell">
-                  <a href="/phenomenon/{{phenomenon.short}}">{{phenomenon.uri}}</a>
+                <button class="btn btn-link"
+                  (click)="redirectDomain(selem.phenomena.value, '/phenomenon/')">{{selem.phenomena.value}}</button>
               </td>
               <td class="mat-h-cell">
-                 {{phenomenon.unit}}
+                {{selem.unit.value}}
+              </td>
+              <td class="mat-h-cell">
+                &plusmn; {{selem.accVal.value}}
               </td>
             </tr>
           </tbody>
-          </table>
-        
-        <div class="categories">
-          <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
-        </div>
-        
+        </table>
       </div>
-      <div class="pagefooter">
-        This page was last edited on 15.05.2019
-        <div class="footerlinks">
-          <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie statement</a> <a href="#">Developers</a>
-        </div>
-    
-    	
+
+      <div class="categories">
+        <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
+      </div>
+
+    </div>
+    <div class="pagefooter">
+      This page was last edited on 15.05.2019
+      <div class="footerlinks">
+        <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie
+          statement</a> <a href="#">Developers</a>
+      </div>
+
+
+    </div>
   </div>
 </div>
-

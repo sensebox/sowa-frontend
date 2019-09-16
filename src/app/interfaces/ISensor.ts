@@ -35,6 +35,19 @@ export class ISensor {
         type: string,
         value: string
     };
-
+    constructor(sensorResponse: any) {
+        // console.log(sensorResponse);
+        this.labels = sensorResponse.labels;
+        this.description = sensorResponse.description;
+        this.iri = sensorResponse.iri;
+        this.sensorElements = sensorResponse.sensorElements;    
+        this.devices = sensorResponse.devices;
+        this.sensorElements = sensorResponse.sensorElements;    
+        this.manufacturer = sensorResponse.manufacturer;    
+        this.price = sensorResponse.price;    
+        this.datasheet = sensorResponse.datasheet;    
+        this.lifeperiod = sensorResponse.lifeperiod;    
+        this.image = sensorResponse.image;    
+    }
 
 }
