@@ -4,7 +4,7 @@ import { CustomValidators } from '../shared/custom.validators';
 import { ActivatedRoute } from '@angular/router';
 import { Phenomenon } from '../phenomenon';
 import { ApiService } from '../services/api.service'
-import { ISensors } from '../interfaces/ISensor';
+import { ISensors } from '../interfaces/ISensors';
 import { IDomain } from '../interfaces/IDomain';
 import { IUnit } from '../interfaces/IUnit';
 import { IIri } from '../interfaces/IIri';

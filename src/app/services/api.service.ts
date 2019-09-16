@@ -124,8 +124,10 @@ export class ApiService {
   }
 
   getSensor(iri) {
-    return this.http.get(this.APIURL + '/queries/sensor/' + iri);
-   }
+    var x = this.http.get(this.APIURL + '/queries/sensor/' + iri);
+    console.log(x);
+    return x;
+  }
 
    getSensorIRI(iri) {
     return this.http.get(this.APIURL + '/queries/sensorIRI/' + iri);
