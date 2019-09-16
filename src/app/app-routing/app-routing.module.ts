@@ -103,7 +103,7 @@ const routes: Routes = [
     component: FormTemplateComponent},
   {
     path: 'phenomenonform',
-    component: FormPhenomenonComponent},
+    component: PhenomenaEditComponent},
   {
     path: 'sensorform',
     component: FormSensorComponent},

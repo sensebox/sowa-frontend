@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <!-- LABEL/NAME -->
+      <!-- LABEL/NAME
       <div class="form-group" [ngClass]="{'has-error' : formErrors.name}">
         <label class="col-sm-2 control-label" for="name">Name</label>
         <div class="col-sm-8">
@@ -29,6 +29,60 @@
           <span class="help-block" *ngIf="formErrors.name">
             {{formErrors.name}}
           </span>
+        </div>
+      </div> -->
+
+      <!-- LABELS -->
+      <div>
+
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="btn btn-primary" (click)="addLabelButtonClick()"
+              [disabled]="phenomenonForm.get('label').invalid">Add label</button>
+          </div>
+        </div>
+
+        <div formArrayName="label" *ngFor="let dom of phenomenonForm.get('label').controls; let i = index">
+          <hr *ngIf="i>0">
+          <div class="well" [formGroupName]="i">
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('value').invalid &&
+                                                              dom.get('value').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'value' + i">
+                Label
+              </label>
+              <div class="col-sm-4">
+                <input type="text" [id]="'value' + i" placeholder="Label" formControlName="value"
+                  class="form-control">
+                <span class="help-block" *ngIf="dom.get('value').errors?.required && 
+                                                dom.get('value').touched ">
+                  Label is required
+                </span>
+              </div>
+              <div class="col-sm-6">
+                <button *ngIf="phenomenonForm.get('label').length>1" class="btn btn-danger btn-sm pull-right"
+                  title="Delete label" (click)="removelabelButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('lang').invalid &&
+                                                              dom.get('lang').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'lang' + i">
+                Language
+              </label>
+              <div class="col-sm-4">
+                <input type="text" [id]="'lang' + i" placeholder="Language of Label" formControlName="lang"
+                  class="form-control">
+                <span class="help-block" *ngIf="dom.get('lang').errors?.required && 
+                                                dom.get('lang').touched ">
+                  Language is required
+                </span>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 

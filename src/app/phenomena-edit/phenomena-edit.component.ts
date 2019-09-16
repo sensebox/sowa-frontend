@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray, Form } from '@angular/forms';
 import { CustomValidators } from '../shared/custom.validators';
 import { ActivatedRoute } from '@angular/router';
 import { Phenomenon } from '../phenomenon';
 import { ApiService } from '../services/api.service'
-import { ISensor } from '../interfaces/ISensor';
+import { ISensors } from '../interfaces/ISensor';
 import { IDomain } from '../interfaces/IDomain';
 import { IUnit } from '../interfaces/IUnit';
+import { IIri } from '../interfaces/IIri';
 
 @Component({
   selector: 'senph-phenomena-edit',
@@ -20,7 +21,7 @@ export class PhenomenaEditComponent implements OnInit {
       'required': 'URI is required.',
       'uriSyntax': 'No white spaces allowed in URI.'
     },
-    'name': {
+    'label': {
       'required': 'URI is required.'
     },
     'description': {
@@ -30,7 +31,7 @@ export class PhenomenaEditComponent implements OnInit {
 
   formErrors = {
     // 'uri': '',
-    // 'name': '',
+    // 'label': '',
     // 'description': '',
     // 'website': '',
     // 'image': '',
@@ -46,7 +47,10 @@ export class PhenomenaEditComponent implements OnInit {
   ngOnInit() {
     this.phenomenonForm = this.fb.group({
       uri: ['', [Validators.required, CustomValidators.uriSyntax]],
-      name: ['', [Validators.required]],
+      label: this.fb.array([
+        this.addLabelFormGroup()
+      ]),
+      //['', [Validators.required]],
       description: ['', [Validators.required]],
       domain: this.fb.array([
         this.addDomainFormGroup()
@@ -80,6 +84,10 @@ export class PhenomenaEditComponent implements OnInit {
 
   addUnitButtonClick(): void {
     (<FormArray>this.phenomenonForm.get('unit')).push(this.addUnitFormGroup());
+  }
+  
+  addLabelButtonClick(): void {
+    (<FormArray>this.phenomenonForm.get('label')).push(this.addLabelFormGroup());
   }
 
   logValidationErrors(group: FormGroup = this.phenomenonForm): void {
@@ -130,6 +138,15 @@ export class PhenomenaEditComponent implements OnInit {
       new FormControl('unitUri', Validators.required),
       new FormControl('unitLabel', Validators.required),
     ]);
+    const formGroupLabel = this.fb.group([
+      new FormControl('value', Validators.required),
+      new FormControl('lang', Validators.required),
+    ]);
+
+    const formArrayLabel = this.fb.array([
+      new FormControl('value', Validators.required),
+      new FormControl('lang', Validators.required),
+    ]);
 
     console.log(formArrayDomain);
     console.log(formGroupDomain);
@@ -139,7 +156,7 @@ export class PhenomenaEditComponent implements OnInit {
 
   onSubmit() {
     console.log(this.phenomenonForm.value);
-    // this.api.editPhenomenon(this.phenomenonForm.value).subscribe(res => {console.log(res)});
+    this.api.editPhenomenon(this.phenomenonForm.value).subscribe(res => {console.log(res)});
     // this.diagnostic(this.phenomenonForm);
   }
 
@@ -157,6 +174,13 @@ export class PhenomenaEditComponent implements OnInit {
     });
   }
 
+  addLabelFormGroup(): FormGroup {
+    return this.fb.group({
+      value: ['', [Validators.required]],
+      lang: ['', [Validators.required]]
+    });
+  }
+
 
   removeDomainButtonClick(skillGroupIndex: number): void {
     (<FormArray>this.phenomenonForm.get('domain')).removeAt(skillGroupIndex);
@@ -164,6 +188,10 @@ export class PhenomenaEditComponent implements OnInit {
 
   removeUnitButtonClick(skillGroupIndex: number): void {
     (<FormArray>this.phenomenonForm.get('unit')).removeAt(skillGroupIndex);
+  }
+
+  removeLabelButtonClick(skillGroupIndex: number): void {
+    (<FormArray>this.phenomenonForm.get('label')).removeAt(skillGroupIndex);
   }
 
   getPhenomenon(shortUri) {
@@ -177,9 +205,10 @@ export class PhenomenaEditComponent implements OnInit {
     console.log(phenomenon);
     this.phenomenonForm.patchValue({
       uri: phenomenon.iri.value.slice(34),
-      name: phenomenon.labels[0].label.value,
+      // label: phenomenon.labels[0].label.value,
       description: phenomenon.description.value
     });
+    this.phenomenonForm.setControl('label', this.setExistingLabels(phenomenon.labels))
 
     this.phenomenonForm.setControl('domain', this.setExistingDomains(phenomenon.domains))
 
@@ -200,10 +229,26 @@ export class PhenomenaEditComponent implements OnInit {
 
   setExistingUnits(unitSet: IUnit[]): FormArray {
     const formArray = new FormArray([]);
+    console.log(unitSet);
+
     unitSet.forEach(s => {
       formArray.push(this.fb.group({
         unitUri: s.unit.value,
         unitLabel: s.unitLabel.value
+      }));
+    });
+
+    return formArray;
+  }
+
+  setExistingLabels(labelSet: IIri[]): FormArray {
+    const formArray = new FormArray([]);
+    console.log(labelSet);
+    labelSet.forEach(s => {
+      formArray.push(this.fb.group({
+        type: s.label.type,
+        value: s.label.value,
+        lang: s.label["xml:lang"]
       }));
     });
 

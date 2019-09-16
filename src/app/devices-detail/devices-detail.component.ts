@@ -4,7 +4,7 @@ import { ApiService } from '../services/api.service';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IDevice } from '../interfaces/IDevice';
-import { ISensor } from '../interfaces/ISensor';
+import { ISensors } from '../interfaces/ISensors';
 
 @Component({
   selector: 'senph-devices-detail',

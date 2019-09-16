@@ -4,7 +4,7 @@ import { CustomValidators } from '../shared/custom.validators';
 import { ActivatedRoute } from '@angular/router';
 import { Device } from '../phenomenon';
 import { ApiService } from '../services/api.service'
-import { ISensor } from '../interfaces/ISensor';
+import { ISensors } from '../interfaces/ISensors';
 
 
 @Component({
@@ -186,7 +186,7 @@ export class DevicesFormComponent implements OnInit {
     this.deviceForm.setControl('sensor', this.setExistingSensors(device.sensors))
   }
 
-    setExistingSensors(sensorSet: ISensor[]): FormArray{
+    setExistingSensors(sensorSet: ISensors[]): FormArray{
       const formArray = new FormArray([]);
       sensorSet.forEach(s => {
         formArray.push(this.fb.group({
