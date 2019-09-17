@@ -18,6 +18,7 @@ import { FormPhenomenonComponent } from '../form-phenomenon/form-phenomenon.comp
 import { FormSensorComponent } from '../form-sensor/form-sensor.component';
 import { FormDomainComponent } from '../form-domain/form-domain.component';
 import { PhenomenaEditComponent } from '../phenomena-edit/phenomena-edit.component';
+import { SensorEditComponent } from '../sensor-edit/sensor-edit.component';
 
 const routes: Routes = [
   {
@@ -25,8 +26,9 @@ const routes: Routes = [
     component: LandingpageComponent
   },
   {
-    path: 'phenomena', 
-    component: PhenomenaComponent},
+    path: 'phenomena',
+    component: PhenomenaComponent
+  },
   {
     path: 'phenomenon',
     children: [
@@ -34,12 +36,13 @@ const routes: Routes = [
         path: '',
         children: [
           { path: ':iri', component: PhenomenaDetailComponent },
-          { path: 'edit',
+          {
+            path: 'edit',
             children: [
-              { 
+              {
                 path: '',
                 children: [
-                  { path: ':id', component: PhenomenaEditComponent } 
+                  { path: ':id', component: PhenomenaEditComponent }
                 ]
               }
             ]
@@ -53,16 +56,37 @@ const routes: Routes = [
   //   component: PhenomenaFormComponent},
   {
     path: 'sensors',
-    component: SensorsComponent},
+    component: SensorsComponent
+  },
   {
-    path: 'sensor/:iri',
-    component: SensorsDetailComponent},
+    path: 'sensor',
+    children: [
+      {
+        path: '',
+        children: [
+          { path: ':iri', component: SensorsDetailComponent },
+          {
+            path: 'edit',
+            children: [
+              {
+                path: '',
+                children: [
+                  { path: ':id', component: SensorEditComponent }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
   // {
   //   path: 'sensorupdate/:iri',
   //   component: SensorsFormComponent},
   {
     path: 'devices',
-    component: DevicesComponent},
+    component: DevicesComponent
+  },
   // {
   //   path: 'device/:iri', 
   //   component: DevicesDetailComponent},
@@ -74,12 +98,13 @@ const routes: Routes = [
         path: '',
         children: [
           { path: ':iri', component: DevicesDetailComponent },
-          { path: 'edit',
+          {
+            path: 'edit',
             children: [
-              { 
+              {
                 path: '',
                 children: [
-                  { path: ':id', component: DevicesFormComponent } 
+                  { path: ':id', component: DevicesFormComponent }
                 ]
               }
             ]
@@ -90,36 +115,43 @@ const routes: Routes = [
   },
 
   {
-    path: 'deviceupdate', 
-    component: DevicesFormComponent},
+    path: 'deviceupdate',
+    component: DevicesFormComponent
+  },
   {
     path: 'domains',
-    component: DomainsComponent},
+    component: DomainsComponent
+  },
   {
-    path: 'domain/:iri', 
-    component: DomainsDetailComponent},
+    path: 'domain/:iri',
+    component: DomainsDetailComponent
+  },
   {
     path: 'form',
-    component: FormTemplateComponent},
+    component: FormTemplateComponent
+  },
   {
     path: 'phenomenonform',
-    component: PhenomenaEditComponent},
+    component: PhenomenaEditComponent
+  },
   {
     path: 'sensorform',
-    component: FormSensorComponent},
+    component: FormSensorComponent
+  },
   {
     path: 'domainform',
-    component: FormDomainComponent}  
+    component: FormDomainComponent
+  }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-     RouterModule.forRoot(routes, {
-       scrollPositionRestoration: 'enabled',
-       anchorScrolling: 'enabled'
-     }) ],
-  exports: [ RouterModule ],
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      anchorScrolling: 'enabled'
+    })],
+  exports: [RouterModule],
   declarations: []
 })
 export class AppRoutingModule { }
