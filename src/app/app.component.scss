@@ -1,13 +1,45 @@
 h1.example-app-name {
-    margin-left: 8px;
-    }
+  margin-left: 8px;
+}
 
-    .example-is-mobile .example-toolbar {
-        position: fixed;
-        /* Make sure the toolbar will stay on top of the content as it scrolls past. */
-        z-index: 2;
-    }
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
 
-    .content {
-        margin: 0 20px;
-      }
+.content {
+  margin: 0 20px;
+}
+
+.btn-senph {
+  background-image: none;
+  background-color: #ffd63e !important;
+  color: rgb(68, 68, 68);
+  border-color: rgb(68, 68, 68);
+}
+
+.btn-senph:disabled {
+  background-color: #ffd53e77 !important;
+  color: rgb(122, 122, 122);
+}
+
+.link-senph {
+  color: #5d4901 !important;
+}
+
+.title-center {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+// Footer style
+.pagefooter {
+  padding: 1.5em 1.3em 2em;
+  font-size: 75%;
+  line-height: 2em;
+}
+.pagefooter a {
+  display: inline-block;
+  margin-right: 1em;
+}
