@@ -29,6 +29,10 @@ import { FormPhenomenonComponent } from './form-phenomenon/form-phenomenon.compo
 import { environment } from '../environments/environment';
 import { FormDomainComponent } from './form-domain/form-domain.component';
 import { PhenomenaEditComponent } from './phenomena-edit/phenomena-edit.component';
+import { SensorEditComponent } from './sensor-edit/sensor-edit.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { HeroBannerComponent } from './hero-banner/hero-banner.component';
 
 
 
@@ -53,7 +57,11 @@ import { PhenomenaEditComponent } from './phenomena-edit/phenomena-edit.componen
     FormSensorComponent,
     FormPhenomenonComponent,
     FormDomainComponent,
-    PhenomenaEditComponent
+    PhenomenaEditComponent,
+    SensorEditComponent,
+    FooterComponent,
+    HeaderComponent,
+    HeroBannerComponent
   ],
   imports: [
     BrowserModule,
