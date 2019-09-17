@@ -1,5 +1,5 @@
 import { IIri } from "./IIri";
-import { IElements } from "../devices-detail/IElements";
+import { IElements } from "./IElements";
 import { IDevices } from "./IDevices";
 
 export class ISensor {
