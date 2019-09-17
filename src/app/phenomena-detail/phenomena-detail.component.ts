@@ -9,7 +9,6 @@ import { IPhenomenon } from '../interfaces/IPhenomenon';
   styleUrls: ['./phenomena-detail.component.scss', '../app.component.scss']
 })
 export class PhenomenaDetailComponent implements OnInit {
-
   phenomenon: IPhenomenon;
   uri;
 

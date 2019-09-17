@@ -1,8 +1,11 @@
-<mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
+<!-- <mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
   <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{phenomenon?.labels[0].label.value}}</h4>
   <span class="example-fill-remaining-space"></span>
   <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button>
-</mat-toolbar>
+</mat-toolbar> -->
+<senph-hero-banner [title]="phenomenon?.labels[0].label.value" > <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button> </senph-hero-banner>
+
+
 <div class="content" *ngIf="phenomenon">
   <div class="article">
     <p class="siteSub">From SOWA, the free SensorWiki</p>
