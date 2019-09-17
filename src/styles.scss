@@ -4,9 +4,19 @@
 @import '~@angular/material/theming';
 @include mat-core();
 // $my-app-primary: mat-palette(#ffd63f);
+@font-face {
+	font-family: BrixSlab-Bold;
+	src: url(assets/font/BrixSlab-Bold.otf) format("opentype");
+}
+@font-face {
+	font-family: BrixSlab;
+	src: url(assets/font/BrixSlab-Regular.otf) format("opentype");
+}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .headline-border {
 	border-bottom: 1px solid rgba(0,0,0,.12);
 }
+
+@import url('https://use.fontawesome.com/releases/v5.10.1/css/all.css');

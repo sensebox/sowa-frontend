@@ -143,6 +143,7 @@ export class ApiService {
 return this.http.get(this.APIURL + '/queries/sensor/' + iri).pipe(
   map((res: Array<any>) => {
     res.forEach((element: any) => {
+      console.log(element);
       var key = Object.getOwnPropertyNames(element)[0];
       if (key != undefined && I2Sensor[key] != undefined) {
         I2Sensor[key].push(element[key]);
