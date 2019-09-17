@@ -1,0 +1,258 @@
+<form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="sensorForm">
+  <div class="panel panel-default">
+    <div class="panel-heading text-center">
+      <h3 class="panel-title">
+        EDIT SENSOR
+      </h3>
+      <p>Add or change information of an existing instance of a sensor.</p>
+    </div>
+
+    <div class="panel-body">
+
+      <!-- URI -->
+      <div class="well well2">
+        <div class="form-group row" [ngClass]="{'has-error' : formErrors.uri}">
+          <label class="col-sm-2 control-label" for="uri">URI</label>
+          <div class="col-sm-4">
+            <input class="form-control" value="http://www.opensensemap.org/SENPH#" readonly>
+          </div>
+          <div class="col-sm-4">
+            <input type="text" id="uri" formControlName="uri" class="form-control" (blur)="logValidationErrors()">
+            <span class="help-block" *ngIf="formErrors.uri">
+              {{formErrors.uri}}
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-8">
+            <span class="help-block">The Uniform Resource Identifier (URI) of a sensor is meant to uniquely identify
+              it among other sensors. For all sensors that entered in this Wiki it starts with
+              'http://www.opensensemap.org/SENPH#' followed by an unique extension. Once the URI is set it should not
+              be changed.</span>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- LABELS -->
+      <div class="well">
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="btn btn-primary btn-senph" (click)="addLabelButtonClick()"
+              [disabled]="sensorForm.get('labels').invalid">Add label</button>
+          </div>
+        </div>
+
+        <div formArrayName="labels" *ngFor="let dom of sensorForm.get('labels').controls; let i = index">
+          <hr *ngIf="i>0">
+          <div class="well well2" [formGroupName]="i">
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('value').invalid &&
+                                                              dom.get('value').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'value' + i">
+                Label
+              </label>
+              <div class="col-sm-8">
+                <input type="text" [id]="'value' + i" placeholder="Label" formControlName="value" class="form-control">
+                <span class="help-block" *ngIf="dom.get('value').errors?.required && 
+                                                dom.get('value').touched ">
+                  Label is required
+                </span>
+              </div>
+              <div class="col-sm-2">
+                <button *ngIf="sensorForm.get('labels').length>1" class="btn btn-danger btn-sm pull-right"
+                  title="Delete label" (click)="removeLabelButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('lang').invalid &&
+                                                              dom.get('lang').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'lang' + i">
+                Language
+              </label>
+              <div class="col-sm-8">
+                <input type="text" [id]="'lang' + i" placeholder="Language of Label" formControlName="lang"
+                  class="form-control">
+                <span class="help-block" *ngIf="dom.get('lang').errors?.required && 
+                                                dom.get('lang').touched ">
+                  Language is required
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.description}">
+        <label class="col-sm-2 control-label" for="description">Description</label>
+        <div class="col-sm-8">
+          <textarea id="description" formControlName="description" class="form-control" rows="5"
+            (blur)="logValidationErrors()"></textarea>
+          <span class="help-block">Please enter a short description of the sensor and its capabilities.</span>
+          <span class="help-block" *ngIf="formErrors.description">
+            {{formErrors.description}}
+          </span>
+        </div>
+      </div>
+
+
+      <!-- sensorElements -->
+      <div class="well">
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="btn btn-primary btn-senph" (click)="addSensorElementButtonClick()"
+              [disabled]="sensorForm.get('sensorElements').invalid">Add sensorElement</button>
+          </div>
+        </div>
+
+        <div formArrayName="sensorElements"
+          *ngFor="let dom of sensorForm.get('sensorElements').controls; let i = index">
+          <hr *ngIf="i>0">
+          <div class="well well2" [formGroupName]="i">
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('phenomenonUri').invalid &&
+                                                              dom.get('phenomenonUri').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'phenomenonUri' + i">
+                Phenomenon URI
+              </label>
+              <div class="col-sm-8">
+                <input type="text" [id]="'phenomenonUri' + i" placeholder="sensorElementName"
+                  formControlName="phenomenonUri" class="form-control">
+                <span class="help-block" *ngIf="dom.get('phenomenonUri').errors?.required && 
+                                                dom.get('phenomenonUri').touched ">
+                  Phenomenon URI is required
+                </span>
+              </div>
+              <div class="col-sm-2">
+                <button *ngIf="sensorForm.get('sensorElements').length>1" class="btn btn-danger btn-sm pull-right"
+                  title="Delete sensorElement" (click)="removeSensorElementButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('unitOfAccuracy').invalid &&
+                                                              dom.get('unitOfAccuracy').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'unitOfAccuracy' + i">
+                Unit of accuracy
+              </label>
+              <div class="col-sm-8">
+                <input type="text" [id]="'unitOfAccuracy' + i" placeholder="unitOfAccuracy"
+                  formControlName="unitOfAccuracy" class="form-control">
+                <span class="help-block" *ngIf="dom.get('unitOfAccuracy').errors?.required && 
+                                                dom.get('unitOfAccuracy').touched ">
+                  Unit of accuracy is required
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('accuracyValue').invalid &&
+            dom.get('accuracyValue').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'accuracyValue' + i">
+                Value of accuracy
+              </label>
+              <div class="col-sm-8">
+                <input type="text" [id]="'accuracyValue' + i" placeholder="accuracyValue"
+                  formControlName="accuracyValue" class="form-control">
+                <span class="help-block"
+                  *ngIf="dom.get('accuracyValue').errors?.required && dom.get('accuracyValue').touched ">
+                  Value of accuracy is required
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- DEVICES -->
+      <div class="well">
+
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="btn btn-primary btn-senph" (click)="addDeviceButtonClick()"
+              [disabled]="sensorForm.get('devices').invalid">Add device</button>
+          </div>
+        </div>
+
+        <div formArrayName="devices" *ngFor="let uni of sensorForm.get('devices').controls; let i = index">
+          <hr *ngIf="i>0">
+          <div class="well well2" [formGroupName]="i">
+
+            <div class="form-group" [ngClass]="{'has-error' : uni.get('deviceUri').invalid &&
+                                                              uni.get('deviceUri').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'deviceUri' + i">
+                device URI
+              </label>
+              <div class="col-sm-8">
+                <input type="text" [id]="'deviceUri' + i" placeholder="UO device Identifier" formControlName="deviceUri"
+                  class="form-control">
+                <span class="help-block" *ngIf="uni.get('deviceUri').errors?.required && 
+                                                uni.get('deviceUri').touched ">
+                  device URI is required
+                </span>
+              </div>
+              <div class="col-sm-2">
+                <button *ngIf="sensorForm.get('devices').length>1" class="btn btn-danger btn-sm pull-right"
+                  title="Delete device" (click)="removeDeviceButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- manufacturer -->
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="manufacturer">manufacturer</label>
+        <div class="col-sm-8">
+          <input type="text" id="manufacturer" formControlName="manufacturer" class="form-control">
+        </div>
+      </div>
+      <!-- price -->
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="price">price</label>
+        <div class="col-sm-8">
+          <input type="text" id="price" formControlName="price" class="form-control">
+        </div>
+      </div>
+      <!-- datasheet -->
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="datasheet">datasheet</label>
+        <div class="col-sm-8">
+          <input type="text" id="datasheet" formControlName="datasheet" class="form-control">
+        </div>
+      </div>
+      <!-- lifeperiod -->
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="lifeperiod">lifeperiod</label>
+        <div class="col-sm-8">
+          <input type="text" id="lifeperiod" formControlName="lifeperiod" class="form-control">
+        </div>
+      </div>
+      <!-- image -->
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="image">image</label>
+        <div class="col-sm-8">
+          <input type="text" id="image" formControlName="image" class="form-control">
+        </div>
+      </div>
+
+
+    </div>
+    <div class="panel-footer">
+      <div class="btn-toolbar">
+        <button class="btn btn-primary btn-senph" type="submit" [disabled]="sensorForm.invalid">Save Changes</button>
+        <button class="btn btn-primary btn-senph" type="button" (click)="onLoadButtonClick()">Load data</button>
+      </div>
+    </div>
+  </div>
+</form>

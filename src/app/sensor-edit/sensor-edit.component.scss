@@ -1,0 +1,27 @@
+.panel > .panel-heading {
+    background-image: none;
+    background-color: #ffd63e;;
+    color: rgb(68, 68, 68);
+    font-weight: bold;
+}
+
+.well2 {
+        background: rgb(255, 255, 255)!important;
+}
+
+.btn-senph {
+    background-image: none;
+    background-color: #ffd63e!important;
+    color: rgb(68, 68, 68);
+    border-color: rgb(68, 68, 68);
+}
+
+.btn-senph:disabled{
+    background-color: #ffd53e77!important;
+    color: rgb(122, 122, 122);
+
+}
+
+.panel{
+    color: rgb(68, 68, 68);
+}
