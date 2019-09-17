@@ -15,6 +15,7 @@ import { IIri } from '../interfaces/IIri';
   styleUrls: ['./phenomena-edit.component.scss']
 })
 export class PhenomenaEditComponent implements OnInit {
+  heroBannerString = "http://www.opensensemap.org/SENPH#";
   phenomenonForm: FormGroup;
   validationMessages = {
     'uri': {

@@ -1,13 +1,23 @@
 <section class="hero is-dark is-bold">
   <div class="hero-body">
     <div class="container">
-      <h1 class="title" style="color: #ffd63e;">
-        {{title}}
+      <div class="columns">
 
-      </h1>
-      <h2 class="subtitle" style="color: #ffd63e;">
-        {{subtitle}}
-      </h2>
+        <div class="column is-11">
+          <h1 class="title" style="color: #ffd63e;">
+            {{title}}
+
+          </h1>
+          <h2 class="subtitle" style="color: #ffd63e;">
+            {{subtitle}}
+          </h2>
+        </div>
+
+        <div class="column is-1" *ngIf="button">
+          <a class="button is-warning" (click)="buttonClick()">Edit</a>
+        </div>
+      </div>
     </div>
   </div>
+
 </section>

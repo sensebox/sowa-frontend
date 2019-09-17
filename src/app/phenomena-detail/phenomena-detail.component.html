@@ -3,7 +3,7 @@
   <span class="example-fill-remaining-space"></span>
   <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button>
 </mat-toolbar> -->
-<senph-hero-banner [title]="phenomenon?.labels[0].label.value" > <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button> </senph-hero-banner>
+<senph-hero-banner [title]="phenomenon?.labels[0].label.value"  (myEvent)="editButtonClick(uri)" [button]="true"> </senph-hero-banner>
 
 
 <div class="content" *ngIf="phenomenon">

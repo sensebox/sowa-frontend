@@ -1,10 +1,11 @@
 <form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="phenomenonForm">
   <div class="panel panel-primary">
-    <div class="panel-heading">
+    <!-- <div class="panel-heading">
       <h3 class="panel-title">
         Edit Phenomenon
       </h3>
-    </div>
+    </div> -->
+    <senph-hero-banner title="Edit Phenomenon:" [subtitle]="heroBannerString + phenomenonForm.get('uri').value"> </senph-hero-banner>
 
     <!-- URI -->
     <div class="panel-body">
