@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./phenomena.component.scss', '../app.component.scss']
 })
 export class PhenomenaComponent implements OnInit {
-
+  title = "Discover phenomena";
+  subtitle = "Here you can find a list of all phenomena that are registered in SOWA";
   phenomenaArray;
   phenomenaArrayFiltered;
   selectedPhenomenon;
