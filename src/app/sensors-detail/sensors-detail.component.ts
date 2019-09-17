@@ -11,14 +11,7 @@ import { ISensor } from '../interfaces/ISensor';
 export class SensorsDetailComponent implements OnInit {
   sensor: ISensor;
   uri;
-  // price= {value: []};
-  // manufacturer = {value: []};
-  // lifeperiod= {value: []};
-  // image = {value: []};
-  // datasheet= {value: []};
-  // phenomena = [];
-  // uri = {iri: [], labels: [], descriptions : [], short: []};
-  // max;
+
 
 
   constructor(
@@ -31,9 +24,6 @@ export class SensorsDetailComponent implements OnInit {
   this.getSensorDetails();
   }
 
-  // relativeLink(id){
-  //   console.log("/sensor/"+ this.uri.iri.slice(33) );
-  // }
 
   getSensorDetails() {
     return this.route.params.subscribe( res => {

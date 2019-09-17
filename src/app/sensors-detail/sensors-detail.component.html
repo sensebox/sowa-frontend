@@ -1,12 +1,16 @@
 <div *ngIf="sensor != undefined">
-  <mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
-    <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{sensor.labels[0].value}}</h4>
+  <mat-toolbar style="background-color: #666666c6;" class="example-toolbar">
+    <span class="title-center">
+      <h4 class="capitalize" style="color: #ffd63e; font-weight:600;">{{sensor.labels[0].value}}</h4>
+    </span>
+    <!-- <span class="example-fill-remaining-space"></span> -->
+    <button class="btn btn-primary btn-senph" (click)="editButtonClick(uri)">Edit</button>
   </mat-toolbar>
-  <h1 class="headline-border"></h1>
-  <div>
-    <div class="article">
+  <h1 class="headline-border detail-body"></h1>
+  <div class="detail-body">
+    <div class="article detail-body">
       <p class="siteSub">From Wikipedia, the free encyclopedia</p>
-      <p class="roleNote">This article is about the {{sensor.labels[0].value}}. For equivalent sensors, see <a
+      <p class="roleNote">This article is about the {{sensor.labels[0].value}}. For equivalent sensors, see <a class="link-senph"
           href="/sensor/sameAs/{{sensor.labels[0].value}}">{{sensor.labels[0].value}}-Equivalents.</a></p>
 
       <div *ngIf="sensor.image[0] != undefined" class="articleRight">
@@ -78,7 +82,7 @@
       <div *ngIf="sensor.datasheet[0] != undefined">
         <h2 id="datasheet">Datasheet</h2>
         <p>The datasheet of the {{sensor.labels[0].value}} is:</p>
-        <b><a href="{{sensor.datasheet[0].value}}" target="_blank">{{sensor.datasheet[0].value}}</a></b>
+        <b><a class="link-senph" href="{{sensor.datasheet[0].value}}" target="_blank">{{sensor.datasheet[0].value}}</a></b>
       </div>
 
       <div *ngIf="sensor.sensorElements[0] != undefined">
@@ -93,11 +97,12 @@
           <tbody>
             <tr *ngFor="let selem of sensor.sensorElements">
               <td class="mat-h-cell">
-                <button class="btn btn-link"
+                <button class="btn btn-link link-senph"
                   (click)="redirectDomain(selem.phenomena.value, '/phenomenon/')">{{selem.phenomena.value}}</button>
               </td>
               <td class="mat-h-cell">
-                {{selem.unit.value}}
+                  <a class="link-senph" href="{{selem.unit.value}}" target="_blank">{{selem.unit.value}}</a>
+                
               </td>
               <td class="mat-h-cell">
                 &plusmn; {{selem.accVal.value}}
@@ -108,18 +113,10 @@
       </div>
 
       <div class="categories">
-        <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
+        <a href="https://opensensemap.org/" target="_blank">openSenseMap </a> <a href="https://www.sensebox.de/en/" target="_blank">senseBox Project</a>
       </div>
 
     </div>
-    <div class="pagefooter">
-      This page was last edited on 15.05.2019
-      <div class="footerlinks">
-        <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie
-          statement</a> <a href="#">Developers</a>
-      </div>
 
-
-    </div>
   </div>
 </div>
