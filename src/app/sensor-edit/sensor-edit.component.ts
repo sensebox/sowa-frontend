@@ -16,6 +16,7 @@ import { IDevice } from '../interfaces/IDevice';
   styleUrls: ['./sensor-edit.component.scss']
 })
 export class SensorEditComponent implements OnInit {
+  heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
   validationMessages = {
     'uri': {
@@ -147,11 +148,7 @@ export class SensorEditComponent implements OnInit {
     console.log(formGroupDevice);
   }
 
-  onSubmit() {
-    console.log(this.sensorForm.value);
-    // this.api.editSensor(this.sensorForm.value).subscribe(res => { console.log(res) });
-    // this.diagnostic(this.sensorForm);
-  }
+
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
@@ -255,6 +252,12 @@ export class SensorEditComponent implements OnInit {
 
   check(){
     console.log(this.sensorForm.get('devices'));
+  }
+
+  onSubmit() {
+    console.log(this.sensorForm.value);
+    this.api.editSensor(this.sensorForm.value).subscribe(res => { console.log(res) });
+    // this.diagnostic(this.sensorForm);
   }
 }
 

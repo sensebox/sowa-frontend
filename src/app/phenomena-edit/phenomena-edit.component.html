@@ -12,7 +12,7 @@
       <div class="form-group row" [ngClass]="{'has-error' : formErrors.uri}">
         <label class="col-sm-2 control-label" for="uri">URI</label>
         <div class="col-sm-4">
-          <input class="form-control" value="http://www.opensensemap.org/SENPH#" readonly>
+          <input class="form-control" [value]="heroBannerString" readonly>
         </div>
         <div class="col-sm-4">
           <input type="text" id="uri" formControlName="uri" class="form-control" (blur)="logValidationErrors()">
@@ -38,7 +38,7 @@
 
         <div class="form-group">
           <div class="col-md-offset-2 col-md-4">
-            <button type="button" class="btn btn-primary" (click)="addLabelButtonClick()"
+            <button type="button" class="button is-warning is-inverted" (click)="addLabelButtonClick()"
               [disabled]="phenomenonForm.get('label').invalid">Add label</button>
           </div>
         </div>
@@ -61,8 +61,8 @@
                 </span>
               </div>
               <div class="col-sm-6">
-                <button *ngIf="phenomenonForm.get('label').length>1" class="btn btn-danger btn-sm pull-right"
-                  title="Delete label" (click)="removelabelButtonClick(i)">
+                <button *ngIf="phenomenonForm.get('label').length>1" class="button is-small is-danger pull-right"
+                  title="Delete label" (click)="removeLabelButtonClick(i)">
                   <span class="glyphicon glyphicon-remove"></span>
                 </button>
               </div>
@@ -105,7 +105,7 @@
 
         <div class="form-group">
           <div class="col-md-offset-2 col-md-4">
-            <button type="button" class="btn btn-primary" (click)="addDomainButtonClick()"
+            <button type="button" class="button is-warning is-inverted" (click)="addDomainButtonClick()"
               [disabled]="phenomenonForm.get('domain').invalid">Add Domain</button>
           </div>
         </div>
@@ -128,7 +128,7 @@
                 </span>
               </div>
               <div class="col-sm-6">
-                <button *ngIf="phenomenonForm.get('domain').length>1" class="btn btn-danger btn-sm pull-right"
+                <button *ngIf="phenomenonForm.get('domain').length>1" class="button is-small is-danger pull-right"
                   title="Delete domain" (click)="removeDomainButtonClick(i)">
                   <span class="glyphicon glyphicon-remove"></span>
                 </button>
@@ -160,7 +160,7 @@
 
         <div class="form-group">
           <div class="col-md-offset-2 col-md-4">
-            <button type="button" class="btn btn-primary" (click)="addUnitButtonClick()"
+            <button type="button" class="button is-warning is-inverted" (click)="addUnitButtonClick()"
               [disabled]="phenomenonForm.get('unit').invalid">Add Unit</button>
           </div>
         </div>
@@ -183,7 +183,7 @@
                 </span>
               </div>
               <div class="col-sm-6">
-                <button *ngIf="phenomenonForm.get('unit').length>1" class="btn btn-danger btn-sm pull-right"
+                <button *ngIf="phenomenonForm.get('unit').length>1" class="button is-small is-danger pull-right"
                   title="Delete Unit" (click)="removeUnitButtonClick(i)">
                   <span class="glyphicon glyphicon-remove"></span>
                 </button>
@@ -211,10 +211,8 @@
 
     </div>
     <div class="panel-footer">
-      <div class="btn-toolbar">
-        <button class="btn btn-primary" type="submit" [disabled]="phenomenonForm.invalid">Save Changes</button>
-        <button class="btn btn-primary" type="button" (click)="onLoadButtonClick()">Load data</button>
-      </div>
+        <button class="button is-success" type="submit" [disabled]="phenomenonForm.invalid">Save Changes</button>
+        <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
     </div>
   </div>
 </form>
