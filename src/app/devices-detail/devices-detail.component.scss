@@ -1,25 +1,8 @@
-.mat-cell,
-.mat-footer-cell,
-.mat-h-cell {
-    padding: 0.75rem !important;
-}
+
 .capitalize {
     text-transform: capitalize;
 }
-table {
-border-collapse: collapse;
-}
-th, td {
-border: 1px solid #ccc;
-padding: 10px;
-text-align: left;
-}
-tr:nth-child(even) {
-background-color: #eee;
-}
-tr:nth-child(odd) {
-background-color: #fff;
-}         
+        
 
 @font-face {
 // font-family: "Linux Libertine";
@@ -162,13 +145,7 @@ overflow: auto;
 optgroup {
 font-weight: bold;
 }
-table {
-border-collapse: collapse;
-border-spacing: 0;
-}
-td,th {
-padding: 0;
-}
+
 html {
 color: #222;
 font-size: 1em;
