@@ -19,6 +19,12 @@ ngOnInit() {
   this.api.getDevices().subscribe(res => {
     this.devicesArray=res;
     (err) => console.log(err);
+    this.devicesArray =  this.devicesArray.filter(function (el){
+      return el.device.type != 'bnode'
+    })
+    // console.log(this.devicesArray);
+    this.devicesArray.sort((a,b) => a.label[0].value.localeCompare(b.label[0].value));
+
     console.dir(res);
     this.assignCopy();
   });

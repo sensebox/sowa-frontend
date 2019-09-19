@@ -1,19 +1,48 @@
-<mat-toolbar style="background-color: #0000006b;" class="example-toolbar">
-    <h1 class="example-app-name capitalize" style="color: #ffd63e;">Domain List</h1>
-</mat-toolbar>
-<h1 class="headline-border"></h1>
-<div class="content">
+<senph-hero-banner title="Discover doamins"
+  subtitle="Here you can find a list of all domains that are registered in SOWA"></senph-hero-banner>
 
-<input matInput #myInput placeholder="Type to filter phenomena..." [(ngModel)]="domain" (input)="filterItem(myInput.value)">
+<div class="container">
+  <div class="notification">
 
-<ul class="heroes">
-    <li>
-    <span class="badge">No.</span> <span class="badge t">Label</span> URI </li>
-    <li *ngFor="let domain of domainsArrayFiltered;let i = index"
-      [class.selected]="domain === selectedDomain"
-      (click)="onSelect(domain)" [hidden]='domain.domain.type != "uri"' [routerLink]="createRoute(i)" >
-      <span class="badge">{{i+1}}</span> <span class="badge t" >{{domain.label[0]?.value}}</span> {{domain.domain.value}}
-    </li>
-  </ul>
 
+    <div class="field is-grouped">
+      <p class="control is-expanded">
+        <input class="input" type="text" #myInput placeholder="Type to filter domains..." [(ngModel)]="domain">
+      </p>
+      <p class="control">
+        <a (click)="filterItem(myInput.value)" class="button is-info">
+          Search
+        </a>
+      </p>
+    </div>
+
+    <table class="table is-hoverable is-striped">
+      <thead>
+        <tr>
+          <th><abbr title="Number">No.</abbr></th>
+          <th>Label</th>
+          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th><abbr title="Number">No.</abbr></th>
+          <th>Label</th>
+          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr *ngFor="let domain of domainsArrayFiltered;let i = index" [hidden]='domain.domain.type != "uri"'
+          [class.selected]="domain === selectedDomain">
+          <th>{{i+1}}</th>
+          <td>
+            <a (click)="onSelect(domain)" class="button"
+              title="{{domain.label[0]?.value}}">{{domain.label[0]?.value}}</a>
+          </td>
+          <td>{{domain.domain.value}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 </div>

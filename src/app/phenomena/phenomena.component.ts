@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./phenomena.component.scss', '../app.component.scss']
 })
 export class PhenomenaComponent implements OnInit {
-  title = "Discover phenomena";
-  subtitle = "Here you can find a list of all phenomena that are registered in SOWA";
+
   phenomenaArray;
   phenomenaArrayFiltered;
   selectedPhenomenon;
@@ -22,7 +21,14 @@ export class PhenomenaComponent implements OnInit {
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
       this.phenomenaArray=res;
-      console.log(res);
+      // console.log(res);
+      this.phenomenaArray =  this.phenomenaArray.filter(function (el){
+        return el.phenomenon.type != 'bnode'
+      })
+      // console.log(this.phenomenaArray);
+      this.phenomenaArray.sort((a,b) => a.label[0].value.localeCompare(b.label[0].value));
+
+      console.log(this.phenomenaArray);
       this.assignCopy();
     });
   }

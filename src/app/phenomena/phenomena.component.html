@@ -1,4 +1,5 @@
-<senph-hero-banner [title]="title" [subtitle]="subtitle"></senph-hero-banner>
+<senph-hero-banner title="Discover phenomena"
+  subtitle="Here you can find a list of all phenomena that are registered in SOWA"></senph-hero-banner>
 
 <div class="container">
   <div class="notification">
@@ -15,22 +16,7 @@
       </p>
     </div>
 
-    <!-- <input matInput #myInput placeholder="Type to filter phenomena..." [(ngModel)]="phenomena"
-              (input)="filterItem(myInput.value)"> -->
-
-
-    <!-- <ul class="heroes">
-      <li>
-        <span class="badge">No.</span> <span class="badge t">Label</span> URI </li>
-      <li *ngFor="let phenomena of phenomenaArrayFiltered;let i = index"
-        [class.selected]="phenomena === selectedPhenomenon" (click)="onSelect(phenomena)"
-        [hidden]='phenomena.phenomenon.type != "uri"'>
-        <span class="badge">{{i+1}}</span> <span class="badge t">{{phenomena.label[0]?.value}}</span>
-        {{phenomena.phenomenon.value}}
-      </li>
-    </ul> -->
-
-    <table class="table">
+    <table class="table is-hoverable is-striped">
       <thead>
         <tr>
           <th><abbr title="Number">No.</abbr></th>

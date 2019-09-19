@@ -18,6 +18,12 @@ export class DomainsComponent implements OnInit {
   ngOnInit() {
     this.api.getDomains().subscribe(res => {
       this.domainsArray=res;
+      this.domainsArray =  this.domainsArray.filter(function (el){
+        return el.domain.type != 'bnode'
+      })
+      // console.log(this.domainsArray);
+      this.domainsArray.sort((a,b) => a.label[0].value.localeCompare(b.label[0].value));
+
       console.dir(res);
       this.assignCopy();
     });
