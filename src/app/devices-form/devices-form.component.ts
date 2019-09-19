@@ -13,6 +13,7 @@ import { ISensors } from '../interfaces/ISensors';
   styleUrls: ['./devices-form.component.scss']
 })
 export class DevicesFormComponent implements OnInit {
+  heroBannerString = "http://www.opensensemap.org/SENPH#";
   deviceForm: FormGroup;
   validationMessages = {
     'uri': {
