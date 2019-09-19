@@ -30,7 +30,7 @@ export class ApiService {
 
   /**--------------Phenomena------------------------ */
   getPhenomena() {
-    return this.http.get(this.APIURL + '/queries/phenomena');
+    return this.http.get(this.APIURL + '/phenomena/all');
   }
 
 
@@ -54,7 +54,7 @@ export class ApiService {
       label: ''
     };
 
-    return this.http.get(this.APIURL + '/queries/phenomenon/' + iri).pipe(
+    return this.http.get(this.APIURL + '/phenomena/phenomenon/' + iri).pipe(
       map((res: Array<any>) => {
         console.log(res);
         res.forEach((element: any) => {
@@ -101,19 +101,19 @@ export class ApiService {
 
 
   // getPhenomenon(iri) {
-  //   return this.http.get(this.APIURL + '/queries/phenomenon/' + iri);
+  //   return this.http.get(this.APIURL + '/phenomena/phenomenon/' + iri);
   //  }
 
   getPhenomenonDEPRECATED(iri) {
-    return this.http.get(this.APIURL + '/queries/phenomenonDEPRECATED/' + iri);
+    return this.http.get(this.APIURL + '/phenomena/phenomenonDEPRECATED/' + iri);
   }
 
   updatePhenomenon(phenomenon) {
-    return this.http.post(this.APIURL + '/queries/phenomenon/update', phenomenon, httpOptions);
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/update', phenomenon, httpOptions);
   }
 
   editPhenomenon(phenomenon) {
-    return this.http.post(this.APIURL + '/queries/phenomenon/edit', phenomenon);
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/edit', phenomenon);
   }
 
   getPhenomenonForSensor(sensor) {
@@ -122,7 +122,7 @@ export class ApiService {
 
   /**--------------Sensors------------------------ */
   getSensors() {
-    return this.http.get(this.APIURL + '/queries/sensors');
+    return this.http.get(this.APIURL + '/sensors/all');
   }
 
   getSensor(iri): Observable<any> {
@@ -140,7 +140,7 @@ export class ApiService {
   var I2Sensor = new ISensor(sensorEmpty);
 
 
-return this.http.get(this.APIURL + '/queries/sensor/' + iri).pipe(
+return this.http.get(this.APIURL + '/sensors/sensor/' + iri).pipe(
   map((res: Array<any>) => {
     res.forEach((element: any) => {
       console.log(element);
@@ -159,17 +159,20 @@ return this.http.get(this.APIURL + '/queries/sensor/' + iri).pipe(
   }
 
 getSensorIRI(iri) {
-  return this.http.get(this.APIURL + '/queries/sensorIRI/' + iri);
+  return this.http.get(this.APIURL + '/sensors/sensorIRI/' + iri);
 }
 
 updateSensor(sensor) {
-  return this.http.post(this.APIURL + '/queries/sensor/update', sensor);
+  return this.http.post(this.APIURL + '/sensors/sensor/update', sensor);
 }
 
+editSensor(sensor) {
+  return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor);
+}
 
 /**--------------Devices------------------------ */
 getDevices() {
-  return this.http.get(this.APIURL + '/queries/devices');
+  return this.http.get(this.APIURL + '/devices/all');
 }
 
 getDevice(iri): Observable < any >
@@ -192,7 +195,7 @@ getDevice(iri): Observable < any >
       label: ''
     };
 
-    return this.http.get(this.APIURL + '/queries/device/' + iri).pipe(
+    return this.http.get(this.APIURL + '/devices/device/' + iri).pipe(
       map((res: Array<any>) => {
         res.forEach((element: any) => {
           console.log(element);
@@ -254,25 +257,25 @@ getDevice(iri): Observable < any >
   }
 
 updateDevice(device) {
-  return this.http.post(this.APIURL + '/queries/device/update', device);
+  return this.http.post(this.APIURL + '/devices/device/update', device);
 }
 
 editDevice(device) {
-  return this.http.post(this.APIURL + '/queries/device/edit', device);
+  return this.http.post(this.APIURL + '/devices/device/edit', device);
 }
 
 
 /**--------------Domains------------------------ */
 getDomains() {
-  return this.http.get(this.APIURL + '/queries/domains');
+  return this.http.get(this.APIURL + '/domains/all');
 }
 
 getDomain(iri) {
-  return this.http.get(this.APIURL + '/queries/domain/' + iri);
+  return this.http.get(this.APIURL + '/domains/domain/' + iri);
 }
 
 updateDomain(domain) {
-  return this.http.post(this.APIURL + '/queries/domain/update', domain);
+  return this.http.post(this.APIURL + '/domains/domain/update', domain);
 }
 
   private handleError(errorResponse: HttpErrorResponse) {
