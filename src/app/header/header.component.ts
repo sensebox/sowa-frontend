@@ -20,11 +20,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           title: 'All Phenomena'
         },
         {
-          path: 'phenomenonform',
+          path: 'phenomenon/add',
           title: 'Add a phenomenon'
         },
         {
-          path: 'phenomenonform',
+          path: 'phenomenon/edit/:id',
           title: 'Edit a phenomenon'
         }
       ]
@@ -37,11 +37,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           title: 'All sensors'
         },
         {
-          path: 'sensorform',
+          path: 'sensor/add',
           title: 'Add a sensor'
         },
         {
-          path: 'sensorform',
+          path: 'sensor/edit/:id',
           title: 'Edit a sensor'
         }
       ]
@@ -54,11 +54,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           title: 'All devices'
         },
         {
-          path: 'deviceupdate',
+          path: 'device/add',
           title: 'Add a device'
         },
         {
-          path: 'deviceupdate',
+          path: 'device/edit/:id',
           title: 'Edit a device'
         }
       ]
@@ -71,11 +71,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
           title: 'All domains'
         },
         {
-          path: 'domainform',
+          path: 'domain/add',
           title: 'Add a domain'
         },
         {
-          path: 'domainform',
+          path: 'domain/edit/:id',
           title: 'Edit a domain'
         }
       ]

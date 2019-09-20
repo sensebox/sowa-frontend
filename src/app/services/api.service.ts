@@ -264,6 +264,10 @@ editDevice(device) {
   return this.http.post(this.APIURL + '/devices/device/edit', device);
 }
 
+addDevice(device) {
+  return this.http.post(this.APIURL + '/devices/device/add', device);
+}
+
 
 /**--------------Domains------------------------ */
 getDomains() {

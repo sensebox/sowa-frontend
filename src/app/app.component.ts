@@ -1,5 +1,5 @@
 import { Component, ViewChildren, QueryList } from '@angular/core';
-import { Filter, FiltersComponent, ActiveFilter } from './filters/filters.component';
+import { Filter, FiltersComponent, ActiveFilter } from './old-stuff/filters/filters.component';
 import { combineLatest, timer } from 'rxjs';
 import { map, switchMap, mapTo } from 'rxjs/operators';
 
