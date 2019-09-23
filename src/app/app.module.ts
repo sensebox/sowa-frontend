@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { NavComponent } from './old-stuff/nav/nav.component';
 import { LandingpageComponent } from './landingpage/landingpage.component';
@@ -72,6 +72,7 @@ import { SensorNewComponent } from './sensor/sensor-new/sensor-new.component';
     SensorNewComponent
   ],
   imports: [
+    NgbModule,
     BrowserModule,
     HttpClientModule,
     FormsModule,
