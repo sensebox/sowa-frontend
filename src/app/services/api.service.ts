@@ -116,6 +116,10 @@ export class ApiService {
     return this.http.post(this.APIURL + '/phenomena/phenomenon/edit', phenomenon);
   }
 
+  addPhenomenon(phenomenon) {
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/add', phenomenon);
+  }
+
   getPhenomenonForSensor(sensor) {
     return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, httpOptions);
   }
