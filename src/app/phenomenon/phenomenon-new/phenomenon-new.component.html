@@ -1,3 +1,240 @@
-<p>
-  phenomenon-new works!
-</p>
+<form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="phenomenonForm">
+  <div class="panel panel-primary">
+
+    <senph-hero-banner title="Edit Phenomenon:" [subtitle]="heroBannerString + phenomenonForm.get('uri').value">
+    </senph-hero-banner>
+
+    <!-- URI -->
+    <div class="panel-body">
+      <div class="form-group row" [ngClass]="{'has-error' : formErrors.uri}">
+        <label class="col-sm-2 control-label" for="uri">URI</label>
+        <div class="col-sm-4">
+          <input class="form-control" [value]="heroBannerString" readonly>
+        </div>
+        <div class="col-sm-4">
+          <input type="text" id="uri" formControlName="uri" class="form-control" (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.uri">
+            {{formErrors.uri}}
+          </span>
+        </div>
+      </div>
+
+      <!-- LABELS -->
+      <div>
+
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="button is-warning is-inverted" (click)="addLabelButtonClick()"
+              [disabled]="phenomenonForm.get('label').invalid">Add label</button>
+          </div>
+        </div>
+
+        <div formArrayName="label" *ngFor="let dom of phenomenonForm.get('label').controls; let i = index">
+          <hr *ngIf="i>0">
+          <div class="well" [formGroupName]="i">
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('value').invalid &&
+                                                                dom.get('value').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'value' + i">
+                Label
+              </label>
+              <div class="col-sm-4">
+                <input type="text" [id]="'value' + i" placeholder="Label" formControlName="value" class="form-control">
+                <span class="help-block" *ngIf="dom.get('value').errors?.required && 
+                                                  dom.get('value').touched ">
+                  Label is required
+                </span>
+              </div>
+              <div class="col-sm-6">
+                <button *ngIf="phenomenonForm.get('label').length>1" class="button is-small is-danger pull-right"
+                  title="Delete label" (click)="removeLabelButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group" [ngClass]="{'has-error' : dom.get('lang').invalid &&
+                                                                dom.get('lang').touched }">
+              <label class="col-sm-2 control-label" [attr.for]="'lang' + i">
+                Language
+              </label>
+              <div class="col-sm-4">
+                <input type="text" [id]="'lang' + i" placeholder="Language of Label" formControlName="lang"
+                  class="form-control">
+                <span class="help-block" *ngIf="dom.get('lang').errors?.required && 
+                                                  dom.get('lang').touched ">
+                  Language is required
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION -->
+      <div class="form-group" [ngClass]="{'has-error' : formErrors.description}">
+        <label class="col-sm-2 control-label" for="description">Description</label>
+        <div class="col-sm-8">
+          <input type="text" id="description" formControlName="description" class="form-control"
+            (blur)="logValidationErrors()">
+          <span class="help-block" *ngIf="formErrors.description">
+            {{formErrors.description}}
+          </span>
+        </div>
+      </div>
+
+
+      <!-- DOMAINS -->
+      <div>
+
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="button is-warning is-inverted" (click)="addDomainButtonClick()"
+              [disabled]="phenomenonForm.get('domain').invalid">Add Domain</button>
+          </div>
+        </div>
+
+        <div formArrayName="domain">
+          <div *ngFor="let dom of phenomenonForm.get('domain').controls; let i = index">
+            <hr *ngIf="i>0">
+            <div class="well" [formGroupName]="i">
+              <!-- 
+                <input type="text" formControlName="X">
+                <p>{{ formErrors.domain[i].X }}</p>
+                Y
+                <div formArrayName="Ys">
+                  <div *ngFor="let Y of dom['controls'].Ys['controls']; let iy=index">
+                    <div formGroupName="{{iy}}" class="Ys">
+                      <input type="text" formControlName="Y1">
+                      <p> {{ formErrors.domain[i].Ys[iy].Y1 }}</p>
+                      <input type="text" formControlName="Y2">
+                      <p>{{ formErrors.domain[i].Ys[iy].Y2 }}</p>
+                      Z
+                      <div formArrayName="Zs">
+                        <div *ngFor="let Z of Y['controls'].Zs['controls']; let iz=index">
+                          <div formGroupName="{{iz}}" class="Zs">
+                            <input type="text" formControlName="Z">
+                            <p>{{ formErrors.domain[i].Ys[iy].Zs[iz].Z }}</p>
+                          </div>
+                        </div>
+                        <input type="button" (click)="addZ(ix,iy)" value="Add Z">
+                      </div>
+                      Z End
+                    </div>
+                  </div>
+                  <input type="button" (click)="addY(ix)" value="Add Y">
+                </div>
+                Y End -->
+
+
+              <div class="form-group" [ngClass]="{'needs-validation' : dom.get('domainUri').invalid &&
+                                                                dom.get('domainUri').touched }">
+                <label class="col-sm-2 control-label" [attr.for]="'domainUri' + i">
+                  Domain URI
+                </label>
+                <div class="col-sm-4">
+                  <input type="text" [id]="'domainUri' + i" placeholder="domainName" formControlName="domainUri"
+                    class="form-control">
+                  <span class="invalid-feedback" *ngIf="dom.get('domainUri').errors?.required && 
+                                                  dom.get('domainUri').touched ">
+                    Domain URI is required
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <button *ngIf="phenomenonForm.get('domain').length>1" class="button is-small is-danger pull-right"
+                    title="Delete domain" (click)="removeDomainButtonClick(i)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group" [ngClass]="{'needs-validation' : dom.get('domainLabel').invalid &&
+                                                                dom.get('domainLabel').touched }">
+                <label class="col-sm-2 control-label" [attr.for]="'domainLabel' + i">
+                  Domain Name
+                </label>
+                <div class="col-sm-4">
+                  <input type="text" [id]="'domainLabel' + i" placeholder="domainLabel" formControlName="domainLabel"
+                    class="form-control">
+                  <span class="invalid-feedback" *ngIf="dom.get('domainLabel').errors?.required && 
+                                                  dom.get('domainLabel').touched ">
+                    Domain name is required
+                  </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- UNITS -->
+      <div>
+
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-4">
+            <button type="button" class="button is-warning is-inverted" (click)="addUnitButtonClick()"
+              [disabled]="phenomenonForm.get('unit').invalid">Add Unit</button>
+          </div>
+        </div>
+
+        <div formArrayName="unit">
+          <div *ngFor="let uni of phenomenonForm.get('unit').controls; let i = index">
+            <hr *ngIf="i>0">
+            <div class="well" [formGroupName]="i">
+
+              <div class="form-group" [ngClass]="{'has-error' : uni.get('unitUri').invalid &&
+                                                                uni.get('unitUri').touched }">
+                <label class="col-sm-2 control-label" [attr.for]="'unitUri' + i">
+                  Unit URI
+                </label>
+                <div class="col-sm-4">
+                  <input type="text" [id]="'unitUri' + i" placeholder="UO Unit Identifier" formControlName="unitUri"
+                    class="form-control">
+                  <span class="help-block" *ngIf="uni.get('unitUri').errors?.required && 
+                                                  uni.get('unitUri').touched ">
+                    Unit URI is required
+                  </span>
+                </div>
+                <div class="col-sm-6">
+                  <button *ngIf="phenomenonForm.get('unit').length>1" class="button is-small is-danger pull-right"
+                    title="Delete Unit" (click)="removeUnitButtonClick(i)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="form-group" [ngClass]="{'has-error' : uni.get('unitLabel').invalid &&
+                                                                uni.get('unitLabel').touched }">
+                <label class="col-sm-2 control-label" [attr.for]="'unitLabel' + i">
+                  Unit Name
+                </label>
+                <div class="col-sm-4">
+                  <input type="text" [id]="'unitLabel' + i" placeholder="Shortcut/Name of Unit"
+                    formControlName="unitLabel" class="form-control">
+                  <span class="help-block" *ngIf="uni.get('unitLabel').errors?.required && 
+                                                  uni.get('unitLabel').touched ">
+                    Unit name is required
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="panel-footer">
+      <div class="field is-grouped">
+        <p class="control">
+          <button class="button is-success" type="submit" [disabled]="phenomenonForm.invalid">Save Changes</button>
+        </p>
+        <p class="control">
+          <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
+        </p>
+      </div>
+    </div>
+  </div>
+</form>
