@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'senph-phenomena',
   templateUrl: './phenomena.component.html',
-  styleUrls: ['./phenomena.component.scss', '../../app.component.scss']
+  styleUrls: ['./phenomena.component.scss', '../../../app.component.scss']
 })
 export class PhenomenaComponent implements OnInit {
 

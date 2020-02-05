@@ -9,7 +9,7 @@ import { ISensors } from '../../../interfaces/ISensors';
 @Component({
   selector: 'senph-devices-detail',
   templateUrl: './devices-detail.component.html',
-  styleUrls: ['./devices-detail.component.scss', '../../app.component.scss']
+  styleUrls: ['./devices-detail.component.scss', '../../../app.component.scss']
 })
 export class DevicesDetailComponent implements OnInit, AfterViewInit {
   device: IDevice;

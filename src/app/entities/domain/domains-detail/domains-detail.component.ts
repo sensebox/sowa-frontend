@@ -5,7 +5,7 @@ import { ApiService } from '../../../services/api.service';
 @Component({
   selector: 'senph-domains-detail',
   templateUrl: './domains-detail.component.html',
-  styleUrls: ['./domains-detail.component.scss', '../../app.component.scss']
+  styleUrls: ['./domains-detail.component.scss', '../../../app.component.scss']
 })
 export class DomainsDetailComponent implements OnInit {
 

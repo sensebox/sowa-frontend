@@ -6,7 +6,7 @@ import { IPhenomenon } from '../../../interfaces/IPhenomenon';
 @Component({
   selector: 'senph-phenomena-detail',
   templateUrl: './phenomena-detail.component.html',
-  styleUrls: ['./phenomena-detail.component.scss', '../../app.component.scss']
+  styleUrls: ['./phenomena-detail.component.scss', '../../../app.component.scss']
 })
 export class PhenomenaDetailComponent implements OnInit {
   phenomenon: IPhenomenon;

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'senph-domains',
   templateUrl: './domains.component.html',
-  styleUrls: ['./domains.component.scss', '../../app.component.scss']
+  styleUrls: ['./domains.component.scss', '../../../app.component.scss']
 })
 export class DomainsComponent implements OnInit {
   

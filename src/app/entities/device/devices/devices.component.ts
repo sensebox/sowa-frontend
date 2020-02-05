@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'senph-devices',
   templateUrl: './devices.component.html',
-  styleUrls: ['./devices.component.scss', '../../app.component.scss']
+  styleUrls: ['./devices.component.scss', '../../../app.component.scss']
 })
 export class DevicesComponent implements OnInit {
 

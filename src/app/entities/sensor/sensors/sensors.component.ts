@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'senph-sensors',
   templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss', '../../app.component.scss']
+  styleUrls: ['./sensors.component.scss', '../../../app.component.scss']
 })
 export class SensorsComponent implements OnInit {
 
