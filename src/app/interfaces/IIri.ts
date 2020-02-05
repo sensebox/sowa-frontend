@@ -1,7 +1,5 @@
 export interface IIri {
-    label: {
-        type: string;
-        value: string;
-        "xml:lang": string;
-    };
+        type: string,
+        value: string,
+        "xml:lang": string
 }
