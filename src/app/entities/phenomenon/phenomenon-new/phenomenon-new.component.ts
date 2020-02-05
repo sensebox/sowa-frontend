@@ -105,46 +105,6 @@ export class PhenomenonNewComponent implements OnInit {
     });
   }
 
-  // onLoadButtonClick() {
-  //   const formGroupDomain = this.fb.group([
-  //     new FormControl('domainUri', Validators.required),
-  //     new FormControl('domainLabel', Validators.required),
-  //   ]);
-
-  //   const formArrayDomain = this.fb.array([
-  //     new FormControl('domainUri', Validators.required),
-  //     new FormControl('domainLabel', Validators.required),
-  //   ]);
-  //   const formGroupUnit = this.fb.group([
-  //     new FormControl('unitUri', Validators.required),
-  //     new FormControl('unitLabel', Validators.required),
-  //   ]);
-
-  //   const formArrayUnit = this.fb.array([
-  //     new FormControl('unitUri', Validators.required),
-  //     new FormControl('unitLabel', Validators.required),
-  //   ]);
-  //   const formGroupLabel = this.fb.group([
-  //     new FormControl('value', Validators.required),
-  //     new FormControl('lang', Validators.required),
-  //   ]);
-
-  //   const formArrayLabel = this.fb.array([
-  //     new FormControl('value', Validators.required),
-  //     new FormControl('lang', Validators.required),
-  //   ]);
-
-  //   console.log(formArrayDomain);
-  //   console.log(formGroupDomain);
-  //   console.log(formArrayUnit);
-  //   console.log(formGroupUnit);
-  // }
-
-  onSubmit() {
-    console.log(this.phenomenonForm.value);
-    // this.api.addPhenomenon(this.phenomenonForm.value).subscribe(res => { console.log(res) });
-    // this.diagnostic(this.phenomenonForm);
-  }
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
@@ -246,6 +206,48 @@ export class PhenomenonNewComponent implements OnInit {
   // assignCopy() {
   //   this.domainsArrayFiltered = Object.assign([], this.domainsArray);
   // }
+
+  onLoadButtonClick() {
+    const formGroupDomain = this.fb.group([
+      new FormControl('domainUri', Validators.required),
+      new FormControl('domainLabel', Validators.required),
+    ]);
+
+    const formArrayDomain = this.fb.array([
+      new FormControl('domainUri', Validators.required),
+      new FormControl('domainLabel', Validators.required),
+    ]);
+    const formGroupUnit = this.fb.group([
+      new FormControl('unitUri', Validators.required),
+      new FormControl('unitLabel', Validators.required),
+    ]);
+
+    const formArrayUnit = this.fb.array([
+      new FormControl('unitUri', Validators.required),
+      new FormControl('unitLabel', Validators.required),
+    ]);
+    const formGroupLabel = this.fb.group([
+      new FormControl('value', Validators.required),
+      new FormControl('lang', Validators.required),
+    ]);
+
+    const formArrayLabel = this.fb.array([
+      new FormControl('value', Validators.required),
+      new FormControl('lang', Validators.required),
+    ]);
+
+    console.log(formArrayDomain);
+    console.log(formGroupDomain);
+    console.log(formArrayUnit);
+    console.log(formGroupUnit);
+  }
+
+  onSubmit() {
+    console.log(this.phenomenonForm.value);
+    // this.api.addPhenomenon(this.phenomenonForm.value).subscribe(res => { console.log(res) });
+    // this.diagnostic(this.phenomenonForm);
+  }
+
 }
 
 
