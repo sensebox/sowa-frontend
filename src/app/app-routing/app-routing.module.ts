@@ -3,26 +3,26 @@ import { CommonModule } from '@angular/common';
 
 
 import { LandingpageComponent } from '../landingpage/landingpage.component';
-import { PhenomenaComponent } from '../phenomenon/phenomena/phenomena.component';
-import { SensorsComponent } from '../sensor/sensors/sensors.component';
-import { DevicesComponent } from '../device/devices/devices.component';
-import { PhenomenaDetailComponent } from '../phenomenon/phenomena-detail/phenomena-detail.component';
+import { PhenomenaComponent } from '../entities/phenomenon/phenomena/phenomena.component';
+import { SensorsComponent } from '../entities/sensor/sensors/sensors.component';
+import { DevicesComponent } from '../entities/device/devices/devices.component';
+import { PhenomenaDetailComponent } from '../entities/phenomenon/phenomena-detail/phenomena-detail.component';
 import { RouterModule, Routes } from '@angular/router';
-import { SensorsDetailComponent } from '../sensor/sensors-detail/sensors-detail.component';
-import { DevicesDetailComponent } from '../device/devices-detail/devices-detail.component';
-import { DevicesEditComponent } from '../device/devices-edit/devices-edit.component';
-import { DomainsComponent } from '../domain/domains/domains.component';
-import { DomainsDetailComponent } from '../domain/domains-detail/domains-detail.component';
+import { SensorsDetailComponent } from '../entities/sensor/sensors-detail/sensors-detail.component';
+import { DevicesDetailComponent } from '../entities/device/devices-detail/devices-detail.component';
+import { DevicesEditComponent } from '../entities/device/devices-edit/devices-edit.component';
+import { DomainsComponent } from '../entities/domain/domains/domains.component';
+import { DomainsDetailComponent } from '../entities/domain/domains-detail/domains-detail.component';
 import { FormTemplateComponent } from '../old-stuff/form-template/form-template.component';
 import { FormPhenomenonComponent } from '../old-stuff/form-phenomenon/form-phenomenon.component';
 import { FormSensorComponent } from '../old-stuff/form-sensor/form-sensor.component';
-import { DomainEditComponent } from '../domain/domain-edit/domain-edit.component';
-import { PhenomenaEditComponent } from '../phenomenon/phenomena-edit/phenomena-edit.component';
-import { SensorEditComponent } from '../sensor/sensor-edit/sensor-edit.component';
-import { DeviceNewComponent } from '../device/device-new/device-new.component'
-import { DomainNewComponent } from '../domain/domain-new/domain-new.component';
-import { SensorNewComponent } from '../sensor/sensor-new/sensor-new.component';
-import { PhenomenonNewComponent } from '../phenomenon/phenomenon-new/phenomenon-new.component';
+import { DomainEditComponent } from '../entities/domain/domain-edit/domain-edit.component';
+import { PhenomenaEditComponent } from '../entities/phenomenon/phenomena-edit/phenomena-edit.component';
+import { SensorEditComponent } from '../entities/sensor/sensor-edit/sensor-edit.component';
+import { DeviceNewComponent } from '../entities/device/device-new/device-new.component'
+import { DomainNewComponent } from '../entities/domain/domain-new/domain-new.component';
+import { SensorNewComponent } from '../entities/sensor/sensor-new/sensor-new.component';
+import { PhenomenonNewComponent } from '../entities/phenomenon/phenomenon-new/phenomenon-new.component';
 const routes: Routes = [
   {
     path: '',
