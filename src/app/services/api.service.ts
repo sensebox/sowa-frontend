@@ -130,32 +130,75 @@ export class ApiService {
   }
 
   getSensor(iri): Observable<any> {
-    var sensorEmpty = {
-      iri: [],
-      labels: [], description: [],
-      sensorElements: [],
-      devices: [],
-      manufacturer: [],
-      price: [],
-      datasheet: [],
-      lifeperiod: [],
-      image: []
-    }
-  var I2Sensor = new ISensor(sensorEmpty);
+ 
+  
 
 
 return this.http.get(this.APIURL + '/sensors/sensor/' + iri).pipe(
   map((res: Array<any>) => {
-    res.forEach((element: any) => {
-      console.log(element);
-      var key = Object.getOwnPropertyNames(element)[0];
-      if (key != undefined && I2Sensor[key] != undefined) {
-        I2Sensor[key].push(element[key]);
-      }
-    })
-    // // console.log(I2Device);
-    // let device = new IDevice(I2Device);
-    // console.log(device);
+    console.log(res);
+    var I2Sensor = new ISensor(res);
+    // res.forEach((element: any) => {
+    //   // console.log(element);
+    //   switch (Object.getOwnPropertyNames(element)[0]) {
+
+    //     case "description": {
+    //       Object.assign(I2Sensor, element);
+    //       break;
+    //     }
+
+    //     case "iri": {
+    //       Object.assign(I2Sensor, element);
+    //       break;
+    //     }
+
+    //     case "manufacturer": {
+    //       Object.assign(I2Sensor, element);
+    //       break;
+    //     }
+
+    //     case "price": {
+    //       Object.assign(I2Sensor, element);
+    //       break;
+    //     }
+
+    //     case "datasheet": {
+    //       Object.assign(I2Sensor, element);
+    //       break;
+    //     }
+
+    //     case "lifeperiod": {
+    //       Object.assign(I2Sensor, element);
+    //       break;
+    //     }
+        
+    //     case "image": {
+    //       Object.assign(I2Sensor, element);
+    //       break;
+    //     }
+
+    //     case "label": {
+    //       I2Sensor.labels.push(element);
+    //       break;
+    //     }
+
+    //     case "device": {
+    //       I2Sensor.devices.push(element);
+    //       break;
+    //     }
+
+    //     case "sensorElement": {
+    //       I2Sensor.sensorElements.push(element);
+    //       break;
+    //     }
+
+    //     default: {
+    //       console.log("Invalid attribute", element);
+    //       break;
+    //     }
+    //   }
+    // })
+    console.log(I2Sensor);
     return I2Sensor;
     // // return <IDevice> I2Device;
     // // .pipe(catchError(this.handleError));
