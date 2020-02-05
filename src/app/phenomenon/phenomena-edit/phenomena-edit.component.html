@@ -33,7 +33,61 @@
         </div>
       </div> -->
 
-      <!-- LABELS -->
+    
+         <div class="container well some-space">
+        <label for="label">Labels</label>
+        <div formArrayName="label" *ngFor="let dom of phenomenonForm.get('label').controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="field is-horizontal is-grouped">
+                  <div class="form-group field-body">
+                    <div class="field is-grouped">
+                      <div class="field-label is-normal">
+                        <label class="label">Label:</label>
+                      </div>
+                      <div class="control">
+                        <input class="input is-normal" type="text" placeholder="Label" [id]="'labelVal' + i"
+                          formControlName="value">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group field-body">
+                    <div class="field is-grouped">
+                      <div class="field-label is-normal">
+                        <label class="label">Language:</label>
+                      </div>
+                      <div class="field is-narrow">
+                        <div class="control">
+                          <div class="select ">
+                            <select [id]="'lang' + i" formControlName="lang">
+                              <option value=""> Choose a language</option>
+                              <option *ngFor="let language of languageArray" [ngValue]="language.val">
+                                {{language.show}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <button class="button is-small is-danger pull-right" (click)="removeLabelButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="button is-warning is-inverted" (click)="addLabelButtonClick()"
+          [disabled]="phenomenonForm.get('label').invalid">Add Label</button>
+      </div>
+
+      
+
+      <!-- LABELS
       <div>
 
         <div class="form-group">
@@ -87,7 +141,28 @@
         </div>
       </div>
 
-      <!-- DESCRIPTION -->
+    -->
+
+    <div class="container well some-space">
+      <div class="field is-horizontal is-grouped">
+        <div class="field-label is-normal">
+          <label class="label">Description:</label>
+        </div>
+        <div class="form-group field-body">
+          <div class="field">
+            <div class="control">
+              <input class="input is-normal" type="text" id="description" formControlName="description"
+                (blur)="logValidationErrors()">
+            </div>
+            <span class="help-block" *ngIf="formErrors.description">
+              {{formErrors.description}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- DESCRIPTION 
       <div class="form-group" [ngClass]="{'has-error' : formErrors.description}">
         <label class="col-sm-2 control-label" for="description">Description</label>
         <div class="col-sm-8">
@@ -97,10 +172,50 @@
             {{formErrors.description}}
           </span>
         </div>
+      </div> -->
+
+
+      <div class="container well some-space">
+        <label for="domain">Domains</label>
+        <div formArrayName="domain" *ngFor="let dom of phenomenonForm.get('domain').controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="field is-horizontal">
+                  <div class="form-group field-body">
+                    <div class="field is-grouped">
+                      <div class="field-label is-narrow">
+                        <label class="label">Domain:</label>
+                      </div>
+                      <div class="field is-narrow">
+                        <div class="control">
+                          <div class="select ">
+                            <select [id]="'domainUri' + i" formControlName="domainUri">
+                              <option> Choose a domain</option>
+                              <option *ngFor="let domain of domainsArray" [ngValue]="domain.domain.value">
+                                {{domain.label[0]?.value}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <button class="button is-small is-danger pull-right" (click)="removeDomainButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="button is-warning is-inverted" (click)="addDomainButtonClick()"
+          [disabled]="phenomenonForm.get('domain').invalid">Add Domain</button>
       </div>
 
-
-      <!-- DOMAINS -->
+      <!-- DOMAINS  
       <div>
 
         <div class="form-group">
@@ -152,10 +267,10 @@
 
           </div>
         </div>
-      </div>
+      </div> -->
 
 
-      <!-- UNITS -->
+      <!-- UNITS 
       <div>
 
         <div class="form-group">
@@ -207,6 +322,48 @@
 
           </div>
         </div>
+      </div>
+      -->
+
+      <!-- UNITS -->
+      <div class="container well some-space">
+        <label for="unit">Units</label>
+        <div formArrayName="unit" *ngFor="let dom of phenomenonForm.get('unit').controls; let i = index">
+          <div [formGroupName]="i">
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="field is-horizontal">
+                  <div class="form-group field-body">
+                    <div class="field is-grouped">
+                      <div class="field-label is-narrow">
+                        <label class="label">unit:</label>
+                      </div>
+                      <div class="field is-narrow">
+                        <div class="control">
+                          <div class="select ">
+                            <select [id]="'unitUri' + i" formControlName="unitUri">
+                              <option> Choose a unit</option>
+                              <option *ngFor="let unit of unitsArray" [ngValue]="unit.y.value">
+                                {{unit.label.value}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-2">
+                <button class="button is-small is-danger pull-right" (click)="removeUnitButtonClick(i)">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="button is-warning is-inverted" (click)="addUnitButtonClick()"
+          [disabled]="phenomenonForm.get('unit').invalid">Add unit</button>
       </div>
 
     </div>

@@ -20,8 +20,9 @@ export class PhenomenaComponent implements OnInit {
 
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
+        console.log(res);
       this.phenomenaArray=res;
-      // console.log(res);
+    
       this.phenomenaArray =  this.phenomenaArray.filter(function (el){
         return el.phenomenon.type != 'bnode'
       })
