@@ -286,6 +286,10 @@ updateDomain(domain) {
   return this.http.post(this.APIURL + '/domains/domain/update', domain);
 }
 
+getUnits() {
+  return this.http.get(this.APIURL + '/units');
+}
+
   private handleError(errorResponse: HttpErrorResponse) {
   if (errorResponse.error instanceof ErrorEvent) {
     console.error('Client Side Error: ', errorResponse.error);
