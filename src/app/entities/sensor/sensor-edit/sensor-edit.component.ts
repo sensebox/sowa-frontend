@@ -10,6 +10,7 @@ import { IPhenomenon } from '../../../interfaces/IPhenomenon';
 import { IElements } from '../../../interfaces/IElements';
 import { IDevice } from '../../../interfaces/IDevice';
 import { LANGUAGES } from '../../../shared/mock-languages';
+import { ILabel } from 'src/app/interfaces/ILabel';
 
 @Component({
   selector: 'senph-sensor-edit',
@@ -17,148 +18,12 @@ import { LANGUAGES } from '../../../shared/mock-languages';
   styleUrls: ['./sensor-edit.component.scss']
 })
 export class SensorEditComponent implements OnInit {
-  // heroBannerString = "http://www.opensensemap.org/SENPH#";
-  // sensorForm: FormGroup;
-
-
-  // validationMessages = {
-  //   'uri': {
-  //     'required': 'URI is required.',
-  //     'uriSyntax': 'No white spaces allowed in URI.'
-  //   },
-  //   'label': {
-  //     'required': 'Label is required.'
-  //   },
-  //   'description': {
-  //     'required': 'Description is required.'
-  //   }
-  // };
-
-  // formErrors = {
-  // };
-
-  // constructor(
-  //   private fb: FormBuilder,
-  //   private route: ActivatedRoute,
-  //   private api: ApiService,
-  //   private _routerService: Router
-  // ) { }
-
-  // ngOnInit() {
-  //   this.sensorForm = this.fb.group({
-  //     uri: ['', [Validators.required, CustomValidators.uriSyntax]],
-  //     label: this.fb.array([
-  //       this.addLabelFormGroup()
-  //     ]),
-  //     //['', [Validators.required]],
-  //     description: ['', [Validators.required]],
-  //     sensorElement: this.fb.array([
-  //       this.addSensorElementFormGroup()
-  //     ]),
-  //     device: this.fb.array([
-  //       this.addDeviceFormGroup()
-  //     ])
-  //   })
-
-  //   this.sensorForm.valueChanges.subscribe(
-  //     (data) => {
-  //       this.logValidationErrors(this.sensorForm);
-  //     }
-  //   );
-
-  //   this.route.paramMap.subscribe(params => {
-  //     const shortUri = params.get('id');
-  //     if (shortUri) {
-  //       this.getSensor(shortUri);
-  //     }
-  //   });
-
-  //   this.retrieveSensorElements();
-  //   this.retrieveDevices();
-
-  //   // this.getSensorDetails();
-  // }
-
-  // addSensorElementButtonClick(): void {
-  //   (<FormArray>this.sensorForm.get('sensorElement')).push(this.addSensorElementFormGroup());
-  // }
-
-  // addDeviceButtonClick(): void {
-  //   (<FormArray>this.sensorForm.get('device')).push(this.addDeviceFormGroup());
-  // }
-
-  // addLabelButtonClick(): void {
-  //   (<FormArray>this.sensorForm.get('label')).push(this.addLabelFormGroup());
-  // }
-
-  // logValidationErrors(group: FormGroup = this.sensorForm): void {
-  //   Object.keys(group.controls).forEach((key: string) => {
-  //     const abstractControl = group.get(key);
-  //     if (abstractControl instanceof FormGroup) {
-  //       this.logValidationErrors(abstractControl);
-  //     }
-  //     else {
-  //       this.formErrors[key] = '';
-  //       if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '')) {
-  //         const messages = this.validationMessages[key];
-  //         for (const errorKey in abstractControl.errors) {
-  //           if (errorKey) {
-  //             this.formErrors[key] += messages[errorKey] + ' ';
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
-
-
-  // onLoadButtonClick() {
-  //   const formGroupDomain = this.fb.group([
-  //     new FormControl('domainUri', Validators.required),
-  //     new FormControl('domainLabel', Validators.required),
-  //   ]);
-
-  //   const formArrayDomain = this.fb.array([
-  //     new FormControl('domainUri', Validators.required),
-  //     new FormControl('domainLabel', Validators.required),
-  //   ]);
-  //   const formGroupUnit = this.fb.group([
-  //     new FormControl('unitUri', Validators.required),
-  //     new FormControl('unitLabel', Validators.required),
-  //   ]);
-
-  //   const formArrayUnit = this.fb.array([
-  //     new FormControl('unitUri', Validators.required),
-  //     new FormControl('unitLabel', Validators.required),
-  //   ]);
-  //   const formGroupLabel = this.fb.group([
-  //     new FormControl('value', Validators.required),
-  //     new FormControl('lang', Validators.required),
-  //   ]);
-
-  //   const formArrayLabel = this.fb.array([
-  //     new FormControl('value', Validators.required),
-  //     new FormControl('lang', Validators.required),
-  //   ]);
-
-  //   console.log(formArrayDomain);
-  //   console.log(formGroupDomain);
-  //   console.log(formArrayUnit);
-  //   console.log(formGroupUnit);
-  // }
-
-  // onSubmit() {
-  //   console.log(this.phenomenonForm.value);
-  //   // this.api.editPhenomenon(this.phenomenonForm.value).subscribe(res => {console.log(res)});
-  //   // this.diagnostic(this.phenomenonForm);
-  // }
-  //-------------------------------------------------------
 
   languageArray = LANGUAGES;
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
-  sensorElementsArray;
-  sensorElementsArrayFiltered;
+  phenomenaArray;
+  phenomenaArrayFiltered;
   devicesArray;
   devicesArrayFiltered;
 
@@ -218,8 +83,8 @@ export class SensorEditComponent implements OnInit {
       }
     });
 
-    // this.retrieveSensorElements();
-    // this.retrieveDevices();
+    this.retrievePhenomena();
+    this.retrieveDevices();
 
   }
 
@@ -339,14 +204,14 @@ export class SensorEditComponent implements OnInit {
     console.log(deviceSet);
     deviceSet.forEach(s => {
       formArray.push(this.fb.group({
-        deviceUri: s.value,
+        deviceUri: s.device.value,
       }));
     });
 
     return formArray;
   }
 
-  setExistingLabels(labelSet): FormArray {
+  setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
     console.log(labelSet);
     labelSet.forEach(s => {
@@ -359,6 +224,33 @@ export class SensorEditComponent implements OnInit {
 
     return formArray;
   }
+
+  retrievePhenomena() {
+    this.api.getPhenomena().subscribe(res => {
+      this.phenomenaArray = res;
+      this.phenomenaArray = this.phenomenaArray.filter(function (el) {
+        return el.phenomenon.type != 'bnode'
+      })
+      // console.log(this.phenomenaArray);
+      this.phenomenaArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+
+      console.dir(this.phenomenaArray);
+    });
+  }
+
+  retrieveDevices() {
+    this.api.getDevices().subscribe(res => {
+      this.devicesArray = res;
+      this.devicesArray = this.devicesArray.filter(function (el) {
+        return el.device.type != 'bnode'
+      })
+      // console.log(this.devicesArray);
+      this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+
+      console.dir(this.devicesArray);
+    });
+  }
+
 
   check() {
     console.log(this.sensorForm.get('devices'));
