@@ -26,6 +26,8 @@ export class SensorEditComponent implements OnInit {
   phenomenaArrayFiltered;
   devicesArray;
   devicesArrayFiltered;
+  unitsArray;
+
 
   validationMessages = {
     'uri': {
@@ -33,7 +35,7 @@ export class SensorEditComponent implements OnInit {
       'uriSyntax': 'No white spaces allowed in URI.'
     },
     'label': {
-      'required': 'URI is required.'
+      'required': 'Label is required.'
     },
     'description': {
       'required': 'Description is required.'
@@ -52,15 +54,15 @@ export class SensorEditComponent implements OnInit {
   ngOnInit() {
     this.sensorForm = this.fb.group({
       uri: ['', [Validators.required, CustomValidators.uriSyntax]],
-      labels: this.fb.array([
+      label: this.fb.array([
         this.addLabelFormGroup()
       ]),
       //['', [Validators.required]],
       description: ['', [Validators.required]],
-      sensorElements: this.fb.array([
+      sensorElement: this.fb.array([
         this.addSensorElementFormGroup()
       ]),
-      devices: this.fb.array([
+      device: this.fb.array([
         this.addDeviceFormGroup()
       ]),
       manufacturer: [''],
@@ -83,8 +85,11 @@ export class SensorEditComponent implements OnInit {
       }
     });
 
+
     this.retrievePhenomena();
     this.retrieveDevices();
+    this.retrieveUnits();
+
 
   }
 
@@ -175,14 +180,14 @@ export class SensorEditComponent implements OnInit {
       manufacturer: sensor.manufacturer.value,
       price: sensor.price.value,
       datasheet: sensor.datasheet.value,
-      lifeperiod: sensor.lifeperiod? sensor.lifeperiod.value : '',
-      image: sensor.image? sensor.image.value : '',
+      lifeperiod: sensor.lifeperiod ? sensor.lifeperiod.value : '',
+      image: sensor.image ? sensor.image.value : '',
     });
-    this.sensorForm.setControl('labels', this.setExistingLabels(sensor.labels))
+    this.sensorForm.setControl('label', this.setExistingLabels(sensor.labels))
 
-    this.sensorForm.setControl('sensorElements', this.setExistingSensorElements(sensor.sensorElements))
+    this.sensorForm.setControl('sensorElement', this.setExistingSensorElements(sensor.sensorElements))
 
-    this.sensorForm.setControl('devices', this.setExistingDevices(sensor.devices))
+    this.sensorForm.setControl('device', this.setExistingDevices(sensor.devices))
   }
 
   setExistingSensorElements(sensorElementSet): FormArray {
@@ -251,9 +256,18 @@ export class SensorEditComponent implements OnInit {
     });
   }
 
+  retrieveUnits() {
+    this.api.getUnits().subscribe(res => {
+      this.unitsArray = res;
+      // console.log(this.unitsArray);
+      this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
+      console.log(this.unitsArray);
+    });
+  }
+
 
   check() {
-    console.log(this.sensorForm.get('devices'));
+    console.log(this.sensorForm.get('device'));
   }
 
   onLoadButtonClick() {
@@ -293,7 +307,48 @@ export class SensorEditComponent implements OnInit {
     console.log(formGroupDevice);
   }
 
+  castNumber(event) {
+    console.log(event);
+  }
+
+  getSelectedDevice(id) {
+    return this.sensorForm.value.device[id].deviceUri;
+  }
+  getSelectedPhenomenon(id) {
+    return this.sensorForm.value.sensorElement[id].phenomenonUri;
+  }
+
+  toggleDisabled(control) {
+    console.log("check");
+    if (control.disabled) {
+      control.enable();
+      control.setValue('');
+    }
+    else {
+      control.disable();
+      control.setValue('undefined');
+    }
+
+    //   if (isChecked){
+    //     document.getElementById("manufacturer").disabled = true;
+    //     document.getElementById("manufacturer").value = "unknown";
+    //   }
+    //   else{
+    //     document.getElementById("manufacturer").disabled = false;
+    //     document.getElementById("manufacturer").value = "";
+
+    //   }
+    // // this.sensorForm.value.sensorElement[id].phenomenonUri
+    // console.log(isChecked);
+  }
+
+
+
   onSubmit() {
+    console.log(this.devicesArray);
+    // this.sensorForm.controls.sensorElement.forEach(element => {
+    //   element.accuracyValue.toFixed(10);
+    // });
     console.log(this.sensorForm.value);
     // this.api.editSensor(this.sensorForm.value).subscribe(res => { console.log(res) });
     // this.diagnostic(this.sensorForm);

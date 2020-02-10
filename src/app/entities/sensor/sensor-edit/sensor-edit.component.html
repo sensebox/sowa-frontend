@@ -1,251 +1,438 @@
 <form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="sensorForm">
+
+
+  <!-- 1 FORM-CONTENT -->
   <div class="panel panel-default">
-    <!-- <div class="panel-heading text-center">
-      <h3 class="panel-title">
-        EDIT SENSOR
-      </h3>
-      <p>Add or change information of an existing instance of a sensor.</p>
-    </div> -->
 
-    <senph-hero-banner title="Edit Sensor:" [subtitle]="heroBannerString + sensorForm.get('uri').value"> </senph-hero-banner>
+    <!-- 1.1 BANNER -->
+    <senph-hero-banner title="Edit Sensor:" [subtitle]="heroBannerString + sensorForm.get('uri').value">
+    </senph-hero-banner>
 
 
+    <!-- 1.2 FORM-FIELDS -->
     <div class="panel-body">
 
-      <!-- URI -->
-      <div class="well well2">
-        <div class="form-group row" [ngClass]="{'has-error' : formErrors.uri}">
-          <label class="col-sm-2 control-label" for="uri">URI</label>
-          <div class="col-sm-4">
-            <input class="form-control" [value]="heroBannerString" readonly>
+      <!-- 1.2.1 URI -->
+      <div class="container well some-space">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">URI:</label>
           </div>
-          <div class="col-sm-4">
-            <input type="text" id="uri" formControlName="uri" class="form-control" (blur)="logValidationErrors()">
-            <span class="help-block" *ngIf="formErrors.uri">
-              {{formErrors.uri}}
-            </span>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-2">
-          </div>
-          <div class="col-sm-8">
-            <span class="help-block">The Uniform Resource Identifier (URI) of a sensor is meant to uniquely identify
-              it among other sensors. For all sensors that entered in this Wiki it starts with
-              'http://www.opensensemap.org/SENPH#' followed by an unique extension. Once the URI is set it should not
-              be changed.</span>
+          <div class="field-body">
+            <div class="field is-narrow">
+              <div class="control">
+                <div class=" input-group">
+                  <span class="input-group-addon" id="heroaddon">{{heroBannerString}}</span>
+                  <input type="text" id="uri" formControlName="uri" class="input is-normal"
+                    (blur)="logValidationErrors()" aria-describedby="heroaddon">
+                </div>
+              </div>
+              <span class="help-block">The Uniform Resource Identifier (URI) of a sensor is meant to uniquely identify
+                it among other sensors. For all sensors that entered in this Wiki it starts with
+                'http://www.opensensemap.org/SENPH#' followed by an unique extension. Once the URI is set it should not
+                be changed.</span>
+              <span class="help-block" *ngIf="formErrors.description">
+                {{formErrors.description}}
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
 
-      <!-- LABELS -->
-      <div class="well">
-        <div class="form-group">
-          <div class="col-md-offset-2 col-md-4">
-            <button type="button" class="btn btn-primary btn-senph" (click)="addLabelButtonClick()"
-              [disabled]="sensorForm.get('labels').invalid">Add label</button>
-          </div>
-        </div>
-
-        <div formArrayName="labels" *ngFor="let dom of sensorForm.get('labels').controls; let i = index">
-          <hr *ngIf="i>0">
-          <div class="well well2" [formGroupName]="i">
-
-            <div class="form-group" [ngClass]="{'has-error' : dom.get('value').invalid &&
-                                                              dom.get('value').touched }">
-              <label class="col-sm-2 control-label" [attr.for]="'value' + i">
-                Label
-              </label>
-              <div class="col-sm-8">
-                <input type="text" [id]="'value' + i" placeholder="Label" formControlName="value" class="form-control">
-                <span class="help-block" *ngIf="dom.get('value').errors?.required && 
-                                                dom.get('value').touched ">
-                  Label is required
-                </span>
-              </div>
-              <div class="col-sm-2">
-                <button *ngIf="sensorForm.get('labels').length>1" class="btn btn-danger btn-sm pull-right"
-                  title="Delete label" (click)="removeLabelButtonClick(i)">
+      <!-- 1.2.2 LABELS -->
+      <div class="container well some-space">
+        <label for="label">Labels</label>
+        <div formArrayName="label" *ngFor="let dom of sensorForm.get('label').controls; let i = index">
+          <div [formGroupName]="i" style="padding:1em;">
+            <article class="message is-small is-inverted ">
+              <div class="message-header">
+                <p></p>
+                <button class="button is-small is-danger" (click)="removeLabelButtonClick(i)">
                   <span class="glyphicon glyphicon-remove"></span>
                 </button>
+                <!-- <button class="delete" aria-label="delete"></button> -->
               </div>
-            </div>
-
-            <div class="form-group" [ngClass]="{'has-error' : dom.get('lang').invalid &&
-                                                              dom.get('lang').touched }">
-              <label class="col-sm-2 control-label" [attr.for]="'lang' + i">
-                Language
-              </label>
-              <div class="col-sm-8">
-                <input type="text" [id]="'lang' + i" placeholder="Language of Label" formControlName="lang"
-                  class="form-control">
-                <span class="help-block" *ngIf="dom.get('lang').errors?.required && 
-                                                dom.get('lang').touched ">
-                  Language is required
-                </span>
+              <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Label:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-narrow">
+                      <div class="control">
+                        <input class="input is-normal" type="text" placeholder="Label" [id]="'labelVal' + i"
+                          formControlName="value">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                      <label class="label">Language:</label>
+                    </div>
+                    <div class="field-body">
+                      <div class="field is-narrow">
+                        <div class="control">
+                          <div class="select ">
+                            <select [id]="'lang' + i" formControlName="lang">
+                              <option value=""> Choose a language</option>
+                              <option *ngFor="let language of languageArray" [ngValue]="language.val">
+                                {{language.show}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-
+            </article>
           </div>
         </div>
-      </div>
-
-      <!-- DESCRIPTION -->
-      <div class="form-group" [ngClass]="{'has-error' : formErrors.description}">
-        <label class="col-sm-2 control-label" for="description">Description</label>
-        <div class="col-sm-8">
-          <textarea id="description" formControlName="description" class="form-control" rows="5"
-            (blur)="logValidationErrors()"></textarea>
-          <span class="help-block">Please enter a short description of the sensor and its capabilities.</span>
-          <span class="help-block" *ngIf="formErrors.description">
-            {{formErrors.description}}
+        <button type="button" class="button is-fullwidth  is-warning is-inverted" (click)="addLabelButtonClick()"
+          [disabled]="sensorForm.get('label').invalid">
+          <span class="icon is-small">
+            <i class="fas fa-plus"></i>
           </span>
+          <span>
+            Add Label
+          </span>
+        </button>
+        <!-- <button type="button" class="button is-warning is-inverted" (click)="addLabelButtonClick()"
+          [disabled]="sensorForm.get('label').invalid">Add Label</button> -->
+      </div>
+
+
+      <!-- 1.2.3 DESCRIPTIONS -->
+      <div class="container well some-space">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Description:</label>
+          </div>
+          <div class="field-body">
+            <div class="field is-narrow">
+              <div class="control">
+                <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
+                  (blur)="logValidationErrors()"></textarea>
+              </div>
+              <span class="help-block">Please enter a short description of the sensor and its capabilities.</span>
+              <span class="help-block" *ngIf="formErrors.description">
+                {{formErrors.description}}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
 
-      <!-- sensorElements -->
-      <div class="well">
-        <div class="form-group">
-          <div class="col-md-offset-2 col-md-4">
-            <button type="button" class="btn btn-primary btn-senph" (click)="addSensorElementButtonClick()"
-              [disabled]="sensorForm.get('sensorElements').invalid">Add sensorElement</button>
-          </div>
-        </div>
 
-        <div formArrayName="sensorElements"
-          *ngFor="let dom of sensorForm.get('sensorElements').controls; let i = index">
-          <hr *ngIf="i>0">
-          <div class="well well2" [formGroupName]="i">
-
-            <div class="form-group" [ngClass]="{'has-error' : dom.get('phenomenonUri').invalid &&
-                                                              dom.get('phenomenonUri').touched }">
-              <label class="col-sm-2 control-label" [attr.for]="'phenomenonUri' + i">
-                Phenomenon URI
-              </label>
-              <div class="col-sm-8">
-                <input type="text" [id]="'phenomenonUri' + i" placeholder="sensorElementName"
-                  formControlName="phenomenonUri" class="form-control">
-                <span class="help-block" *ngIf="dom.get('phenomenonUri').errors?.required && 
-                                                dom.get('phenomenonUri').touched ">
-                  Phenomenon URI is required
-                </span>
-              </div>
-              <div class="col-sm-2">
-                <button *ngIf="sensorForm.get('sensorElements').length>1" class="btn btn-danger btn-sm pull-right"
-                  title="Delete sensorElement" (click)="removeSensorElementButtonClick(i)">
+      <!-- 1.2.4 Phenomena/SensorElements -->
+      <div class="container well some-space">
+        <label for="sensorElement">Phenomena</label>
+        <div formArrayName="sensorElement" *ngFor="let dom of sensorForm.get('sensorElement').controls; let i = index">
+          <div [formGroupName]="i" style=" padding:1em;">
+            <article class="message is-small is-inverted ">
+              <div class="message-header">
+                <p>{{getSelectedPhenomenon(i)}}</p>
+                <button class="button is-small is-danger" (click)="removeSensorElementButtonClick(i)">
                   <span class="glyphicon glyphicon-remove"></span>
                 </button>
               </div>
-            </div>
-
-            <div class="form-group" [ngClass]="{'has-error' : dom.get('unitOfAccuracy').invalid &&
-                                                              dom.get('unitOfAccuracy').touched }">
-              <label class="col-sm-2 control-label" [attr.for]="'unitOfAccuracy' + i">
-                Unit of accuracy
-              </label>
-              <div class="col-sm-8">
-                <input type="text" [id]="'unitOfAccuracy' + i" placeholder="unitOfAccuracy"
-                  formControlName="unitOfAccuracy" class="form-control">
-                <span class="help-block" *ngIf="dom.get('unitOfAccuracy').errors?.required && 
-                                                dom.get('unitOfAccuracy').touched ">
-                  Unit of accuracy is required
-                </span>
+              <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Phenomenon:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-narrow">
+                      <div class="control">
+                        <div class="select ">
+                          <select [id]="'phenomenonUri' + i" formControlName="phenomenonUri">
+                            <option value=""> Choose a phenomenon</option>
+                            <option *ngFor="let phenomenon of phenomenaArray" [ngValue]="phenomenon.phenomenon.value">
+                              {{phenomenon.label[0].value}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Numeric Accuracy Value: </label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-narrow">
+                      <div class="control">
+                        <input class="input is-normal" type="number" step="0.0000000001" placeholder="0.0000000001"
+                          [id]="'accuracyValue' + i" formControlName="accuracyValue"
+                          (ngModelChange)="castNumber($event)">
+                      </div>
+                      <p class="help">Be aware numbers are rounded to a maximum of 15 digits </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="label">Unit of Accuracy:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-narrow">
+                      <div class="control">
+                        <div class="select ">
+                          <select [id]="'unitOfAccuracy' + i" formControlName="unitOfAccuracy">
+                            <option value=""> Choose a unit</option>
+                            <option *ngFor="let unit of unitsArray" [ngValue]="unit.y.value">
+                              {{unit.label.value}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-
-            <div class="form-group" [ngClass]="{'has-error' : dom.get('accuracyValue').invalid &&
-            dom.get('accuracyValue').touched }">
-              <label class="col-sm-2 control-label" [attr.for]="'accuracyValue' + i">
-                Value of accuracy
-              </label>
-              <div class="col-sm-8">
-                <input type="text" [id]="'accuracyValue' + i" placeholder="accuracyValue"
-                  formControlName="accuracyValue" class="form-control">
-                <span class="help-block"
-                  *ngIf="dom.get('accuracyValue').errors?.required && dom.get('accuracyValue').touched ">
-                  Value of accuracy is required
-                </span>
-              </div>
-            </div>
-
+            </article>
           </div>
         </div>
+        <button type="button" class="button is-fullwidth is-warning is-inverted" (click)="addSensorElementButtonClick()"
+          [disabled]="sensorForm.get('sensorElement').invalid">
+          <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>
+            Add Phenomenon
+          </span>
+        </button>
+        <!-- <button type="button" class="button is-warning is-inverted" (click)="addSensorElementButtonClick()"
+          [disabled]="sensorForm.get('sensorElement').invalid">Add Phenomenon</button> -->
       </div>
 
 
       <!-- DEVICES -->
-      <div class="well">
 
-        <div class="form-group">
-          <div class="col-md-offset-2 col-md-4">
-            <button type="button" class="btn btn-primary btn-senph" (click)="addDeviceButtonClick()"
-              [disabled]="sensorForm.get('devices').invalid">Add device</button>
-          </div>
-        </div>
-
-        <div formArrayName="devices" *ngFor="let uni of sensorForm.get('devices').controls; let i = index">
-          <hr *ngIf="i>0">
-          <div class="well well2" [formGroupName]="i">
-
-            <div class="form-group" [ngClass]="{'has-error' : uni.get('deviceUri').invalid &&
-                                                              uni.get('deviceUri').touched }">
-              <label class="col-sm-2 control-label" [attr.for]="'deviceUri' + i">
-                device URI
-              </label>
-              <div class="col-sm-8">
-                <input type="text" [id]="'deviceUri' + i" placeholder="UO device Identifier" formControlName="deviceUri"
-                  class="form-control">
-                <span class="help-block" *ngIf="uni.get('deviceUri').errors?.required && 
-                                                uni.get('deviceUri').touched ">
-                  device URI is required
-                </span>
-              </div>
-              <div class="col-sm-2">
-                <button *ngIf="sensorForm.get('devices').length>1" class="btn btn-danger btn-sm pull-right"
-                  title="Delete device" (click)="removeDeviceButtonClick(i)">
+      <div class="container well some-space">
+        <label for="device">Devices</label>
+        <div formArrayName="device" *ngFor="let dom of sensorForm.get('device').controls; let i = index">
+          <div [formGroupName]="i" style="padding:1em;">
+            <article class="message is-small is-inverted ">
+              <div class="message-header">
+                <p>{{getSelectedDevice(i)}}</p>
+                <button class="button is-small is-danger" (click)="removeDeviceButtonClick(i)">
                   <span class="glyphicon glyphicon-remove"></span>
                 </button>
+                <!-- <button class="delete" aria-label="delete"></button> -->
+              </div>
+              <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                    <label class="device">Device:</label>
+                  </div>
+                  <div class="field-body">
+                    <div class="field is-narrow">
+                      <div class="control">
+                        <div class="select ">
+                          <select [id]="'deviceUri' + i" formControlName="deviceUri"
+                            (ngModelChange)="castNumber($event)">
+                            <option value=""> Choose a device</option>
+                            <option *ngFor="let device of devicesArray" [ngValue]="device.device.value">
+                              {{device.label[0].value}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+        <button type="button" class="button is-fullwidth  is-warning is-inverted" (click)="addDeviceButtonClick()"
+          [disabled]="sensorForm.get('device').invalid">
+          <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span>
+            Add Device
+          </span>
+        </button>
+      </div>
+
+
+      <!-- manufacturer -->
+      <div class="container well some-space">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Manufacturer:</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input type="text" id="manufacturer" formControlName="manufacturer" class="input is-normal">
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Set value to <i>undefined</i> :</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <label class="checkbox">
+                    <!-- <input type="checkbox"> -->
+                    <input type="checkbox" id="manufacturerRadio"
+                      (change)="toggleDisabled(sensorForm.controls.manufacturer)">
+                  </label>
+                  <!-- </div>  -->
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- manufacturer -->
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="manufacturer">manufacturer</label>
-        <div class="col-sm-8">
-          <input type="text" id="manufacturer" formControlName="manufacturer" class="form-control">
-        </div>
-      </div>
       <!-- price -->
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="price">price</label>
-        <div class="col-sm-8">
-          <input type="text" id="price" formControlName="price" class="form-control">
+      <div class="container well some-space">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Price:</label>
+          </div>
+          <div class="field-body">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="input is-normal" type="number" step="0.01" placeholder="0.00" id="price"
+                  formControlName="price">
+              </div>
+              <p class="control">
+                <a class="button is-static">
+                  €
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Set value to <i>undefined</i> :</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <label class="checkbox">
+                    <!-- <input type="checkbox"> -->
+                    <input type="checkbox" id="priceRadio" (change)="toggleDisabled(sensorForm.controls.price)">
+                  </label>
+                  <!-- </div>  -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <!-- datasheet -->
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="datasheet">datasheet</label>
-        <div class="col-sm-8">
-          <input type="text" id="datasheet" formControlName="datasheet" class="form-control">
+      <div class="container well some-space">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Datasheet:</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input type="text" id="datasheet" formControlName="datasheet" class="input is-normal">
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Set value to <i>undefined</i> :</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <label class="checkbox">
+                    <!-- <input type="checkbox"> -->
+                    <input type="checkbox" id="datasheetRadio" (change)="toggleDisabled(sensorForm.controls.datasheet)">
+                  </label>
+                  <!-- </div>  -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <!-- lifeperiod -->
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="lifeperiod">lifeperiod</label>
-        <div class="col-sm-8">
-          <input type="text" id="lifeperiod" formControlName="lifeperiod" class="form-control">
+      <div class="container well some-space">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Lifeperiod:</label>
+          </div>
+          <div class="field-body">
+            <div class="field has-addons">
+              <div class="control">
+                <input class="input is-normal" type="number" step="1" placeholder="0" id="lifeperiod"
+                  formControlName="lifeperiod">
+              </div>
+              <p class="control">
+                <a class="button is-static">
+                  Days
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Set value to <i>undefined</i> :</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <label class="checkbox">
+                    <!-- <input type="checkbox"> -->
+                    <input type="checkbox" id="lifeperiodRadio"
+                      (change)="toggleDisabled(sensorForm.controls.lifeperiod)">
+                  </label>
+                  <!-- </div>  -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <!-- image -->
-      <div class="form-group">
-        <label class="col-sm-2 control-label" for="image">image</label>
-        <div class="col-sm-8">
-          <input type="text" id="image" formControlName="image" class="form-control">
+      <div class="container well some-space">
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Image:</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control">
+                <input type="text" id="image" formControlName="image" class="input is-normal">
+              </div>
+            </div>
+          </div>
+          <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Set value to <i>undefined</i> :</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <label class="checkbox">
+                    <!-- <input type="checkbox"> -->
+                    <input type="checkbox" id="imageRadio" (change)="toggleDisabled(sensorForm.controls.image)">
+                  </label>
+                  <!-- </div>  -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -253,7 +440,8 @@
     </div>
     <div class="panel-footer">
       <div class="btn-toolbar">
-        <button class="btn btn-primary btn-senph" type="submit" [disabled]="sensorForm.invalid">Save Changes</button>
+        <button class="btn btn-primary btn-senph" type="submit" [disabled]="sensorForm.invalid">Save
+          Changes</button>
         <button class="btn btn-primary btn-senph" type="button" (click)="onLoadButtonClick()">Load data</button>
       </div>
     </div>
