@@ -100,8 +100,8 @@
           <div class="form-group field-body">
             <div class="field">
               <div class="control">
-                <input class="input is-normal" type="text" id="description" formControlName="description"
-                  (blur)="logValidationErrors()">
+                <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
+                  (blur)="logValidationErrors()"></textarea>
               </div>
               <span class="help-block" *ngIf="formErrors.description">
                 {{formErrors.description}}
