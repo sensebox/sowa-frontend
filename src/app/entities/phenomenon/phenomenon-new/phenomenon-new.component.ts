@@ -9,6 +9,7 @@ import { IDomain } from '../../../interfaces/IDomain';
 import { IUnit } from '../../../interfaces/IUnit';
 import { IIri } from '../../../interfaces/IIri';
 import { LANGUAGES } from '../../../shared/mock-languages';
+import { ILabel } from 'src/app/interfaces/ILabel';
 @Component({
   selector: 'senph-phenomenon-new',
   templateUrl: './phenomenon-new.component.html',
@@ -166,14 +167,14 @@ export class PhenomenonNewComponent implements OnInit {
     return formArray;
   }
 
-  setExistingLabels(labelSet: IIri[]): FormArray {
+  setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
     console.log(labelSet);
     labelSet.forEach(s => {
       formArray.push(this.fb.group({
-        type: s.label.type,
-        value: s.label.value,
-        lang: s.label["xml:lang"]
+        type: s.type,
+        value: s.value,
+        lang: s["xml:lang"]
       }));
     });
 

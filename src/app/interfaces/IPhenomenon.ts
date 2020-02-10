@@ -1,13 +1,14 @@
 import { IIri } from './IIri';
 import { IUnit } from './IUnit';
 import { IDomain } from './IDomain';
+import { ILabel } from './ILabel';
 
 export class IPhenomenon {
     iri: {
         type: string,
         value: string,
     };
-    labels?: IIri[];
+    labels?: ILabel[];
     description: {
         type: string;
         value: string;
@@ -16,12 +17,53 @@ export class IPhenomenon {
     units?: IUnit[];
     domains?: IDomain[];
 
-    constructor(phenomenonResponse: any) {
-        console.log(phenomenonResponse);
-        this.labels = phenomenonResponse.labels;
-        this.description = phenomenonResponse.description;
-        this.iri = phenomenonResponse.iri;
-        this.units = phenomenonResponse.units;    
-        this.domains = phenomenonResponse.domains;
+    constructor(res: any) {
+        // console.log(phenomenonResponse);
+        // this.labels = phenomenonResponse.labels;
+        // this.description = phenomenonResponse.description;
+        // this.iri = phenomenonResponse.iri;
+        // this.units = phenomenonResponse.units;    
+        // this.domains = phenomenonResponse.domains;
+
+        this.labels = [];
+        this.units = [];
+        this.domains = [];
+        
+
+        res.forEach((element: any) => {
+            console.log(element);
+            switch (Object.getOwnPropertyNames(element)[0]) {
+  
+              case "description": {
+                Object.assign(this, element);
+                break;
+              }
+  
+              case "iri": {
+                Object.assign(this, element);
+                break;
+              }
+  
+              case "label": {
+                this.labels.push(new ILabel(element));
+                break;
+              }
+  
+              case "unit": {
+                this.units.push(element);
+                break;
+              }
+  
+              case "domain": {
+                this.domains.push(element);
+                break;
+              }
+  
+              default: {
+                console.log("Invalid attribute", element);
+                break;
+              }
+            }
+          })
     }
 }

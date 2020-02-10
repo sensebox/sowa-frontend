@@ -35,64 +35,10 @@ export class ApiService {
 
 
   getPhenomenon(iri): Observable<any> {
-    let I2Phenomenon = {
-      iri: '',
-      labels: [],
-      description: '',
-      units: [],
-      domains: [],
-    };
-    let unit = {
-      unit: '',
-      unitLabel: ''
-    };
-    let domain = {
-      domain: '',
-      domainsLabel: ''
-    };
-    let label = {
-      label: ''
-    };
-
     return this.http.get(this.APIURL + '/phenomena/phenomenon/' + iri).pipe(
       map((res: Array<any>) => {
         console.log(res);
-        res.forEach((element: any) => {
-          console.log(element);
-          switch (Object.getOwnPropertyNames(element)[0]) {
-
-            case "description": {
-              Object.assign(I2Phenomenon, element);
-              break;
-            }
-
-            case "iri": {
-              Object.assign(I2Phenomenon, element);
-              break;
-            }
-
-            case "label": {
-              I2Phenomenon.labels.push(element);
-              break;
-            }
-
-            case "unit": {
-              I2Phenomenon.units.push(element);
-              break;
-            }
-
-            case "domain": {
-              I2Phenomenon.domains.push(element);
-              break;
-            }
-
-            default: {
-              console.log("Invalid attribute", element);
-              break;
-            }
-          }
-        })
-        let phenomenon = new IPhenomenon(I2Phenomenon);
+        let phenomenon = new IPhenomenon(res);
         console.log(phenomenon);
         return phenomenon;
       })
@@ -130,99 +76,37 @@ export class ApiService {
   }
 
   getSensor(iri): Observable<any> {
- 
-  
 
 
-return this.http.get(this.APIURL + '/sensors/sensor/' + iri).pipe(
-  map((res: Array<any>) => {
-    console.log(res);
-    var I2Sensor = new ISensor(res);
-    // res.forEach((element: any) => {
-    //   // console.log(element);
-    //   switch (Object.getOwnPropertyNames(element)[0]) {
 
-    //     case "description": {
-    //       Object.assign(I2Sensor, element);
-    //       break;
-    //     }
 
-    //     case "iri": {
-    //       Object.assign(I2Sensor, element);
-    //       break;
-    //     }
-
-    //     case "manufacturer": {
-    //       Object.assign(I2Sensor, element);
-    //       break;
-    //     }
-
-    //     case "price": {
-    //       Object.assign(I2Sensor, element);
-    //       break;
-    //     }
-
-    //     case "datasheet": {
-    //       Object.assign(I2Sensor, element);
-    //       break;
-    //     }
-
-    //     case "lifeperiod": {
-    //       Object.assign(I2Sensor, element);
-    //       break;
-    //     }
-        
-    //     case "image": {
-    //       Object.assign(I2Sensor, element);
-    //       break;
-    //     }
-
-    //     case "label": {
-    //       I2Sensor.labels.push(element);
-    //       break;
-    //     }
-
-    //     case "device": {
-    //       I2Sensor.devices.push(element);
-    //       break;
-    //     }
-
-    //     case "sensorElement": {
-    //       I2Sensor.sensorElements.push(element);
-    //       break;
-    //     }
-
-    //     default: {
-    //       console.log("Invalid attribute", element);
-    //       break;
-    //     }
-    //   }
-    // })
-    console.log(I2Sensor);
-    return I2Sensor;
-    // // return <IDevice> I2Device;
-    // // .pipe(catchError(this.handleError));
-  }))
+    return this.http.get(this.APIURL + '/sensors/sensor/' + iri).pipe(
+      map((res: Array<any>) => {
+        console.log(res);
+        var I2Sensor = new ISensor(res);
+        console.log(I2Sensor);
+        return I2Sensor;
+      }))
   }
 
-getSensorIRI(iri) {
-  return this.http.get(this.APIURL + '/sensors/sensorIRI/' + iri);
-}
+  getSensorIRI(iri) {
+    return this.http.get(this.APIURL + '/sensors/sensorIRI/' + iri);
+  }
 
-updateSensor(sensor) {
-  return this.http.post(this.APIURL + '/sensors/sensor/update', sensor);
-}
+  updateSensor(sensor) {
+    return this.http.post(this.APIURL + '/sensors/sensor/update', sensor);
+  }
 
-editSensor(sensor) {
-  return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor);
-}
+  editSensor(sensor) {
+    return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor);
+  }
 
-/**--------------Devices------------------------ */
-getDevices() {
-  return this.http.get(this.APIURL + '/devices/all');
-}
+  /**--------------Devices------------------------ */
+  getDevices() {
+    return this.http.get(this.APIURL + '/devices/all');
+  }
 
-getDevice(iri): Observable < any >
+  getDevice(iri): Observable<any>
   // : Observable<IDevice[]> 
   {
     let I2Device = {
@@ -303,43 +187,43 @@ getDevice(iri): Observable < any >
       }))
   }
 
-updateDevice(device) {
-  return this.http.post(this.APIURL + '/devices/device/update', device);
-}
-
-editDevice(device) {
-  return this.http.post(this.APIURL + '/devices/device/edit', device);
-}
-
-addDevice(device) {
-  return this.http.post(this.APIURL + '/devices/device/add', device);
-}
-
-
-/**--------------Domains------------------------ */
-getDomains() {
-  return this.http.get(this.APIURL + '/domains/all');
-}
-
-getDomain(iri) {
-  return this.http.get(this.APIURL + '/domains/domain/' + iri);
-}
-
-updateDomain(domain) {
-  return this.http.post(this.APIURL + '/domains/domain/update', domain);
-}
-
-getUnits() {
-  return this.http.get(this.APIURL + '/units');
-}
-
-  private handleError(errorResponse: HttpErrorResponse) {
-  if (errorResponse.error instanceof ErrorEvent) {
-    console.error('Client Side Error: ', errorResponse.error);
-  } else {
-    console.error('Server Side Error: ', errorResponse);
+  updateDevice(device) {
+    return this.http.post(this.APIURL + '/devices/device/update', device);
   }
 
-  return throwError('There is a problem with the service ');
-}
+  editDevice(device) {
+    return this.http.post(this.APIURL + '/devices/device/edit', device);
+  }
+
+  addDevice(device) {
+    return this.http.post(this.APIURL + '/devices/device/add', device);
+  }
+
+
+  /**--------------Domains------------------------ */
+  getDomains() {
+    return this.http.get(this.APIURL + '/domains/all');
+  }
+
+  getDomain(iri) {
+    return this.http.get(this.APIURL + '/domains/domain/' + iri);
+  }
+
+  updateDomain(domain) {
+    return this.http.post(this.APIURL + '/domains/domain/update', domain);
+  }
+
+  getUnits() {
+    return this.http.get(this.APIURL + '/units');
+  }
+
+  private handleError(errorResponse: HttpErrorResponse) {
+    if (errorResponse.error instanceof ErrorEvent) {
+      console.error('Client Side Error: ', errorResponse.error);
+    } else {
+      console.error('Server Side Error: ', errorResponse);
+    }
+
+    return throwError('There is a problem with the service ');
+  }
 }
