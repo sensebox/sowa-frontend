@@ -37,9 +37,9 @@ export class ApiService {
   getPhenomenon(iri): Observable<any> {
     return this.http.get(this.APIURL + '/phenomena/phenomenon/' + iri).pipe(
       map((res: Array<any>) => {
-        console.log(res);
+        // console.log(res);
         let phenomenon = new IPhenomenon(res);
-        console.log(phenomenon);
+        // console.log(phenomenon);
         return phenomenon;
       })
     )

@@ -31,7 +31,7 @@ export class IPhenomenon {
         
 
         res.forEach((element: any) => {
-            console.log(element);
+            // console.log(element);
             switch (Object.getOwnPropertyNames(element)[0]) {
   
               case "description": {
