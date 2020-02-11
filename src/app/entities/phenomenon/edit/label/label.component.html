@@ -1,0 +1,53 @@
+<div [formGroup]="parentForm">
+    <div formArrayName="label" *ngFor="let dom of parentForm.get('label').controls; let i = index">
+        <div [formGroupName]="i" style="padding:1em;">
+            <article class="message is-small is-inverted ">
+                <div class="message-header">
+                    <p></p>
+                    <button class="button is-small is-danger" (click)="removeLabelButtonClick(i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Label:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <input class="input is-normal" type="text" placeholder="Label" [id]="'labelVal' + i"
+                                        formControlName="value">
+                                </div>
+                            </div>
+                            <div class="field-label is-normal">
+                                <label class="label">Language:</label>
+                            </div>
+                            <div class="field">
+                                <div class="control is-expanded">
+                                    <div class="select ">
+                                        <select [id]="'lang' + i" formControlName="lang">
+                                            <option value=""> Choose a language</option>
+                                            <option *ngFor="let language of languageArray" [ngValue]="language.val">
+                                                {{language.show}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <button type="button" class="button is-fullwidth  is-warning is-inverted" (click)="addLabelButtonClick()"
+        [disabled]="parentForm.get('label').invalid">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <span>
+            Add Label
+        </span>
+    </button>
+</div>

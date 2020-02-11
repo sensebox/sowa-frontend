@@ -1,0 +1,44 @@
+<div [formGroup]="parentForm">
+    <div formArrayName="unit" *ngFor="let dom of parentForm.get('unit').controls; let i = index">
+        <div [formGroupName]="i" style=" padding:1em;">
+            <article class="message is-small is-inverted ">
+                <div class="message-header">
+                    <p>{{getSelectedUnit(i)}}</p>
+                    <button class="button is-small is-danger" (click)="removeUnitButtonClick(i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Unit:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-narrow">
+                                <div class="control">
+                                    <div class="select ">
+                                        <select [id]="'unitUri' + i" formControlName="unitUri">
+                                            <option value=""> Choose a unit</option>
+                                            <option *ngFor="let unit of unitsArray" [ngValue]="unit.y.value">
+                                                {{unit.label.value}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <button type="button" class="button is-fullwidth is-warning is-inverted" (click)="addUnitButtonClick()"
+        [disabled]="parentForm.get('unit').invalid">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <span>
+            Add Domain
+        </span>
+    </button>
+</div>

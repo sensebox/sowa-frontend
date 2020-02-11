@@ -37,6 +37,10 @@ import { DeviceNewComponent } from './entities/device/device-new/device-new.comp
 import { PhenomenonNewComponent } from './entities/phenomenon/phenomenon-new/phenomenon-new.component';
 import { DomainNewComponent } from './entities/domain/domain-new/domain-new.component';
 import { SensorNewComponent } from './entities/sensor/sensor-new/sensor-new.component';
+import { LabelComponent } from './entities/phenomenon/edit/label/label.component';
+import { UnitComponent } from './entities/phenomenon/edit/unit/unit.component';
+import { DomainComponent } from './entities/phenomenon/edit/domain/domain.component';
+import { SensorElementComponent } from './entities/phenomenon/edit/sensor-element/sensor-element.component';
 
 
 
@@ -70,7 +74,11 @@ import { SensorNewComponent } from './entities/sensor/sensor-new/sensor-new.comp
     DeviceNewComponent,
     PhenomenonNewComponent,
     DomainNewComponent,
-    SensorNewComponent
+    SensorNewComponent,
+    LabelComponent,
+    UnitComponent,
+    DomainComponent,
+    SensorElementComponent
   ],
   imports: [
     BrowserModule,
