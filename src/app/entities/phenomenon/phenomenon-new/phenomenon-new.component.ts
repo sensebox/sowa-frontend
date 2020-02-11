@@ -123,6 +123,7 @@ export class PhenomenonNewComponent implements OnInit {
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
+      type: "literal",
       value: ['', [Validators.required]],
       lang: ['', [Validators.required]]
     });
