@@ -1,0 +1,49 @@
+<div [formGroup]="parentForm">
+    <div formArrayName="device" *ngFor="let dom of parentForm.get('device').controls; let i = index">
+        <div [formGroupName]="i" style="padding:1em;">
+            <article class="message is-small is-inverted ">
+                <div class="message-header">
+                    <p>{{getSelectedDevice(i)}}</p>
+                    <button class="button is-small is-danger" (click)="removeDeviceButtonClick(i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="device">Device:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-narrow">
+                                <div class="control">
+                                    <div class="select ">
+                                        <select [id]="'deviceUri' + i" formControlName="deviceUri">
+                                            <option value=""> Choose a device</option>
+                                            <option *ngFor="let device of devicesArray" [ngValue]="device.device.value">
+                                                {{device.label[0].value}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span class="help-block error-block"
+                                    *ngIf="device.controls[i].get('deviceUri').errors?.required &&
+                                (device.controls[i].get('deviceUri').touched || !device.controls[i].get('deviceUri').pristine)">
+                                    {{validationMessages.device.required}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <button type="button" class="button is-fullwidth  is-warning is-inverted" (click)="addDeviceButtonClick()"
+        [disabled]="parentForm.get('device').invalid">
+        <span class="icon is-small">
+            <i class="fas fa-plus"></i>
+        </span>
+        <span>
+            Add Device
+        </span>
+    </button>
+</div>
