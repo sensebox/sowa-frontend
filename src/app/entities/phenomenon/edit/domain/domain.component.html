@@ -25,7 +25,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <span class="help-block error-block" *ngIf="domain.controls[i].get('domainUri').errors?.required &&
+                                <span class="help-block error-block"
+                                    *ngIf="domain.controls[i].get('domainUri').errors?.required &&
                                 (domain.controls[i].get('domainUri').touched || !domain.controls[i].get('domainUri').pristine)">
                                     {{validationMessages.domain.required}}
                                 </span>
@@ -36,13 +37,15 @@
             </article>
         </div>
     </div>
-    <button type="button" class="button is-fullwidth is-warning is-inverted" (click)="addDomainButtonClick()"
-        [disabled]="parentForm.get('domain').invalid">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <span>
-            Add Domain
-        </span>
-    </button>
+    <div class="buttons is-centered">
+        <button type="button" class="button is-warning is-inverted" (click)="addDomainButtonClick()"
+            [disabled]="parentForm.get('domain').invalid">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span>
+                Add Domain
+            </span>
+        </button>
+    </div>
 </div>

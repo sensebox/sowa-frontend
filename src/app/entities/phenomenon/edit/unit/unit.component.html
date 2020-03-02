@@ -37,13 +37,15 @@
             </article>
         </div>
     </div>
-    <button type="button" class="button is-fullwidth is-warning is-inverted" (click)="addUnitButtonClick()"
-        [disabled]="parentForm.get('unit').invalid">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <span>
-            Add Domain
-        </span>
-    </button>
+    <div class="buttons is-centered">
+        <button type="button" class="button is-warning is-inverted" (click)="addUnitButtonClick()"
+            [disabled]="parentForm.get('unit').invalid">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span>
+                Add Unit
+            </span>
+        </button>
+    </div>
 </div>

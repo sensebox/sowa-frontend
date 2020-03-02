@@ -27,10 +27,10 @@
                                     </div>
                                 </div>
                                 <span class="help-block error-block"
-                                *ngIf="sensorElement.controls[i].get('phenomenonUri').errors?.required &&
+                                    *ngIf="sensorElement.controls[i].get('phenomenonUri').errors?.required &&
                                                             (sensorElement.controls[i].get('phenomenonUri').touched || !sensorElement.controls[i].get('phenomenonUri').pristine)">
-                                {{validationMessages.label.required}}
-                            </span>
+                                    {{validationMessages.label.required}}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -46,10 +46,10 @@
                                         formControlName="accuracyValue">
                                 </div>
                                 <span class="help-block error-block"
-                                *ngIf="sensorElement.controls[i].get('accuracyValue').errors?.required &&
+                                    *ngIf="sensorElement.controls[i].get('accuracyValue').errors?.required &&
                                                             (sensorElement.controls[i].get('accuracyValue').touched || !sensorElement.controls[i].get('accuracyValue').pristine)">
-                                {{validationMessages.accuracyValue.required}}
-                            </span>
+                                    {{validationMessages.accuracyValue.required}}
+                                </span>
                                 <p class="help">Be aware numbers are rounded to a maximum of 15 digits </p>
                             </div>
                         </div>
@@ -71,10 +71,10 @@
                                     </div>
                                 </div>
                                 <span class="help-block error-block"
-                                *ngIf="sensorElement.controls[i].get('unitOfAccuracy').errors?.required &&
+                                    *ngIf="sensorElement.controls[i].get('unitOfAccuracy').errors?.required &&
                                                             (sensorElement.controls[i].get('unitOfAccuracy').touched || !sensorElement.controls[i].get('unitOfAccuracy').pristine)">
-                                {{validationMessages.unitOfAccuracy.required}}
-                            </span>
+                                    {{validationMessages.unitOfAccuracy.required}}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -82,13 +82,15 @@
             </article>
         </div>
     </div>
-    <button type="button" class="button is-fullwidth is-warning is-inverted" (click)="addSensorElementButtonClick()"
-        [disabled]="parentForm.get('sensorElement').invalid">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <span>
-            Add Phenomenon
-        </span>
-    </button>
+    <div class="buttons is-centered">
+        <button type="button" class="button is-warning is-inverted" (click)="addSensorElementButtonClick()"
+            [disabled]="parentForm.get('sensorElement').invalid">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span>
+                Add Phenomenon
+            </span>
+        </button>
+    </div>
 </div>

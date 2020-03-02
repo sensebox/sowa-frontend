@@ -37,13 +37,15 @@
             </article>
         </div>
     </div>
-    <button type="button" class="button is-fullwidth  is-warning is-inverted" (click)="addDeviceButtonClick()"
-        [disabled]="parentForm.get('device').invalid">
-        <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-        </span>
-        <span>
-            Add Device
-        </span>
-    </button>
+    <div class="buttons is-centered">
+        <button type="button" class="button is-warning is-inverted" (click)="addDeviceButtonClick()"
+            [disabled]="parentForm.get('device').invalid">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span>
+                Add Device
+            </span>
+        </button>
+    </div>
 </div>
