@@ -1,0 +1,23 @@
+.error-block {
+  color: hsl(348, 86%, 61%);
+}
+
+select.ng-invalid.ng-dirty {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+input.ng-invalid.ng-dirty {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+select.ng-invalid.ng-touched {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+input.ng-invalid.ng-touched {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
