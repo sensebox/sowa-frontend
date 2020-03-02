@@ -42,6 +42,8 @@ import { UnitComponent } from './entities/phenomenon/edit/unit/unit.component';
 import { DomainComponent } from './entities/phenomenon/edit/domain/domain.component';
 import { SensorElementComponent } from './entities/phenomenon/edit/sensor-element/sensor-element.component';
 import { DeviceComponent } from './entities/phenomenon/edit/device/device.component';
+import { TextComponent } from './entities/phenomenon/edit/text/text.component';
+import { NumberComponent } from './entities/phenomenon/edit/number/number.component';
 
 
 
@@ -80,7 +82,9 @@ import { DeviceComponent } from './entities/phenomenon/edit/device/device.compon
     UnitComponent,
     DomainComponent,
     SensorElementComponent,
-    DeviceComponent
+    DeviceComponent,
+    TextComponent,
+    NumberComponent
   ],
   imports: [
     BrowserModule,

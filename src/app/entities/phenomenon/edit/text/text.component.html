@@ -1,0 +1,30 @@
+<div [formGroup]="parentForm">
+    <div class="container well some-space">
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">{{label}}:</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                    <div class="control">
+                        <input type="text" [id]="id" [formControl]="control" class="input is-normal">
+                    </div>
+                </div>
+            </div>
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Set value to <i>undefined</i> :</label>
+                </div>
+                <div class="field-body">
+                    <div class="field is-narrow">
+                        <div class="control">
+                            <label class="checkbox">
+                                <input type="checkbox" id="radio + {{id}}" (change)="toggleDisabled($event)">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

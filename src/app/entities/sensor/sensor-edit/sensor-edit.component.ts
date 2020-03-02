@@ -61,11 +61,11 @@ export class SensorEditComponent implements OnInit {
       device: this.fb.array([
         this.addDeviceFormGroup()
       ]),
-      manufacturer: [''],
-      price: [''],
-      datasheet: [''],
-      lifeperiod: [''],
-      image: ['']
+      manufacturer: [{value: '', disabled: false}],
+      price: [{value: '', disabled: false}],
+      datasheet: [{value: '', disabled: false}],
+      lifeperiod: [{value: '', disabled: false}],
+      image: [{value: '', disabled: false}]
     })
 
     this.sensorForm.valueChanges.subscribe(

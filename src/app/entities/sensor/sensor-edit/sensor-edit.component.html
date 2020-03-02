@@ -86,172 +86,29 @@
 
 
       <!-- 1.2.6 MANUFACTURER -->
-      <div class="container well some-space">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Manufacturer:</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input type="text" id="manufacturer" formControlName="manufacturer" class="input is-normal">
-              </div>
-            </div>
-          </div>
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label">Set value to <i>undefined</i> :</label>
-            </div>
-            <div class="field-body">
-              <div class="field is-narrow">
-                <div class="control">
-                  <label class="checkbox">
-                    <input type="checkbox" id="manufacturerRadio"
-                      (change)="toggleDisabled(sensorForm.controls.manufacturer)">
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <senph-text label="Manufacturer" id="manufacturer" [control]="this.sensorForm.get('manufacturer')"
+        [parentForm]="sensorForm"></senph-text>
 
 
       <!-- 1.2.7 PRICE -->
-      <div class="container well some-space">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Price:</label>
-          </div>
-          <div class="field-body">
-            <div class="field has-addons">
-              <div class="control">
-                <input class="input is-normal" type="number" step="0.01" placeholder="0.00" id="price"
-                  formControlName="price">
-              </div>
-              <p class="control">
-                <a class="button is-static">
-                  €
-                </a>
-              </p>
-            </div>
-          </div>
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label">Set value to <i>undefined</i> :</label>
-            </div>
-            <div class="field-body">
-              <div class="field is-narrow">
-                <div class="control">
-                  <label class="checkbox">
-                    <input type="checkbox" id="priceRadio" (change)="toggleDisabled(sensorForm.controls.price)">
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <senph-number label="Price" id="price" [control]="this.sensorForm.get('price')" [parentForm]="sensorForm"
+        step="0.01" placeholder="0.00" addon="€"></senph-number>
 
 
       <!-- 1.2.8 DATASHEET -->
-      <div class="container well some-space">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Datasheet:</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input type="text" id="datasheet" formControlName="datasheet" class="input is-normal">
-              </div>
-            </div>
-          </div>
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label">Set value to <i>undefined</i> :</label>
-            </div>
-            <div class="field-body">
-              <div class="field is-narrow">
-                <div class="control">
-                  <label class="checkbox">
-                    <input type="checkbox" id="datasheetRadio" (change)="toggleDisabled(sensorForm.controls.datasheet)">
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <senph-text label="Datasheet" id="datasheet" [control]="this.sensorForm.get('datasheet')"
+        [parentForm]="sensorForm"></senph-text>
 
 
       <!-- 1.2.9 LIFEPERIOD -->
-      <div class="container well some-space">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Lifeperiod:</label>
-          </div>
-          <div class="field-body">
-            <div class="field has-addons">
-              <div class="control">
-                <input class="input is-normal" type="number" step="1" placeholder="0" id="lifeperiod"
-                  formControlName="lifeperiod">
-              </div>
-              <p class="control">
-                <a class="button is-static">
-                  Days
-                </a>
-              </p>
-            </div>
-          </div>
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label">Set value to <i>undefined</i> :</label>
-            </div>
-            <div class="field-body">
-              <div class="field is-narrow">
-                <div class="control">
-                  <label class="checkbox">
-                    <input type="checkbox" id="lifeperiodRadio"
-                      (change)="toggleDisabled(sensorForm.controls.lifeperiod)">
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <senph-number label="Lifeperiod" id="lifeperiod" [control]="this.sensorForm.get('lifeperiod')"
+        [parentForm]="sensorForm" step="1" placeholder="0" addon="Days"></senph-number>
 
 
       <!-- 1.2.10 IMAGE -->
-      <div class="container well some-space">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Image:</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <input type="text" *ngIf="!information.image" id="image" formControlName="image" class="input is-normal">
-              </div>
-            </div>
-          </div>
-          <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label">Set value to <i>undefined</i> :</label>
-            </div>
-            <div class="field-body">
-              <div class="field is-narrow">
-                <div class="control">
-                  <label class="checkbox">
-                    <input type="checkbox" id="imageRadio" [ngModel]="information.image" [ngModelOptions]="{standalone: true}" (ngModelChange)="toggleDisabled(sensorForm.controls.image, image, $event)">
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <senph-text label="Image" id="image" [control]="this.sensorForm.get('image')" [parentForm]="sensorForm">
+      </senph-text>
+
     </div>
 
 
