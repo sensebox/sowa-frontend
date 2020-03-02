@@ -10,8 +10,8 @@ export class IDevices {
     };
 
     constructor(resDevice: any) {
-        console.log(resDevice)
-        console.log(this)
+        // console.log(resDevice)
+        // console.log(this)
         this.device = {
             type: resDevice.device.type,
             value: resDevice.device.value

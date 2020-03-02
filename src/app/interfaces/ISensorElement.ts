@@ -21,7 +21,7 @@ export class ISensorElement {
     };
 
     constructor(resSensorElement: any) {
-        console.log(resSensorElement)
+        // console.log(resSensorElement)
         this.accVal = resSensorElement.accVal;
         this.phenomenon = resSensorElement.phenomenon;
         this.sensorElement = resSensorElement.sensorElement;

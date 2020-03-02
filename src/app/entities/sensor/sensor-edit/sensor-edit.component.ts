@@ -1,14 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
-import { IDomain } from '../../../interfaces/IDomain';
-import { IIri } from '../../../interfaces/IIri';
-import { IUnit } from '../../../interfaces/IUnit';
-import { IPhenomenon } from '../../../interfaces/IPhenomenon';
-import { IElements } from '../../../interfaces/IElements';
-import { IDevice } from '../../../interfaces/IDevice';
 import { LANGUAGES } from '../../../shared/mock-languages';
 import { ILabel } from 'src/app/interfaces/ILabel';
 
@@ -22,10 +16,6 @@ export class SensorEditComponent implements OnInit {
   languageArray = LANGUAGES;
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
-  // phenomenaArray;
-  // devicesArray;
-  // unitsArray;
-
 
   validationMessages = {
     'uri': {
@@ -57,13 +47,13 @@ export class SensorEditComponent implements OnInit {
     private api: ApiService
   ) { }
 
+
   ngOnInit() {
     this.sensorForm = this.fb.group({
       uri: ['', [Validators.required, CustomValidators.uriSyntax]],
       label: this.fb.array([
         this.addLabelFormGroup()
       ]),
-      //['', [Validators.required]],
       description: ['', [Validators.required]],
       sensorElement: this.fb.array([
         this.addSensorElementFormGroup()
@@ -90,27 +80,10 @@ export class SensorEditComponent implements OnInit {
         this.getSensor(shortUri);
       }
     });
-
-
-    // this.retrievePhenomena();
-    // this.retrieveDevices();
-    // this.retrieveUnits();
-
-
   }
 
 
-
-  // addDeviceButtonClick(): void {
-  //   (<FormArray>this.sensorForm.get('device')).push(this.addDeviceFormGroup());
-  // }
-
-  // addLabelButtonClick(): void {
-  //   (<FormArray>this.sensorForm.get('label')).push(this.addLabelFormGroup());
-  // }
-
   logValidationErrors(group: FormGroup = this.sensorForm): void {
-    // console.log(Object.keys(group.controls));
     Object.keys(group.controls).forEach((key: string) => {
       const abstractControl = group.get(key);
       if (abstractControl instanceof FormGroup) {
@@ -131,8 +104,6 @@ export class SensorEditComponent implements OnInit {
   }
 
 
-
-
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
       phenomenonUri: ['', [Validators.required]],
@@ -141,11 +112,13 @@ export class SensorEditComponent implements OnInit {
     });
   }
 
+
   addDeviceFormGroup(): FormGroup {
     return this.fb.group({
       deviceUri: ['', [Validators.required]]
     });
   }
+
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
@@ -155,16 +128,6 @@ export class SensorEditComponent implements OnInit {
   }
 
 
-
-
-  // removeDeviceButtonClick(skillGroupIndex: number): void {
-  //   (<FormArray>this.sensorForm.get('device')).removeAt(skillGroupIndex);
-  // }
-
-  // removeLabelButtonClick(skillGroupIndex: number): void {
-  //   (<FormArray>this.sensorForm.get('label')).removeAt(skillGroupIndex);
-  // }
-
   getSensor(shortUri) {
     this.api.getSensor(shortUri).subscribe(
       (sensor) => this.editSensor(sensor),
@@ -172,12 +135,11 @@ export class SensorEditComponent implements OnInit {
     );
   }
 
+
   editSensor(sensor) {
-    console.log(sensor);
+    // console.log(sensor);
     this.sensorForm.patchValue({
-      // uri: sensor.iri[0] ? sensor.iri[0].value.slice(34) : "",
       uri: sensor.iri.value.slice(34),
-      // description: sensor.description[0] ? sensor.description[0].value : ""
       description: sensor.description.value,
       manufacturer: sensor.manufacturer.value,
       price: sensor.price.value,
@@ -192,9 +154,10 @@ export class SensorEditComponent implements OnInit {
     this.sensorForm.setControl('device', this.setExistingDevices(sensor.devices))
   }
 
+
   setExistingSensorElements(sensorElementSet): FormArray {
     const formArray = new FormArray([]);
-    console.log(sensorElementSet);
+    // console.log(sensorElementSet);
     sensorElementSet.forEach(s => {
       formArray.push(this.fb.group({
         phenomenonUri: [s.phenomenon.value, [Validators.required]],
@@ -206,9 +169,10 @@ export class SensorEditComponent implements OnInit {
     return formArray;
   }
 
+
   setExistingDevices(deviceSet): FormArray {
     const formArray = new FormArray([]);
-    console.log(deviceSet);
+    // console.log(deviceSet);
     deviceSet.forEach(s => {
       formArray.push(this.fb.group({
         deviceUri: [s.device.value, [Validators.required]]
@@ -218,9 +182,10 @@ export class SensorEditComponent implements OnInit {
     return formArray;
   }
 
+
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    console.log(labelSet);
+    // console.log(labelSet);
     labelSet.forEach(s => {
       formArray.push(this.fb.group({
         type: [s.type, [Validators.required]],
@@ -232,73 +197,11 @@ export class SensorEditComponent implements OnInit {
     return formArray;
   }
 
-  // retrieveDevices() {
-  //   this.api.getDevices().subscribe(res => {
-  //     this.devicesArray = res;
-  //     this.devicesArray = this.devicesArray.filter(function (el) {
-  //       return el.device.type != 'bnode'
-  //     })
-  //     // console.log(this.devicesArray);
-  //     this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
-
-  //     console.dir(this.devicesArray);
-  //   });
-  // }
-
-  // retrieveUnits() {
-  //   this.api.getUnits().subscribe(res => {
-  //     this.unitsArray = res;
-  //     // console.log(this.unitsArray);
-  //     this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
-  //     console.log(this.unitsArray);
-  //   });
-  // }
-
-  onLoadButtonClick() {
-    const formGroupSensorElement = this.fb.group([
-      new FormControl('phenomenonUri', Validators.required),
-      new FormControl('unitOfAccuracy', Validators.required),
-      new FormControl('accuracyValue', Validators.required),
-    ]);
-
-    const formArraySensorElement = this.fb.array([
-      new FormControl('phenomenonUri', Validators.required),
-      new FormControl('unitOfAccuracy', Validators.required),
-      new FormControl('accuracyValue', Validators.required),
-    ]);
-    const formGroupDevice = this.fb.group([
-      new FormControl('deviceUri', Validators.required),
-    ]);
-
-    const formArrayDevice = this.fb.array([
-      new FormControl('deviceUri', Validators.required),
-    ]);
-    const formGroupLabel = this.fb.group([
-      new FormControl('value', Validators.required),
-      new FormControl('lang', Validators.required),
-    ]);
-
-    const formArrayLabel = this.fb.array([
-      new FormControl('value', Validators.required),
-      new FormControl('lang', Validators.required),
-    ]);
-
-    console.log(formArraySensorElement);
-    console.log(formGroupSensorElement);
-    console.log(formArrayDevice);
-    console.log(formGroupDevice);
-    console.log(formArrayLabel);
-    console.log(formGroupDevice);
-  }
-
-  // getSelectedDevice(id) {
-  //   return this.sensorForm.value.device[id].deviceUri;
-  // }
   
   toggleDisabled(control, status, event){
-    console.log(control);
-    console.log(status);
-    console.log(event);
+    // console.log(control);
+    // console.log(status);
+    // console.log(event);
     this.information[status] = event;
     if(event){
       control.setValue('')
@@ -307,20 +210,11 @@ export class SensorEditComponent implements OnInit {
       control.setValue('undefined')
     }
   }
-  // toggleDisabled(control) {
-  //   console.log(this.information);
-  //   if (control.disabled) {
-  //     control.setValue('');
-  //   }
-  //   else {
-  //     control.setValue('undefined');
-  //   }
-  // }
+
 
   get image(): FormArray {
     return this.sensorForm.get('image') as FormArray;
   } 
-
 
 
   onSubmit() {

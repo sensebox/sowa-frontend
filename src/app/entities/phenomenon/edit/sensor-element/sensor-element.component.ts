@@ -64,7 +64,7 @@ export class SensorElementComponent implements OnInit {
       // console.log(this.phenomenaArray);
       this.phenomenaArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
 
-      console.dir(this.phenomenaArray);
+      // console.dir(this.phenomenaArray);
     });
   }
 
@@ -73,7 +73,7 @@ export class SensorElementComponent implements OnInit {
       this.unitsArray = res;
       // console.log(this.unitsArray);
       this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
-      console.log(this.unitsArray);
+      // console.log(this.unitsArray);
     });
   }
 
