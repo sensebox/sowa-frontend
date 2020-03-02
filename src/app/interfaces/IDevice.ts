@@ -1,41 +1,82 @@
 import { ISensors } from './ISensors'
-import { IIri } from './IIri';
+import { ILabel } from './ILabel';
 export class IDevice {
+    iri: {
+        type: string,
+        value: string
+    };
+    labels: ILabel[];
+    description: {
+        type: string;
+        value: string;
+        "xml:lang": string;
+    };
     website: {
         datatype: string;
         type: string;
         value: string;
     };
-    labels?: IIri[];
     image: {
         datatype: string;
         type: string;
         value: string;
-    };
-    description: {
-        type: string;
-        value: string;
-        "xml:lang": string;
     };
     contact: {
         datatype: string;
         type: string;
         value: string;
     };
-    iri: {
-        type: string,
-        value: string,
-    };
-    sensors?: ISensors[];
+    sensors: ISensors[];
 
-    constructor(deviceResponse: any) {
-        // console.log(deviceResponse);
-        this.website = deviceResponse.website;
-        this.labels = deviceResponse.labels;
-        this.image = deviceResponse.image;
-        this.description = deviceResponse.description;
-        this.contact = deviceResponse.contact;
-        this.iri = deviceResponse.iri;
-        this.sensors = deviceResponse.sensors
+    constructor(res: any) {
+        this.labels = [];
+        this.sensors = [];
+
+        res.forEach((element: any) => {
+            console.log(element);
+            switch (Object.getOwnPropertyNames(element)[0]) {
+
+                case "description": {
+                    Object.assign(this, element);
+                    break;
+                }
+
+                case "iri": {
+                    Object.assign(this, element);
+                    break;
+                }
+
+                case "website": {
+                    Object.assign(this, element);
+                    break;
+                }
+
+                case "image": {
+                    Object.assign(this, element);
+                    break;
+                }
+
+                case "contact": {
+                    Object.assign(this, element);
+                    break;
+                }
+
+                case "label": {
+                    this.labels.push(new ILabel(element));
+                    break;
+                }
+
+                case "sensors": {
+                    this.sensors.push(new ISensors(element));
+                    break;
+                }
+
+
+                default: {
+                    console.log("Invalid attribute");
+                    break;
+                }
+            }
+        })
     }
 }

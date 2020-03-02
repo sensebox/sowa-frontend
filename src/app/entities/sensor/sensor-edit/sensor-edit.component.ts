@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
-import { LANGUAGES } from '../../../shared/mock-languages';
 import { ILabel } from 'src/app/interfaces/ILabel';
 
 @Component({
@@ -13,7 +12,6 @@ import { ILabel } from 'src/app/interfaces/ILabel';
 })
 export class SensorEditComponent implements OnInit {
 
-  languageArray = LANGUAGES;
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
 
@@ -32,14 +30,6 @@ export class SensorEditComponent implements OnInit {
 
   formErrors = {
   };
-
-  information = {
-    manufacturer: false,       
-    price: false,    
-    datasheet: false,
-    lifeperiod: false,
-    image: false
-  }
 
   constructor(
     private fb: FormBuilder,
@@ -137,7 +127,7 @@ export class SensorEditComponent implements OnInit {
 
 
   editSensor(sensor) {
-    // console.log(sensor);
+    console.log(sensor);
     this.sensorForm.patchValue({
       uri: sensor.iri.value.slice(34),
       description: sensor.description.value,
@@ -185,7 +175,7 @@ export class SensorEditComponent implements OnInit {
 
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    // console.log(labelSet);
+    console.log(labelSet);
     labelSet.forEach(s => {
       formArray.push(this.fb.group({
         type: [s.type, [Validators.required]],
@@ -195,20 +185,6 @@ export class SensorEditComponent implements OnInit {
     });
 
     return formArray;
-  }
-
-  
-  toggleDisabled(control, status, event){
-    // console.log(control);
-    // console.log(status);
-    // console.log(event);
-    this.information[status] = event;
-    if(event){
-      control.setValue('')
-    }
-    else{
-      control.setValue('undefined')
-    }
   }
 
 

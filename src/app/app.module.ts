@@ -44,6 +44,8 @@ import { SensorElementComponent } from './entities/phenomenon/edit/sensor-elemen
 import { DeviceComponent } from './entities/phenomenon/edit/device/device.component';
 import { TextComponent } from './entities/phenomenon/edit/text/text.component';
 import { NumberComponent } from './entities/phenomenon/edit/number/number.component';
+import { SensorComponent } from './entities/phenomenon/edit/sensor/sensor.component';
+import { PhenomenonComponent } from './entities/phenomenon/edit/phenomenon/phenomenon.component';
 
 
 
@@ -84,7 +86,9 @@ import { NumberComponent } from './entities/phenomenon/edit/number/number.compon
     SensorElementComponent,
     DeviceComponent,
     TextComponent,
-    NumberComponent
+    NumberComponent,
+    SensorComponent,
+    PhenomenonComponent
   ],
   imports: [
     BrowserModule,

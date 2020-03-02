@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../services/api.service'
-import { IDomain } from '../../../interfaces/IDomain';
+import { IDomains } from '../../../interfaces/IDomains';
 import { IUnit } from '../../../interfaces/IUnit';
 import { ILabel } from 'src/app/interfaces/ILabel';
 
@@ -119,7 +119,6 @@ export class PhenomenaEditComponent implements OnInit {
     // console.log(phenomenon);
     this.phenomenonForm.patchValue({
       uri: phenomenon.iri.value.slice(34),
-      // label: phenomenon.labels[0].label.value,
       description: phenomenon.description.value
     });
     this.phenomenonForm.setControl('label', this.setExistingLabels(phenomenon.labels))
@@ -129,7 +128,7 @@ export class PhenomenaEditComponent implements OnInit {
     this.phenomenonForm.setControl('unit', this.setExistingUnits(phenomenon.units))
   }
 
-  setExistingDomains(domainSet: IDomain[]): FormArray {
+  setExistingDomains(domainSet: IDomains[]): FormArray {
     const formArray = new FormArray([]);
     domainSet.forEach(s => {
       formArray.push(this.fb.group({

@@ -1,6 +1,6 @@
 import { IIri } from './IIri';
 import { IUnit } from './IUnit';
-import { IDomain } from './IDomain';
+import { IDomains } from './IDomains';
 import { ILabel } from './ILabel';
 
 export class IPhenomenon {
@@ -15,7 +15,7 @@ export class IPhenomenon {
         "xml:lang": string;
     };
     units?: IUnit[];
-    domains?: IDomain[];
+    domains?: IDomains[];
 
     constructor(res: any) {
         // console.log(phenomenonResponse);
