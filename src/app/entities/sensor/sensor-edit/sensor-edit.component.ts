@@ -22,11 +22,9 @@ export class SensorEditComponent implements OnInit {
   languageArray = LANGUAGES;
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
-  phenomenaArray;
-  phenomenaArrayFiltered;
-  devicesArray;
-  devicesArrayFiltered;
-  unitsArray;
+  // phenomenaArray;
+  // devicesArray;
+  // unitsArray;
 
 
   validationMessages = {
@@ -44,6 +42,14 @@ export class SensorEditComponent implements OnInit {
 
   formErrors = {
   };
+
+  information = {
+    manufacturer: false,       
+    price: false,    
+    datasheet: false,
+    lifeperiod: false,
+    image: false
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -86,24 +92,22 @@ export class SensorEditComponent implements OnInit {
     });
 
 
-    this.retrievePhenomena();
-    this.retrieveDevices();
-    this.retrieveUnits();
+    // this.retrievePhenomena();
+    // this.retrieveDevices();
+    // this.retrieveUnits();
 
 
   }
 
-  addSensorElementButtonClick(): void {
-    (<FormArray>this.sensorForm.get('sensorElement')).push(this.addSensorElementFormGroup());
-  }
 
-  addDeviceButtonClick(): void {
-    (<FormArray>this.sensorForm.get('device')).push(this.addDeviceFormGroup());
-  }
 
-  addLabelButtonClick(): void {
-    (<FormArray>this.sensorForm.get('label')).push(this.addLabelFormGroup());
-  }
+  // addDeviceButtonClick(): void {
+  //   (<FormArray>this.sensorForm.get('device')).push(this.addDeviceFormGroup());
+  // }
+
+  // addLabelButtonClick(): void {
+  //   (<FormArray>this.sensorForm.get('label')).push(this.addLabelFormGroup());
+  // }
 
   logValidationErrors(group: FormGroup = this.sensorForm): void {
     // console.log(Object.keys(group.controls));
@@ -151,17 +155,15 @@ export class SensorEditComponent implements OnInit {
   }
 
 
-  removeSensorElementButtonClick(skillGroupIndex: number): void {
-    (<FormArray>this.sensorForm.get('sensorElement')).removeAt(skillGroupIndex);
-  }
 
-  removeDeviceButtonClick(skillGroupIndex: number): void {
-    (<FormArray>this.sensorForm.get('device')).removeAt(skillGroupIndex);
-  }
 
-  removeLabelButtonClick(skillGroupIndex: number): void {
-    (<FormArray>this.sensorForm.get('label')).removeAt(skillGroupIndex);
-  }
+  // removeDeviceButtonClick(skillGroupIndex: number): void {
+  //   (<FormArray>this.sensorForm.get('device')).removeAt(skillGroupIndex);
+  // }
+
+  // removeLabelButtonClick(skillGroupIndex: number): void {
+  //   (<FormArray>this.sensorForm.get('label')).removeAt(skillGroupIndex);
+  // }
 
   getSensor(shortUri) {
     this.api.getSensor(shortUri).subscribe(
@@ -195,9 +197,9 @@ export class SensorEditComponent implements OnInit {
     console.log(sensorElementSet);
     sensorElementSet.forEach(s => {
       formArray.push(this.fb.group({
-        phenomenonUri: s.phenomenon.value,
-        unitOfAccuracy: s.unit.value,
-        accuracyValue: s.accVal.value
+        phenomenonUri: [s.phenomenon.value, [Validators.required]],
+        unitOfAccuracy: [s.unit.value, [Validators.required]],
+        accuracyValue: [s.accVal.value, [Validators.required]]
       }));
     });
 
@@ -209,7 +211,7 @@ export class SensorEditComponent implements OnInit {
     console.log(deviceSet);
     deviceSet.forEach(s => {
       formArray.push(this.fb.group({
-        deviceUri: s.device.value,
+        deviceUri: [s.device.value, [Validators.required]]
       }));
     });
 
@@ -221,54 +223,36 @@ export class SensorEditComponent implements OnInit {
     console.log(labelSet);
     labelSet.forEach(s => {
       formArray.push(this.fb.group({
-        type: s.type,
-        value: s.value,
-        lang: s["xml:lang"]
+        type: [s.type, [Validators.required]],
+        value: [s.value, [Validators.required]],
+        lang: [s["xml:lang"], [Validators.required]]
       }));
     });
 
     return formArray;
   }
 
-  retrievePhenomena() {
-    this.api.getPhenomena().subscribe(res => {
-      this.phenomenaArray = res;
-      this.phenomenaArray = this.phenomenaArray.filter(function (el) {
-        return el.phenomenon.type != 'bnode'
-      })
-      // console.log(this.phenomenaArray);
-      this.phenomenaArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+  // retrieveDevices() {
+  //   this.api.getDevices().subscribe(res => {
+  //     this.devicesArray = res;
+  //     this.devicesArray = this.devicesArray.filter(function (el) {
+  //       return el.device.type != 'bnode'
+  //     })
+  //     // console.log(this.devicesArray);
+  //     this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
 
-      console.dir(this.phenomenaArray);
-    });
-  }
+  //     console.dir(this.devicesArray);
+  //   });
+  // }
 
-  retrieveDevices() {
-    this.api.getDevices().subscribe(res => {
-      this.devicesArray = res;
-      this.devicesArray = this.devicesArray.filter(function (el) {
-        return el.device.type != 'bnode'
-      })
-      // console.log(this.devicesArray);
-      this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
-
-      console.dir(this.devicesArray);
-    });
-  }
-
-  retrieveUnits() {
-    this.api.getUnits().subscribe(res => {
-      this.unitsArray = res;
-      // console.log(this.unitsArray);
-      this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
-      console.log(this.unitsArray);
-    });
-  }
-
-
-  check() {
-    console.log(this.sensorForm.get('device'));
-  }
+  // retrieveUnits() {
+  //   this.api.getUnits().subscribe(res => {
+  //     this.unitsArray = res;
+  //     // console.log(this.unitsArray);
+  //     this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
+  //     console.log(this.unitsArray);
+  //   });
+  // }
 
   onLoadButtonClick() {
     const formGroupSensorElement = this.fb.group([
@@ -307,45 +291,40 @@ export class SensorEditComponent implements OnInit {
     console.log(formGroupDevice);
   }
 
-  castNumber(event) {
+  // getSelectedDevice(id) {
+  //   return this.sensorForm.value.device[id].deviceUri;
+  // }
+  
+  toggleDisabled(control, status, event){
+    console.log(control);
+    console.log(status);
     console.log(event);
-  }
-
-  getSelectedDevice(id) {
-    return this.sensorForm.value.device[id].deviceUri;
-  }
-  getSelectedPhenomenon(id) {
-    return this.sensorForm.value.sensorElement[id].phenomenonUri;
-  }
-
-  toggleDisabled(control) {
-    console.log("check");
-    if (control.disabled) {
-      control.enable();
-      control.setValue('');
+    this.information[status] = event;
+    if(event){
+      control.setValue('')
     }
-    else {
-      control.disable();
-      control.setValue('undefined');
+    else{
+      control.setValue('undefined')
     }
-
-    //   if (isChecked){
-    //     document.getElementById("manufacturer").disabled = true;
-    //     document.getElementById("manufacturer").value = "unknown";
-    //   }
-    //   else{
-    //     document.getElementById("manufacturer").disabled = false;
-    //     document.getElementById("manufacturer").value = "";
-
-    //   }
-    // // this.sensorForm.value.sensorElement[id].phenomenonUri
-    // console.log(isChecked);
   }
+  // toggleDisabled(control) {
+  //   console.log(this.information);
+  //   if (control.disabled) {
+  //     control.setValue('');
+  //   }
+  //   else {
+  //     control.setValue('undefined');
+  //   }
+  // }
+
+  get image(): FormArray {
+    return this.sensorForm.get('image') as FormArray;
+  } 
 
 
 
   onSubmit() {
-    console.log(this.devicesArray);
+    // console.log(this.devicesArray);
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
     // });

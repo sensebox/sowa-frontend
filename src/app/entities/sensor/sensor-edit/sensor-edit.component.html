@@ -45,57 +45,7 @@
       <!-- 1.2.2 LABELS -->
       <div class="container well some-space">
         <label for="label">Labels</label>
-        <div formArrayName="label" *ngFor="let dom of sensorForm.get('label').controls; let i = index">
-          <div [formGroupName]="i" style="padding:1em;">
-            <article class="message is-small is-inverted ">
-              <div class="message-header">
-                <p></p>
-                <button class="button is-small is-danger" (click)="removeLabelButtonClick(i)">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </button>
-              </div>
-              <div class="message-body" style="border-width: 0 4px 4px 4px;">
-                <div class="field is-horizontal">
-                  <div class="field-label is-normal">
-                    <label class="label">Label:</label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field">
-                      <div class="control is-expanded">
-                        <input class="input is-normal" type="text" placeholder="Label" [id]="'labelVal' + i"
-                          formControlName="value">
-                      </div>
-                    </div>
-                    <div class="field-label is-normal">
-                      <label class="label">Language:</label>
-                    </div>
-                    <div class="field">
-                      <div class="control is-expanded">
-                        <div class="select ">
-                          <select [id]="'lang' + i" formControlName="lang">
-                            <option value=""> Choose a language</option>
-                            <option *ngFor="let language of languageArray" [ngValue]="language.val">
-                              {{language.show}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-        <button type="button" class="button is-fullwidth  is-warning is-inverted" (click)="addLabelButtonClick()"
-          [disabled]="sensorForm.get('label').invalid">
-          <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span>
-            Add Label
-          </span>
-        </button>
+        <senph-label [parentForm]="sensorForm"></senph-label>
       </div>
 
 
@@ -124,131 +74,14 @@
       <!-- 1.2.4 PHENOMENA/SENSORELEMENTS -->
       <div class="container well some-space">
         <label for="sensorElement">Phenomena</label>
-        <div formArrayName="sensorElement" *ngFor="let dom of sensorForm.get('sensorElement').controls; let i = index">
-          <div [formGroupName]="i" style=" padding:1em;">
-            <article class="message is-small is-inverted ">
-              <div class="message-header">
-                <p>{{getSelectedPhenomenon(i)}}</p>
-                <button class="button is-small is-danger" (click)="removeSensorElementButtonClick(i)">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </button>
-              </div>
-              <div class="message-body" style="border-width: 0 4px 4px 4px;">
-                <div class="field is-horizontal">
-                  <div class="field-label is-normal">
-                    <label class="label">Phenomenon:</label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field is-narrow">
-                      <div class="control">
-                        <div class="select ">
-                          <select [id]="'phenomenonUri' + i" formControlName="phenomenonUri">
-                            <option value=""> Choose a phenomenon</option>
-                            <option *ngFor="let phenomenon of phenomenaArray" [ngValue]="phenomenon.phenomenon.value">
-                              {{phenomenon.label[0].value}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="field is-horizontal">
-                  <div class="field-label is-normal">
-                    <label class="label">Numeric Accuracy Value: </label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field is-narrow">
-                      <div class="control">
-                        <input class="input is-normal" type="number" step="0.0000000001" placeholder="0.0000000001"
-                          [id]="'accuracyValue' + i" formControlName="accuracyValue"
-                          (ngModelChange)="castNumber($event)">
-                      </div>
-                      <p class="help">Be aware numbers are rounded to a maximum of 15 digits </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="field is-horizontal">
-                  <div class="field-label is-normal">
-                    <label class="label">Unit of Accuracy:</label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field is-narrow">
-                      <div class="control">
-                        <div class="select ">
-                          <select [id]="'unitOfAccuracy' + i" formControlName="unitOfAccuracy">
-                            <option value=""> Choose a unit</option>
-                            <option *ngFor="let unit of unitsArray" [ngValue]="unit.y.value">
-                              {{unit.label.value}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-        <button type="button" class="button is-fullwidth is-warning is-inverted" (click)="addSensorElementButtonClick()"
-          [disabled]="sensorForm.get('sensorElement').invalid">
-          <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span>
-            Add Phenomenon
-          </span>
-        </button>
+        <senph-sensor-element [parentForm]="sensorForm"></senph-sensor-element>
       </div>
 
 
       <!-- 1.2.5 DEVICES -->
       <div class="container well some-space">
         <label for="device">Devices</label>
-        <div formArrayName="device" *ngFor="let dom of sensorForm.get('device').controls; let i = index">
-          <div [formGroupName]="i" style="padding:1em;">
-            <article class="message is-small is-inverted ">
-              <div class="message-header">
-                <p>{{getSelectedDevice(i)}}</p>
-                <button class="button is-small is-danger" (click)="removeDeviceButtonClick(i)">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </button>
-              </div>
-              <div class="message-body" style="border-width: 0 4px 4px 4px;">
-                <div class="field is-horizontal">
-                  <div class="field-label is-normal">
-                    <label class="device">Device:</label>
-                  </div>
-                  <div class="field-body">
-                    <div class="field is-narrow">
-                      <div class="control">
-                        <div class="select ">
-                          <select [id]="'deviceUri' + i" formControlName="deviceUri"
-                            (ngModelChange)="castNumber($event)">
-                            <option value=""> Choose a device</option>
-                            <option *ngFor="let device of devicesArray" [ngValue]="device.device.value">
-                              {{device.label[0].value}}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-        <button type="button" class="button is-fullwidth  is-warning is-inverted" (click)="addDeviceButtonClick()"
-          [disabled]="sensorForm.get('device').invalid">
-          <span class="icon is-small">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span>
-            Add Device
-          </span>
-        </button>
+        <senph-device [parentForm]="sensorForm"></senph-device>
       </div>
 
 
@@ -399,7 +232,7 @@
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input type="text" id="image" formControlName="image" class="input is-normal">
+                <input type="text" *ngIf="!information.image" id="image" formControlName="image" class="input is-normal">
               </div>
             </div>
           </div>
@@ -411,7 +244,7 @@
               <div class="field is-narrow">
                 <div class="control">
                   <label class="checkbox">
-                    <input type="checkbox" id="imageRadio" (change)="toggleDisabled(sensorForm.controls.image)">
+                    <input type="checkbox" id="imageRadio" [ngModel]="information.image" [ngModelOptions]="{standalone: true}" (ngModelChange)="toggleDisabled(sensorForm.controls.image, image, $event)">
                   </label>
                 </div>
               </div>
