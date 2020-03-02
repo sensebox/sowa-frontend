@@ -14,9 +14,21 @@ export class LabelComponent implements OnInit {
 
   constructor(private fb: FormBuilder) { }
   languageArray = LANGUAGES;
+  validationMessages = {
+    'label': {
+      'required': 'Label is required.'
+    }, 
+    'labelLang': {
+      'required': 'Language for label is required.'
+    }
+  };
 
   ngOnInit() {
   }
+
+  get label(): FormArray {
+    return this.parentForm.get('label') as FormArray;
+  } 
 
   addLabelButtonClick(): void {
     (<FormArray>this.parentForm.get('label')).push(this.addLabelFormGroup());

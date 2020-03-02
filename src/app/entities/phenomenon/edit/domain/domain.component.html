@@ -25,6 +25,10 @@
                                         </select>
                                     </div>
                                 </div>
+                                <span class="help-block error-block" *ngIf="domain.controls[i].get('domainUri').errors?.required &&
+                                (domain.controls[i].get('domainUri').touched || !domain.controls[i].get('domainUri').pristine)">
+                                    {{validationMessages.domain.required}}
+                                </span>
                             </div>
                         </div>
                     </div>

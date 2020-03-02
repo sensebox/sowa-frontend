@@ -13,11 +13,21 @@ export class UnitComponent implements OnInit {
     private fb: FormBuilder,
     private api: ApiService
   ) { }
+
   unitsArray;
+  validationMessages = {
+    'unit': {
+      'required': 'Please select a unit.'
+    }
+  };
 
   ngOnInit() {
     this.retrieveUnits();
   }
+
+  get unit(): FormArray {
+    return this.parentForm.get('unit') as FormArray;
+  } 
 
   addUnitButtonClick(): void {
     (<FormArray>this.parentForm.get('unit')).push(this.addUnitFormGroup());

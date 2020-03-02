@@ -19,6 +19,11 @@
                                     <input class="input is-normal" type="text" placeholder="Label" [id]="'labelVal' + i"
                                         formControlName="value">
                                 </div>
+                                <span class="help-block error-block"
+                                    *ngIf="label.controls[i].get('value').errors?.required &&
+                                                                (label.controls[i].get('value').touched || !label.controls[i].get('value').pristine)">
+                                    {{validationMessages.label.required}}
+                                </span>
                             </div>
                             <div class="field-label is-normal">
                                 <label class="label">Language:</label>
@@ -34,6 +39,10 @@
                                         </select>
                                     </div>
                                 </div>
+                                <span class="help-block error-block" *ngIf="label.controls[i].get('lang').errors?.required &&
+                                (label.controls[i].get('lang').touched || !label.controls[i].get('lang').pristine)">
+                                    {{validationMessages.labelLang.required}}
+                                </span>
                             </div>
                         </div>
                     </div>

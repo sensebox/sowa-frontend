@@ -15,11 +15,19 @@ export class DomainComponent implements OnInit {
     private api: ApiService
   ) { }
   domainsArray;
-
+  validationMessages = {
+    'domain': {
+      'required': 'Please select a domain.'
+    } 
+  };
 
   ngOnInit() {
     this.retrieveDomains();
   }
+
+  get domain(): FormArray {
+    return this.parentForm.get('domain') as FormArray;
+  } 
 
   addDomainButtonClick(): void {
     (<FormArray>this.parentForm.get('domain')).push(this.addDomainFormGroup());

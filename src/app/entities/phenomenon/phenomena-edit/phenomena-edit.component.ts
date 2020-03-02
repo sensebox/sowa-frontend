@@ -137,7 +137,7 @@ export class PhenomenaEditComponent implements OnInit {
     const formArray = new FormArray([]);
     domainSet.forEach(s => {
       formArray.push(this.fb.group({
-        domainUri: s.domain.value
+        domainUri: [s.domain.value, [Validators.required]]
       }));
     });
 
@@ -150,7 +150,7 @@ export class PhenomenaEditComponent implements OnInit {
 
     unitSet.forEach(s => {
       formArray.push(this.fb.group({
-        unitUri: s.unit.value
+        unitUri: [s.unit.value, [Validators.required]]
       }));
     });
 
@@ -162,9 +162,9 @@ export class PhenomenaEditComponent implements OnInit {
     // console.log(labelSet);
     labelSet.forEach(s => {
       formArray.push(this.fb.group({
-        type: s.type,
-        value: s.value,
-        lang: s["xml:lang"]
+        type: [s.type, [Validators.required]],
+        value: [s.value, [Validators.required]],
+        lang: [s["xml:lang"], [Validators.required]]
       }));
     });
 

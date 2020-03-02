@@ -25,6 +25,11 @@
                                         </select>
                                     </div>
                                 </div>
+                                <span class="help-block error-block"
+                                    *ngIf="unit.controls[i].get('unitUri').errors?.required &&
+                                                                (unit.controls[i].get('unitUri').touched || !unit.controls[i].get('unitUri').pristine)">
+                                    {{validationMessages.unit.required}}
+                                </span>
                             </div>
                         </div>
                     </div>
