@@ -1,22 +1,22 @@
 <section class="hero is-dark is-bold">
   <div class="hero-body">
-    <div class="container">
-      <div class="columns">
+    <div class="container is-fluid">
+      <nav class="level">
 
-        <div class="column is-11">
-          <h1 class="title" style="color: #ffd63e;">
-            {{title}}
-
-          </h1>
-          <h2 class="subtitle" style="color: #ffd63e;">
-            {{subtitle}}
-          </h2>
+        <div class="level-left">
+          <div>
+            <h1 class="title" style="color: #ffd63e;">
+              {{title}}
+            </h1>
+            <h2 *ngIf="subtitle" class="subtitle" style="color: #ffd63e;">
+              {{subtitle}}
+            </h2>
+          </div>
         </div>
-
-        <div class="column is-1" *ngIf="button">
+        <div class="level-right" *ngIf="button">
           <a class="button is-warning" (click)="buttonClick()">Edit</a>
         </div>
-      </div>
+      </nav>
     </div>
   </div>
 
