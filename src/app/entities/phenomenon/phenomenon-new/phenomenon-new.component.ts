@@ -2,12 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl, FormArray, Form } from '@angular/forms';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ActivatedRoute } from '@angular/router';
-import { Phenomenon } from '../../../phenomenon';
 import { ApiService } from '../../../services/api.service'
-import { ISensors } from '../../../interfaces/ISensors';
-import { IDomain } from '../../../interfaces/IDomain';
+import { IDomains } from '../../../interfaces/IDomains';
 import { IUnit } from '../../../interfaces/IUnit';
-import { IIri } from '../../../interfaces/IIri';
 import { LANGUAGES } from '../../../shared/mock-languages';
 import { ILabel } from 'src/app/interfaces/ILabel';
 @Component({
@@ -142,7 +139,7 @@ export class PhenomenonNewComponent implements OnInit {
     (<FormArray>this.phenomenonForm.get('label')).removeAt(skillGroupIndex);
   }
 
-  setExistingDomains(domainSet: IDomain[]): FormArray {
+  setExistingDomains(domainSet: IDomains[]): FormArray {
     const formArray = new FormArray([]);
     domainSet.forEach(s => {
       formArray.push(this.fb.group({

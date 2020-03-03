@@ -162,8 +162,8 @@ export class DeviceNewComponent implements OnInit {
     const formArray = new FormArray([]);
     sensorSet.forEach(s => {
       formArray.push(this.fb.group({
-        sensorUri: s.sensors.value,
-        sensorLabel: s.sensorsLabel.value
+        sensorUri: s.sensor.value,
+        sensorLabel: s.sensorLabel.value
       }));
     });
 
