@@ -2,6 +2,7 @@ import { IIri } from './IIri';
 import { IUnit } from './IUnit';
 import { IDomains } from './IDomains';
 import { ILabel } from './ILabel';
+import { ISensors } from './ISensors';
 
 export class IPhenomenon {
     iri: {
@@ -16,6 +17,7 @@ export class IPhenomenon {
     };
     units?: IUnit[];
     domains?: IDomains[];
+    sensors?: ISensors[];
 
     constructor(res: any) {
         // console.log(phenomenonResponse);
@@ -28,10 +30,11 @@ export class IPhenomenon {
         this.labels = [];
         this.units = [];
         this.domains = [];
+        this.sensors = [];
         
 
         res.forEach((element: any) => {
-            // console.log(element);
+            console.log(element);
             switch (Object.getOwnPropertyNames(element)[0]) {
   
               case "description": {
@@ -56,6 +59,11 @@ export class IPhenomenon {
   
               case "domain": {
                 this.domains.push(element);
+                break;
+              }
+              
+              case "sensors": {
+                this.sensors.push(new ISensors(element));
                 break;
               }
   

@@ -14,14 +14,17 @@ export class ISensorElement {
         type: string,
         value: string
     };
-    phenomenonName: ILabel[];
+    phenomenonName: {
+        type: string,
+        value: string
+    };
     unit: {
         type: string,
         value: string
     };
 
     constructor(resSensorElement: any) {
-        // console.log(resSensorElement)
+        console.log(resSensorElement)
         this.accVal = resSensorElement.accVal;
         this.phenomenon = resSensorElement.phenomenon;
         this.sensorElement = resSensorElement.sensorElement;
