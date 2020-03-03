@@ -176,6 +176,12 @@ export class ApiService {
     return this.http.get(this.APIURL + '/units');
   }
 
+  getUnitLabel(iri) {
+    console.log(iri)
+    return this.http.get(this.APIURL + '/unit/http://purl.obolibrary.org/obo/' + iri.uri.slice(31));
+  }
+
+
   private handleError(errorResponse: HttpErrorResponse) {
     if (errorResponse.error instanceof ErrorEvent) {
       console.error('Client Side Error: ', errorResponse.error);
