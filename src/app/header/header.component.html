@@ -1,46 +1,53 @@
-<nav class="navbar is-dark is-transparent" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="#">
-      <img src="../../assets/img/owl_logo.png" class="brand">
-    </a>
-  </div>
+<section class="hero is-dark is-bold is-small">
+  <div class="hero-body">
+    <div class="container  is-fluid">
+      <nav class="level navbar is-dark is-transparent" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand level-left">
+          <a class="navbar-item" href="#">
+            <img src="../../assets/img/owl_logo.png" class="brand">
+          </a>
+        </div>
 
-    <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger is active" aria-label="menu"
-      aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-
-  <div id="navbarBasicExample" class="navbar-menu" #navMenu>
-    <div class="navbar-start">
-      <div class="navbar-item has-dropdown is-hoverable" *ngFor="let nav of fillerNav">
-        <a class="navbar-link">
-          {{nav.topic}}
+        <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger is active" aria-label="menu"
+          aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
         </a>
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item" *ngFor="let li of nav.options" routerLink={{li.path}} routerLinkActive="active">
-            {{li.title}}
-          </a>
+        <div id="navbarBasicExample" class="navbar-menu" #navMenu>
+          <div class="navbar-start level-left">
+            <div class="navbar-item has-dropdown is-hoverable" *ngFor="let nav of fillerNav">
+              <a class="navbar-link is-size-4 has-text-weight-bold">
+                {{nav.topic}}
+              </a>
+
+              <div class="navbar-dropdown">
+                <a class="navbar-item black-color" *ngFor="let li of nav.options" routerLink={{li.path}}
+                  routerLinkActive="active">
+                  {{li.title}}
+                </a>
+              </div>
+            </div>
+
+
+
+          </div>
+
+          <div class="navbar-end level-right">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-light">
+                  <strong>Sign up</strong>
+                </a>
+                <a class="button is-warning">
+                  Log in
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-
-
-
-    </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-dark">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-warning">
-            Log in
-          </a>
-        </div>
-      </div>
+      </nav>
     </div>
   </div>
-</nav>
+</section>
