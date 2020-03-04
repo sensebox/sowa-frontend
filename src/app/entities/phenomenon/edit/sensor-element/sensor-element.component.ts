@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../../../services/api.service'
+import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 
 
 @Component({
@@ -57,15 +58,17 @@ export class SensorElementComponent implements OnInit {
 
   retrievePhenomena() {
     this.api.getPhenomena().subscribe(res => {
-      this.phenomenaArray = res;
-      this.phenomenaArray = this.phenomenaArray.filter(function (el) {
-        return el.phenomenon.type != 'bnode'
-      })
-      // console.log(this.phenomenaArray);
-      this.phenomenaArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
-
-      // console.dir(this.phenomenaArray);
-    });
+      // console.log(res);
+    var tempArray: any = res;
+  
+    tempArray =  tempArray.filter(function (el){
+      return el.phenomenon.type != 'bnode'
+    })
+    // console.log(tempArray);
+    tempArray.sort((a,b) => a.phenomenonLabel[0].value.localeCompare(b.phenomenonLabel[0].value));
+    this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
+    // console.log(this.phenomenaArray);
+  });
   }
 
   retrieveUnits() {
