@@ -29,11 +29,12 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss",
-              "node_modules/bulma/css/bulma.min.css"
+              "node_modules/bulma/css/bulma.min.css",
+              "node_modules/bulma-extensions/bulma-pageloader/dist/css/bulma-pageloader.min.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/popper.js/dist/umd/popper.min.js"
             ]
           },
           "configurations": {
