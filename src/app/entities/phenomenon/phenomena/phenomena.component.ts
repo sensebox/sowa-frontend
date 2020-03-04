@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
+import { IPhenomena } from 'src/app/interfaces/IPhenomena';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'senph-phenomena',
@@ -9,11 +11,12 @@ import { Router } from '@angular/router';
 })
 export class PhenomenaComponent implements OnInit {
 
+  faSearch = faSearch;
   phenomenaArray;
-  phenomenaArrayFiltered;
   selectedPhenomenon;
+  searchTerm;
 
-  constructor( 
+  constructor(
       private api:ApiService,
       private _routerService:Router
     ) { }
@@ -21,33 +24,20 @@ export class PhenomenaComponent implements OnInit {
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
         console.log(res);
-      this.phenomenaArray=res;
+      var tempArray: any = res;
     
-      this.phenomenaArray =  this.phenomenaArray.filter(function (el){
+      tempArray =  tempArray.filter(function (el){
         return el.phenomenon.type != 'bnode'
       })
-      // console.log(this.phenomenaArray);
-      this.phenomenaArray.sort((a,b) => a.label[0].value.localeCompare(b.label[0].value));
-
+      // console.log(tempArray);
+      tempArray.sort((a,b) => a.phenomenonLabel[0].value.localeCompare(b.phenomenonLabel[0].value));
+      this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
       console.log(this.phenomenaArray);
-      this.assignCopy();
     });
   }
 
   onSelect(phenomenon){
     this.selectedPhenomenon = phenomenon;
     this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon.value.slice(34)]);
-  }
-
-  assignCopy(){
-    this.phenomenaArrayFiltered = Object.assign([], this.phenomenaArray);
- }
-  filterItem(value){
-      if(!value){
-          this.assignCopy();
-      } // when nothing has typed
-      this.phenomenaArrayFiltered = Object.assign([], this.phenomenaArray).filter(
-        sensors => JSON.stringify(sensors).toLowerCase().indexOf(value.toLowerCase()) > -1
-      )
   }
 }

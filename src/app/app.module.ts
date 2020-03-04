@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavComponent } from './old-stuff/nav/nav.component';
 import { LandingpageComponent } from './landingpage/landingpage.component';
@@ -46,7 +46,11 @@ import { TextComponent } from './entities/phenomenon/edit/text/text.component';
 import { NumberComponent } from './entities/phenomenon/edit/number/number.component';
 import { SensorComponent } from './entities/phenomenon/edit/sensor/sensor.component';
 import { PhenomenonComponent } from './entities/phenomenon/edit/phenomenon/phenomenon.component';
-
+import { Table3Component } from './tiles/table3/table3.component';
+import { UriTileComponent } from './tiles/uri-tile/uri-tile.component';
+import { InfoTileComponent } from './tiles/info-tile/info-tile.component';
+import { FilterPipePipe } from './pipes/filter-pipe.pipe';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -88,7 +92,11 @@ import { PhenomenonComponent } from './entities/phenomenon/edit/phenomenon/pheno
     TextComponent,
     NumberComponent,
     SensorComponent,
-    PhenomenonComponent
+    PhenomenonComponent,
+    Table3Component,
+    UriTileComponent,
+    InfoTileComponent,
+    FilterPipePipe
   ],
   imports: [
     BrowserModule,
@@ -97,7 +105,8 @@ import { PhenomenonComponent } from './entities/phenomenon/edit/phenomenon/pheno
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

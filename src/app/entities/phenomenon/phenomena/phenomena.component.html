@@ -1,21 +1,77 @@
-<senph-hero-banner title="Discover phenomena"
-  subtitle="Here you can find a list of all phenomena that are registered in SOWA"></senph-hero-banner>
+<senph-hero-banner title="Phenomena" subtitle="Discover all phenomena registered in SOWA below"></senph-hero-banner>
 
-<div class="container">
-  <div class="notification">
+<section class="hero is-dark is-small is-bold">
+  <div class="hero-body">
+    <div class="level">
+      <!-- <label for="myInput">Search for Phenomena</label> -->
+      <!-- <div class="level-left"> -->
+        <div class=" level-item">
+          <div class="field">
+            <p class="control has-icons-left is-expanded">
+            <input class="input" type="text" #myInput placeholder="Type to filter phenomena..."
+              [(ngModel)]="searchTerm">
+            <span class="icon is-left">
+              <fa-icon [icon]="faSearch"></fa-icon>
+            </span>
+          </p>
+        </div>
+        <!-- </div> -->
+      </div>
+      <!-- <div class="level-right"> -->
+        <div class="level-item" *ngIf="phenomenaArray">
+          <div class="has-text-centered">
+            <p class="heading">Phenomena</p>
+            <p class="title"> {{phenomenaArray.length}}
+            </p>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  </div>
+</section>
 
-
-    <div class="field is-grouped">
+<div class="container is-fluid">
+  <div class="notification is-light">
+    <!-- <div class="field is-grouped">
       <p class="control is-expanded">
-        <input class="input" type="text" #myInput placeholder="Type to filter phenomena..." [(ngModel)]="phenomena">
+        <input class="input" type="text" #myInput placeholder="Type to filter phenomena..." [(ngModel)]="searchTerm">
       </p>
-      <p class="control">
-        <a (click)="filterItem(myInput.value)" class="button is-info">
-          Search
-        </a>
-      </p>
+    </div> -->
+    <div class="list is-hoverable">
+      <div class="list-item">
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-1">
+
+          </div>
+          <div class="column is-5">
+            <strong>
+              Label
+            </strong>
+          </div>
+          <div class="column is-6">
+            <strong>
+              URI
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div class="list-item" *ngFor="let phenomena of phenomenaArray | filterPipe:searchTerm;let i = index"
+        [class.selected]="phenomena === selectedPhenomenon" (click)="onSelect(phenomena)">
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-1">
+            {{i+1}}
+          </div>
+          <div class="column is-5">
+            {{phenomena.phenomenonLabel[0]?.value}}
+          </div>
+          <div class="column is-6">
+            {{phenomena.phenomenon.value}}
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- 
     <table class="table is-hoverable is-striped">
       <thead>
         <tr>
@@ -42,7 +98,7 @@
           <td>{{phenomena.phenomenon.value}}</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
 
   </div>
 </div>

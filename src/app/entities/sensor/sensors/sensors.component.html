@@ -1,22 +1,73 @@
-<senph-hero-banner title="Discover sensors"
-  subtitle="Here you can find a list of all sensors that are registered in SOWA"></senph-hero-banner>
+<senph-hero-banner title="Sensors"
+  subtitle="Discover all phenomena registered in SOWA below"></senph-hero-banner>
 
-<div class="container">
-  <div class="notification">
-
-
-    <div class="field is-grouped">
-      <p class="control is-expanded">
-        <input class="input" type="text" #myInput placeholder="Type to filter sensors..." [(ngModel)]="sensors">
+<!-- 
+<div class="container is-fluid">
+  <div class="notification has-text-centered ">
+    <div class="field">
+      <p class="control has-icons-left is-expanded">
+        <input class="input" type="text" #myInput placeholder="Type to filter sensors..." [(ngModel)]="searchTerm">
+        <span class="icon is-left">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </span>
       </p>
-      <p class="control">
+    </div>
+  </div>
+</div> -->
+
+<div class="container is-fluid">
+  <div class="notification">
+    <div class="field is-grouped">
+      <p class="control  has-icons-left is-expanded">
+        <input class="input" type="text" #myInput placeholder="Type to filter sensors..." [(ngModel)]="searchTerm">
+        <span class="icon is-left">
+          <fa-icon [icon]="faSearch"></fa-icon>
+        </span>
+      </p>
+      <!-- <p class="control">
         <a (click)="filterItem(myInput.value)" class="button is-info">
           Search
         </a>
-      </p>
+      </p> -->
     </div>
 
-    <table class="table is-hoverable is-striped">
+    <div class="list is-hoverable">
+      <div class="list-item">
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-1">
+
+          </div>
+          <div class="column is-5">
+            <strong>
+              Label
+            </strong>
+          </div>
+          <div class="column is-6">
+            <strong>
+              URI
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div class="list-item" *ngFor="let sensors of sensorsArray | filterPipe:searchTerm;let i = index"
+        [class.selected]="sensors === selectedSensor" (click)=onSelect(sensors)>
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-1">
+            {{i+1}}
+          </div>
+          <div class="column is-5">
+            {{sensors.sensorLabel[0]?.value}}
+          </div>
+          <div class="column is-6">
+            {{sensors.sensor.value}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pageloader is-bottom-to-top" [ngClass]="{'is-active': pageLoadActive === '1' }"><span
+        class="title">Pageloader</span></div>
+    <!-- <table class="table is-hoverable is-striped">
       <thead>
         <tr>
           <th><abbr title="Number">No.</abbr></th>
@@ -32,17 +83,17 @@
         </tr>
       </tfoot>
       <tbody>
-        <tr *ngFor="let sensors of sensorsArrayFiltered;let i = index" [hidden]='sensors.sensor.type != "uri"'
+        <tr *ngFor="let sensors of sensorsArray | filterPipe:searchTerm;let i = index" [hidden]='sensors.sensor.type != "uri"'
           [class.selected]="sensors === selectedSensor">
           <th>{{i+1}}</th>
           <td>
             <a (click)="onSelect(sensors)" class="button"
-              title="{{sensors.label[0]?.value}}">{{sensors.label[0]?.value}}</a>
+              title="{{sensors.sensorLabel[0]?.value}}">{{sensors.sensorLabel[0]?.value}}</a>
           </td>
           <td>{{sensors.sensor.value}}</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
 
   </div>
 </div>
