@@ -181,6 +181,9 @@ export class ApiService {
     return this.http.get(this.APIURL + '/unit/http://purl.obolibrary.org/obo/' + iri.uri.slice(31));
   }
 
+  getAllEntities() {
+    return this.http.get(this.APIURL + '/all');
+  }
 
   private handleError(errorResponse: HttpErrorResponse) {
     if (errorResponse.error instanceof ErrorEvent) {
