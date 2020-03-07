@@ -51,6 +51,8 @@ import { UriTileComponent } from './tiles/uri-tile/uri-tile.component';
 import { InfoTileComponent } from './tiles/info-tile/info-tile.component';
 import { FilterPipePipe } from './pipes/filter-pipe.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { SearchPipePipe } from './pipes/search-pipe.pipe';
+import { FilterOptionsPipePipe } from './pipes/filter-options-pipe.pipe';
 
 
 
@@ -96,7 +98,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     Table3Component,
     UriTileComponent,
     InfoTileComponent,
-    FilterPipePipe
+    FilterPipePipe,
+    SearchPipePipe,
+    FilterOptionsPipePipe
   ],
   imports: [
     BrowserModule,

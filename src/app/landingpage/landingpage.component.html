@@ -1,12 +1,16 @@
 <!-- <h1 class="headline-border" style="padding: 20px 20px;">Welcome at SOWA! </h1> -->
-<section class="SectionComponent hero section is-block is-relative is-white is-medium" style="background-size: 700px; background-image: url(../../assets/img/network.jpg)">
+<section class="SectionComponent hero section is-block is-relative is-white is-medium"
+    style="background-size: 700px; background-image: url(../../assets/img/network.jpg)">
     <div class="container">
-        <div class="columns is-vcentered is-desktop" >
+        <div class="columns is-vcentered is-desktop">
             <div class="column is-5-desktop has-text-centered-touch">
                 <header class="SectionHeader__header">
-                    <h1 class="title is-spaced has-text-weight-bold is-1 is-size-2-mobile" style="color: white!important;">Welcome to the SENPH Ontology Web Application.
+                    <h1 class="title is-spaced has-text-weight-bold is-1 is-size-2-mobile"
+                        style="color: white!important;">Welcome to the SENPH Ontology Web Application.
                     </h1>
-                    <p class="subtitle" style="color: white!important;">This web application offers a wiki platform to create and access crowd sourced explicit information about instances of sensors, phenomena, devices and domains.</p>
+                    <p class="subtitle" style="color: white!important;">This web application offers a wiki platform to
+                        create and access crowd sourced explicit information about instances of sensors, phenomena,
+                        devices and domains.</p>
                 </header><button class="button is-warning is-medium">Get Started</button>
             </div>
             <div class="column is-1"></div>
@@ -17,3 +21,215 @@
         </div>
     </div>
 </section>
+
+<section class="hero is-dark is-small is-bold">
+    <div class="hero-body">
+        <div class="container">
+            <!-- <label for="myInput">Search for Phenomena</label> -->
+            <!-- <div class="level-left"> -->
+            <!-- <div class=" level-item"> -->
+            <div class="columns is-vcentered">
+                <div class="column is-2">
+                    <p class="subtitle has-text-weight-bold">
+                        Explore Senph Ontology Web Application:
+                    </p>
+                </div>
+                <div class="column">
+                    <div class="field has-addons">
+                        <p class="control has-icons-left is-expanded">
+                            <input class="input" type="text" #myInput placeholder="Search" [(ngModel)]="searchTerm">
+                            <span class="icon is-left">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </span>
+                        </p>
+                        <p class="control">
+                            <a (click)="filterItem(myInput.value)" class="button is-info">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- </div> -->
+<!-- <div class="level-item">
+                <div class="level">
+                    <div class="level-item">
+                        <p class="heading">
+                            Phenomena:
+                        </p>
+                        <p class="control">
+                            <input type="checkbox" id="checkPheno" (change)="toggleDisabled($event)">
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="level-item">
+                <div class="has-text-centered">
+                    <p class="heading">Phenomena</p>
+                    <p class="control is-centered">
+                        <input type="checkbox" id="radio + {{id}}" (change)="toggleDisabled($event)">
+                    </p>
+                </div>
+            </div>
+            <div class="level-item">
+                <div class="has-text-centered">
+                    <p class="heading">Phenomena</p>
+                    <p class="title"> {{phenomenaArray.length}}
+                    </p>
+                </div>
+            </div>
+            <div class="level-item" *ngIf="phenomenaArray">
+                <div class="has-text-centered">
+                    <p class="heading">Phenomena</p>
+                    <p class="title"> {{phenomenaArray.length}}
+                    </p>
+                </div>
+            </div> -->
+<!-- </div> -->
+<!-- </div> -->
+<div *ngIf="(entityArray | searchPipe:searchTerm | filterOptionsPipe:filterOptionsArray) as result">
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            1-{{result.length}} of {{result.length}} results
+            <span *ngIf="searchTerm">
+                for {{searchTerm}}
+            </span>
+        </div>
+    </section>
+    <div class="container is-fluid">
+        <div class="columns">
+            <div class="column is-2">
+                <!-- <nav class="panel">
+                <p class="panel-heading">
+                    Filter Options
+                </p>
+                <label class="panel-block">
+                    <input type="checkbox">
+                    Phenomena
+                </label>
+                <label class="panel-block">
+                    <input type="checkbox">
+                    Sensors
+                </label>
+                <label class="panel-block">
+                    <input type="checkbox">
+                    Domains
+                </label>
+                <label class="panel-block">
+                    <input type="checkbox">
+                    Devices
+                </label>
+                <div class="panel-block">
+                    <button class="button is-link is-outlined is-fullwidth">
+                        Reset all filters
+                    </button>
+                </div>
+            </nav> -->
+                <aside class="menu">
+                    <p class="menu-label">
+                        Filter options
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <label class="panel-block">
+                                <input type="checkbox" checked value='phenomenon' (change)="onFilterChange($event)">
+                                Phenomena
+                            </label>
+                        </li>
+                        <li>
+                            <label class="panel-block">
+                                <input type="checkbox" checked value='sensor' (change)="onFilterChange($event)">
+                                Sensors
+                            </label>
+                        </li>
+                        <li>
+                            <label class="panel-block">
+                                <input type="checkbox" checked value='domain' (change)="onFilterChange($event)">
+                                Domains
+                            </label>
+                        </li>
+                        <li>
+                            <label class="panel-block">
+                                <input type="checkbox" checked value='device' (change)="onFilterChange($event)">
+                                Devices
+                            </label>
+                        </li>
+                        <li>
+                            <button class="button is-link is-outlined is-fullwidth">
+                                Reset all filters
+                            </button>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+            <div class="column">
+                <div class="list is-hoverable">
+                    <div class="list-item">
+                        <div class="columns is-mobile is-multiline is-centered">
+                            <div class="column is-1">
+
+                            </div>
+                            <div class="column is-3" (click)="sortBy('label', result)">
+                                <strong>
+                                    Label
+                                </strong>
+                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'label'"></i>
+                            </div>
+                            <div class="column is-6" (click)="sortBy('entity', result)">
+                                <strong>
+                                    URI
+                                </strong>
+                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'entity'"></i>
+
+                            </div>
+                            <div class="column is-2" (click)="sortBy('type', result)">
+                                <strong>
+                                    Type
+                                </strong>
+                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'type'"></i>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="list-item" *ngFor="let entity of result; let i = index; let l = count"
+                        [class.selected]="entity === selectedSensor" (click)=onSelect(entity)>
+                        <div class="columns is-mobile is-multiline is-centered">
+                            <div class="column is-1">
+                                {{i+1}}
+                            </div>
+                            <div class="column is-3">
+                                {{entity.label.value}}
+                            </div>
+                            <div class="column is-6">
+                                {{entity.entity.value}}
+                            </div>
+                            <div class="column is-2">
+                                {{entity.type.value | slice:34 | titlecase}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <nav class="level">
+                <div class="level-left">
+                </div>
+                <div class="level-right">
+                    <p class="level-item">
+                        1-{{result.length}} of {{result.length}} results
+                        <span *ngIf="searchTerm">
+                            for {{searchTerm}}
+                        </span>
+                    </p>
+                </div>
+            </nav>
+        </div>
+    </section>
+</div>
