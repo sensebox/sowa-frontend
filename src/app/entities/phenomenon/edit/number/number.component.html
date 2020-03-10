@@ -32,5 +32,8 @@
                 </div>
             </div>
         </div>
+        <span class="help-block error-block" *ngIf="formErrors[id]">
+            {{formErrors[id]}}
+        </span>
     </div>
 </div>

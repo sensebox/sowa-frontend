@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
@@ -16,7 +16,9 @@ export class NumberComponent implements OnInit {
   @Input() step: Number;
   @Input() placeholder: Number;
   @Input() addon: String;
-  
+  @Input() formErrors;
+
+
   tempValue: Number;
 
   constructor() { }
@@ -24,14 +26,14 @@ export class NumberComponent implements OnInit {
   ngOnInit() {
   }
 
-  toggleDisabled(e){
+  toggleDisabled(e) {
     console.log(e);
-    if(e.target.checked){
-      
-    this.tempValue = this.control.value;
-    this.control.disable();
-    this.control.setValue('undefined');
-    } 
+    if (e.target.checked) {
+
+      this.tempValue = this.control.value;
+      this.control.disable();
+      this.control.setValue('undefined');
+    }
     else {
       this.control.enable();
       this.control.setValue(this.tempValue);
