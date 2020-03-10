@@ -99,7 +99,8 @@ export class ApiService {
   }
 
   editSensor(sensor) {
-    return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor);
+    return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor, httpOptions)
+    .pipe(catchError(this.handleError));
   }
 
   /**--------------Devices------------------------ */
