@@ -14,6 +14,7 @@ export class SensorEditComponent implements OnInit {
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
+  submitted = false;
 
   validationMessages = {
     'uri': {
@@ -25,6 +26,23 @@ export class SensorEditComponent implements OnInit {
     },
     'description': {
       'required': 'Description is required.'
+    },
+    'manufacturer': {
+      'required': 'Type a manufacturer or use the checkbox to set its value to undefined.'
+    },
+    'price': {
+      'required': 'Provide a price or use the checkbox to set its value to undefined.'
+    },
+    'datasheet': {
+      'required': 'Provide a datasheet link or use the checkbox to set its value to undefined.',
+      'uriSyntax': 'No white spaces allowed in Datasheet-URL.'
+    },
+    'lifeperiod': {
+      'required': 'Provide a lifeperiod or use the checkbox to set its value to undefined.'
+    },
+    'image': {
+      'required': 'Provide an image link or use the checkbox to set its value to undefined.',
+      'uriSyntax': 'No white spaces allowed in Image-URL.'
     }
   };
 
@@ -51,11 +69,11 @@ export class SensorEditComponent implements OnInit {
       device: this.fb.array([
         this.addDeviceFormGroup()
       ]),
-      manufacturer: [{value: '', disabled: false}],
-      price: [{value: '', disabled: false}],
-      datasheet: [{value: '', disabled: false}],
-      lifeperiod: [{value: '', disabled: false}],
-      image: [{value: '', disabled: false}]
+      manufacturer: [{ value: '', disabled: false }, [Validators.required]],
+      price: [{ value: '', disabled: false }, [Validators.required]],
+      datasheet: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      lifeperiod: [{ value: '', disabled: false }, [Validators.required]],
+      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]]
     })
 
     this.sensorForm.valueChanges.subscribe(
@@ -81,7 +99,7 @@ export class SensorEditComponent implements OnInit {
       }
       else {
         this.formErrors[key] = '';
-        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '')) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '' || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -190,16 +208,30 @@ export class SensorEditComponent implements OnInit {
 
   get image(): FormArray {
     return this.sensorForm.get('image') as FormArray;
-  } 
+  }
 
 
   onSubmit() {
+    this.submitted = true;
     // console.log(this.devicesArray);
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
     // });
     console.log(this.sensorForm.value);
-    // this.api.editSensor(this.sensorForm.value).subscribe(res => { console.log(res) });
+    console.log(this.sensorForm.getRawValue());
+  
+    if (this.sensorForm.invalid) {
+      console.log("invalid");
+    }
+    else {
+      console.log("valid");
+      this.api.editSensor(this.sensorForm.getRawValue()).subscribe(
+        (data) => {
+          console.log(data);
+        },
+        (error: any) => console.log(error)
+      );
+    }
     // this.diagnostic(this.sensorForm);
   }
 }

@@ -33,8 +33,8 @@
                 it among other sensors. For all sensors being entered in this Wiki, it starts with
                 'http://www.opensensemap.org/SENPH#' followed by an unique extension. Once the URI is set it should not
                 be changed.</span>
-              <span class="help-block" *ngIf="formErrors.description">
-                {{formErrors.description}}
+              <span class="help-block error-block" *ngIf="formErrors.uri">
+                {{formErrors.uri}}
               </span>
             </div>
           </div>
@@ -62,7 +62,7 @@
                   (blur)="logValidationErrors()"></textarea>
               </div>
               <span class="help-block">Please enter a short description of the sensor and its capabilities.</span>
-              <span class="help-block" *ngIf="formErrors.description">
+              <span class="help-block error-block" *ngIf="formErrors.description">
                 {{formErrors.description}}
               </span>
             </div>
@@ -86,29 +86,26 @@
 
 
       <!-- 1.2.6 MANUFACTURER -->
-      <senph-text label="Manufacturer" id="manufacturer" [control]="this.sensorForm.get('manufacturer')"
-        [parentForm]="sensorForm"></senph-text>
-
+      <senph-text [formErrors]="formErrors" label="Manufacturer" id="manufacturer"
+        [control]="this.sensorForm.get('manufacturer')" [parentForm]="sensorForm"></senph-text>
 
       <!-- 1.2.7 PRICE -->
-      <senph-number label="Price" id="price" [control]="this.sensorForm.get('price')" [parentForm]="sensorForm"
-        step="0.01" placeholder="0.00" addon="€"></senph-number>
-
+      <senph-number [formErrors]="formErrors" label="Price" id="price" [control]="this.sensorForm.get('price')"
+        [parentForm]="sensorForm" step="0.01" placeholder="0.00" addon="€"></senph-number>
 
       <!-- 1.2.8 DATASHEET -->
-      <senph-text label="Datasheet" id="datasheet" [control]="this.sensorForm.get('datasheet')"
-        [parentForm]="sensorForm"></senph-text>
-
+      <senph-text [formErrors]="formErrors" label="Datasheet" id="datasheet"
+        [control]="this.sensorForm.get('datasheet')" [parentForm]="sensorForm"></senph-text>
 
       <!-- 1.2.9 LIFEPERIOD -->
-      <senph-number label="Lifeperiod" id="lifeperiod" [control]="this.sensorForm.get('lifeperiod')"
-        [parentForm]="sensorForm" step="1" placeholder="0" addon="Days"></senph-number>
-
+      <senph-number [formErrors]="formErrors" label="Lifeperiod" id="lifeperiod"
+        [control]="this.sensorForm.get('lifeperiod')" [parentForm]="sensorForm" step="1" placeholder="0" addon="Days">
+      </senph-number>
 
       <!-- 1.2.10 IMAGE -->
-      <senph-text label="Image" id="image" [control]="this.sensorForm.get('image')" [parentForm]="sensorForm">
+      <senph-text [formErrors]="formErrors" label="Image" id="image" [control]="this.sensorForm.get('image')"
+        [parentForm]="sensorForm">
       </senph-text>
-
     </div>
 
 
@@ -116,12 +113,18 @@
     <div class="panel-footer">
       <div class="field is-grouped">
         <p class="control">
-          <button class="button is-success" type="submit" [disabled]="sensorForm.invalid">Save Changes</button>
+          <button class="button is-success" type="submit">Save Changes</button>
         </p>
         <p class="control">
           <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
         </p>
       </div>
+      <span class="help-block" *ngIf="submitted && sensorForm.invalid">
+        There are invalid fields in the form, please review your inputs to submit this form.
+      </span>
+      <span class="help-block" *ngIf="submitted && sensorForm.valid">
+        All problems resolved, you are ready to submit this form.
+      </span>
     </div>
 
   </div>
