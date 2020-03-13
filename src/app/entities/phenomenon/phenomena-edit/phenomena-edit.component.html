@@ -6,7 +6,8 @@
 
 
     <!-- 1.1 BANNER -->
-    <senph-hero-banner title="Edit Phenomenon:" [subtitle]="heroBannerString + phenomenonForm.get('uri').value">
+    <senph-hero-banner title="Edit Phenomenon:" [subtitle]="heroBannerString + phenomenonForm.get('uri').value"
+      button="Back to Detail-View" (myEvent)="redirectDetails(shortUri)">
     </senph-hero-banner>
 
 
