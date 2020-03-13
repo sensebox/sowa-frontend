@@ -34,9 +34,25 @@ export class ApiService {
     return this.http.get(this.APIURL + '/phenomena/all');
   }
 
+  getPhenomenonHistory(iri) {
+    console.log(iri);
+    return this.http.get(this.APIURL + '/phenomena/phenomenon-history/' + iri);
+  }
+
 
   getPhenomenon(iri): Observable<any> {
     return this.http.get(this.APIURL + '/phenomena/phenomenon/' + iri).pipe(
+      map((res: Array<any>) => {
+        console.log(res);
+        let phenomenon = new IPhenomenon(res);
+        // console.log(phenomenon);
+        return phenomenon;
+      })
+    )
+  }
+
+  getHistoricPhenomenon(iri): Observable<any> {
+    return this.http.get(this.APIURL + '/phenomena/historic-phenomenon/' + iri).pipe(
       map((res: Array<any>) => {
         // console.log(res);
         let phenomenon = new IPhenomenon(res);
@@ -51,21 +67,23 @@ export class ApiService {
   //   return this.http.get(this.APIURL + '/phenomena/phenomenon/' + iri);
   //  }
 
-  getPhenomenonDEPRECATED(iri) {
-    return this.http.get(this.APIURL + '/phenomena/phenomenonDEPRECATED/' + iri);
-  }
+  // getPhenomenonDEPRECATED(iri) {
+  //   return this.http.get(this.APIURL + '/phenomena/phenomenonDEPRECATED/' + iri);
+  // }
 
-  updatePhenomenon(phenomenon) {
-    return this.http.post(this.APIURL + '/phenomena/phenomenon/update', phenomenon, httpOptions);
+  createPhenomenon(phenomenon) {
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/create', phenomenon, httpOptions)
+    .pipe(catchError(this.handleError));
   }
 
   editPhenomenon(phenomenon) {
-    return this.http.post(this.APIURL + '/phenomena/phenomenon/edit', phenomenon);
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/edit', phenomenon, httpOptions)
+    .pipe(catchError(this.handleError));
   }
 
-  addPhenomenon(phenomenon) {
-    return this.http.post(this.APIURL + '/phenomena/phenomenon/add', phenomenon);
-  }
+  // addPhenomenon(phenomenon) {
+  //   return this.http.post(this.APIURL + '/phenomena/phenomenon/add', phenomenon);
+  // }
 
   getPhenomenonForSensor(sensor) {
     return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, httpOptions);
@@ -76,11 +94,13 @@ export class ApiService {
     return this.http.get(this.APIURL + '/sensors/all');
   }
 
+  getSensorHistory(iri) {
+    console.log(iri);
+    return this.http.get(this.APIURL + '/sensors/sensor-history/' + iri);
+  }
+
+
   getSensor(iri): Observable<any> {
-
-
-
-
     return this.http.get(this.APIURL + '/sensors/sensor/' + iri).pipe(
       map((res: Array<any>) => {
         console.log(res);
@@ -90,13 +110,31 @@ export class ApiService {
       }))
   }
 
-  getSensorIRI(iri) {
-    return this.http.get(this.APIURL + '/sensors/sensorIRI/' + iri);
+  getHistoricSensor(iri): Observable<any> {
+    return this.http.get(this.APIURL + '/sensors/historic-sensor/' + iri).pipe(
+      map((res: Array<any>) => {
+        console.log(res);
+        var I2Sensor = new ISensor(res);
+        console.log(I2Sensor);
+        return I2Sensor;
+      }))
   }
 
-  updateSensor(sensor) {
-    return this.http.post(this.APIURL + '/sensors/sensor/update', sensor);
+
+
+  // getSensorIRI(iri) {
+  //   return this.http.get(this.APIURL + '/sensors/sensorIRI/' + iri);
+  // }
+
+  // updateSensor(sensor) {
+  //   return this.http.post(this.APIURL + '/sensors/sensor/update', sensor);
+  // }
+
+  createSensor(sensor) {
+    return this.http.post(this.APIURL + '/sensors/sensor/create', sensor, httpOptions)
+    .pipe(catchError(this.handleError));
   }
+
 
   editSensor(sensor) {
     return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor, httpOptions)
