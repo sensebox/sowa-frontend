@@ -13,8 +13,13 @@
             </h2>
           </div>
         </div>
-        <div class="level-right" *ngIf="button">
-          <a class="button is-warning" (click)="buttonClick()">Edit</a>
+        <div class="level-right">
+          <div class="level-item" *ngIf="button">
+            <a class="button is-warning" (click)="buttonClick()">{{button}}</a>
+          </div>
+          <div class="level-item" *ngIf="button2">
+            <a class="button is-warning" (click)="buttonClick2()">{{button2}}</a>
+          </div>
         </div>
       </nav>
     </div>
