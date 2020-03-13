@@ -5,8 +5,8 @@
   <span class="example-fill-remaining-space"></span>
   <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button>
 </mat-toolbar> -->
-  <senph-hero-banner [title]="phenomenon.labels[0].value" [subtitle]="phenomenon.iri.value"
-    (myEvent)="editButtonClick(phenomenon.iri.value)" [button]="true"> </senph-hero-banner>
+  <senph-hero-banner [title]="prefLabel?.value" [subtitle]="phenomenon.iri.value" (myEvent)="button1(uri)"
+    [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">> </senph-hero-banner>
 
 
   <!-- <div class="content" *ngIf="phenomenonForm">
@@ -124,8 +124,36 @@
   </div>
 </div> -->
 
+<section *ngIf="phenomenonHistory">
+  <div class="list is-hoverable">
+    <div class="list-item">
+      <div class="columns is-mobile is-multiline is-centered">
+        <div class="column is-3">
+          Index
+        </div>
+        <div class="column is-9">
+          <strong>
+            URI
+          </strong>
+        </div>
+      </div>
+    </div>
+    <div class="list-item" *ngFor="let version of phenomenonHistory;let i = index"
+      [class.selected]="version === selectedVersion" (click)=redirectHistoricDetails(uri,version.phenomenon.value)>
+      <div class="columns is-mobile is-multiline is-centered">
+        <div class="column is-3">
+          {{i+1}}
+        </div>
+        <div class="column is-9">
+          {{version.phenomenon.value}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <section class="section">
+
+  <section class="section" *ngIf="!phenomenonHistory">
     <div class="container is-fluid">
       <div class="tile is-ancestor">
         <div class="tile is-vertical">
@@ -143,7 +171,7 @@
               <article class="tile is-child notification is-warning">
                 <p class="title">Labels</p>
                 <p class="subtitle">These are the available labels in various languages for the
-                  {{phenomenon.labels[0].value}}:</p>
+                  {{prefLabel?.value}}:</p>
                 <div class="columns is-mobile is-multiline is-centered">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
@@ -204,7 +232,7 @@
             <article class="tile is-child notification is-danger">
               <p class="title">Domains</p>
               <p class="subtitle">
-                {{phenomenon.labels[0].value}} is part of the following domains:
+                {{prefLabel?.value}} is part of the following domains:
               </p>
               <div class="content">
                 <div class="columns is-mobile is-multiline is-centered">
@@ -237,7 +265,7 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{domain.domainLabel.value}}
+                      {{domain.domainLabel?.value}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
@@ -257,7 +285,7 @@
             <article class="tile is-child notification is-danger">
               <p class="title">Units</p>
               <p class="subtitle">
-                These are the units that can be describe {{phenomenon.labels[0].value}}
+                These are the units that can be describe {{prefLabel?.value}}
               </p>
               <div class="content">
                 <div class="columns is-mobile is-multiline is-centered">

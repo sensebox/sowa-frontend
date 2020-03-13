@@ -18,6 +18,12 @@ export class PhenomenaDetailComponent implements OnInit {
   phenomenon: IPhenomenon;
   uri;
   languageArray = LANGUAGES;
+  prefLabel: ILabel;
+  phenomenonHistory: Object;
+  historic = {
+    button1: undefined,
+    button2: undefined
+  };
 
 
   constructor(
@@ -58,49 +64,58 @@ export class PhenomenaDetailComponent implements OnInit {
   };
 
   ngOnInit() {
-    // this.phenomenonForm = this.fb.group({
-    //   uri: ['', [Validators.required, CustomValidators.uriSyntax]],
-    //   label: this.fb.array([
-    //     this.addLabelFormGroup()
-    //   ]),
-    //   description: [''],
-    //   domain: this.fb.array([
-    //     this.addDomainFormGroup()
-    //   ]),
-    //   unit: this.fb.array([
-    //     this.addUnitFormGroup()
-    //   ])
-    // });
-
-    // this.phenomenonForm.valueChanges.subscribe(
-    //   (data) => {
-    //     this.logValidationErrors(this.phenomenonForm);
-    //   }
-    // );
-
-    // this.route.paramMap.subscribe(params => {
-    //   console.log(params)
-    //   const shortUri = params.get('iri');
-    //   console.log(shortUri)
-    //   if (shortUri) {
-    //     this.getPhenomenon(shortUri);
-    //   }
-    // });
-    // console.log(this.phenomenonForm.get('domain').controls);
-
     this.getPhenomenonDetails();
   }
 
 
   getPhenomenonDetails() {
-    return this.route.params.subscribe(res => {
-      this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
-        console.log(response);
-        this.phenomenon = response;
-        this.uri = this.phenomenon.iri.value.slice(34);
-        console.log(this.uri);
-      });
-    })
+    console.log(this._routerService.url)
+    if (this._routerService.url.search('/historic/') !== -1) {
+      this.historic.button1 = "Back to current version"
+    }
+    else {
+      this.historic.button1 = "Edit"
+      this.historic.button2 = "Log History"
+    };
+    console.log(this._routerService.url)
+    if (this.historic.button2) {
+      return this.route.params.subscribe(res => {
+        this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
+          console.log(response);
+          this.phenomenon = response;
+          console.log("NEW");
+          this.phenomenon.labels.forEach(element => {
+            console.log(element["xml:lang"])
+            if (element["xml:lang"] == "en") {
+              this.prefLabel = element
+              return
+            }
+            this.prefLabel = element;
+          });
+          this.uri = this.phenomenon.iri.value.slice(34);
+          console.log(this.uri);
+        });
+      })
+    }
+    else {
+      return this.route.params.subscribe(res => {
+        this.api.getHistoricPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
+          console.log(response);
+          this.phenomenon = response;
+          console.log("historic");
+          this.phenomenon.labels.forEach(element => {
+            console.log(element["xml:lang"])
+            if (element["xml:lang"] == "en") {
+              this.prefLabel = element
+              return
+            }
+            this.prefLabel = element;
+          });
+          this.uri = this.phenomenon.iri.value.slice(34);
+          console.log(this.uri);
+        });
+      })
+    }
   }
 
   redirectDomain(longURI) {
@@ -108,8 +123,32 @@ export class PhenomenaDetailComponent implements OnInit {
     this._routerService.navigate(['/domain/', longURI.slice(34)]);
   }
 
-  editButtonClick(longUri) {
-    this._routerService.navigate(['/phenomenon/edit', longUri.slice(34)]);
+  button1(uri) {
+    console.log(this.historic)
+    if (this.historic.button2) {
+      this.editButtonClick(uri)
+    }
+    else {
+      this.route.params.subscribe(res => {
+        this._routerService.navigate(['/phenomenon/detail/', res.uri]);
+      })
+    }
+  }
+
+  editButtonClick(uri) {
+    this._routerService.navigate(['/phenomenon/edit', uri]);
+  }
+
+
+  redirectHistoricDetails(uri, historicUri) {
+    this._routerService.navigate(['/phenomenon/detail/' + uri + '/historic', historicUri.slice(34)]);
+  }
+
+  getHistory(shortUri) {
+    this.api.getPhenomenonHistory(shortUri).subscribe(res => {
+      console.log(res);
+      this.phenomenonHistory = res;
+    });
   }
 
   search(nameKey, myArray) {
