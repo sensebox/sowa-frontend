@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
@@ -15,6 +15,7 @@ export class SensorEditComponent implements OnInit {
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
   submitted = false;
+  shortUri: string;
 
   validationMessages = {
     'uri': {
@@ -52,7 +53,8 @@ export class SensorEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private api: ApiService
+    private api: ApiService,
+    private _routerService: Router
   ) { }
 
 
@@ -83,9 +85,9 @@ export class SensorEditComponent implements OnInit {
     );
 
     this.route.paramMap.subscribe(params => {
-      const shortUri = params.get('id');
-      if (shortUri) {
-        this.getSensor(shortUri);
+      this.shortUri = params.get('id');
+      if (this.shortUri) {
+        this.getSensor(this.shortUri);
       }
     });
   }
@@ -208,6 +210,10 @@ export class SensorEditComponent implements OnInit {
 
   get image(): FormArray {
     return this.sensorForm.get('image') as FormArray;
+  }
+
+  redirectDetails(uri){
+    this._routerService.navigate(['/sensor/detail', uri]);
   }
 
 
