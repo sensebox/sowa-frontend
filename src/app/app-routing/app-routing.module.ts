@@ -45,7 +45,8 @@ const routes: Routes = [
               {
                 path: '',
                 children: [
-                  { path: ':iri', component: PhenomenaDetailComponent }
+                  { path: ':iri', component: PhenomenaDetailComponent },
+                  { path: ':uri/historic/:iri', component:PhenomenaDetailComponent }                  
                 ]
               }
             ]
@@ -81,6 +82,18 @@ const routes: Routes = [
         children: [
           {
             path: 'detail',
+            children: [
+              {
+                path: '',
+                children: [
+                  { path: ':iri', component: SensorsDetailComponent },
+                  { path: ':uri/historic/:iri', component: SensorsDetailComponent },                  
+                ]
+              }
+            ]
+          },
+          {
+            path: 'detail-historic',
             children: [
               {
                 path: '',
