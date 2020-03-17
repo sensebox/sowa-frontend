@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
@@ -13,40 +13,40 @@ import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 })
 export class DomainEditComponent implements OnInit {
 
-//   constructor(
-//     private route:ActivatedRoute,
-//     private api:ApiService
-//   ) { }
-//     // iri;
-//   languageTags = [{name: 'english', short: 'en'}, {name: 'german', short: 'de'},
-//   {name: 'spanish', short: 'es'}, {name: 'italian', short: 'it'}];
+  //   constructor(
+  //     private route:ActivatedRoute,
+  //     private api:ApiService
+  //   ) { }
+  //     // iri;
+  //   languageTags = [{name: 'english', short: 'en'}, {name: 'german', short: 'de'},
+  //   {name: 'spanish', short: 'es'}, {name: 'italian', short: 'it'}];
 
-//   domainModel = new Domain(
-//     "",
-//     { 
-//       label: "",
-//       lang: this.languageTags[0].short
-//     },
-//     { 
-//       comment: "",
-//       lang: this.languageTags[0].short
-//     }
-//   );
+  //   domainModel = new Domain(
+  //     "",
+  //     { 
+  //       label: "",
+  //       lang: this.languageTags[0].short
+  //     },
+  //     { 
+  //       comment: "",
+  //       lang: this.languageTags[0].short
+  //     }
+  //   );
 
-//   submitted = false;
-//   ngOnInit(){
-//     // this.route.params.subscribe(res => {
-//     //   this.iri = res.iri;
-//     // });
-//   }
-//   onSubmit() { 
-//     this.api.updateDomain(this.domainModel).subscribe(res => {console.log(res)});
-//     this.diagnostic(this.domainModel);
-//   }
+  //   submitted = false;
+  //   ngOnInit(){
+  //     // this.route.params.subscribe(res => {
+  //     //   this.iri = res.iri;
+  //     // });
+  //   }
+  //   onSubmit() { 
+  //     this.api.updateDomain(this.domainModel).subscribe(res => {console.log(res)});
+  //     this.diagnostic(this.domainModel);
+  //   }
 
-//   // TODO: Remove this when we're done
-//   diagnostic(model) { console.log(model); }
-// }
+  //   // TODO: Remove this when we're done
+  //   diagnostic(model) { console.log(model); }
+  // }
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   domainForm: FormGroup;
@@ -66,10 +66,16 @@ export class DomainEditComponent implements OnInit {
 
   formErrors = {
   };
+  shortUri: string;
+  submitted = false;
 
-  constructor(private fb: FormBuilder,
+
+  constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
-    private api: ApiService) { }
+    private api: ApiService,
+    private _routerService: Router
+    ) { }
 
   ngOnInit() {
     this.domainForm = this.fb.group({
@@ -90,9 +96,9 @@ export class DomainEditComponent implements OnInit {
     );
 
     this.route.paramMap.subscribe(params => {
-      const shortUri = params.get('id');
-      if (shortUri) {
-        this.getDomain(shortUri);
+      this.shortUri = params.get('id');
+      if (this.shortUri) {
+        this.getDomain(this.shortUri);
       }
     });
   }
@@ -106,7 +112,7 @@ export class DomainEditComponent implements OnInit {
       }
       else {
         this.formErrors[key] = '';
-        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '')) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== ''|| this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -129,7 +135,10 @@ export class DomainEditComponent implements OnInit {
 
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
-      phenomenonUri: ['', [Validators.required]]
+      // phenomenonObject: [{
+      phenomenonURI: ['',
+        // phenomenonLabel: ''}, 
+        [Validators.required]]
     });
   }
 
@@ -157,7 +166,10 @@ export class DomainEditComponent implements OnInit {
     console.log(phenomenaSet);
     phenomenaSet.forEach(s => {
       formArray.push(this.fb.group({
-        phenomenonUri: [s.phenomenon.value, [Validators.required]]
+        // phenomenonObject: [{
+        phenomenonURI: [s.phenomenon.value,
+        // 'phenomenonLabel': s.phenomenonLabel.value}, 
+        [Validators.required]]
       }));
     });
 
@@ -180,10 +192,24 @@ export class DomainEditComponent implements OnInit {
     return formArray;
   }
 
+  redirectDetails(uri){
+    this._routerService.navigate(['/domain/detail', uri]);
+  }
+
   onSubmit() {
     console.log(this.domainForm.value);
-    this.api.editDomain(this.domainForm.value).subscribe(res => { console.log(res) });
-    // this.diagnostic(this.domainForm);
+    this.submitted = true;
+    if (this.domainForm.invalid) {
+      console.log("invalid");
+    }
+    else {
+      console.log("valid");
+      this.api.editDomain(this.domainForm.value).subscribe(res => {
+        console.log(res)
+      },
+        (error: any) => console.log(error)
+      );
+    }
   }
 }
 
