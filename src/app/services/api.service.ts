@@ -34,6 +34,10 @@ export class ApiService {
     return this.http.get(this.APIURL + '/phenomena/all');
   }
 
+  getPhenomenaAllLabels() {
+    return this.http.get(this.APIURL + '/phenomena/all/labels');
+  }
+
   getPhenomenonHistory(iri) {
     console.log(iri);
     return this.http.get(this.APIURL + '/phenomena/phenomenon-history/' + iri);
@@ -63,31 +67,19 @@ export class ApiService {
   }
 
 
-  // getPhenomenon(iri) {
-  //   return this.http.get(this.APIURL + '/phenomena/phenomenon/' + iri);
-  //  }
-
-  // getPhenomenonDEPRECATED(iri) {
-  //   return this.http.get(this.APIURL + '/phenomena/phenomenonDEPRECATED/' + iri);
-  // }
-
   createPhenomenon(phenomenon) {
     return this.http.post(this.APIURL + '/phenomena/phenomenon/create', phenomenon, httpOptions)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   editPhenomenon(phenomenon) {
     return this.http.post(this.APIURL + '/phenomena/phenomenon/edit', phenomenon, httpOptions)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
-  // addPhenomenon(phenomenon) {
-  //   return this.http.post(this.APIURL + '/phenomena/phenomenon/add', phenomenon);
+  // getPhenomenonForSensor(sensor) {
+  //   return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, httpOptions);
   // }
-
-  getPhenomenonForSensor(sensor) {
-    return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, httpOptions);
-  }
 
   /**--------------Sensors------------------------ */
   getSensors() {
@@ -120,25 +112,15 @@ export class ApiService {
       }))
   }
 
-
-
-  // getSensorIRI(iri) {
-  //   return this.http.get(this.APIURL + '/sensors/sensorIRI/' + iri);
-  // }
-
-  // updateSensor(sensor) {
-  //   return this.http.post(this.APIURL + '/sensors/sensor/update', sensor);
-  // }
-
   createSensor(sensor) {
     return this.http.post(this.APIURL + '/sensors/sensor/create', sensor, httpOptions)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
 
   editSensor(sensor) {
     return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor, httpOptions)
-    .pipe(catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   /**--------------Devices------------------------ */
@@ -146,26 +128,12 @@ export class ApiService {
     return this.http.get(this.APIURL + '/devices/all');
   }
 
-  getDevice(iri): Observable<any>
-  // : Observable<IDevice[]> 
-  {
-    // let I2Device = {
-    //   website: '',
-    //   labels: [],
-    //   image: '',
-    //   description: '',
-    //   contact: '',
-    //   iri: '',
-    //   sensors: []
-    // };
-    // let sensor = {
-    //   sensors: '',
-    //   sensorsLabel: ''
-    // };
-    // let label = {
-    //   label: ''
-    // };
+  getDeviceHistory(iri) {
+    console.log(iri);
+    return this.http.get(this.APIURL + '/devices/device-history/' + iri);
+  }
 
+  getDevice(iri): Observable<any> {
     return this.http.get(this.APIURL + '/devices/device/' + iri).pipe(
       map((res: Array<any>) => {
         console.log(res);
@@ -175,16 +143,24 @@ export class ApiService {
       }))
   }
 
-  updateDevice(device) {
-    return this.http.post(this.APIURL + '/devices/device/update', device);
+  getHistoricDevice(iri): Observable<any> {
+    return this.http.get(this.APIURL + '/devices/historic-device/' + iri).pipe(
+      map((res: Array<any>) => {
+        console.log(res);
+        var I2Device = new IDevice(res);
+        console.log(I2Device);
+        return I2Device;
+      }))
   }
 
   editDevice(device) {
-    return this.http.post(this.APIURL + '/devices/device/edit', device);
+    return this.http.post(this.APIURL + '/devices/device/edit', device, httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
-  addDevice(device) {
-    return this.http.post(this.APIURL + '/devices/device/add', device);
+  createDevice(device) {
+    return this.http.post(this.APIURL + '/devices/device/create', device, httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
 
@@ -193,8 +169,12 @@ export class ApiService {
     return this.http.get(this.APIURL + '/domains/all');
   }
 
-  getDomain(iri) : Observable<any>
-  {
+  getDomainHistory(iri) {
+    console.log(iri);
+    return this.http.get(this.APIURL + '/domains/domain-history/' + iri);
+  }
+
+  getDomain(iri): Observable<any> {
     return this.http.get(this.APIURL + '/domains/domain/' + iri).pipe(
       map((res: Array<any>) => {
         console.log(res);
@@ -204,12 +184,29 @@ export class ApiService {
       }))
   }
 
-  updateDomain(domain) {
-    return this.http.post(this.APIURL + '/domains/domain/update', domain);
+
+  getHistoricDomain(iri): Observable<any> {
+    return this.http.get(this.APIURL + '/domains/historic-domain/' + iri).pipe(
+      map((res: Array<any>) => {
+        console.log(res);
+        let domain = new IDomain(res);
+        console.log(domain);
+        return domain;
+      })
+    )
   }
+
   editDomain(domain) {
-    return this.http.post(this.APIURL + '/domains/domain/edit', domain);
+    return this.http.post(this.APIURL + '/domains/domain/edit', domain)
+      .pipe(catchError(this.handleError));
   }
+
+  createDomain(domain) {
+    return this.http.post(this.APIURL + '/domains/domain/create', domain, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+
 
   getUnits() {
     return this.http.get(this.APIURL + '/units');
