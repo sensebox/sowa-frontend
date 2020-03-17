@@ -16,10 +16,11 @@ export class IDevices {
             type: resDevice.device.type,
             value: resDevice.device.value
         }
-        this.deviceLabel = {
-            type: resDevice.deviceLabel.type,
-            value: resDevice.deviceLabel.value,
-            "xml:lang": resDevice.deviceLabel["xml:lang"]
+        // this.deviceLabel = {
+        //     type: resDevice.label[0].type,
+        //     value: resDevice.label[0].value,
+        //     "xml:lang": resDevice.label[0]["xml:lang"]
+        // }
+        this.deviceLabel = resDevice.label;
         }
     }
-}

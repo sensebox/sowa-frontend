@@ -66,7 +66,7 @@ export class IDevice {
                     break;
                 }
 
-                case "sensors": {
+                case "sensor": {
                     this.sensors.push(new ISensors(element));
                     break;
                 }

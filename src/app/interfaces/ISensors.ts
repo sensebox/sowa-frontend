@@ -12,7 +12,7 @@ export class ISensors {
     };
 
     constructor(resSensor: any) {
-        this.sensor = resSensor.sensors;
-        this.sensorLabel = resSensor.sensorsLabel;
+        this.sensor = resSensor.sensor;
+        this.sensorLabel = resSensor.sensorLabel;
     }
 };
