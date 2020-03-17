@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
 
-  fillerNav: Array<{ topic: string, options: [{ path: string, title: any }, { path: string, title: any }, { path: string, title: any }] }> = [
+  fillerNav: Array<{ topic: string, options: [{ path: string, title: any }, { path: string, title: any }] }> = [
     {
       topic: 'Phenomena',
       options: [
@@ -22,10 +22,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         {
           path: 'phenomenon/add',
           title: 'Add a phenomenon'
-        },
-        {
-          path: 'phenomenon/edit/:id',
-          title: 'Edit a phenomenon'
         }
       ]
     },
@@ -39,10 +35,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         {
           path: 'sensor/add',
           title: 'Add a sensor'
-        },
-        {
-          path: 'sensor/edit/:id',
-          title: 'Edit a sensor'
         }
       ]
     },
@@ -56,10 +48,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         {
           path: 'device/add',
           title: 'Add a device'
-        },
-        {
-          path: 'device/edit/:id',
-          title: 'Edit a device'
         }
       ]
     },
@@ -73,10 +61,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         {
           path: 'domain/add',
           title: 'Add a domain'
-        },
-        {
-          path: 'domain/edit/:id',
-          title: 'Edit a domain'
         }
       ]
     }

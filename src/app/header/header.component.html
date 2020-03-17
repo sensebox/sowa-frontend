@@ -25,7 +25,15 @@
               <div class="navbar-dropdown">
                 <a class="navbar-item black-color" *ngFor="let li of nav.options" routerLink={{li.path}}
                   routerLinkActive="active">
-                  {{li.title}}
+                  <p>
+                    <span class="icon is-left" *ngIf="(li.title | slice:0:3) == 'All'">
+                      <i class="fas fa-search" aria-hidden="true"></i>
+                    </span>
+                    <span class="icon is-left" *ngIf="(li.title | slice:0:3) != 'All'">
+                      <i class="fas fa-plus" aria-hidden="true"></i>
+                    </span>
+                    {{li.title}}
+                  </p>
                 </a>
               </div>
             </div>
