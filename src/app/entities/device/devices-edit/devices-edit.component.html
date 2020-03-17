@@ -1,6 +1,3 @@
-
-
-
 <form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="deviceForm">
 
 
@@ -9,7 +6,8 @@
 
 
     <!-- 1.1 BANNER -->
-    <senph-hero-banner title="Edit Device:" [subtitle]="heroBannerString + deviceForm.get('uri').value">
+    <senph-hero-banner title="Edit Device:" [subtitle]="heroBannerString + deviceForm.get('uri').value"
+    button="Back to Detail-View" (myEvent)="redirectDetails(shortUri)">
     </senph-hero-banner>
 
 
@@ -36,8 +34,8 @@
                 it among other devices. For all devices being entered in this Wiki, it starts with
                 'http://www.opensensemap.org/SENPH#' followed by an unique extension. Once the URI is set it should not
                 be changed.</span>
-              <span class="help-block" *ngIf="formErrors.description">
-                {{formErrors.description}}
+              <span class="help-block error-block" *ngIf="formErrors.uri">
+                {{formErrors.uri}}
               </span>
             </div>
           </div>
@@ -64,7 +62,7 @@
                   (blur)="logValidationErrors()"></textarea>
               </div>
               <span class="help-block">Please enter a short description of the device and its capabilities.</span>
-              <span class="help-block" *ngIf="formErrors.description">
+              <span class="help-block error-block" *ngIf="formErrors.description">
                 {{formErrors.description}}
               </span>
             </div>
@@ -74,15 +72,18 @@
 
 
       <!-- 1.2.4 WEBSITE -->
-      <senph-text label="Website" id="website" [control]="this.deviceForm.get('website')" [parentForm]="deviceForm">
+      <senph-text [formErrors]="formErrors" label="Website" id="website" [control]="this.deviceForm.get('website')"
+        [parentForm]="deviceForm">
       </senph-text>
 
       <!-- 1.2.5 IMAGE -->
-      <senph-text label="Image" id="image" [control]="this.deviceForm.get('image')" [parentForm]="deviceForm">
+      <senph-text [formErrors]="formErrors" label="Image" id="image" [control]="this.deviceForm.get('image')"
+        [parentForm]="deviceForm">
       </senph-text>
 
       <!-- 1.2.6 CONTACT -->
-      <senph-text label="Contact" id="contact" [control]="this.deviceForm.get('contact')" [parentForm]="deviceForm">
+      <senph-text [formErrors]="formErrors" label="Contact" id="contact" [control]="this.deviceForm.get('contact')"
+        [parentForm]="deviceForm">
       </senph-text>
 
       <!-- 1.2.7 SENSORS -->
@@ -99,12 +100,18 @@
     <div class="panel-footer">
       <div class="field is-grouped">
         <p class="control">
-          <button class="button is-success" type="submit" [disabled]="deviceForm.invalid">Save Changes</button>
+          <button class="button is-success" type="submit">Save Changes</button>
         </p>
         <p class="control">
           <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
         </p>
       </div>
+      <span class="help-block" *ngIf="submitted && deviceForm.invalid">
+        There are invalid fields in the form, please review your inputs to submit this form.
+      </span>
+      <span class="help-block" *ngIf="submitted && deviceForm.valid">
+        All problems resolved, you are ready to submit this form.
+      </span>
     </div>
 
   </div>

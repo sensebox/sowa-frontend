@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
@@ -28,15 +28,32 @@ export class DevicesEditComponent implements OnInit {
     },
     'description': {
       'required': 'Description is required.'
+    },
+    'website': {
+      'required': 'Provide a datasheet link or use the checkbox to set its value to undefined.',
+      'uriSyntax': 'No white spaces allowed in Datasheet-URL.'
+    },
+    'contact': {
+      'required': 'Provide a lifeperiod or use the checkbox to set its value to undefined.'
+    },
+    'image': {
+      'required': 'Provide an image link or use the checkbox to set its value to undefined.',
+      'uriSyntax': 'No white spaces allowed in Image-URL.'
     }
   };
 
   formErrors = {
   };
+  shortUri: string;
+  submitted = false;
 
-  constructor(private fb: FormBuilder,
+
+  constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
-    private api: ApiService) { }
+    private api: ApiService,
+    private _routerService: Router
+  ) { }
 
   ngOnInit() {
     this.deviceForm = this.fb.group({
@@ -45,9 +62,9 @@ export class DevicesEditComponent implements OnInit {
         this.addLabelFormGroup()
       ]),
       description: ['', [Validators.required]],
-      website: [{ value: '', disabled: false }],
-      image: [{ value: '', disabled: false }],
-      contact: [{ value: '', disabled: false }],
+      website: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      contact: [{ value: '', disabled: false }, [Validators.required]],
       sensor: this.fb.array([
         this.addSensorFormGroup()
       ])
@@ -60,9 +77,9 @@ export class DevicesEditComponent implements OnInit {
     );
 
     this.route.paramMap.subscribe(params => {
-      const shortUri = params.get('id');
-      if (shortUri) {
-        this.getDevice(shortUri);
+      this.shortUri = params.get('id');
+      if (this.shortUri) {
+        this.getDevice(this.shortUri);
       }
     });
   }
@@ -76,7 +93,7 @@ export class DevicesEditComponent implements OnInit {
       }
       else {
         this.formErrors[key] = '';
-        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '')) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '' || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -115,9 +132,9 @@ export class DevicesEditComponent implements OnInit {
     this.deviceForm.patchValue({
       uri: device.iri.value.slice(34),
       description: device.description.value,
-      website: device.website.value ? device.website.value : '',
-      image: device.image.value ? device.image.value : '',
-      contact: device.contact.value ? device.contact.value : ''
+      website: device.website ? device.website.value : '',
+      image: device.image ? device.image.value : '',
+      contact: device.contact ? device.contact.value : ''
     });
 
     this.deviceForm.setControl('label', this.setExistingLabels(device.labels))
@@ -152,10 +169,27 @@ export class DevicesEditComponent implements OnInit {
     return formArray;
   }
 
+  redirectDetails(uri) {
+    this._routerService.navigate(['/device/detail', uri]);
+  }
+
   onSubmit() {
-    console.log(this.deviceForm.value);
-    this.api.editDevice(this.deviceForm.value).subscribe(res => { console.log(res) });
-    // this.diagnostic(this.deviceForm);
+    this.submitted = true;
+    console.log(this.deviceForm.getRawValue());
+
+    if (this.deviceForm.invalid) {
+      console.log("invalid");
+    }
+    else {
+      console.log("valid");
+      this.api.editDevice(this.deviceForm.getRawValue()).subscribe(
+        res => {
+          console.log(res)
+        },
+        (error: any) => console.log(error)
+      );
+      // this.diagnostic(this.deviceForm);
+    }
   }
 }
 
