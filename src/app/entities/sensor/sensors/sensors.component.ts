@@ -29,11 +29,11 @@ export class SensorsComponent implements OnInit {
 
       tempArray = tempArray.filter(function (el) {
         // return (el.sensorLabel != undefined && el.sensorLabel[0] != undefined)
-        return el.sensors.type === 'uri'
+        return el.sensor.type === 'uri'
 
       })
       // console.log(this.sensorssArray);
-      tempArray.sort((a, b) => a.sensorsLabel[0].value.localeCompare(b.sensorsLabel[0].value));
+      tempArray.sort((a, b) => a.sensorLabel[0].value.localeCompare(b.sensorLabel[0].value));
       console.log(tempArray)
       this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
       console.dir(this.sensorsArray);
