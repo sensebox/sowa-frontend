@@ -79,7 +79,7 @@ export class PhenomenaEditComponent implements OnInit {
       }
       else {
         this.formErrors[key] = '';
-        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '')) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== ''|| this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {

@@ -24,6 +24,7 @@ export class PhenomenaDetailComponent implements OnInit {
     button1: undefined,
     button2: undefined
   };
+  unitsArray;
 
 
   constructor(
@@ -65,6 +66,8 @@ export class PhenomenaDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getPhenomenonDetails();
+    this.retrieveUnits();
+
   }
 
 
@@ -149,6 +152,26 @@ export class PhenomenaDetailComponent implements OnInit {
       console.log(res);
       this.phenomenonHistory = res;
     });
+  }
+
+  retrieveUnits() {
+    this.api.getUnits().subscribe(res => {
+      this.unitsArray = res;
+      // console.log(this.unitsArray);
+      this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
+      // console.log(this.unitsArray);
+    });
+  }
+
+  searchPheno(nameKey, val1, myArray, val2) {
+    // console.log(nameKey)
+    for (var i = 0; i < myArray.length; i++) {
+      // console.log(myArray[i][val1])
+      if (myArray[i][val1].value === nameKey) {
+        console.log(myArray[i][val2].value);
+        return myArray[i][val2].value;
+      }
+    }
   }
 
   search(nameKey, myArray) {
