@@ -4,10 +4,11 @@
   <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button>
 </mat-toolbar> -->
 <div *ngIf="device">
-  <senph-hero-banner [title]="device?.labels[0].label.value" (myEvent)="editButtonClick(uri)" [button]="true">
+  <senph-hero-banner [title]="device?.labels[0].value" (myEvent)="button1(uri)"
+  [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">>
   </senph-hero-banner>
 
-  <div class="content">
+  <!-- <div class="content">
     <div class="article">
       <p class="siteSub">From SOWA, the free SensorWiki</p>
       <p class="roleNote">This article is about <b>{{device.labels[0].label.value}}</b>. For equivalent devices, see <a
@@ -86,5 +87,166 @@
 
 
     </div>
-  </div>
+  </div> -->
+
+  <section *ngIf="deviceHistory">
+    <div class="list is-hoverable">
+      <div class="list-item">
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-3">
+            Index
+          </div>
+          <div class="column is-9">
+            <strong>
+              URI
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div class="list-item" *ngFor="let version of deviceHistory;let i = index"
+        [class.selected]="version === selectedVersion" (click)=redirectHistoricDetails(uri,version.device.value)>
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-3">
+            {{i+1}}
+          </div>
+          <div class="column is-9">
+            {{version.device.value}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" *ngIf="!deviceHistory">
+    <div class="container is-fluid">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical">
+          <div class="tile">
+            <!-- <senph-uri-tile [parent]="device"></senph-uri-tile> -->
+            <div class="tile is-parent is-vertical">
+              <article class="tile is-child notification is-warning">
+                <p class="title">URI</p>
+                <div class="content">
+                  <strong>
+                    {{device.iri.value}}
+                  </strong>
+                </div>
+              </article>
+              <article class="tile is-child notification is-warning">
+                <p class="title">Labels</p>
+                <p class="subtitle">These are the available labels in various languages for the
+                  {{prefLabel?.value}}:</p>
+                <div class="columns is-mobile is-multiline is-centered">
+                  <div class="column is-1">
+                    <p class="bd-notification is-primary">
+                      <strong>
+
+                      </strong>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <strong>
+                        Label
+                      </strong>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <strong>
+                        Language
+                      </strong>
+                    </p>
+                  </div>
+                </div>
+                <div class="columns is-mobile is-multiline is-centered"
+                  *ngFor="let label of device.labels;let i = index">
+                  <div class="column is-1">
+                    <p class="bd-notification is-primary">
+                      {{i+1}}
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      {{label.value}}
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      {{search(label["xml:lang"], "val", languageArray, "show")}}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="tile is-parent">
+              <article class="tile is-child notification is-warning">
+                <p class="title">Description</p>
+                <div class="content">
+                  <strong>
+                    {{device.description.value}}
+                  </strong>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="tile is-parent">
+
+            <article class="tile is-child notification is-danger">
+              <p class="title">Sensors</p>
+              <p class="subtitle">These are the sensors that are part of the {{prefLabel?.value}}
+                Device:
+              </p>
+              <div class="content">
+                <div class="columns is-mobile is-multiline is-centered">
+                  <div class="column is-1">
+                    <p class="bd-notification is-primary">
+                      <strong>
+
+                      </strong>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <strong>URI</strong>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <strong>Label</strong>
+                    </p>
+                  </div>
+                </div>
+                <div class="columns is-mobile is-multiline is-centered"
+                  *ngFor="let dom of device.sensors;let i = index">
+                  <div class="column is-1">
+                    <p class="bd-notification is-primary">
+                      <strong>
+                        {{i+1}}
+                      </strong>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <a class=""
+                        (click)="redirectDomain(dom.sensor.value, '/sensor/')">{{dom.sensor.value}}</a>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <a class="" *ngIf="sensorsArray"
+                        (click)="redirectDomain(dom.sensor.value, '/sensor/')">
+                        {{searchPheno(dom.sensor.value, "sensor", sensorsArray , "sensorLabel")}}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
