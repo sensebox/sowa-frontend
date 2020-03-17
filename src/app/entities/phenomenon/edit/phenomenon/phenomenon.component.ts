@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../../../services/api.service'
+import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 
 @Component({
   selector: 'senph-phenomenon',
@@ -8,7 +9,7 @@ import { ApiService } from '../../../../services/api.service'
   styleUrls: ['./phenomenon.component.scss']
 })
 export class PhenomenonComponent implements OnInit {
-  
+
   @Input() parentForm: FormGroup;
 
   constructor(
@@ -19,7 +20,7 @@ export class PhenomenonComponent implements OnInit {
   validationMessages = {
     'phenomenon': {
       'required': 'Please select a phenomenon.'
-    } 
+    }
   };
 
   ngOnInit() {
@@ -28,7 +29,7 @@ export class PhenomenonComponent implements OnInit {
 
   get phenomenon(): FormArray {
     return this.parentForm.get('phenomenon') as FormArray;
-  } 
+  }
 
   addPhenomenonButtonClick(): void {
     (<FormArray>this.parentForm.get('phenomenon')).push(this.addPhenomenonFormGroup());
@@ -36,24 +37,33 @@ export class PhenomenonComponent implements OnInit {
 
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
-      phenomenonUri: ['', [Validators.required]]
+      // phenomenonObject: [{
+        phenomenonURI: ['',
+        // phenomenonLabel: ''}, 
+        [Validators.required]]
     });
   }
 
   getSelectedPhenomenon(id) {
-    return this.parentForm.value.phenomenon[id].phenomenonUri;
+    return this.parentForm.value.phenomenon[id].phenomenonURI;
+  }
+
+  getValueFor(value) {
+    console.log(value);
   }
 
   retrievePhenomena() {
-    this.api.getPhenomena().subscribe(res => {
-      this.phenomenaArray = res;
-      this.phenomenaArray = this.phenomenaArray.filter(function (el) {
+    this.api.getPhenomenaAllLabels().subscribe(res => {
+      console.log(res);
+      var tempArray: any = res;
+
+      tempArray = tempArray.filter(function (el) {
         return el.phenomenon.type != 'bnode'
       })
-      // console.log(this.phenomenaArray);
-      this.phenomenaArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
-
-      // console.dir(this.phenomenaArray);
+      console.log(tempArray);
+      tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
+      this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
+      console.log(this.phenomenaArray);
     });
   }
 

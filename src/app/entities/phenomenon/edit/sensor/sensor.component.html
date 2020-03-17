@@ -20,7 +20,7 @@
                                         <select [id]="'sensorUri' + i" formControlName="sensorUri">
                                             <option value=""> Choose a sensor</option>
                                             <option *ngFor="let sensor of sensorsArray" [ngValue]="sensor.sensor.value">
-                                                {{sensor.label[0]?.value}}
+                                                {{sensor.sensorLabel[0]?.value}}
                                             </option>
                                         </select>
                                     </div>

@@ -50,8 +50,8 @@ export class SensorComponent implements OnInit {
       this.sensorsArray = this.sensorsArray.filter(function (el) {
         return el.sensor.type != 'bnode'
       })
-      // console.log(this.sensorsArray);
-      this.sensorsArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      console.log(this.sensorsArray);
+      this.sensorsArray.sort((a, b) => a.sensorLabel[0].value.localeCompare(b.sensorLabel[0].value));
 
       // console.dir(this.sensorsArray);
     });

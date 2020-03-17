@@ -16,18 +16,19 @@
                         <div class="field-body">
                             <div class="field is-narrow">
                                 <div class="control">
-                                    <div class="select ">
-                                        <select [id]="'phenomenonUri' + i" formControlName="phenomenonUri">
+                                    <div class="select">
+                                        <select [id]="'phenomenonURI' + i" formControlName="phenomenonURI">
                                             <option value=""> Choose a phenomenon</option>
-                                            <option *ngFor="let phenomenon of phenomenaArray" [ngValue]="phenomenon.phenomenon.value">
-                                                {{phenomenon.label[0]?.value}}
+                                            <option *ngFor="let pheno of phenomenaArray" [ngValue]="pheno.phenomenon.value">
+                                                {{pheno.phenomenonLabel.value}} (URI: {{pheno.phenomenon.value | slice:33}})
                                             </option>
                                         </select>
                                     </div>
+                                    
                                 </div>
                                 <span class="help-block error-block"
-                                    *ngIf="phenomenon.controls[i].get('phenomenonUri').errors?.required &&
-                                (phenomenon.controls[i].get('phenomenonUri').touched || !phenomenon.controls[i].get('phenomenonUri').pristine)">
+                                    *ngIf="phenomenon.controls[i].get('phenomenonURI').errors?.required &&
+                                (phenomenon.controls[i].get('phenomenonURI').touched || !phenomenon.controls[i].get('phenomenonURI').pristine)">
                                     {{validationMessages.phenomenon.required}}
                                 </span>
                             </div>
