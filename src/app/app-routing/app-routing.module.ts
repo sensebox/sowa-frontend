@@ -138,7 +138,8 @@ const routes: Routes = [
               {
                 path: '',
                 children: [
-                  { path: ':iri', component: DevicesDetailComponent }
+                  { path: ':iri', component: DevicesDetailComponent },
+                  { path: ':uri/historic/:iri', component:DevicesDetailComponent }                  
                 ]
               }
             ]
@@ -178,7 +179,9 @@ const routes: Routes = [
               {
                 path: '',
                 children: [
-                  { path: ':iri', component: DomainsDetailComponent }
+                  { path: ':iri', component: DomainsDetailComponent },
+                  { path: ':uri/historic/:iri', component:DomainsDetailComponent }                  
+
                 ]
               }
             ]
