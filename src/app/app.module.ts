@@ -42,9 +42,6 @@ import { TextComponent } from './entities/phenomenon/edit/text/text.component';
 import { NumberComponent } from './entities/phenomenon/edit/number/number.component';
 import { SensorComponent } from './entities/phenomenon/edit/sensor/sensor.component';
 import { PhenomenonComponent } from './entities/phenomenon/edit/phenomenon/phenomenon.component';
-import { Table3Component } from './tiles/table3/table3.component';
-import { UriTileComponent } from './tiles/uri-tile/uri-tile.component';
-import { InfoTileComponent } from './tiles/info-tile/info-tile.component';
 import { FilterPipePipe } from './pipes/filter-pipe.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchPipePipe } from './pipes/search-pipe.pipe';
@@ -88,9 +85,6 @@ import { ValidComponent } from './entities/phenomenon/edit/valid/valid.component
     NumberComponent,
     SensorComponent,
     PhenomenonComponent,
-    Table3Component,
-    UriTileComponent,
-    InfoTileComponent,
     FilterPipePipe,
     SearchPipePipe,
     FilterOptionsPipePipe,
