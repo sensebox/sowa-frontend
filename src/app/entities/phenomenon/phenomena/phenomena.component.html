@@ -1,24 +1,21 @@
-<senph-hero-banner title="Phenomena" subtitle="Discover all phenomena registered in SOWA below"></senph-hero-banner>
+<senph-hero-banner title="Phenomena" subtitle="Discover all phenomena registered in SOWA"></senph-hero-banner>
 
 <section class="hero is-dark is-small is-bold">
   <div class="hero-body">
-    <div class="level">
-      <!-- <label for="myInput">Search for Phenomena</label> -->
-      <!-- <div class="level-left"> -->
-        <div class=" level-item">
+    <div class="container is-fluid">
+      <div class="columns is-vcentered">
+        <div class="column is-8">
           <div class="field">
             <p class="control has-icons-left is-expanded">
-            <input class="input" type="text" #myInput placeholder="Type to filter phenomena..."
-              [(ngModel)]="searchTerm">
-            <span class="icon is-left">
-              <fa-icon [icon]="faSearch"></fa-icon>
-            </span>
-          </p>
+              <input class="input" type="text" #myInput placeholder="Type to filter phenomena..."
+                [(ngModel)]="searchTerm">
+              <span class="icon is-left">
+                <fa-icon [icon]="faSearch"></fa-icon>
+              </span>
+            </p>
+          </div>
         </div>
-        <!-- </div> -->
-      </div>
-      <!-- <div class="level-right"> -->
-        <div class="level-item" *ngIf="phenomenaArray">
+        <div class="column is-1 is-offset-3" *ngIf="phenomenaArray">
           <div class="has-text-centered">
             <p class="heading">Phenomena</p>
             <p class="title"> {{phenomenaArray.length}}
@@ -26,7 +23,7 @@
           </div>
         </div>
       </div>
-    <!-- </div> -->
+    </div>
   </div>
 </section>
 
@@ -70,35 +67,5 @@
         </div>
       </div>
     </div>
-
-    <!-- 
-    <table class="table is-hoverable is-striped">
-      <thead>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </tfoot>
-      <tbody>
-        <tr *ngFor="let phenomena of phenomenaArrayFiltered;let i = index" [hidden]='phenomena.phenomenon.type != "uri"'
-          [class.selected]="phenomena === selectedPhenomenon">
-          <th>{{i+1}}</th>
-          <td>
-            <a (click)="onSelect(phenomena)" class="button"
-              title="{{phenomena.label[0]?.value}}">{{phenomena.label[0]?.value}}</a>
-          </td>
-          <td>{{phenomena.phenomenon.value}}</td>
-        </tr>
-      </tbody>
-    </table> -->
-
   </div>
 </div>

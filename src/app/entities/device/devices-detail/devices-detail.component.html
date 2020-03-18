@@ -1,93 +1,9 @@
-<!-- <mat-toolbar style="background-color: #000000c6;" class="example-toolbar">
-  <h4 class="example-app-name capitalize" style="color: #ffd63e;">{{device?.labels[0].label.value}}</h4>
-  <span class="example-fill-remaining-space"></span>
-  <button class="btn btn-primary" (click)="editButtonClick(uri)">Edit</button>
-</mat-toolbar> -->
 <div *ngIf="device">
-  <senph-hero-banner [title]="device?.labels[0].value" (myEvent)="button1(uri)"
+  <senph-hero-banner [title]="device?.labels[0].value" [subtitle]="device?.iri.value" (myEvent)="button1(uri)"
   [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">>
   </senph-hero-banner>
 
-  <!-- <div class="content">
-    <div class="article">
-      <p class="siteSub">From SOWA, the free SensorWiki</p>
-      <p class="roleNote">This article is about <b>{{device.labels[0].label.value}}</b>. For equivalent devices, see <a
-          href="/phenomenon/sameAs/{{device.labels[0].label.value}}">{{device.labels[0].label.value}}-Equivalents.</a>
-      </p>
 
-      <div class="articleRight">
-        <div class="articleRightInner">
-          <img src="{{device.image.value}}" alt="{{device.labels[0].label.value}}" />
-        </div>
-        The {{device.labels[0].label.value}}
-      </div>
-
-      <p>{{device.description.value}}</p>
-      <div class="contentsPanel">
-        <div class="contentsHeader">Contents</div>
-        <ul>
-          <li><span>1</span><a href="/device/{{uri}}#uri">URI</a> </li>
-          <li><span>2</span><a href="/device/{{uri}}#labels">Labels</a> </li>
-          <li><span>3</span><a href="/device/{{uri}}#sensors">Sensors</a></li>
-          <li><span>4</span><a href="/device/{{uri}}#website">Website</a></li>
-          <li><span>5</span><a href="/device/{{uri}}#contact">Contact</a></li>
-        </ul>
-      </div>
-      <h2 id="uri">URI</h2>
-      <p>The URI of the {{device.labels[0].label.value}} is: </p>
-      <b>{{device.iri.value}}</b>
-      <h2 id="labels">Labels</h2>
-      <p>These are the available labels for the {{device.labels[0].label.value}} Device:</p>
-      <ul>
-        <li *ngFor="let name of device.labels">
-          <b>{{name.label.value}}</b>
-        </li>
-      </ul>
-
-      <h2 id="sensors">Sensors</h2>
-      <p>These sensors are part of the device: {{device.labels[0].label.value}}</p>
-      <table class="table is-striped is-hoverable">
-        <thead>
-          <th>Label</th>
-          <th>Sensor URI</th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let sensor of device.sensors">
-            <td>
-              <a href="/sensor/{{sensor.sensors.value | slice:34}}">{{sensor.sensorsLabel.value}}</a>
-            </td>
-            <td>
-              {{sensor.sensors.value}}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2 id="website">Website</h2>
-      <p>The website of the {{device.labels[0].label.value}} is:</p>
-      <b><a href="//{{device.website.value}}" target="_blank">{{device.website.value}}</a></b>
-
-      <h2 id="contact">Contact</h2>
-      <p>The contact of the {{device.labels[0].label.value}} is:</p>
-      <b>{{device.contact.value}}</b>
-
-
-
-      <div class="categories">
-        <a href="#">Minimum corrumpit </a> <a href="#">Regione suscipit </a> <a href="#">Has et partem </a>
-      </div>
-
-    </div>
-    <div class="pagefooter">
-      This page was last edited on 15.05.2019
-      <div class="footerlinks">
-        <a href="#">Privacy policy</a> <a href="#">About</a> <a href="#">Terms and conditions</a> <a href="#">Cookie
-          statement</a> <a href="#">Developers</a>
-      </div>
-
-
-    </div>
-  </div> -->
 
   <section *ngIf="deviceHistory">
     <div class="list is-hoverable">

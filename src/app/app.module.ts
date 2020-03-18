@@ -14,7 +14,6 @@ import { SensorsDetailComponent } from './entities/sensor/sensors-detail/sensors
 import { DevicesDetailComponent } from './entities/device/devices-detail/devices-detail.component';
 // import { SensorsFormComponent } from './sensors-form/sensors-form.component';
 import { DevicesEditComponent } from './entities/device/devices-edit/devices-edit.component';
-import { FormTemplateComponent } from './old-stuff/form-template/form-template.component';
 import { DomainsComponent } from './entities/domain/domains/domains.component';
 import { DomainsDetailComponent } from './entities/domain/domains-detail/domains-detail.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -23,9 +22,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { from } from 'rxjs';
-import { FiltersComponent } from './old-stuff/filters/filters.component';
-import { FormSensorComponent } from './old-stuff/form-sensor/form-sensor.component';
-import { FormPhenomenonComponent } from './old-stuff/form-phenomenon/form-phenomenon.component';
 import { environment } from '../environments/environment';
 import { DomainEditComponent } from './entities/domain/domain-edit/domain-edit.component';
 import { PhenomenaEditComponent } from './entities/phenomenon/phenomena-edit/phenomena-edit.component';
@@ -53,6 +49,7 @@ import { FilterPipePipe } from './pipes/filter-pipe.pipe';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchPipePipe } from './pipes/search-pipe.pipe';
 import { FilterOptionsPipePipe } from './pipes/filter-options-pipe.pipe';
+import { ValidComponent } from './entities/phenomenon/edit/valid/valid.component';
 
 
 
@@ -70,12 +67,8 @@ import { FilterOptionsPipePipe } from './pipes/filter-options-pipe.pipe';
     DevicesDetailComponent,
     // SensorsFormComponent,
     DevicesEditComponent,
-    FormTemplateComponent,
     DomainsComponent,
     DomainsDetailComponent,
-    FiltersComponent,
-    FormSensorComponent,
-    FormPhenomenonComponent,
     DomainEditComponent,
     PhenomenaEditComponent,
     SensorEditComponent,
@@ -100,7 +93,8 @@ import { FilterOptionsPipePipe } from './pipes/filter-options-pipe.pipe';
     InfoTileComponent,
     FilterPipePipe,
     SearchPipePipe,
-    FilterOptionsPipePipe
+    FilterOptionsPipePipe,
+    ValidComponent
   ],
   imports: [
     BrowserModule,

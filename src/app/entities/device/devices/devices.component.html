@@ -1,51 +1,5 @@
 <senph-hero-banner title="Devices"
-  subtitle="Here you can find a list of all devices that are registered in SOWA"></senph-hero-banner>
-
-<!-- <div class="container">
-  <div class="notification">
-
-
-    <div class="field is-grouped">
-      <p class="control is-expanded">
-        <input class="input" type="text" #myInput placeholder="Type to filter devices..." [(ngModel)]="device">
-      </p>
-      <p class="control">
-        <a (click)="filterItem(myInput.value)" class="button is-info">
-          Search
-        </a>
-      </p>
-    </div>
-
-    <table class="table is-hoverable is-striped">
-      <thead>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </tfoot>
-      <tbody>
-        <tr *ngFor="let device of devicesArrayFiltered;let i = index" [hidden]='device.device.type != "uri"'
-          [class.selected]="device === selectedDevice">
-          <th>{{i+1}}</th>
-          <td>
-            <a (click)="onSelect(device)" class="button"
-              title="{{device.label[0]?.value}}">{{device.label[0]?.value}}</a>
-          </td>
-          <td>{{device.device.value}}</td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-</div> -->
+  subtitle="Discover all devices registered in SOWA"></senph-hero-banner>
 
 <div class="container is-fluid">
   <div class="notification">

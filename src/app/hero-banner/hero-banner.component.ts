@@ -13,6 +13,7 @@ export class HeroBannerComponent implements OnInit {
   @Input()  button2: string;
   @Output() myEvent = new EventEmitter();
   @Output() myEvent2 = new EventEmitter();
+  @Input() valid: string;
 
   
 

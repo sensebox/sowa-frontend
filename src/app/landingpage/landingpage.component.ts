@@ -40,7 +40,8 @@ export class LandingpageComponent implements OnInit {
 
   onSelect(entity) {
     this.selectedEntity = entity;
-    this._routerService.navigate(['/' + entity.type.value + '/detail/', entity.entity.value.slice(34)]);
+    console.log(entity)
+    this._routerService.navigate(['/' + entity.type.value.slice(34) + '/detail/', entity.entity.value.slice(34)]);
   }
 
   sortBy(category, array) {
@@ -57,6 +58,7 @@ export class LandingpageComponent implements OnInit {
 
     }
   }
+
 
   onFilterChange(e) {
     if (e.target.checked) {

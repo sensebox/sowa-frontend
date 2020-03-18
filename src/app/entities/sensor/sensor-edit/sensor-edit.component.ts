@@ -75,7 +75,8 @@ export class SensorEditComponent implements OnInit {
       price: [{ value: '', disabled: false }, [Validators.required]],
       datasheet: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       lifeperiod: [{ value: '', disabled: false }, [Validators.required]],
-      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]]
+      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      validation: [false, [Validators.required]]
     })
 
     this.sensorForm.valueChanges.subscribe(
@@ -212,10 +213,14 @@ export class SensorEditComponent implements OnInit {
     return this.sensorForm.get('image') as FormArray;
   }
 
-  redirectDetails(uri){
+  redirectDetails(uri) {
     this._routerService.navigate(['/sensor/detail', uri]);
   }
 
+  onLoadButtonClick(){
+    console.log(this.sensorForm.value);
+    console.log(this.sensorForm.getRawValue());
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -225,7 +230,7 @@ export class SensorEditComponent implements OnInit {
     // });
     console.log(this.sensorForm.value);
     console.log(this.sensorForm.getRawValue());
-  
+
     if (this.sensorForm.invalid) {
       console.log("invalid");
     }

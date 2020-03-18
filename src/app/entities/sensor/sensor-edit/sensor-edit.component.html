@@ -107,6 +107,11 @@
       <senph-text [formErrors]="formErrors" label="Image" id="image" [control]="this.sensorForm.get('image')"
         [parentForm]="sensorForm">
       </senph-text>
+
+      <!-- 1.2.10 IMAGE -->
+      <senph-valid [formErrors]="formErrors" label="VALIDATE" id="validation" [control]="this.sensorForm.get('validation')"
+        [parentForm]="sensorForm">
+      </senph-valid>
     </div>
 
 

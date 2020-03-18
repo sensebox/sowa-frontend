@@ -1,51 +1,6 @@
 <senph-hero-banner title="Domains"
   subtitle="Discover all domains registered in SOWA below"></senph-hero-banner>
 
-<!-- <div class="container">
-  <div class="notification">
-
-
-    <div class="field is-grouped">
-      <p class="control is-expanded">
-        <input class="input" type="text" #myInput placeholder="Type to filter domains..." [(ngModel)]="domain">
-      </p>
-      <p class="control">
-        <a (click)="filterItem(myInput.value)" class="button is-info">
-          Search
-        </a>
-      </p>
-    </div>
-
-    <table class="table is-hoverable is-striped">
-      <thead>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </tfoot>
-      <tbody>
-        <tr *ngFor="let domain of domainsArrayFiltered;let i = index" [hidden]='domain.domain.type != "uri"'
-          [class.selected]="domain === selectedDomain">
-          <th>{{i+1}}</th>
-          <td>
-            <a (click)="onSelect(domain)" class="button"
-              title="{{domain.label[0]?.value}}">{{domain.label[0]?.value}}</a>
-          </td>
-          <td>{{domain.domain.value}}</td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
-</div> -->
 <div class="container is-fluid">
   <div class="notification">
     <div class="field is-grouped">

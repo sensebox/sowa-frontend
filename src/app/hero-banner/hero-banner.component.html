@@ -7,6 +7,9 @@
           <div>
             <h1 class="title" style="color: #ffd63e;">
               {{title}}
+              <span class="icon" *ngIf="valid == 'true'">
+                <i class="fas fa-check" aria-hidden="true"></i>
+              </span>
             </h1>
             <h2 *ngIf="subtitle" class="subtitle" style="color: #ffd63e;">
               {{subtitle}}

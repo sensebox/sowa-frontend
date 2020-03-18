@@ -1,19 +1,6 @@
 <senph-hero-banner title="Sensors"
   subtitle="Discover all phenomena registered in SOWA below"></senph-hero-banner>
 
-<!-- 
-<div class="container is-fluid">
-  <div class="notification has-text-centered ">
-    <div class="field">
-      <p class="control has-icons-left is-expanded">
-        <input class="input" type="text" #myInput placeholder="Type to filter sensors..." [(ngModel)]="searchTerm">
-        <span class="icon is-left">
-          <fa-icon [icon]="faSearch"></fa-icon>
-        </span>
-      </p>
-    </div>
-  </div>
-</div> -->
 
 <div class="container is-fluid">
   <div class="notification">
@@ -24,11 +11,6 @@
           <fa-icon [icon]="faSearch"></fa-icon>
         </span>
       </p>
-      <!-- <p class="control">
-        <a (click)="filterItem(myInput.value)" class="button is-info">
-          Search
-        </a>
-      </p> -->
     </div>
 
     <div class="list is-hoverable">
@@ -67,33 +49,6 @@
 
     <div class="pageloader is-bottom-to-top" [ngClass]="{'is-active': pageLoadActive === '1' }"><span
         class="title">Pageloader</span></div>
-    <!-- <table class="table is-hoverable is-striped">
-      <thead>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </thead>
-      <tfoot>
-        <tr>
-          <th><abbr title="Number">No.</abbr></th>
-          <th>Label</th>
-          <th><abbr title="Uniform Resource Identifier">URI</abbr></th>
-        </tr>
-      </tfoot>
-      <tbody>
-        <tr *ngFor="let sensors of sensorsArray | filterPipe:searchTerm;let i = index" [hidden]='sensors.sensor.type != "uri"'
-          [class.selected]="sensors === selectedSensor">
-          <th>{{i+1}}</th>
-          <td>
-            <a (click)="onSelect(sensors)" class="button"
-              title="{{sensors.sensorLabel[0]?.value}}">{{sensors.sensorLabel[0]?.value}}</a>
-          </td>
-          <td>{{sensors.sensor.value}}</td>
-        </tr>
-      </tbody>
-    </table> -->
 
   </div>
 </div>
