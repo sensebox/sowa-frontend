@@ -59,8 +59,8 @@ export class AppComponent {
       // );
     }
   
-    getData( query ) {
-      // Simulate HTTP request..
-      return timer(1000).pipe(mapTo("https://api.com?" + query));
-    }
+    // getData( query ) {
+    //   // Simulate HTTP request..
+    //   return timer(1000).pipe(mapTo("https://api.com?" + query));
+    // }
   }
