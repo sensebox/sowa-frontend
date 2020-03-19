@@ -44,12 +44,20 @@
 
           <div class="navbar-end level-right">
             <div class="navbar-item">
-              <div class="buttons">
+              <div *ngIf="!(user$ | async)" class="buttons" (click)="login()">
                 <a class="button is-light">
                   <strong>Sign up</strong>
                 </a>
                 <a class="button is-warning">
                   Log in
+                </a>
+              </div>
+              <div class="buttons" *ngIf="(user$ | async)">
+                <a class="button is-warning">
+                  {{(user$ | async).name}}
+                </a>
+                <a class="button is-light" (click)="logout()">
+                  <strong>Log out</strong>
                 </a>
               </div>
             </div>

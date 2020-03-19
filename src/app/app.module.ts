@@ -47,6 +47,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchPipePipe } from './pipes/search-pipe.pipe';
 import { FilterOptionsPipePipe } from './pipes/filter-options-pipe.pipe';
 import { ValidComponent } from './entities/phenomenon/edit/valid/valid.component';
+import { LoginContainerComponent } from './login/login-container/login-container.component';
+import { LoginComponent } from './login/login/login.component';
+import { LoginModalComponent } from './login/login-modal/login-modal.component';
+import { LoadingComponent } from './shared/loading/loading.component';
 
 
 
@@ -88,7 +92,11 @@ import { ValidComponent } from './entities/phenomenon/edit/valid/valid.component
     FilterPipePipe,
     SearchPipePipe,
     FilterOptionsPipePipe,
-    ValidComponent
+    ValidComponent,
+    LoginContainerComponent,
+    LoginComponent,
+    LoginModalComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

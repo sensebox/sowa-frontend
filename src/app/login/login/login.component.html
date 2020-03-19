@@ -1,0 +1,60 @@
+<form class="form-horizontal" (ngSubmit)="login()" [formGroup]="loginForm">
+
+        <div class="container well some-space">
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">User or Email:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control is-expanded">
+                            <input type="text" [id]="'email'" [formControl]="loginForm.get('email')" class="input is-normal">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <span class="help-block error-block" *ngIf="formErrors['email']">
+                {{formErrors['email']}}
+            </span> -->
+        <!-- </div> -->
+ 
+        <!-- <div class="container well some-space"> -->
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Password:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control is-expanded">
+                            <input type="password" [id]="'password'" formControlName="password" class="input is-normal">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <span class="help-block error-block" *ngIf="formErrors['password']">
+                {{formErrors['password']}}
+            </span> -->
+    </div>
+
+
+    <div class="panel-footer">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button is-success" type="submit" [disabled]="loginForm.invalid || loading">Login</button>
+          </p>
+          <senph-loading *ngIf="loading"></senph-loading>
+        </div>
+
+        <article class="message is-danger" *ngIf="errorMessage">
+            <div class="message-body">
+                {{errorMessage}}
+            </div>
+        </article>
+      
+        <span class="help-block" *ngIf="loginForm.invalid">
+          There are invalid fields in the form, please review your inputs to submit this form.
+        </span>
+    </div>
+  
+
+</form>

@@ -1,0 +1,6 @@
+<senph-login
+    [user]="user$ | async"
+    [errorMessage]="errorMessage$ | async"
+    [loading]="loading$ | async"
+    (loggedIn)="login($event)"
+></senph-login>

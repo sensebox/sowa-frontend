@@ -202,7 +202,11 @@ export class ApiService {
   }
 
   createDomain(domain) {
-    return this.http.post(this.APIURL + '/domains/domain/create', domain, httpOptions)
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', window.localStorage.getItem('sb_accesstoken'));
+    headers = headers.append('Content-Type', 'application/json');
+
+    return this.http.post(this.APIURL + '/domains/domain/create', domain, {headers: headers})
       .pipe(catchError(this.handleError));
   }
 

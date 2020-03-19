@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
@@ -10,6 +11,7 @@ import { FormControl } from '@angular/forms';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
+  user$ = this.authService.getUser();
 
   fillerNav: Array<{ topic: string, options: [{ path: string, title: any }, { path: string, title: any }] }> = [
     {
@@ -78,7 +80,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private authService: AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -89,6 +91,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  }
+
+  login(){
+    this.authService.setLoginPageOpen(true);
+  }
+
+  logout(){
+    this.authService.logout();
   }
 
 }
