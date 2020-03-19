@@ -11,15 +11,15 @@ export class NumberComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
   @Input() control: FormControl;
-  @Input() id: String;
-  @Input() label: String;
-  @Input() step: Number;
-  @Input() placeholder: Number;
-  @Input() addon: String;
+  @Input() id: string;
+  @Input() label: string;
+  @Input() step: number;
+  @Input() placeholder: number;
+  @Input() addon: string;
   @Input() formErrors;
 
 
-  tempValue: Number;
+  tempValue: number;
 
   constructor() { }
 
