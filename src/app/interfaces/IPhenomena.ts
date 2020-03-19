@@ -6,9 +6,15 @@ export class IPhenomena {
         value: string,
     };
     phenomenonLabel: ILabel;
+    validation: {
+        type: string,
+        value: string,
+    };
+
   
     constructor(resPhenomenon: any) {
         this.phenomenon = resPhenomenon.phenomenon;
         this.phenomenonLabel = resPhenomenon.phenomenonLabel;
+        this.validation = resPhenomenon.validation;
     }
 };
