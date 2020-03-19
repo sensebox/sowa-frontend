@@ -43,7 +43,7 @@
                             </span>
                         </p>
                         <p class="control">
-                            <a (click)="filterItem(myInput.value)" class="button is-info">
+                            <a class="button is-info">
                                 <i class="fas fa-search" aria-hidden="true"></i>
                             </a>
                         </p>
@@ -179,7 +179,7 @@
                                 </strong>
                                 <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'label'"></i>
                             </div>
-                            <div class="column is-6" (click)="sortBy('entity', result)">
+                            <div class="column is-5" (click)="sortBy('entity', result)">
                                 <strong>
                                     URI
                                 </strong>
@@ -193,6 +193,13 @@
                                 <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'type'"></i>
 
                             </div>
+                            <div class="column is-1" (click)="sortBy('validation', result)">
+                                <strong>
+                                    Verified
+                                </strong>
+                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'validation'"></i>
+
+                            </div>
                         </div>
                     </div>
                     <div class="list-item" *ngFor="let entity of result; let i = index; let l = count"
@@ -204,11 +211,17 @@
                             <div class="column is-3">
                                 {{entity.label.value}}
                             </div>
-                            <div class="column is-6">
+                            <div class="column is-5">
                                 {{entity.entity.value}}
                             </div>
                             <div class="column is-2">
                                 {{entity.type.value | slice:34 | titlecase}}
+                            </div>
+                            <div class="column is-1">
+                                  <span class="fa fa-stack fa-xs" *ngIf="entity.validation.value == 'true'">
+                                    <i class="fa fa-certificate fa-stack-2x"></i>
+                                    <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+                                </span>
                             </div>
                         </div>
                     </div>

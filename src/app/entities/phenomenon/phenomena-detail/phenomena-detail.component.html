@@ -1,6 +1,6 @@
 <div *ngIf="phenomenon != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.value" [subtitle]="phenomenon.iri.value" (myEvent)="button1(uri)"
+  <senph-hero-banner [title]="prefLabel?.value" [valid]="phenomenon.validation?.value" [subtitle]="phenomenon.iri.value" (myEvent)="button1(uri)"
     [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">> </senph-hero-banner>
 
 <section *ngIf="phenomenonHistory">

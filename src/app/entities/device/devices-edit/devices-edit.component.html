@@ -2,12 +2,12 @@
 
 
   <!-- 1 FORM-CONTENT -->
-  <div class="panel panel-default">
+  <!-- <div class="panel panel-default"> -->
 
 
     <!-- 1.1 BANNER -->
     <senph-hero-banner title="Edit Device:" [subtitle]="heroBannerString + deviceForm.get('uri').value"
-    button="Back to Detail-View" (myEvent)="redirectDetails(shortUri)">
+      button="Back to Detail-View" (myEvent)="redirectDetails(shortUri)">
     </senph-hero-banner>
 
 
@@ -92,6 +92,11 @@
         <senph-sensor [parentForm]="deviceForm"></senph-sensor>
       </div>
 
+      <!-- 1.2.6 VALIDATION -->
+      <senph-valid [formErrors]="formErrors" label="VALIDATE" id="validation"
+        [control]="this.deviceForm.get('validation')" [parentForm]="deviceForm">
+      </senph-valid>
+
 
     </div>
 
@@ -114,5 +119,5 @@
       </span>
     </div>
 
-  </div>
+  <!-- </div> -->
 </form>

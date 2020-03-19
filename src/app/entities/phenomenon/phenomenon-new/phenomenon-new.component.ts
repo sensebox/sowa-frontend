@@ -6,6 +6,7 @@ import { ApiService } from '../../../services/api.service'
 import { IDomains } from '../../../interfaces/IDomains';
 import { IUnit } from '../../../interfaces/IUnit';
 import { ILabel } from 'src/app/interfaces/ILabel';
+import { FormErrors } from 'src/app/interfaces/form-errors';
 
 @Component({
   selector: 'senph-phenomenon-new',
@@ -33,7 +34,8 @@ export class PhenomenonNewComponent implements OnInit {
     }
   };
 
-  formErrors = {
+  formErrors: FormErrors = {
+    
   };
 
   constructor(
@@ -54,7 +56,8 @@ export class PhenomenonNewComponent implements OnInit {
       ]),
       unit: this.fb.array([
         this.addUnitFormGroup()
-      ])
+      ]),
+      validation: [false, [Validators.required]]
     });
 
     this.phenomenonForm.valueChanges.subscribe(
@@ -114,7 +117,7 @@ export class PhenomenonNewComponent implements OnInit {
 
 
   onLoadButtonClick() {
-    console.log(this.phenomenonForm.controls);
+    console.log(this.phenomenonForm.value);
   }
 
   onSubmit() {

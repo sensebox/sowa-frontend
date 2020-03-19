@@ -45,9 +45,14 @@
               Label
             </strong>
           </div>
-          <div class="column is-6">
+          <div class="column is-5">
             <strong>
               URI
+            </strong>
+          </div>
+          <div class="column is-1">
+            <strong>
+              Verified
             </strong>
           </div>
         </div>
@@ -61,8 +66,14 @@
           <div class="column is-5">
             {{phenomena.phenomenonLabel[0]?.value}}
           </div>
-          <div class="column is-6">
+          <div class="column is-5">
             {{phenomena.phenomenon.value}}
+          </div>
+          <div class="column is-1">
+            <span class="fa fa-stack fa-xs" *ngIf="phenomena.validation[0]?.value == 'true'">
+              <i class="fa fa-certificate fa-stack-2x"></i>
+              <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+            </span>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { ISensors } from 'src/app/interfaces/ISensors';
+import { FormErrors } from 'src/app/interfaces/form-errors';
 
 
 
@@ -42,7 +43,7 @@ export class DevicesEditComponent implements OnInit {
     }
   };
 
-  formErrors = {
+  formErrors: FormErrors = {
   };
   shortUri: string;
   submitted = false;
@@ -67,7 +68,8 @@ export class DevicesEditComponent implements OnInit {
       contact: [{ value: '', disabled: false }, [Validators.required]],
       sensor: this.fb.array([
         this.addSensorFormGroup()
-      ])
+      ]),
+      validation: [false, [Validators.required]]
     })
 
     this.deviceForm.valueChanges.subscribe(
@@ -134,7 +136,7 @@ export class DevicesEditComponent implements OnInit {
       description: device.description.value,
       website: device.website ? device.website.value : '',
       image: device.image ? device.image.value : '',
-      contact: device.contact ? device.contact.value : ''
+      contact: device.contact ? device.contact.value : '',
     });
 
     this.deviceForm.setControl('label', this.setExistingLabels(device.labels))
@@ -171,6 +173,10 @@ export class DevicesEditComponent implements OnInit {
 
   redirectDetails(uri) {
     this._routerService.navigate(['/device/detail', uri]);
+  }
+
+  onLoadButtonClick() {
+    console.log(this.deviceForm.getRawValue());
   }
 
   onSubmit() {

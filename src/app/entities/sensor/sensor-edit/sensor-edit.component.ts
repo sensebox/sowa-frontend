@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
+import { FormErrors } from 'src/app/interfaces/form-errors';
 
 @Component({
   selector: 'senph-sensor-edit',
@@ -47,7 +48,7 @@ export class SensorEditComponent implements OnInit {
     }
   };
 
-  formErrors = {
+  formErrors: FormErrors = {
   };
 
   constructor(
