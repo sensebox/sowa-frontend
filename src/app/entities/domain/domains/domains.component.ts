@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { IDomain } from 'src/app/interfaces/IDomain';
 import { IDomains } from 'src/app/interfaces/IDomains';
 
 @Component({
   selector: 'senph-domains',
   templateUrl: './domains.component.html',
-  styleUrls: ['./domains.component.scss', '../../../app.component.scss']
+  styleUrls: ['./domains.component.scss']
 })
 export class DomainsComponent implements OnInit {
-  faSearch = faSearch;
   domainsArray;
   domainsArrayFiltered;
   selectedDomain;

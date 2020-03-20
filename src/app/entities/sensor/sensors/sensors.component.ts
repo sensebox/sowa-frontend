@@ -6,7 +6,7 @@ import { ISensors } from 'src/app/interfaces/ISensors';
 @Component({
   selector: 'senph-sensors',
   templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss', '../../../app.component.scss']
+  styleUrls: ['./sensors.component.scss']
 })
 export class SensorsComponent implements OnInit {
   sensorsArray;

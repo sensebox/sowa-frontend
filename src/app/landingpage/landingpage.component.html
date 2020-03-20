@@ -39,12 +39,12 @@
                         <p class="control has-icons-left is-expanded">
                             <input class="input" type="text" #myInput placeholder="Search" [(ngModel)]="searchTerm">
                             <span class="icon is-left">
-                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <i class="fa fa-search" aria-hidden="true"></i>
                             </span>
                         </p>
                         <p class="control">
                             <a class="button is-info">
-                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <i class="fa fa-search" aria-hidden="true"></i>
                             </a>
                         </p>
                     </div>
@@ -177,27 +177,27 @@
                                 <strong>
                                     Label
                                 </strong>
-                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'label'"></i>
+                                <i class="fa fa-sort" aria-hidden="true" *ngIf="sortCategory === 'label'"></i>
                             </div>
                             <div class="column is-5" (click)="sortBy('entity', result)">
                                 <strong>
                                     URI
                                 </strong>
-                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'entity'"></i>
+                                <i class="fa fa-sort" aria-hidden="true" *ngIf="sortCategory === 'entity'"></i>
 
                             </div>
                             <div class="column is-2" (click)="sortBy('type', result)">
                                 <strong>
                                     Type
                                 </strong>
-                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'type'"></i>
+                                <i class="fa fa-sort" aria-hidden="true" *ngIf="sortCategory === 'type'"></i>
 
                             </div>
                             <div class="column is-1" (click)="sortBy('validation', result)">
                                 <strong>
                                     Verified
                                 </strong>
-                                <i class="fas fa-sort" aria-hidden="true" *ngIf="sortCategory === 'validation'"></i>
+                                <i class="fa fa-sort" aria-hidden="true" *ngIf="sortCategory === 'validation'"></i>
 
                             </div>
                         </div>
