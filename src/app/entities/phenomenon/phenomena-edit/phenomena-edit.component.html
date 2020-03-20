@@ -2,7 +2,7 @@
 
 
   <!-- 1 FORM-CONTENT -->
-  <div class="panel panel-primary">
+  <!-- <div class="panel panel-primary"> -->
 
 
     <!-- 1.1 BANNER -->
@@ -86,7 +86,15 @@
         <label for="unit">Units</label>
         <senph-unit [parentForm]="phenomenonForm"></senph-unit>
       </div>
+
+      <!-- 1.2.6 VALIDATION -->
+      <senph-valid [formErrors]="formErrors" label="VALIDATE" id="validation"
+        [control]="this.phenomenonForm.get('validation')" [parentForm]="phenomenonForm">
+      </senph-valid>
+
     </div>
+
+
 
 
     <!-- 1.3 SUBMIT-BUTTONS -->
@@ -106,7 +114,7 @@
     </div>
 
 
-  </div>
+  <!-- </div> -->
 
 
 </form>

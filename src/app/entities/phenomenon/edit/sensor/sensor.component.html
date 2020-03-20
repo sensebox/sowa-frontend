@@ -1,5 +1,5 @@
 <div [formGroup]="parentForm">
-    <div formArrayName="sensor" *ngFor="let dom of parentForm.get('sensor').controls; let i = index">
+    <div formArrayName="sensor" *ngFor="let dom of parentForm.get('sensor')?.controls; let i = index">
         <div [formGroupName]="i" style=" padding:1em;">
             <article class="message is-small is-inverted ">
                 <div class="message-header">

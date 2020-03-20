@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { ISensors } from 'src/app/interfaces/ISensors';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'senph-sensors',
   templateUrl: './sensors.component.html',
-  styleUrls: ['./sensors.component.scss', '../../../app.component.scss']
+  styleUrls: ['./sensors.component.scss']
 })
 export class SensorsComponent implements OnInit {
-  faSearch = faSearch;
   sensorsArray;
   selectedSensor;
   searchTerm;

@@ -1,5 +1,4 @@
-<senph-hero-banner title="Sensors"
-  subtitle="Discover all phenomena registered in SOWA below"></senph-hero-banner>
+<senph-hero-banner title="Sensors" subtitle="Discover all phenomena registered in SOWA below"></senph-hero-banner>
 
 
 <div class="container is-fluid">
@@ -8,7 +7,7 @@
       <p class="control  has-icons-left is-expanded">
         <input class="input" type="text" #myInput placeholder="Type to filter sensors..." [(ngModel)]="searchTerm">
         <span class="icon is-left">
-          <fa-icon [icon]="faSearch"></fa-icon>
+          <i class="fa fa-search" aria-hidden="true"></i>
         </span>
       </p>
     </div>
@@ -24,9 +23,14 @@
               Label
             </strong>
           </div>
-          <div class="column is-6">
+          <div class="column is-5">
             <strong>
               URI
+            </strong>
+          </div>
+          <div class="column is-1">
+            <strong>
+              Verified
             </strong>
           </div>
         </div>
@@ -40,8 +44,14 @@
           <div class="column is-5">
             {{sensors.sensorLabel[0]?.value}}
           </div>
-          <div class="column is-6">
+          <div class="column is-5">
             {{sensors.sensor.value}}
+          </div>
+          <div class="column is-1">
+            <span class="fa fa-stack fa-xs" *ngIf="sensors.validation[0]?.value == 'true'">
+              <i class="fa fa-certificate fa-stack-2x"></i>
+              <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+            </span>
           </div>
         </div>
       </div>

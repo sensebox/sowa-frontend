@@ -1,6 +1,6 @@
 <div *ngIf="sensor != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.value" [valid]="sensor.validation.value" [subtitle]="sensor?.iri.value" (myEvent)="button1(uri)"
+  <senph-hero-banner [title]="prefLabel?.value" [valid]="sensor.validation?.value" [subtitle]="sensor?.iri.value" (myEvent)="button1(uri)"
     [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
   </senph-hero-banner>
 

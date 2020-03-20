@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
+import { FormErrors } from 'src/app/interfaces/form-errors';
 
 @Component({
   selector: 'senph-domain-new',
@@ -27,7 +28,8 @@ export class DomainNewComponent implements OnInit {
       'required': 'Description is required.'
     }
   };
-  formErrors = {
+  formErrors: FormErrors = {
+
   };
   shortUri: string;
   submitted = false;
@@ -38,7 +40,7 @@ export class DomainNewComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.domainForm = this.fb.group({
@@ -49,7 +51,8 @@ export class DomainNewComponent implements OnInit {
       description: ['', [Validators.required]],
       phenomenon: this.fb.array([
         this.addPhenomenonFormGroup()
-      ])
+      ]),
+      validation: [false, [Validators.required]]
     })
 
     this.domainForm.valueChanges.subscribe(
@@ -68,7 +71,7 @@ export class DomainNewComponent implements OnInit {
       }
       else {
         this.formErrors[key] = '';
-        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== ''|| this.submitted)) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '' || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -96,6 +99,10 @@ export class DomainNewComponent implements OnInit {
         // phenomenonLabel: ''}, 
         [Validators.required]]
     });
+  }
+
+  onLoadButtonClick() {
+    console.log(this.domainForm.getRawValue());
   }
 
   onSubmit() {

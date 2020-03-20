@@ -10,11 +10,11 @@ export class ValidComponent implements OnInit {
 
   @Input() parentForm: FormGroup;
   @Input() control: FormControl;
-  @Input() id: String;
-  @Input() label: String;
+  @Input() id: string;
+  @Input() label: string;
   @Input() formErrors;
 
-  tempValue: String;
+  tempValue: string;
   checkboxState = false;
 
   constructor() { }

@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChildren } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Router } from '@angular/router';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'senph-landingpage',

@@ -2,16 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'senph-phenomena',
   templateUrl: './phenomena.component.html',
-  styleUrls: ['./phenomena.component.scss', '../../../app.component.scss']
+  styleUrls: ['./phenomena.component.scss']
 })
 export class PhenomenaComponent implements OnInit {
 
-  faSearch = faSearch;
   phenomenaArray;
   selectedPhenomenon;
   searchTerm;

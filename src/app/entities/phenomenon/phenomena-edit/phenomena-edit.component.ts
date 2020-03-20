@@ -6,6 +6,7 @@ import { ApiService } from '../../../services/api.service'
 import { IDomains } from '../../../interfaces/IDomains';
 import { IUnit } from '../../../interfaces/IUnit';
 import { ILabel } from 'src/app/interfaces/ILabel';
+import { FormErrors } from 'src/app/interfaces/form-errors';
 
 @Component({
   selector: 'senph-phenomena-edit',
@@ -28,7 +29,7 @@ export class PhenomenaEditComponent implements OnInit {
     }
   };
 
-  formErrors = {
+  formErrors: FormErrors = {
   };
   shortUri: string;
   submitted = false;
@@ -53,7 +54,8 @@ export class PhenomenaEditComponent implements OnInit {
       ]),
       unit: this.fb.array([
         this.addUnitFormGroup()
-      ])
+      ]),
+      validation: [false, [Validators.required]]
     });
 
     this.phenomenonForm.valueChanges.subscribe(
@@ -123,7 +125,7 @@ export class PhenomenaEditComponent implements OnInit {
     // console.log(phenomenon);
     this.phenomenonForm.patchValue({
       uri: phenomenon.iri.value.slice(34),
-      description: phenomenon.description.value
+      description: phenomenon.description.value,
     });
     this.phenomenonForm.setControl('label', this.setExistingLabels(phenomenon.labels))
 
@@ -175,7 +177,7 @@ export class PhenomenaEditComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.phenomenonForm.controls);
+    console.log(this.phenomenonForm.value);
   }
 
   onSubmit() {

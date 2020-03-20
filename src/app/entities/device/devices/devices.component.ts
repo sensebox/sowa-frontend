@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { IDevices } from 'src/app/interfaces/IDevices';
 
 @Component({
   selector: 'senph-devices',
   templateUrl: './devices.component.html',
-  styleUrls: ['./devices.component.scss', '../../../app.component.scss']
+  styleUrls: ['./devices.component.scss']
 })
 export class DevicesComponent implements OnInit {
-  faSearch = faSearch;
   devicesArray;
   selectedDevice;
   searchTerm;

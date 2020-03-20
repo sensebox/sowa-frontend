@@ -10,9 +10,14 @@ export class ISensors {
         value: string,
         "xml:lang": string
     };
+    validation: {
+        type: string,
+        value: string,
+    };
 
     constructor(resSensor: any) {
         this.sensor = resSensor.sensor;
         this.sensorLabel = resSensor.sensorLabel;
+        this.validation = resSensor.validation;
     }
 };

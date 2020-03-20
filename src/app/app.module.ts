@@ -43,7 +43,6 @@ import { NumberComponent } from './entities/phenomenon/edit/number/number.compon
 import { SensorComponent } from './entities/phenomenon/edit/sensor/sensor.component';
 import { PhenomenonComponent } from './entities/phenomenon/edit/phenomenon/phenomenon.component';
 import { FilterPipePipe } from './pipes/filter-pipe.pipe';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { SearchPipePipe } from './pipes/search-pipe.pipe';
 import { FilterOptionsPipePipe } from './pipes/filter-options-pipe.pipe';
 import { ValidComponent } from './entities/phenomenon/edit/valid/valid.component';
@@ -106,7 +105,6 @@ import { LoadingComponent } from './shared/loading/loading.component';
     AppRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

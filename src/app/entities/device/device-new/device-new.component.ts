@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { ISensors } from 'src/app/interfaces/ISensors';
+import { FormErrors } from 'src/app/interfaces/form-errors';
 
 @Component({
   selector: 'senph-device-new',
@@ -39,7 +40,8 @@ export class DeviceNewComponent implements OnInit {
     }
   };
 
-  formErrors = {
+  formErrors: FormErrors = {
+
   };
   shortUri: string;
   submitted = false;
@@ -64,7 +66,8 @@ export class DeviceNewComponent implements OnInit {
       contact: [{ value: '', disabled: false }, [Validators.required]],
       sensor: this.fb.array([
         this.addSensorFormGroup()
-      ])
+      ]),
+      validation: [false, [Validators.required]]
     })
 
     this.deviceForm.valueChanges.subscribe(
@@ -110,7 +113,9 @@ export class DeviceNewComponent implements OnInit {
     });
   }
 
-
+  onLoadButtonClick() {
+    console.log(this.deviceForm.getRawValue());
+  }
 
   onSubmit() {
     this.submitted = true;

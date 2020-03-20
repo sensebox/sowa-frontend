@@ -13,6 +13,11 @@ export class IDomain {
         "xml:lang": string;
     };
     phenomenon: IPhenomena[];
+    validation: {
+        datatype: string,
+        type: string,
+        value: string
+    };
 
     constructor(res: any) {
         this.labels = [];
@@ -41,6 +46,12 @@ export class IDomain {
                     this.phenomenon.push(new IPhenomena(element));
                     break;
                 }
+
+                case "validation": {
+                    Object.assign(this, element);
+                    break;
+                }
+
 
                 default: {
                     console.log("Invalid attribute");

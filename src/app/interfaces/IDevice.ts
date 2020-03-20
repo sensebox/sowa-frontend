@@ -27,6 +27,11 @@ export class IDevice {
         value: string;
     };
     sensors: ISensors[];
+    validation: {
+        datatype: string,
+        type: string,
+        value: string
+    };
 
     constructor(res: any) {
         this.labels = [];
@@ -68,6 +73,11 @@ export class IDevice {
 
                 case "sensor": {
                     this.sensors.push(new ISensors(element));
+                    break;
+                }
+                
+                case "validation": {
+                    Object.assign(this, element);
                     break;
                 }
 

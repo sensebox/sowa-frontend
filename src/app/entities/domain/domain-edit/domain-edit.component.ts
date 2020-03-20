@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
+import { FormErrors } from 'src/app/interfaces/form-errors';
 
 @Component({
   selector: 'senph-domain-edit',
@@ -64,7 +65,7 @@ export class DomainEditComponent implements OnInit {
     }
   };
 
-  formErrors = {
+  formErrors: FormErrors = {
   };
   shortUri: string;
   submitted = false;
@@ -75,7 +76,7 @@ export class DomainEditComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router
-    ) { }
+  ) { }
 
   ngOnInit() {
     this.domainForm = this.fb.group({
@@ -86,7 +87,8 @@ export class DomainEditComponent implements OnInit {
       description: ['', [Validators.required]],
       phenomenon: this.fb.array([
         this.addPhenomenonFormGroup()
-      ])
+      ]),
+      validation: [false, [Validators.required]]
     })
 
     this.domainForm.valueChanges.subscribe(
@@ -112,7 +114,7 @@ export class DomainEditComponent implements OnInit {
       }
       else {
         this.formErrors[key] = '';
-        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== ''|| this.submitted)) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '' || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -153,7 +155,7 @@ export class DomainEditComponent implements OnInit {
     console.log(domain);
     this.domainForm.patchValue({
       uri: domain.iri.value.slice(34),
-      description: domain.description.value,
+      description: domain.description.value
     });
 
     this.domainForm.setControl('label', this.setExistingLabels(domain.labels))
@@ -192,9 +194,14 @@ export class DomainEditComponent implements OnInit {
     return formArray;
   }
 
-  redirectDetails(uri){
+  redirectDetails(uri) {
     this._routerService.navigate(['/domain/detail', uri]);
   }
+
+  onLoadButtonClick() {
+    console.log(this.domainForm.getRawValue());
+  }
+
 
   onSubmit() {
     console.log(this.domainForm.value);
