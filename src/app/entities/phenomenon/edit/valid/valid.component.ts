@@ -1,5 +1,7 @@
+import { AuthService } from './../../../../services/auth.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControlName, FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'senph-valid',
@@ -14,10 +16,13 @@ export class ValidComponent implements OnInit {
   @Input() label: string;
   @Input() formErrors;
 
+  userRole$ = this.authService.getUser();
   tempValue: string;
   checkboxState = false;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService
+  ) { }
 
   ngOnInit() {
   }

@@ -1,6 +1,7 @@
 <div [formGroup]="parentForm">
-    <div class="container well some-space">
-        <div class="field is-horizontal">
+    <div class="container well some-space" *ngIf="(userRole$ | async)">
+        <div class="field is-horizontal" *ngIf="(userRole$ | async).role === 'admin' 
+                                                || (userRole$ | async).role === 'expert'">
             <div class="field-label is-normal">
                 <label class="label">{{label}}:</label>
             </div>
