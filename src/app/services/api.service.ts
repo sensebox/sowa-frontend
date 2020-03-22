@@ -9,20 +9,17 @@ import { ISensor } from '../interfaces/ISensor';
 import { Sensor } from '../phenomenon';
 import { IDomain } from '../interfaces/IDomain';
 
-
-
-
-
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+
+  createHeaders() {
+    let headers = new HttpHeaders();
+    headers = headers.append('Authorization', window.localStorage.getItem('sb_accesstoken'));
+    headers = headers.append('Content-Type', 'application/json');
+    return headers;
+  }
 
 
   APIURL = 'http://localhost:3000';
@@ -68,17 +65,17 @@ export class ApiService {
 
 
   createPhenomenon(phenomenon) {
-    return this.http.post(this.APIURL + '/phenomena/phenomenon/create', phenomenon, httpOptions)
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/create', phenomenon, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
   editPhenomenon(phenomenon) {
-    return this.http.post(this.APIURL + '/phenomena/phenomenon/edit', phenomenon, httpOptions)
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/edit', phenomenon, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
   // getPhenomenonForSensor(sensor) {
-  //   return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, httpOptions);
+  //   return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, { headers: this.createHeaders()});
   // }
 
   /**--------------Sensors------------------------ */
@@ -113,13 +110,13 @@ export class ApiService {
   }
 
   createSensor(sensor) {
-    return this.http.post(this.APIURL + '/sensors/sensor/create', sensor, httpOptions)
+    return this.http.post(this.APIURL + '/sensors/sensor/create', sensor, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
 
   editSensor(sensor) {
-    return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor, httpOptions)
+    return this.http.post(this.APIURL + '/sensors/sensor/edit', sensor, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
@@ -154,19 +151,19 @@ export class ApiService {
   }
 
   editDevice(device) {
-    return this.http.post(this.APIURL + '/devices/device/edit', device, httpOptions)
+    return this.http.post(this.APIURL + '/devices/device/edit', device, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
   createDevice(device) {
-    return this.http.post(this.APIURL + '/devices/device/create', device, httpOptions)
+    return this.http.post(this.APIURL + '/devices/device/create', device, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
 
   /**--------------Domains------------------------ */
   getDomains() {
-    return this.http.get(this.APIURL + '/domains/all');
+    return this.http.get(this.APIURL + '/domains/all', { headers: this.createHeaders() });
   }
 
   getDomainHistory(iri) {
@@ -202,11 +199,7 @@ export class ApiService {
   }
 
   createDomain(domain) {
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', window.localStorage.getItem('sb_accesstoken'));
-    headers = headers.append('Content-Type', 'application/json');
-
-    return this.http.post(this.APIURL + '/domains/domain/create', domain, {headers: headers})
+    return this.http.post(this.APIURL + '/domains/domain/create', domain, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
@@ -222,7 +215,7 @@ export class ApiService {
   }
 
   getAllEntities() {
-    return this.http.get(this.APIURL + '/all');
+    return this.http.get(this.APIURL + '/all', { headers: this.createHeaders() });
   }
 
   private handleError(errorResponse: HttpErrorResponse) {
