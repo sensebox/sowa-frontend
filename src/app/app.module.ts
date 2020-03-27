@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,7 +10,7 @@ import { SensorsComponent } from './entities/sensor/sensors/sensors.component';
 import { DevicesComponent } from './entities/device/devices/devices.component';
 import { PhenomenaDetailComponent } from './entities/phenomenon/phenomena-detail/phenomena-detail.component';
 // import { PhenomenaFormComponent } from './phenomena-form/phenomena-form.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SensorsDetailComponent } from './entities/sensor/sensors-detail/sensors-detail.component';
 import { DevicesDetailComponent } from './entities/device/devices-detail/devices-detail.component';
 // import { SensorsFormComponent } from './sensors-form/sensors-form.component';
@@ -50,6 +51,7 @@ import { LoginContainerComponent } from './login/login-container/login-container
 import { LoginComponent } from './login/login/login.component';
 import { LoginModalComponent } from './login/login-modal/login-modal.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { TokenInterceptor } from './services/interceptors/token-interceptor.service';
 
 
 
@@ -106,7 +108,13 @@ import { LoadingComponent } from './shared/loading/loading.component';
     MaterialModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    },
+    AuthService
+  ],
   bootstrap: [AppComponent]
 
 })
