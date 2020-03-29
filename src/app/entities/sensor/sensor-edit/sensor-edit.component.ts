@@ -119,8 +119,10 @@ export class SensorEditComponent implements OnInit {
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
       phenomenonUri: ['', [Validators.required]],
-      unitOfAccuracy: ['', [Validators.required]],
-      accuracyValue: ['', [Validators.required]]
+      unitOfAccuracy: [{ value: '', disabled: false }, [Validators.required]],
+      unitUndefined:[false],
+      accuracyValue: [{ value: '', disabled: false }, [Validators.required]],
+      accValUndefined:[false],
     });
   }
 
@@ -173,8 +175,10 @@ export class SensorEditComponent implements OnInit {
     sensorElementSet.forEach(s => {
       formArray.push(this.fb.group({
         phenomenonUri: [s.phenomenon.value, [Validators.required]],
-        unitOfAccuracy: [s.unit.value, [Validators.required]],
-        accuracyValue: [s.accVal.value, [Validators.required]]
+        unitOfAccuracy: [{value: s.unit.value, disabled: (s.unit.value === 'http://server/unset-base/undefined')}, [Validators.required]],
+        unitUndefined: [(s.unit.value === 'http://server/unset-base/undefined')],
+        accuracyValue: [{value: s.accVal.value, disabled: (s.accVal.value == "undefined")}, [Validators.required]],
+        accValUndefined: [(s.accVal.value === "undefined")]
       }));
     });
 

@@ -153,7 +153,7 @@
                         (click)="redirectDomain(selem.phenomenon.value, '/phenomenon/')">{{selem.phenomenon.value}}</a>
                     </p>
                   </div>
-                  <div class="column is-fullwidth">
+                  <div class="column is-fullwidth" *ngIf="selem.unit?.value != 'http://server/unset-base/undefined'">
                     <p class="bd-notification is-primary">
                       <a *ngIf="unitsArray" class="" href="{{selem.unit?.value}}" target="_blank">
                         <!-- TODO: FIX REOLOADING ISSUE -->
@@ -161,9 +161,19 @@
                       </a>
                     </p>
                   </div>
-                  <div class="column is-fullwidth">
+                  <div class="column is-fullwidth" *ngIf="selem.unit?.value === 'http://server/unset-base/undefined'">
+                    <p class="bd-notification is-primary">
+                       Not specified.
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth" *ngIf="selem.accVal?.value != 'undefined'">
                     <p class="bd-notification is-primary">
                       &plusmn; {{selem.accVal?.value}}
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth" *ngIf="selem.accVal?.value === 'undefined'">
+                    <p class="bd-notification is-primary">
+                      Not specified.
                     </p>
                   </div>
                 </div>
