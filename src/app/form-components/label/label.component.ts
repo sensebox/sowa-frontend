@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { LANGUAGES } from '../../../../shared/mock-languages';
+import { LANGUAGES } from '../../shared/mock-languages';
 
 @Component({
   selector: 'senph-label',

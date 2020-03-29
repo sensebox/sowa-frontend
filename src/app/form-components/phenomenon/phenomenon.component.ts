@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../../../services/api.service'
+import { ApiService } from '../../services/api.service'
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 
 @Component({
