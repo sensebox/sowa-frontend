@@ -194,7 +194,7 @@ export class ApiService {
   }
 
   editDomain(domain) {
-    return this.http.post(this.APIURL + '/domains/domain/edit', domain)
+    return this.http.post(this.APIURL + '/domains/domain/edit', domain, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
