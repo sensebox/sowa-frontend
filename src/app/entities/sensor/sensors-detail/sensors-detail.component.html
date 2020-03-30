@@ -1,19 +1,29 @@
 <div *ngIf="sensor != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.value" [valid]="sensor.validation?.value" [subtitle]="sensor?.iri.value" (myEvent)="button1(uri)"
-    [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
+  <senph-hero-banner [title]="prefLabel?.value" [valid]="sensor.validation?.value" [subtitle]="sensor?.iri.value"
+    (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
   </senph-hero-banner>
 
   <section *ngIf="sensorHistory">
     <div class="list is-hoverable">
       <div class="list-item">
         <div class="columns is-mobile is-multiline is-centered">
-          <div class="column is-3">
+          <div class="column is-1">
             Index
           </div>
-          <div class="column is-9">
+          <div class="column is-5">
             <strong>
               URI
+            </strong>
+          </div>
+          <div class="column is-3">
+            <strong>
+              Timestamp:
+            </strong>
+          </div>
+          <div class="column is-3">
+            <strong>
+              Editor
             </strong>
           </div>
         </div>
@@ -21,11 +31,23 @@
       <div class="list-item" *ngFor="let version of sensorHistory;let i = index"
         [class.selected]="version === selectedVersion" (click)=redirectHistoricDetails(uri,version.sensor.value)>
         <div class="columns is-mobile is-multiline is-centered">
-          <div class="column is-3">
+          <div class="column is-1">
             {{i+1}}
           </div>
-          <div class="column is-9">
+          <div class="column is-5">
             {{version.sensor.value}}
+          </div>
+          <div class="column is-3" *ngIf="version.dateTime">
+            {{version.dateTime.value | date:'long'}}
+          </div>
+          <div class="column is-3" style="color: darkred;" *ngIf="!version.dateTime">
+            Timestamp is missing
+          </div>
+          <div class="column is-3" *ngIf="version.user">
+            {{version.user.value}}
+          </div>
+          <div class="column is-3" style="color: darkred;" *ngIf="!version.user">
+            Editor is unknown
           </div>
         </div>
       </div>
@@ -163,7 +185,7 @@
                   </div>
                   <div class="column is-fullwidth" *ngIf="selem.unit?.value === 'http://server/unset-base/undefined'">
                     <p class="bd-notification is-primary">
-                       Not specified.
+                      Not specified.
                     </p>
                   </div>
                   <div class="column is-fullwidth" *ngIf="selem.accVal?.value != 'undefined'">

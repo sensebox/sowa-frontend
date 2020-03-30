@@ -133,6 +133,7 @@ export class DomainsDetailComponent implements OnInit {
     }
   }
 
+
   searchPheno(nameKey, val1, myArray, val2) {
     // console.log(nameKey)
     for (var i = 0; i < myArray.length; i++) {
