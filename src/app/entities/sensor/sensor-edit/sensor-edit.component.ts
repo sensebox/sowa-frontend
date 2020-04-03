@@ -5,6 +5,7 @@ import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
+import { ErrorModalService } from 'src/app/services/error-modal.service';
 
 @Component({
   selector: 'senph-sensor-edit',
@@ -55,7 +56,8 @@ export class SensorEditComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
-    private _routerService: Router
+    private _routerService: Router,
+    private errorService: ErrorModalService
   ) { }
 
 
@@ -219,6 +221,7 @@ export class SensorEditComponent implements OnInit {
   }
 
   redirectDetails(uri) {
+    console.log("check");
     this._routerService.navigate(['/sensor/detail', uri]);
   }
 
@@ -244,8 +247,13 @@ export class SensorEditComponent implements OnInit {
       this.api.editSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
           console.log(data);
+          this.redirectDetails(this.shortUri);
         },
-        (error: any) => console.log(error)
+        (error: any) => {
+          console.log(error)
+          this.errorService.setErrorModalOpen(true);
+          this.errorService.setErrorMessage(error);
+        }
       );
     }
     // this.diagnostic(this.sensorForm);
