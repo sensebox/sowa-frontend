@@ -224,7 +224,6 @@ export class ApiService {
     } else {
       console.error('Server Side Error: ', errorResponse);
     }
-
-    return throwError('There is a problem with the service ');
+    return throwError(errorResponse);
   }
 }

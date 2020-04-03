@@ -50,6 +50,9 @@ import { LoginContainerComponent } from './login/login-container/login-container
 import { LoginComponent } from './login/login/login.component';
 import { LoginModalComponent } from './login/login-modal/login-modal.component';
 import { LoadingComponent } from './shared/loading/loading.component';
+import { ErrorLogComponent } from './error-log/error-log/error-log.component';
+import { ErrorLogContainerComponent } from './error-log/error-log-container/error-log-container.component';
+import { ErrorLogModalComponent } from './error-log/error-log-modal/error-log-modal.component';
 
 
 
@@ -95,7 +98,10 @@ import { LoadingComponent } from './shared/loading/loading.component';
     LoginContainerComponent,
     LoginComponent,
     LoginModalComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorLogComponent,
+    ErrorLogContainerComponent,
+    ErrorLogModalComponent
   ],
   imports: [
     BrowserModule,
