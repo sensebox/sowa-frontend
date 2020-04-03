@@ -34,24 +34,27 @@ import { DeviceNewComponent } from './entities/device/device-new/device-new.comp
 import { PhenomenonNewComponent } from './entities/phenomenon/phenomenon-new/phenomenon-new.component';
 import { DomainNewComponent } from './entities/domain/domain-new/domain-new.component';
 import { SensorNewComponent } from './entities/sensor/sensor-new/sensor-new.component';
-import { LabelComponent } from './entities/phenomenon/edit/label/label.component';
-import { UnitComponent } from './entities/phenomenon/edit/unit/unit.component';
-import { DomainComponent } from './entities/phenomenon/edit/domain/domain.component';
-import { SensorElementComponent } from './entities/phenomenon/edit/sensor-element/sensor-element.component';
-import { DeviceComponent } from './entities/phenomenon/edit/device/device.component';
-import { TextComponent } from './entities/phenomenon/edit/text/text.component';
-import { NumberComponent } from './entities/phenomenon/edit/number/number.component';
-import { SensorComponent } from './entities/phenomenon/edit/sensor/sensor.component';
-import { PhenomenonComponent } from './entities/phenomenon/edit/phenomenon/phenomenon.component';
+import { LabelComponent } from './form-components/label/label.component';
+import { UnitComponent } from './form-components/unit/unit.component';
+import { DomainComponent } from './form-components/domain/domain.component';
+import { SensorElementComponent } from './form-components/sensor-element/sensor-element.component';
+import { DeviceComponent } from './form-components/device/device.component';
+import { TextComponent } from './form-components/text/text.component';
+import { NumberComponent } from './form-components/number/number.component';
+import { SensorComponent } from './form-components/sensor/sensor.component';
+import { PhenomenonComponent } from './form-components/phenomenon/phenomenon.component';
 import { FilterPipePipe } from './pipes/filter-pipe.pipe';
 import { SearchPipePipe } from './pipes/search-pipe.pipe';
 import { FilterOptionsPipePipe } from './pipes/filter-options-pipe.pipe';
-import { ValidComponent } from './entities/phenomenon/edit/valid/valid.component';
+import { ValidComponent } from './form-components/valid/valid.component';
 import { LoginContainerComponent } from './login/login-container/login-container.component';
 import { LoginComponent } from './login/login/login.component';
 import { LoginModalComponent } from './login/login-modal/login-modal.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { TokenInterceptor } from './services/interceptors/token-interceptor.service';
+import { ErrorLogComponent } from './error-log/error-log/error-log.component';
+import { ErrorLogContainerComponent } from './error-log/error-log-container/error-log-container.component';
+import { ErrorLogModalComponent } from './error-log/error-log-modal/error-log-modal.component';
 
 
 
@@ -97,7 +100,10 @@ import { TokenInterceptor } from './services/interceptors/token-interceptor.serv
     LoginContainerComponent,
     LoginComponent,
     LoginModalComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorLogComponent,
+    ErrorLogContainerComponent,
+    ErrorLogModalComponent
   ],
   imports: [
     BrowserModule,

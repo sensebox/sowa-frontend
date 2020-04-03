@@ -1,0 +1,52 @@
+<div [formGroup]="parentForm">
+    <div formArrayName="phenomenon" *ngFor="let dom of parentForm.get('phenomenon')?.controls; let i = index">
+        <div [formGroupName]="i" style=" padding:1em;">
+            <article class="message is-small is-inverted ">
+                <div class="message-header">
+                    <p>{{getSelectedPhenomenon(i)}}</p>
+                    <button class="button is-small is-danger" (click)="removePhenomenonButtonClick(i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-narrow">
+                            <label class="label">Phenomenon:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-narrow">
+                                <div class="control">
+                                    <div class="select">
+                                        <select [id]="'phenomenonURI' + i" formControlName="phenomenonURI">
+                                            <option value=""> Choose a phenomenon</option>
+                                            <option *ngFor="let pheno of phenomenaArray" [ngValue]="pheno.phenomenon.value">
+                                                {{pheno.phenomenonLabel.value}} (URI: {{pheno.phenomenon.value | slice:33}})
+                                            </option>
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+                                <span class="help-block error-block"
+                                    *ngIf="phenomenon.controls[i].get('phenomenonURI').errors?.required &&
+                                (phenomenon.controls[i].get('phenomenonURI').touched || !phenomenon.controls[i].get('phenomenonURI').pristine)">
+                                    {{validationMessages.phenomenon.required}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <div class="buttons is-centered">
+        <button type="button" class="button is-warning is-inverted" (click)="addPhenomenonButtonClick()"
+            [disabled]="parentForm.get('phenomenon').invalid">
+            <span class="icon is-small">
+                <i class="fa fa-plus"></i>
+            </span>
+            <span>
+                Add Phenomenon
+            </span>
+        </button>
+    </div>
+</div>

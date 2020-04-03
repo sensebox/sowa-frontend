@@ -85,9 +85,9 @@ export class SensorsDetailComponent implements OnInit {
           this.sensor = response;
           this.sensor.labels.forEach(element => {
             console.log(element["xml:lang"])
-            if(element["xml:lang"] == "en"){
-            this.prefLabel = element
-            return
+            if (element["xml:lang"] == "en") {
+              this.prefLabel = element
+              return
             }
             this.prefLabel = element;
           });
@@ -106,9 +106,9 @@ export class SensorsDetailComponent implements OnInit {
           this.sensor = response;
           this.sensor.labels.forEach(element => {
             console.log(element["xml:lang"])
-            if(element["xml:lang"] == "en"){
-            this.prefLabel = element
-            return
+            if (element["xml:lang"] == "en") {
+              this.prefLabel = element
+              return
             }
           });
           this.uri = this.sensor.iri.value.slice(34);
