@@ -16,7 +16,10 @@ export class ApiService {
 
   createHeaders() {
     let headers = new HttpHeaders();
-    headers = headers.append('Authorization', window.localStorage.getItem('sb_accesstoken'));
+    let token = window.localStorage.getItem('sb_accesstoken');
+    if (token) {
+      headers = headers.append('Authorization', token);
+    }
     headers = headers.append('Content-Type', 'application/json');
     return headers;
   }
