@@ -6,7 +6,7 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { ISensors } from 'src/app/interfaces/ISensors';
 import { FormErrors } from 'src/app/interfaces/form-errors';
-
+import { ErrorModalService } from 'src/app/services/error-modal.service';
 
 
 @Component({
@@ -53,7 +53,8 @@ export class DevicesEditComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
-    private _routerService: Router
+    private _routerService: Router,
+    private errorService: ErrorModalService
   ) { }
 
   ngOnInit() {
@@ -190,11 +191,15 @@ export class DevicesEditComponent implements OnInit {
       console.log("valid");
       this.api.editDevice(this.deviceForm.getRawValue()).subscribe(
         res => {
-          console.log(res)
+          console.log(res);
+          this.redirectDetails(this.shortUri);
         },
-        (error: any) => console.log(error)
+        (error: any) => {
+          console.log(error)
+          this.errorService.setErrorModalOpen(true);
+          this.errorService.setErrorMessage(error);
+        }
       );
-      // this.diagnostic(this.deviceForm);
     }
   }
 }

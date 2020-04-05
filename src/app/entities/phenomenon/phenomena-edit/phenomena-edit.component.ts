@@ -7,6 +7,7 @@ import { IDomains } from '../../../interfaces/IDomains';
 import { IUnit } from '../../../interfaces/IUnit';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
+import { ErrorModalService } from 'src/app/services/error-modal.service';
 
 @Component({
   selector: 'senph-phenomena-edit',
@@ -39,8 +40,9 @@ export class PhenomenaEditComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
-    private _routerService: Router
-    ) { }
+    private _routerService: Router,
+    private errorService: ErrorModalService
+  ) { }
 
   ngOnInit() {
     this.phenomenonForm = this.fb.group({
@@ -81,7 +83,7 @@ export class PhenomenaEditComponent implements OnInit {
       }
       else {
         this.formErrors[key] = '';
-        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== ''|| this.submitted)) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== '' || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -172,7 +174,7 @@ export class PhenomenaEditComponent implements OnInit {
     return formArray;
   }
 
-  redirectDetails(uri){
+  redirectDetails(uri) {
     this._routerService.navigate(['/phenomenon/detail', uri]);
   }
 
@@ -192,9 +194,14 @@ export class PhenomenaEditComponent implements OnInit {
       console.log("valid");
       this.api.editPhenomenon(this.phenomenonForm.value).subscribe(
         (res) => {
-         console.log(res) 
+          console.log(res);
+          this.redirectDetails(this.shortUri);
         },
-        (error: any) => console.log(error)
+        (error: any) => {
+          console.log(error)
+          this.errorService.setErrorModalOpen(true);
+          this.errorService.setErrorMessage(error);
+        }
       );
     }
     // this.api.editPhenomenon(this.phenomenonForm.value).subscribe(res => {console.log(res)});
