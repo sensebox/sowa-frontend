@@ -31,11 +31,14 @@
               "src/styles.scss",
               "node_modules/bulma/css/bulma.min.css",
               "node_modules/bulma-extensions/bulma-pageloader/dist/css/bulma-pageloader.min.css",
-              "node_modules/font-awesome/css/font-awesome.css"
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/bulma-modal-fx/dist/css/modal-fx.min.css"
+
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/popper.js/dist/umd/popper.min.js"
+              "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/bulma-modal-fx/dist/js/modal-fx.min.js"
             ]
           },
           "configurations": {

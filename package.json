@@ -26,6 +26,7 @@
     "bootstrap": "^4.4.1",
     "bulma": "^0.7.5",
     "bulma-extensions": "^6.2.7",
+    "bulma-modal-fx": "^1.1.1",
     "core-js": "^2.6.11",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",

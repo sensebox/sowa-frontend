@@ -1,0 +1,26 @@
+<div *ngIf="errorMessage">
+    <article class="message is-danger">
+        <div class="message-header">
+            <p>
+                Oups! Something went wrong:
+            </p>
+        </div>
+        <div class="message-body">
+            <p *ngIf="errorMessage.status == 403">
+                Your login verification failed. Please login and try to
+                submit your form again.
+            </p>
+            <p *ngIf="errorMessage.status != 403">
+                {{errorMessage | json}}
+            </p>
+        </div>
+    </article>
+    <div class="panel-footer" *ngIf="errorMessage.status == 403">
+        <div class="field is-grouped">
+            <p class="control">
+                <button class="button is-success" (click)="login()">Login</button>
+            </p>
+            <senph-loading *ngIf="loading"></senph-loading>
+        </div>
+    </div>
+</div>

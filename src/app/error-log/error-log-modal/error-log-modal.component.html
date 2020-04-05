@@ -1,0 +1,7 @@
+<div class="modal modal-fx-newsPaper" [class.is-active]="errorModalOpen$ | async">
+    <div class="modal-background" (click)="closeModal()"></div>
+    <div class="modal-content">
+        <senph-error-log-container></senph-error-log-container>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="closeModal()"></button>
+  </div>
