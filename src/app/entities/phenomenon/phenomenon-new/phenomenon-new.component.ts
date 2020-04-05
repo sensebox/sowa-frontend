@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { CustomValidators } from '../../../shared/custom.validators';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service'
 import { IDomains } from '../../../interfaces/IDomains';
 import { IUnit } from '../../../interfaces/IUnit';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
+import { ErrorModalService } from 'src/app/services/error-modal.service';
 
 @Component({
   selector: 'senph-phenomenon-new',
@@ -35,14 +36,16 @@ export class PhenomenonNewComponent implements OnInit {
   };
 
   formErrors: FormErrors = {
-    
+
   };
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
-    ) { }
+    private _routerService: Router,
+    private errorService: ErrorModalService
+  ) { }
 
   ngOnInit() {
     this.phenomenonForm = this.fb.group({
@@ -133,9 +136,15 @@ export class PhenomenonNewComponent implements OnInit {
       console.log("valid");
       this.api.createPhenomenon(this.phenomenonForm.getRawValue()).subscribe(
         (res) => {
-         console.log(res) 
+          console.log(res);
+          this.phenomenonForm.reset();
+          this._routerService.navigate(['/phenomena']);
         },
-        (error: any) => console.log(error)
+        (error: any) => {
+          console.log(error);
+          this.errorService.setErrorModalOpen(true);
+          this.errorService.setErrorMessage(error);
+        }
       );
     }
     // this.api.editPhenomenon(this.phenomenonForm.value).subscribe(res => {console.log(res)});

@@ -6,6 +6,7 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 import { FormErrors } from 'src/app/interfaces/form-errors';
+import { ErrorModalService } from 'src/app/services/error-modal.service';
 
 @Component({
   selector: 'senph-domain-edit',
@@ -75,7 +76,8 @@ export class DomainEditComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
-    private _routerService: Router
+    private _routerService: Router,
+    private errorService: ErrorModalService
   ) { }
 
   ngOnInit() {
@@ -212,9 +214,15 @@ export class DomainEditComponent implements OnInit {
     else {
       console.log("valid");
       this.api.editDomain(this.domainForm.value).subscribe(res => {
-        console.log(res)
+        console.log(res);
+        this.redirectDetails(this.shortUri);
+
       },
-        (error: any) => console.log(error)
+        (error: any) => {
+          console.log(error)
+          this.errorService.setErrorModalOpen(true);
+          this.errorService.setErrorMessage(error);
+        }
       );
     }
   }
