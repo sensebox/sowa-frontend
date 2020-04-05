@@ -6,6 +6,7 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from './../../../services/error-modal.service';
+import * as bulmaToast from "bulma-toast";
 
 
 @Component({
@@ -53,7 +54,7 @@ export class SensorNewComponent implements OnInit {
   formErrors: FormErrors = {
 
   };
-  
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -161,6 +162,16 @@ export class SensorNewComponent implements OnInit {
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
+      bulmaToast.toast({
+        message: "Some necessary information is missing! Please check your form.",
+        type: "is-danger",
+        dismissible: true,
+        closeOnClick: true,
+        animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+        position: "center",
+        pauseOnHover: true,
+        duration: 5000
+      });
     }
     else {
       console.log("valid");
@@ -168,6 +179,15 @@ export class SensorNewComponent implements OnInit {
         (data) => {
           console.log(data);
           this.sensorForm.reset();
+          bulmaToast.toast({
+            message: "Edit successful!",
+            type: "is-success",
+            dismissible: true,
+            closeOnClick: true,
+            animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+            position: "top-center",
+            duration: 5000
+          });
           this._routerService.navigate(['/sensors']);
         },
         (error: any) => {

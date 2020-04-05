@@ -6,6 +6,7 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
+import * as bulmaToast from "bulma-toast";
 
 @Component({
   selector: 'senph-sensor-edit',
@@ -241,12 +242,31 @@ export class SensorEditComponent implements OnInit {
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
+      bulmaToast.toast({
+        message: "Some necessary information is missing! Please check your form.",
+        type: "is-danger",
+        dismissible: true,
+        closeOnClick: true,
+        animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+        position: "center",
+        pauseOnHover: true,
+        duration: 5000
+      });
     }
     else {
       console.log("valid");
       this.api.editSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
           console.log(data);
+          bulmaToast.toast({
+            message: "Edit successful!",
+            type: "is-success",
+            dismissible: true,
+            closeOnClick: true,
+            animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+            position: "top-center",
+            duration: 5000
+          });
           this.redirectDetails(this.shortUri);
         },
         (error: any) => {
