@@ -5,6 +5,8 @@ import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
+import { ErrorModalService } from 'src/app/services/error-modal.service';
+import * as bulmaToast from "bulma-toast";
 
 @Component({
   selector: 'senph-sensor-edit',
@@ -55,7 +57,8 @@ export class SensorEditComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
-    private _routerService: Router
+    private _routerService: Router,
+    private errorService: ErrorModalService
   ) { }
 
 
@@ -119,8 +122,10 @@ export class SensorEditComponent implements OnInit {
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
       phenomenonUri: ['', [Validators.required]],
-      unitOfAccuracy: ['', [Validators.required]],
-      accuracyValue: ['', [Validators.required]]
+      unitOfAccuracy: [{ value: '', disabled: false }, [Validators.required]],
+      unitUndefined:[false],
+      accuracyValue: [{ value: '', disabled: false }, [Validators.required]],
+      accValUndefined:[false],
     });
   }
 
@@ -173,8 +178,10 @@ export class SensorEditComponent implements OnInit {
     sensorElementSet.forEach(s => {
       formArray.push(this.fb.group({
         phenomenonUri: [s.phenomenon.value, [Validators.required]],
-        unitOfAccuracy: [s.unit.value, [Validators.required]],
-        accuracyValue: [s.accVal.value, [Validators.required]]
+        unitOfAccuracy: [{value: s.unit.value, disabled: (s.unit.value === 'http://server/unset-base/undefined')}, [Validators.required]],
+        unitUndefined: [(s.unit.value === 'http://server/unset-base/undefined')],
+        accuracyValue: [{value: s.accVal.value, disabled: (s.accVal.value == "undefined")}, [Validators.required]],
+        accValUndefined: [(s.accVal.value === "undefined")]
       }));
     });
 
@@ -215,6 +222,7 @@ export class SensorEditComponent implements OnInit {
   }
 
   redirectDetails(uri) {
+    console.log("check");
     this._routerService.navigate(['/sensor/detail', uri]);
   }
 
@@ -234,14 +242,38 @@ export class SensorEditComponent implements OnInit {
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
+      bulmaToast.toast({
+        message: "Some necessary information is missing! Please check your form.",
+        type: "is-danger",
+        dismissible: true,
+        closeOnClick: true,
+        animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+        position: "center",
+        pauseOnHover: true,
+        duration: 5000
+      });
     }
     else {
       console.log("valid");
       this.api.editSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
           console.log(data);
+          bulmaToast.toast({
+            message: "Edit successful!",
+            type: "is-success",
+            dismissible: true,
+            closeOnClick: true,
+            animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+            position: "top-center",
+            duration: 5000
+          });
+          this.redirectDetails(this.shortUri);
         },
-        (error: any) => console.log(error)
+        (error: any) => {
+          console.log(error)
+          this.errorService.setErrorModalOpen(true);
+          this.errorService.setErrorMessage(error);
+        }
       );
     }
     // this.diagnostic(this.sensorForm);

@@ -5,6 +5,9 @@ import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
+import { ErrorModalService } from './../../../services/error-modal.service';
+import * as bulmaToast from "bulma-toast";
+
 
 @Component({
   selector: 'senph-sensor-new',
@@ -56,7 +59,8 @@ export class SensorNewComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
-    private _routerService: Router
+    private _routerService: Router,
+    private errorService: ErrorModalService
   ) { }
 
 
@@ -86,13 +90,6 @@ export class SensorNewComponent implements OnInit {
         this.logValidationErrors(this.sensorForm);
       }
     );
-
-    // this.route.paramMap.subscribe(params => {
-    //   this.shortUri = params.get('id');
-    //   if (this.shortUri) {
-    //     this.getSensor(this.shortUri);
-    //   }
-    // });
   }
 
 
@@ -116,12 +113,13 @@ export class SensorNewComponent implements OnInit {
     });
   }
 
-
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
       phenomenonUri: ['', [Validators.required]],
-      unitOfAccuracy: ['', [Validators.required]],
-      accuracyValue: ['', [Validators.required]]
+      unitOfAccuracy: [{ value: '', disabled: false }, [Validators.required]],
+      unitUndefined: [false],
+      accuracyValue: [{ value: '', disabled: false }, [Validators.required]],
+      accValUndefined: [false],
     });
   }
 
@@ -139,77 +137,6 @@ export class SensorNewComponent implements OnInit {
       lang: ['', [Validators.required]]
     });
   }
-
-
-  // getSensor(shortUri) {
-  //   this.api.getSensor(shortUri).subscribe(
-  //     (sensor) => this.editSensor(sensor),
-  //     (err: any) => console.log(err)
-  //   );
-  // }
-
-
-  // editSensor(sensor) {
-  //   console.log(sensor);
-  //   this.sensorForm.patchValue({
-  //     uri: sensor.iri.value.slice(34),
-  //     description: sensor.description.value,
-  //     manufacturer: sensor.manufacturer.value,
-  //     price: sensor.price.value,
-  //     datasheet: sensor.datasheet.value,
-  //     lifeperiod: sensor.lifeperiod ? sensor.lifeperiod.value : '',
-  //     image: sensor.image ? sensor.image.value : '',
-  //   });
-  //   this.sensorForm.setControl('label', this.setExistingLabels(sensor.labels))
-
-  //   this.sensorForm.setControl('sensorElement', this.setExistingSensorElements(sensor.sensorElements))
-
-  //   this.sensorForm.setControl('device', this.setExistingDevices(sensor.devices))
-  // }
-
-
-  // setExistingSensorElements(sensorElementSet): FormArray {
-  //   const formArray = new FormArray([]);
-  //   // console.log(sensorElementSet);
-  //   sensorElementSet.forEach(s => {
-  //     formArray.push(this.fb.group({
-  //       phenomenonUri: [s.phenomenon.value, [Validators.required]],
-  //       unitOfAccuracy: [s.unit.value, [Validators.required]],
-  //       accuracyValue: [s.accVal.value, [Validators.required]]
-  //     }));
-  //   });
-
-  //   return formArray;
-  // }
-
-
-  // setExistingDevices(deviceSet): FormArray {
-  //   const formArray = new FormArray([]);
-  //   // console.log(deviceSet);
-  //   deviceSet.forEach(s => {
-  //     formArray.push(this.fb.group({
-  //       deviceUri: [s.device.value, [Validators.required]]
-  //     }));
-  //   });
-
-  //   return formArray;
-  // }
-
-
-  // setExistingLabels(labelSet: ILabel[]): FormArray {
-  //   const formArray = new FormArray([]);
-  //   console.log(labelSet);
-  //   labelSet.forEach(s => {
-  //     formArray.push(this.fb.group({
-  //       type: [s.type, [Validators.required]],
-  //       value: [s.value, [Validators.required]],
-  //       lang: [s["xml:lang"], [Validators.required]]
-  //     }));
-  //   });
-
-  //   return formArray;
-  // }
-
 
   get image(): FormArray {
     return this.sensorForm.get('image') as FormArray;
@@ -235,14 +162,39 @@ export class SensorNewComponent implements OnInit {
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
+      bulmaToast.toast({
+        message: "Some necessary information is missing! Please check your form.",
+        type: "is-danger",
+        dismissible: true,
+        closeOnClick: true,
+        animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+        position: "center",
+        pauseOnHover: true,
+        duration: 5000
+      });
     }
     else {
       console.log("valid");
       this.api.createSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
           console.log(data);
+          this.sensorForm.reset();
+          bulmaToast.toast({
+            message: "Edit successful!",
+            type: "is-success",
+            dismissible: true,
+            closeOnClick: true,
+            animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+            position: "top-center",
+            duration: 5000
+          });
+          this._routerService.navigate(['/sensors']);
         },
-        (error: any) => console.log(error)
+        (error: any) => {
+          console.log(error);
+          this.errorService.setErrorModalOpen(true);
+          this.errorService.setErrorMessage(error);
+        }
       );
     }
     // this.diagnostic(this.sensorForm);

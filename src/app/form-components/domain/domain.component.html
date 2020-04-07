@@ -1,0 +1,51 @@
+<div [formGroup]="parentForm">
+    <div formArrayName="domain" *ngFor="let dom of parentForm.get('domain')?.controls; let i = index">
+        <div [formGroupName]="i" style=" padding:1em;">
+            <article class="message is-small is-inverted ">
+                <div class="message-header">
+                    <p>{{getSelectedDomain(i)}}</p>
+                    <button class="button is-small is-danger" (click)="removeDomainButtonClick(i)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <div class="message-body" style="border-width: 0 4px 4px 4px;">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-narrow">
+                            <label class="label">Domain:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-narrow">
+                                <div class="control">
+                                    <div class="select ">
+                                        <select [id]="'domainUri' + i" formControlName="domainUri">
+                                            <option value=""> Choose a domain</option>
+                                            <option *ngFor="let domain of domainsArray" [ngValue]="domain.domain.value">
+                                                {{domain.label[0]?.value}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span class="help-block error-block"
+                                    *ngIf="domain.controls[i].get('domainUri').errors?.required &&
+                                (domain.controls[i].get('domainUri').touched || !domain.controls[i].get('domainUri').pristine)">
+                                    {{validationMessages.domain.required}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    <div class="buttons is-centered">
+        <button type="button" class="button is-warning is-inverted" (click)="addDomainButtonClick()"
+            [disabled]="parentForm.get('domain').invalid">
+            <span class="icon is-small">
+                <i class="fa fa-plus"></i>
+            </span>
+            <span>
+                Add Domain
+            </span>
+        </button>
+    </div>
+</div>
