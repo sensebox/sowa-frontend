@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_url: 'http://api.sensor-wiki.opensensemap.org'
+  api_url: 'https://api.sensor-wiki.opensensemap.org'
 };
