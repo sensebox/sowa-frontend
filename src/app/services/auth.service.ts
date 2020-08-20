@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IUser } from '../interfaces/iUser';
 import { HttpClient } from '@angular/common/http';
 
@@ -20,9 +20,6 @@ export class AuthService {
     this.loading$ = new BehaviorSubject(false);
     this.loginPageOpen$ = new BehaviorSubject(false);
     this.errorMessage$ = new BehaviorSubject(null);
-
-    if(window.localStorage.getItem('sb_refreshtoken'))
-      this.recoverSession(window.localStorage.getItem('sb_refreshtoken'))
   } 
 
   getUser(){
@@ -93,9 +90,31 @@ export class AuthService {
     });
   }
 
+  refreshAccessToken(){
+    return new Observable(observer => {
+      return this.http.post(this.AUTH_API_URL + 'users/refresh-auth', {token: window.localStorage.getItem('sb_refreshtoken')})
+          .subscribe((response:any) => {
+            this.user$.next(response.data.user);
+            window.localStorage.setItem('sb_accesstoken', response.token);
+            window.localStorage.setItem('sb_refreshtoken', response.refreshToken);           
+            this.loading$.next(false);
+
+            observer.next(response.refreshToken);
+            observer.complete();
+          }, (err) => {
+            const error = err && err.errorMessage ? err.errorMessage : 'Error';
+            observer.error({error});
+          });
+      });
+  }
+
   logout(){
     window.localStorage.removeItem('sb_accesstoken');
     window.localStorage.removeItem('sb_refreshtoken');
     this.user$.next(undefined);
+  }
+
+  getAccessToken(){
+    return window.localStorage.getItem('sb_accesstoken');
   }
 }

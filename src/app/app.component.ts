@@ -1,3 +1,4 @@
+import { AuthService } from './services/auth.service';
 import { Component, ViewChildren, QueryList } from '@angular/core';
 import { combineLatest, timer } from 'rxjs';
 import { map, switchMap, mapTo } from 'rxjs/operators';
@@ -57,6 +58,13 @@ export class AppComponent {
       //        filters.map(filter => `${filter.group}=${filter.id}`).join("&")),
       //   switchMap(this.getData)
       // );
+    }
+
+    constructor(private auth: AuthService){
+      //Check if token is in localstorage and try to recover session
+      if(window.localStorage.getItem('sb_refreshtoken'))
+        this.auth.recoverSession(window.localStorage.getItem('sb_refreshtoken'))
+
     }
   
     // getData( query ) {
