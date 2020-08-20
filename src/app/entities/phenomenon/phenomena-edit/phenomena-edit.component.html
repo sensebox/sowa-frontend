@@ -104,7 +104,7 @@
           <button class="button is-success" type="submit" [disabled]="phenomenonForm.invalid">Save Changes</button>
         </p>
         <p class="control">
-          <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
+          <button class="button is-danger" type="button" (click)="onDelete()">DELETE PHENOMENON</button>
         </p>
       </div>
       <span class="help-block error-block" *ngIf="phenomenonForm.invalid">
