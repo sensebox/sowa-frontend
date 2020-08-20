@@ -91,7 +91,7 @@
         <p class="control">
           <button class="button is-success" type="submit">Save Changes</button>
         </p>
-        <p class="control">
+        <p class="control" *ngIf="(user$ | async)?.role == ('admin' || 'expert')">
           <button class="button is-danger" type="button" (click)="onDelete()">DELETE DOMAIN</button>
         </p>
       </div>

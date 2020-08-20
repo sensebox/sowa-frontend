@@ -8,6 +8,7 @@ import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'senph-domain-edit',
@@ -50,7 +51,7 @@ export class DomainEditComponent implements OnInit {
   //   // TODO: Remove this when we're done
   //   diagnostic(model) { console.log(model); }
   // }
-
+  user$ = this.authService.getUser();
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   domainForm: FormGroup;
 
@@ -78,7 +79,8 @@ export class DomainEditComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -106,6 +108,8 @@ export class DomainEditComponent implements OnInit {
         this.getDomain(this.shortUri);
       }
     });
+
+    console.log(this.user$);
   }
 
 

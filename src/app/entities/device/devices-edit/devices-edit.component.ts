@@ -8,6 +8,7 @@ import { ISensors } from 'src/app/interfaces/ISensors';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ import * as bulmaToast from "bulma-toast";
   styleUrls: ['./devices-edit.component.scss']
 })
 export class DevicesEditComponent implements OnInit {
-
+  
+  user$ = this.authService.getUser();
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   deviceForm: FormGroup;
 
@@ -55,7 +57,8 @@ export class DevicesEditComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {

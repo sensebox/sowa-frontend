@@ -9,6 +9,7 @@ import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'senph-phenomena-edit',
@@ -16,6 +17,8 @@ import * as bulmaToast from "bulma-toast";
   styleUrls: ['./phenomena-edit.component.scss']
 })
 export class PhenomenaEditComponent implements OnInit {
+
+  user$ = this.authService.getUser();
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   phenomenonForm: FormGroup;
   validationMessages = {
@@ -42,7 +45,8 @@ export class PhenomenaEditComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
