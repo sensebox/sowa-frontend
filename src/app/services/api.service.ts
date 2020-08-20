@@ -8,6 +8,7 @@ import { IPhenomenon } from '../interfaces/IPhenomenon';
 import { ISensor } from '../interfaces/ISensor';
 import { Sensor } from '../phenomenon';
 import { IDomain } from '../interfaces/IDomain';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class ApiService {
   }
 
 
-  APIURL = 'http://localhost:3000';
+  APIURL = environment.api_url;
 
   constructor(private http: HttpClient) { }
 

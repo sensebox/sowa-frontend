@@ -1,6 +1,11 @@
-# SenphFrontend
+# SOWA Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.4.
+This is the frontend for the SensorOntology Web Applications (SOWA).
+
+The project was created with the angular-cli.
+
+To Run this locally you will need the [SOWA-Backend](https://github.com/sensebox/sowa-backend)
+
 
 ## Development server
 
