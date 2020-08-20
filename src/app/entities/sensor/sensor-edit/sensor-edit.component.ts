@@ -123,9 +123,9 @@ export class SensorEditComponent implements OnInit {
     return this.fb.group({
       phenomenonUri: ['', [Validators.required]],
       unitOfAccuracy: [{ value: '', disabled: false }, [Validators.required]],
-      unitUndefined:[false],
+      unitUndefined: [false],
       accuracyValue: [{ value: '', disabled: false }, [Validators.required]],
-      accValUndefined:[false],
+      accValUndefined: [false],
     });
   }
 
@@ -178,9 +178,9 @@ export class SensorEditComponent implements OnInit {
     sensorElementSet.forEach(s => {
       formArray.push(this.fb.group({
         phenomenonUri: [s.phenomenon.value, [Validators.required]],
-        unitOfAccuracy: [{value: s.unit.value, disabled: (s.unit.value === 'http://server/unset-base/undefined')}, [Validators.required]],
+        unitOfAccuracy: [{ value: s.unit.value, disabled: (s.unit.value === 'http://server/unset-base/undefined') }, [Validators.required]],
         unitUndefined: [(s.unit.value === 'http://server/unset-base/undefined')],
-        accuracyValue: [{value: s.accVal.value, disabled: (s.accVal.value == "undefined")}, [Validators.required]],
+        accuracyValue: [{ value: s.accVal.value, disabled: (s.accVal.value == "undefined") }, [Validators.required]],
         accValUndefined: [(s.accVal.value === "undefined")]
       }));
     });
@@ -226,7 +226,7 @@ export class SensorEditComponent implements OnInit {
     this._routerService.navigate(['/sensor/detail', uri]);
   }
 
-  onLoadButtonClick(){
+  onLoadButtonClick() {
     console.log(this.sensorForm.value);
     console.log(this.sensorForm.getRawValue());
   }
@@ -278,6 +278,30 @@ export class SensorEditComponent implements OnInit {
     }
     // this.diagnostic(this.sensorForm);
   }
+
+  onDelete() {
+    this.api.deleteSensor(this.sensorForm.getRawValue()).subscribe(
+      (data) => {
+        console.log(data);
+        bulmaToast.toast({
+          message: "Delete successful!",
+          type: "is-success",
+          dismissible: true,
+          closeOnClick: true,
+          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+          position: "top-center",
+          duration: 5000
+        });
+        this._routerService.navigate(['/sensors']);
+      },
+      (error: any) => {
+        console.log(error)
+        this.errorService.setErrorModalOpen(true);
+        this.errorService.setErrorMessage(error);
+      }
+    );
+  }
+  // this.diagnostic(this.sensorForm);
 }
 
 

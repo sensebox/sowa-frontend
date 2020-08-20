@@ -246,6 +246,30 @@ export class DomainEditComponent implements OnInit {
       );
     }
   }
+
+  onDelete() {
+    this.api.deleteDomain(this.domainForm.getRawValue()).subscribe(
+      (data) => {
+        console.log(data);
+        bulmaToast.toast({
+          message: "Delete successful!",
+          type: "is-success",
+          dismissible: true,
+          closeOnClick: true,
+          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+          position: "top-center",
+          duration: 5000
+        });
+        this._routerService.navigate(['/domains']);
+      },
+      (error: any) => {
+        console.log(error)
+        this.errorService.setErrorModalOpen(true);
+        this.errorService.setErrorMessage(error);
+      }
+    );
+  }
+
 }
 
 
