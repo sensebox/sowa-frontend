@@ -222,6 +222,29 @@ export class DevicesEditComponent implements OnInit {
       );
     }
   }
+
+  onDelete() {
+    this.api.deleteDevice(this.deviceForm.getRawValue()).subscribe(
+      (data) => {
+        console.log(data);
+        bulmaToast.toast({
+          message: "Delete successful!",
+          type: "is-success",
+          dismissible: true,
+          closeOnClick: true,
+          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+          position: "top-center",
+          duration: 5000
+        });
+        this._routerService.navigate(['/devices']);
+      },
+      (error: any) => {
+        console.log(error)
+        this.errorService.setErrorModalOpen(true);
+        this.errorService.setErrorMessage(error);
+      }
+    );
+  }
 }
 
 

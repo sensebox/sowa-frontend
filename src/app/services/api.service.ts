@@ -78,6 +78,11 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+  deletePhenomenon(phenomenon) {
+    return this.http.post(this.APIURL + '/phenomena/phenomenon/delete/', phenomenon, { headers: this.createHeaders() })
+      .pipe(catchError(this.handleError));
+  }
+
   // getPhenomenonForSensor(sensor) {
   //   return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, { headers: this.createHeaders()});
   // }
@@ -124,6 +129,12 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteSensor(sensor) {
+    return this.http.post(this.APIURL + '/sensors/sensor/delete/', sensor, { headers: this.createHeaders() })
+      .pipe(catchError(this.handleError));
+  }
+
+
   /**--------------Devices------------------------ */
   getDevices() {
     return this.http.get(this.APIURL + '/devices/all');
@@ -161,6 +172,11 @@ export class ApiService {
 
   createDevice(device) {
     return this.http.post(this.APIURL + '/devices/device/create', device, { headers: this.createHeaders() })
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteDevice(device) {
+    return this.http.post(this.APIURL + '/devices/device/delete/', device, { headers: this.createHeaders() })
       .pipe(catchError(this.handleError));
   }
 
@@ -207,6 +223,13 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteDomain(domain) {
+    return this.http.post(this.APIURL + '/domains/domain/delete/', domain, { headers: this.createHeaders() })
+      .pipe(catchError(this.handleError));
+  }
+
+
+/**-------------------Units------------------- */
 
 
   getUnits() {

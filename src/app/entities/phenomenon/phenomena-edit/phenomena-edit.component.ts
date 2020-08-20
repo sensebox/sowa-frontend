@@ -227,6 +227,30 @@ export class PhenomenaEditComponent implements OnInit {
     // this.api.editPhenomenon(this.phenomenonForm.value).subscribe(res => {console.log(res)});
     // this.diagnostic(this.phenomenonForm);
   }
+
+  onDelete() {
+    this.api.deletePhenomenon(this.phenomenonForm.getRawValue()).subscribe(
+      (data) => {
+        console.log(data);
+        bulmaToast.toast({
+          message: "Delete successful!",
+          type: "is-success",
+          dismissible: true,
+          closeOnClick: true,
+          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+          position: "top-center",
+          duration: 5000
+        });
+        this._routerService.navigate(['/phenomena']);
+      },
+      (error: any) => {
+        console.log(error)
+        this.errorService.setErrorModalOpen(true);
+        this.errorService.setErrorMessage(error);
+      }
+    );
+  }
+
 }
 
 
