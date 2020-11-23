@@ -8,6 +8,7 @@ import { IDomains } from '../../../interfaces/IDomains';
 import { IUnit } from '../../../interfaces/IUnit';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
+import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'senph-phenomena-detail',
@@ -25,6 +26,8 @@ export class PhenomenaDetailComponent implements OnInit {
     button2: undefined
   };
   unitsArray;
+
+  redirectDomain = redirectDomain;
 
 
   constructor(
@@ -111,9 +114,9 @@ export class PhenomenaDetailComponent implements OnInit {
     }
   }
 
-  redirectDomain(longURI) {
-    this._routerService.navigate(['/domain/', longURI.slice(34)]);
-  }
+  // redirectDomain(longURI) {
+  //   this._routerService.navigate(['/domain/', longURI.slice(34)]);
+  // }
 
   button1(uri) {
     console.log(this.historic)

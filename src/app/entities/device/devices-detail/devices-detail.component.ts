@@ -5,6 +5,7 @@ import { IDevice } from '../../../interfaces/IDevice';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { ISensors } from 'src/app/interfaces/ISensors';
+import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'senph-devices-detail',
@@ -45,6 +46,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   };
   prefLabel: ILabel;
   sensorsArray;
+  redirectDomain = redirectDomain;
 
 
 

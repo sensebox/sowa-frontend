@@ -6,6 +6,7 @@ import { LANGUAGES } from 'src/app/shared/mock-languages';
 import { forkJoin } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ILabel } from 'src/app/interfaces/ILabel';
+import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'senph-sensors-detail',
@@ -24,6 +25,8 @@ export class SensorsDetailComponent implements OnInit {
     button2: undefined
   };
   prefLabel: ILabel;
+
+  redirectDomain = redirectDomain; 
 
 
   constructor(
@@ -129,10 +132,6 @@ export class SensorsDetailComponent implements OnInit {
         console.log(this.uri);
       });
     })
-  }
-
-  redirectDomain(longURI, link) {
-    this._routerService.navigate([link, longURI.slice(34)]);
   }
 
   button1(uri) {
