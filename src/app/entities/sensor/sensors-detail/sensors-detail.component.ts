@@ -70,7 +70,6 @@ export class SensorsDetailComponent implements OnInit {
 
 
   getSensorDetails() {
-    console.log(this._routerService.url)
     if (this._routerService.url.search('/historic/') !== -1) {
       this.historic.button1 = "Back to current version"
     }
@@ -78,16 +77,11 @@ export class SensorsDetailComponent implements OnInit {
       this.historic.button1 = "Edit"
       this.historic.button2 = "Log History"
     };
-    console.log(this._routerService.url)
     if (this.historic.button2) {
       return this.route.params.subscribe(res => {
-        console.log(res);
         this.api.getSensor(res.iri).subscribe((response: ISensor) => {
-          console.log(response);
-          console.log("NEW");
           this.sensor = response;
           this.sensor.labels.forEach(element => {
-            console.log(element["xml:lang"])
             if (element["xml:lang"] == "en") {
               this.prefLabel = element
               return
@@ -96,19 +90,14 @@ export class SensorsDetailComponent implements OnInit {
           });
           this.uri = this.sensor.iri.value.slice(34);
           // this.pushLabelNames(response);
-          console.log(this.uri);
         });
       })
     }
     else {
       return this.route.params.subscribe(res => {
-        console.log(res);
         this.api.getHistoricSensor(res.iri).subscribe((response: ISensor) => {
-          console.log(response);
-          console.log("HISTORIC");
           this.sensor = response;
           this.sensor.labels.forEach(element => {
-            console.log(element["xml:lang"])
             if (element["xml:lang"] == "en") {
               this.prefLabel = element
               return
@@ -116,7 +105,6 @@ export class SensorsDetailComponent implements OnInit {
           });
           this.uri = this.sensor.iri.value.slice(34);
           // this.pushLabelNames(response);
-          console.log(this.uri);
         });
       })
     }
@@ -125,11 +113,9 @@ export class SensorsDetailComponent implements OnInit {
   getSensorDetailsfork() {
     return this.route.params.subscribe(res => {
       this.api.getSensor(res.iri).subscribe((response: ISensor) => {
-        console.log(response);
         this.sensor = response;
         this.uri = this.sensor.iri.value.slice(34);
         // this.pushLabelNames(response);
-        console.log(this.uri);
       });
     })
   }
@@ -165,7 +151,6 @@ export class SensorsDetailComponent implements OnInit {
     for (var i = 0; i < myArray.length; i++) {
       // console.log(myArray[i].y.value)
       if (myArray[i].y.value === nameKey) {
-        console.log(myArray[i].label.value)
         return myArray[i].label.value;
       }
     }
@@ -183,7 +168,6 @@ export class SensorsDetailComponent implements OnInit {
 
   pushLabelNames(sensor) {
     for (var i = 0; i < sensor.sensorElements.length; i++) {
-      console.log(sensor.sensorElements[i].unit.value)
       this.unitsArray[i] = this.retrieveUnit(sensor.sensorElements[i].unit.value);
     }
   }

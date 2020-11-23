@@ -5,6 +5,8 @@ import { IDomain } from 'src/app/interfaces/IDomain';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
+import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
+
 
 @Component({
   selector: 'senph-domains-detail',
@@ -24,6 +26,8 @@ export class DomainsDetailComponent implements OnInit {
   prefLabel: ILabel;
   phenomenaArray: any[];
 
+  redirectDomain = redirectDomain;
+
 
 
   constructor(
@@ -38,7 +42,6 @@ export class DomainsDetailComponent implements OnInit {
   }
 
   getDomainDetails() {
-    console.log(this._routerService.url)
     if (this._routerService.url.search('/historic/') !== -1) {
       this.historic.button1 = "Back to current version"
     }
@@ -46,16 +49,11 @@ export class DomainsDetailComponent implements OnInit {
       this.historic.button1 = "Edit"
       this.historic.button2 = "Log History"
     };
-    console.log(this._routerService.url)
     if (this.historic.button2) {
       this.route.params.subscribe(res => {
-        console.log(res);
         this.api.getDomain(res.iri).subscribe((response: IDomain) => {
-          console.log(response);
-          console.log("NEW");
           this.domain = response;
           this.domain.labels.forEach(element => {
-            console.log(element["xml:lang"])
             if (element["xml:lang"] == "en") {
               this.prefLabel = element
               return
@@ -64,16 +62,12 @@ export class DomainsDetailComponent implements OnInit {
           });
           this.uri = this.domain.iri.value.slice(34);
           // this.pushLabelNames(response);
-          console.log(this.uri);
         });
       })
     }
     else {
       return this.route.params.subscribe(res => {
-        console.log(res);
         this.api.getHistoricDomain(res.iri).subscribe((response: IDomain) => {
-          console.log(response);
-          console.log("historic");
           this.domain = response;
           this.domain.labels.forEach(element => {
             console.log(element["xml:lang"])
@@ -85,18 +79,13 @@ export class DomainsDetailComponent implements OnInit {
           });
           this.uri = this.domain.iri.value.slice(34);
           // this.pushLabelNames(response);
-          console.log(this.uri);
         });
       })
     }
   }
 
-  redirectDomain(longURI, link) {
-    this._routerService.navigate([link, longURI.slice(34)]);
-  }
 
   button1(uri) {
-    console.log(this.historic)
     if (this.historic.button2) {
       this.editButtonClick(uri)
     }
@@ -139,7 +128,6 @@ export class DomainsDetailComponent implements OnInit {
     for (var i = 0; i < myArray.length; i++) {
       // console.log(myArray[i][val1])
       if (myArray[i][val1].value === nameKey) {
-        console.log(myArray[i][val2].value);
         return myArray[i][val2].value;
       }
     }
@@ -148,16 +136,13 @@ export class DomainsDetailComponent implements OnInit {
 
   retrievePhenomena() {
     this.api.getPhenomenaAllLabels().subscribe(res => {
-      console.log(res);
       var tempArray: any = res;
 
       tempArray = tempArray.filter(function (el) {
         return el.phenomenon.type != 'bnode'
       })
-      console.log(tempArray);
       tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
       this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
-      console.log(this.phenomenaArray);
     });
   }
   // this.max = this.getMaxArrayLength();

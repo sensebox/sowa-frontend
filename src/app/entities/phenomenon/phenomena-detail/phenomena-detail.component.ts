@@ -114,10 +114,6 @@ export class PhenomenaDetailComponent implements OnInit {
     }
   }
 
-  // redirectDomain(longURI) {
-  //   this._routerService.navigate(['/domain/', longURI.slice(34)]);
-  // }
-
   button1(uri) {
     console.log(this.historic)
     if (this.historic.button2) {

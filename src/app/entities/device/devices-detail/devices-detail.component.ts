@@ -67,7 +67,6 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   }
 
   getDeviceDetails() {
-    console.log(this._routerService.url)
     if (this._routerService.url.search('/historic/') !== -1) {
       this.historic.button1 = "Back to current version"
     }
@@ -75,15 +74,12 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
       this.historic.button1 = "Edit"
       this.historic.button2 = "Log History"
     };
-    console.log(this._routerService.url)
     if (this.historic.button2) {
       return this.route.params.subscribe(res => {
         this.api.getDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
-          console.log("NEW");
           this.setPrefLabel();
           this.uri = this.device.iri.value.slice(34);
-          console.log(this.uri);
         });
       })
     }
@@ -91,10 +87,8 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
       this.route.params.subscribe(res => {
         this.api.getHistoricDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
-          console.log("historic");
           this.setPrefLabel();
           this.uri = this.device.iri.value.slice(34);
-          console.log(this.uri);
         });
       })
     }
@@ -102,7 +96,6 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   
   setPrefLabel(){
     this.device.labels.forEach(element => {
-      console.log(element["xml:lang"])
       if (element["xml:lang"] == "en") {
         this.prefLabel = element
         return
@@ -112,7 +105,6 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   }
 
   button1(uri) {
-    console.log(this.historic)
     if (this.historic.button2) {
       this.editButtonClick(uri)
     }
@@ -133,7 +125,6 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
 
   getHistory(shortUri) {
     this.api.getDeviceHistory(shortUri).subscribe(res => {
-      console.log(res);
       this.deviceHistory = res;
     });
   }
@@ -143,7 +134,6 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
     for (var i = 0; i < myArray.length; i++) {
       // console.log(myArray[i][val1])
       if (myArray[i][val1] === nameKey) {
-        console.log(myArray[i][val2]);
         return myArray[i][val2];
       }
     }
@@ -154,7 +144,6 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
     for (var i = 0; i < myArray.length; i++) {
       // console.log(myArray[i][val1])
       if (myArray[i][val1].value === nameKey) {
-        console.log(myArray[i][val2][0].value);
         return myArray[i][val2][0].value;
       }
     }
@@ -163,13 +152,11 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   retrieveSensors() {
     this.api.getSensors().subscribe(res => {
       var tempArray: any = res;
-      console.log(tempArray)
       tempArray = tempArray.filter(function (el) {
         return el.sensor.type != 'bnode'
       })
       // console.log(this.sensorsArray);
       this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
-      console.log(this.sensorsArray);
       // console.dir(this.sensorsArray);
     });
   }
