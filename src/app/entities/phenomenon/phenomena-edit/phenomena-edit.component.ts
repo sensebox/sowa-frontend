@@ -128,7 +128,7 @@ export class PhenomenaEditComponent implements OnInit {
     // console.log(phenomenon);
     this.phenomenonForm.patchValue({
       uri: phenomenon.iri.value.slice(34),
-      description: phenomenon.description.value,
+      description: phenomenon.description ? phenomenon.description.value : '',
     });
     this.phenomenonForm.setControl('label', this.setExistingLabels(phenomenon.labels))
 

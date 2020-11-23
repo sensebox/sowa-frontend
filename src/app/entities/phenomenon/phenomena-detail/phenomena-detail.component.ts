@@ -72,7 +72,6 @@ export class PhenomenaDetailComponent implements OnInit {
 
 
   getPhenomenonDetails() {
-    console.log(this._routerService.url)
     if (this._routerService.url.search('/historic/') !== -1) {
       this.historic.button1 = "Back to current version"
     }
@@ -80,15 +79,11 @@ export class PhenomenaDetailComponent implements OnInit {
       this.historic.button1 = "Edit"
       this.historic.button2 = "Log History"
     };
-    console.log(this._routerService.url)
     if (this.historic.button2) {
       return this.route.params.subscribe(res => {
         this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
-          console.log(response);
           this.phenomenon = response;
-          console.log("NEW");
           this.phenomenon.labels.forEach(element => {
-            console.log(element["xml:lang"])
             if (element["xml:lang"] == "en") {
               this.prefLabel = element
               return
@@ -96,18 +91,14 @@ export class PhenomenaDetailComponent implements OnInit {
             this.prefLabel = element;
           });
           this.uri = this.phenomenon.iri.value.slice(34);
-          console.log(this.uri);
         });
       })
     }
     else {
       return this.route.params.subscribe(res => {
         this.api.getHistoricPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
-          console.log(response);
           this.phenomenon = response;
-          console.log("historic");
           this.phenomenon.labels.forEach(element => {
-            console.log(element["xml:lang"])
             if (element["xml:lang"] == "en") {
               this.prefLabel = element
               return
@@ -115,14 +106,12 @@ export class PhenomenaDetailComponent implements OnInit {
             this.prefLabel = element;
           });
           this.uri = this.phenomenon.iri.value.slice(34);
-          console.log(this.uri);
         });
       })
     }
   }
 
   redirectDomain(longURI) {
-    console.log(longURI);
     this._routerService.navigate(['/domain/', longURI.slice(34)]);
   }
 
@@ -149,7 +138,6 @@ export class PhenomenaDetailComponent implements OnInit {
 
   getHistory(shortUri) {
     this.api.getPhenomenonHistory(shortUri).subscribe(res => {
-      console.log(res);
       this.phenomenonHistory = res;
     });
   }
@@ -168,17 +156,14 @@ export class PhenomenaDetailComponent implements OnInit {
     for (var i = 0; i < myArray.length; i++) {
       // console.log(myArray[i][val1])
       if (myArray[i][val1].value === nameKey) {
-        console.log(myArray[i][val2].value);
         return myArray[i][val2].value;
       }
     }
   }
 
   search(nameKey, myArray) {
-    console.log(nameKey)
     for (var i = 0; i < myArray.length; i++) {
       if (myArray[i].val === nameKey["xml:lang"]) {
-        console.log(myArray[i].show)
         return myArray[i].show;
       }
     }

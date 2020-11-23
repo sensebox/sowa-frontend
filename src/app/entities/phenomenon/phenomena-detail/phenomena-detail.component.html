@@ -121,7 +121,7 @@
               <article class="tile is-child notification is-warning">
                 <p class="title">Description</p>
                 <div class="content">
-                  <strong>
+                  <strong *ngIf="phenomenon.description">
                     {{phenomenon.description.value}}
                   </strong>
                 </div>
