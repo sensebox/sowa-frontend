@@ -1,3 +1,3 @@
-module.exports.redirectDomain =  function(longURI, link) {
+export function redirectDomain (longURI, link) {
     this._routerService.navigate([link, longURI.slice(34)]);
   }
