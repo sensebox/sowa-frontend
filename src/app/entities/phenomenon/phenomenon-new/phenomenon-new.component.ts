@@ -107,7 +107,9 @@ export class PhenomenonNewComponent implements OnInit {
 
   addUnitFormGroup(): FormGroup {
     return this.fb.group({
-      unitUri: ['', [Validators.required]]
+      unitUri: ['', [Validators.required]],
+      min: ['', []],
+      max: ['', []]
     });
   }
 
@@ -125,8 +127,6 @@ export class PhenomenonNewComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.phenomenonForm.value);
-    console.log(this.phenomenonForm.getRawValue());
     this.submitted = true;
 
 

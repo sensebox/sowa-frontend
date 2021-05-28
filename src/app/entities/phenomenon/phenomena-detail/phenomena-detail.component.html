@@ -205,6 +205,16 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
+                      <strong>Min</strong>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <strong>Max</strong>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
                       <strong>URI</strong>
                     </p>
                   </div>
@@ -222,6 +232,20 @@
                     <p class="bd-notification is-primary" *ngIf="unitsArray">
                       {{searchPheno(unit.unit.value, "y", unitsArray , "label")}}
                       <!-- {{unit.unitLabel.value}} -->
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <a (click)="redirectDomain(unit.unit.value, '/phenomenon/detail/')">
+                        {{unit.min.value}}
+                      </a>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth">
+                    <p class="bd-notification is-primary">
+                      <a (click)="redirectDomain(unit.unit.value, '/phenomenon/detail/')">
+                        {{unit.max.value}}
+                      </a>
                     </p>
                   </div>
                   <div class="column is-fullwidth">
