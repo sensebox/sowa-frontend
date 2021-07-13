@@ -72,10 +72,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   @ViewChild('navBurger', { static: false }) navBurger: ElementRef;
   @ViewChild('navMenu', { static: false }) navMenu: ElementRef;
+  @ViewChild('navItem', { static: false }) navItem: ElementRef;
 
   toggleNavbar() {
     this.navBurger.nativeElement.classList.toggle('is-active');
     this.navMenu.nativeElement.classList.toggle('is-active');
+  }
+
+  toggleDropdown(dropdown) {
+
+    dropdown.classList.toggle('is-active');
+    
+    //this.navItem.nativeElement.children[1].classList.toggle('is-active');
   }
 
   private _mobileQueryListener: () => void;

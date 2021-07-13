@@ -1,12 +1,40 @@
 .brand {
-    img {
-      display: block;
-      height: 32px;
-    }
+  img {
+    display: block;
+    height: 32px;
   }
-  .navbar {
-    margin-bottom: 0;
 }
-  .black-color {
-    color: rgb(74, 74, 74)!important;
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.black-color {
+  color: rgb(74, 74, 74) !important;
+}
+
+
+// @media only screen and (max-width: 1024px) {
+//   .navbar-item {
+//     &.has-dropdown {
+//       .navbar-dropdown {
+//         display: none;
+//       }
+
+//       &:active {
+//         .navbar-dropdown {
+//           display: block !important;
+//         }
+//       }
+//     }
+//   }
+// }
+
+@media screen and (max-width: 1024px) {
+  .navbar-dropdown .is-active {
+    display: block;
   }
+  .navbar-dropdown:not(.is-active) {
+    display: none;
+  }
+}
