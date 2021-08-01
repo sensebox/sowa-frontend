@@ -8,6 +8,8 @@ import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from './../../../services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
 
+import { FileUploader } from 'ng2-file-upload';
+
 
 @Component({
   selector: 'senph-sensor-new',
@@ -15,6 +17,16 @@ import * as bulmaToast from "bulma-toast";
   styleUrls: ['./sensor-new.component.scss']
 })
 export class SensorNewComponent implements OnInit {
+
+  sensorName = "";
+
+  public uploader: FileUploader = new FileUploader({
+    url: 'http://localhost:3000/image/upload',
+    itemAlias: 'image',
+    additionalParameter: {
+      sensorUri: this.sensorName
+    }
+  })
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
@@ -81,7 +93,7 @@ export class SensorNewComponent implements OnInit {
       price: [{ value: '', disabled: false }, [Validators.required]],
       datasheet: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       lifeperiod: [{ value: '', disabled: false }, [Validators.required]],
-      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      image: [{ value: '', disabled: false }, [CustomValidators.uriSyntax]],
       validation: [false, [Validators.required]]
     })
 
@@ -90,6 +102,14 @@ export class SensorNewComponent implements OnInit {
         this.logValidationErrors(this.sensorForm);
       }
     );
+
+    this.uploader.onAfterAddingFile = (file) => {
+      console.log(file);
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = (item: any, status: any) => {
+      console.log('Uploaded File Details:', item);
+    };
   }
 
 
@@ -157,8 +177,12 @@ export class SensorNewComponent implements OnInit {
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
     // });
-    console.log(this.sensorForm.value);
-    console.log(this.sensorForm.getRawValue());
+    this.sensorName = this.sensorForm.get('uri').value;    
+    var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
+    var extension = inputValue.split('.')[1];
+    this.sensorForm.value.image = extension;
+    var imageFileName = this.sensorForm.get('uri').value + "." + extension;
+    this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
@@ -189,6 +213,8 @@ export class SensorNewComponent implements OnInit {
             duration: 5000
           });
           this._routerService.navigate(['/sensors']);
+          console.log(this.sensorName);
+          this.uploader.uploadAll()
         },
         (error: any) => {
           console.log(error);

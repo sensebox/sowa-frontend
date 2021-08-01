@@ -104,9 +104,13 @@
       </senph-number>
 
       <!-- 1.2.10 IMAGE -->
-      <senph-text [formErrors]="formErrors" label="Image" id="image" [control]="this.sensorForm.get('image')"
-        [parentForm]="sensorForm">
-      </senph-text>
+      <!-- <div class="file-upload">
+        <input type="file" name="imageUpload" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg"/>
+      </div> -->
+
+      <div class="file-upload">
+        <input type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg"/>
+      </div>
 
       <!-- 1.2.11 VALIDATION -->
       <senph-valid [formErrors]="formErrors" label="VALIDATE" id="validation" [control]="this.sensorForm.get('validation')"
@@ -119,7 +123,7 @@
     <div class="panel-footer">
       <div class="field is-grouped">
         <p class="control">
-          <button class="button is-success" type="submit">Save Changes</button>
+          <button class="button is-success" type="submit" (click)="uploader.uploadAll()">Save Changes</button>
         </p>
         <p class="control">
           <button class="button is-danger" type="button" (click)="onDelete()">DELETE SENSOR</button>
