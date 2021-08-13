@@ -174,16 +174,12 @@ export class SensorNewComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    console.log(this.APIURL + '/image/upload');
     
-    this.uploader = new FileUploader({
-      url: this.APIURL + '/image/upload',
-      itemAlias: 'image',
+    this.uploader.setOptions({
       additionalParameter: {
-        sensorUri: this.sensorForm.get('uri')
+        sensorUri: this.sensorForm.get('uri').value
       }
     })
-    this.uploader.uploadAll();
     // console.log(this.devicesArray);
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
@@ -206,6 +202,7 @@ export class SensorNewComponent implements OnInit {
         pauseOnHover: true,
         duration: 5000
       });
+      this.uploader.uploadAll();
     }
     else {
       console.log("valid");
