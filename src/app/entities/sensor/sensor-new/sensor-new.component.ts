@@ -7,6 +7,7 @@ import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from './../../../services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+import { environment } from 'src/environments/environment';
 
 import { FileUploader } from 'ng2-file-upload';
 
@@ -18,20 +19,20 @@ import { FileUploader } from 'ng2-file-upload';
 })
 export class SensorNewComponent implements OnInit {
 
-  sensorName = "";
-
-  public uploader: FileUploader = new FileUploader({
-    url: 'http://localhost:3000/image/upload',
-    itemAlias: 'image',
-    additionalParameter: {
-      sensorUri: this.sensorName
-    }
-  })
-
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
   submitted = false;
   shortUri: string;
+
+  APIURL = environment.api_url;
+
+  public uploader: FileUploader = new FileUploader({
+    url: this.APIURL + '/image/upload',
+    itemAlias: 'image',
+    additionalParameter: {
+      sensorUri: ""
+    }
+  })
 
   validationMessages = {
     'uri': {
@@ -125,7 +126,7 @@ export class SensorNewComponent implements OnInit {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
-              this.formErrors[key] += messages[errorKey] + ' ';
+              //this.formErrors[key] += messages[errorKey] + ' ';
             }
           }
         }
@@ -173,11 +174,20 @@ export class SensorNewComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    console.log(this.APIURL + '/image/upload');
+    
+    this.uploader = new FileUploader({
+      url: this.APIURL + '/image/upload',
+      itemAlias: 'image',
+      additionalParameter: {
+        sensorUri: this.sensorForm.get('uri')
+      }
+    })
+    this.uploader.uploadAll();
     // console.log(this.devicesArray);
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
-    // });
-    this.sensorName = this.sensorForm.get('uri').value;    
+    // });  
     var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
     var extension = inputValue.split('.')[1];
     this.sensorForm.value.image = extension;
@@ -212,9 +222,8 @@ export class SensorNewComponent implements OnInit {
             position: "top-center",
             duration: 5000
           });
+          //this.uploader.uploadAll();
           this._routerService.navigate(['/sensors']);
-          console.log(this.sensorName);
-          this.uploader.uploadAll()
         },
         (error: any) => {
           console.log(error);
