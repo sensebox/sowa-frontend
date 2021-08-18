@@ -106,9 +106,10 @@
     <!-- <senph-text [formErrors]="formErrors" label="Image" id="image" [control]="this.sensorForm.get('image')"
         [parentForm]="sensorForm">
     </senph-text> -->
-
-    <div class="file-upload">
-      <input type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg"/>
+    <div class="container well some-space"> 
+      <div class="file-upload ">
+        <input type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg"/>
+      </div>
     </div>
   </div>
 
