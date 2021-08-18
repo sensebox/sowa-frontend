@@ -202,7 +202,7 @@ export class SensorNewComponent implements OnInit {
         pauseOnHover: true,
         duration: 5000
       });
-      this.uploader.uploadAll();
+      //this.uploader.uploadAll();
     }
     else {
       console.log("valid");
@@ -219,8 +219,11 @@ export class SensorNewComponent implements OnInit {
             position: "top-center",
             duration: 5000
           });
-          //this.uploader.uploadAll();
-          this._routerService.navigate(['/sensors']);
+          this.uploader.uploadAll();
+          this._routerService.navigate(['/sensors'])
+          .then(() => {
+            window.location.reload();
+          });
         },
         (error: any) => {
           console.log(error);
