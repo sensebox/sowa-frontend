@@ -35,7 +35,9 @@ export class UnitComponent implements OnInit {
 
   addUnitFormGroup(): FormGroup {
     return this.fb.group({
-      unitUri: ['', [Validators.required]]
+      unitUri: ['', [Validators.required]],
+      min: ['', []],
+      max: ['', []]
     });
   }
 

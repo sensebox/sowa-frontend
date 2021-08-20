@@ -220,7 +220,7 @@
               *ngIf="sensor.image && sensor.image.value != 'undefined' && sensor.image.value != 'http://server/unset-base/undefined'">
               <article class=" tile is-child notification is-dark">
                 <figure class="image is-256x256">
-                  <img class="is-rounded" src="{{sensor.image.value}}">
+                  <img class="is-rounded" src="{{APIURL}}/image/{{sensor.image.value}}">
                 </figure>
                 <p>
                   The {{prefLabel?.value}}. <a href="{{sensor.image.value}}">Source</a>

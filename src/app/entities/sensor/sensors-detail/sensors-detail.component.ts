@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'senph-sensors-detail',
@@ -26,7 +27,9 @@ export class SensorsDetailComponent implements OnInit {
   };
   prefLabel: ILabel;
 
-  redirectDomain = redirectDomain; 
+  redirectDomain = redirectDomain;
+
+  APIURL = environment.api_url;
 
 
   constructor(

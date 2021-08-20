@@ -33,6 +33,40 @@
                             </div>
                         </div>
                     </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Min:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-narrow">
+                                <div class="control is-expanded">
+                                    <input type="number" placeholder="Min" formControlName="min" [id]="'minVal' + i">
+                                </div>
+                                <span class="help-block error-block"
+                                    *ngIf="unit.controls[i].get('unitUri').errors?.required &&
+                                                                (unit.controls[i].get('unitUri').touched || !unit.controls[i].get('unitUri').pristine)">
+                                    {{validationMessages.unit.required}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">Max:</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-narrow">
+                                <div class="control">
+                                    <input type="number" placeholder="Max" formControlName="max" [id]="'maxVal' + i">
+                                </div>
+                                <span class="help-block error-block"
+                                    *ngIf="unit.controls[i].get('unitUri').errors?.required &&
+                                                                (unit.controls[i].get('unitUri').touched || !unit.controls[i].get('unitUri').pristine)">
+                                    {{validationMessages.unit.required}}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </article>
         </div>

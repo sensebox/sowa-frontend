@@ -8,12 +8,22 @@ import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
 
+import { FileUploader } from 'ng2-file-upload';
+
 @Component({
   selector: 'senph-sensor-edit',
   templateUrl: './sensor-edit.component.html',
   styleUrls: ['./sensor-edit.component.scss']
 })
 export class SensorEditComponent implements OnInit {
+
+  public uploader: FileUploader = new FileUploader({
+    url: 'http://localhost:3000/image/upload',
+    itemAlias: 'image',
+    additionalParameter: {
+      sensorname: ""
+    }
+  })
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   sensorForm: FormGroup;
@@ -79,7 +89,7 @@ export class SensorEditComponent implements OnInit {
       price: [{ value: '', disabled: false }, [Validators.required]],
       datasheet: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       lifeperiod: [{ value: '', disabled: false }, [Validators.required]],
-      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      image: [{ value: '', disabled: false }, [CustomValidators.uriSyntax]],
       validation: [false, [Validators.required]]
     })
 
@@ -89,9 +99,18 @@ export class SensorEditComponent implements OnInit {
       }
     );
 
+    this.uploader.onAfterAddingFile = (file) => {
+      console.log(file);
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = (item: any, status: any) => {
+      console.log('Uploaded File Details:', item);
+    };
+
     this.route.paramMap.subscribe(params => {
       this.shortUri = params.get('id');
       if (this.shortUri) {
+        this.uploader.options.additionalParameter.sensorname = this.shortUri;
         this.getSensor(this.shortUri);
       }
     });
@@ -237,8 +256,11 @@ export class SensorEditComponent implements OnInit {
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
     // });
-    console.log(this.sensorForm.value);
-    console.log(this.sensorForm.getRawValue());
+    var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
+    var extension = inputValue.split('.')[1];
+    this.sensorForm.value.image = extension;
+    var imageFileName = this.sensorForm.get('uri').value + "." + extension;
+    this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
       console.log("invalid");

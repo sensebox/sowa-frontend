@@ -7,6 +7,9 @@ import { ILabel } from 'src/app/interfaces/ILabel';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from './../../../services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+import { environment } from 'src/environments/environment';
+
+import { FileUploader } from 'ng2-file-upload';
 
 
 @Component({
@@ -20,6 +23,16 @@ export class SensorNewComponent implements OnInit {
   sensorForm: FormGroup;
   submitted = false;
   shortUri: string;
+
+  APIURL = environment.api_url;
+
+  public uploader: FileUploader = new FileUploader({
+    url: this.APIURL + '/image/upload',
+    itemAlias: 'image',
+    additionalParameter: {
+      sensorUri: ""
+    }
+  })
 
   validationMessages = {
     'uri': {
@@ -81,7 +94,7 @@ export class SensorNewComponent implements OnInit {
       price: [{ value: '', disabled: false }, [Validators.required]],
       datasheet: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       lifeperiod: [{ value: '', disabled: false }, [Validators.required]],
-      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      image: [{ value: '', disabled: false }, [CustomValidators.uriSyntax]],
       validation: [false, [Validators.required]]
     })
 
@@ -90,6 +103,14 @@ export class SensorNewComponent implements OnInit {
         this.logValidationErrors(this.sensorForm);
       }
     );
+
+    this.uploader.onAfterAddingFile = (file) => {
+      console.log(file);
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = (item: any, status: any) => {
+      console.log('Uploaded File Details:', item);
+    };
   }
 
 
@@ -105,7 +126,7 @@ export class SensorNewComponent implements OnInit {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
-              this.formErrors[key] += messages[errorKey] + ' ';
+              //this.formErrors[key] += messages[errorKey] + ' ';
             }
           }
         }
@@ -153,12 +174,21 @@ export class SensorNewComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    
+    this.uploader.setOptions({
+      additionalParameter: {
+        sensorUri: this.sensorForm.get('uri').value
+      }
+    })
     // console.log(this.devicesArray);
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
-    // });
-    console.log(this.sensorForm.value);
-    console.log(this.sensorForm.getRawValue());
+    // });  
+    var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
+    var extension = inputValue.split('.')[1];
+    this.sensorForm.value.image = extension;
+    var imageFileName = this.sensorForm.get('uri').value + "." + extension;
+    this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
@@ -172,6 +202,7 @@ export class SensorNewComponent implements OnInit {
         pauseOnHover: true,
         duration: 5000
       });
+      //this.uploader.uploadAll();
     }
     else {
       console.log("valid");
@@ -188,7 +219,11 @@ export class SensorNewComponent implements OnInit {
             position: "top-center",
             duration: 5000
           });
-          this._routerService.navigate(['/sensors']);
+          this.uploader.uploadAll();
+          this._routerService.navigate(['/sensors'])
+          .then(() => {
+            window.location.reload();
+          });
         },
         (error: any) => {
           console.log(error);

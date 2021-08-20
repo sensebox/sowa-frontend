@@ -36,10 +36,10 @@ export class IPhenomenon {
     this.units = [];
     this.domains = [];
     this.sensors = [];
+    console.log(res);
 
 
     res.forEach((element: any) => {
-      console.log(element);
       switch (Object.getOwnPropertyNames(element)[0]) {
 
         case "description": {
@@ -57,7 +57,7 @@ export class IPhenomenon {
           break;
         }
 
-        case "unit": {
+        case "rov": {
           this.units.push(element);
           break;
         }

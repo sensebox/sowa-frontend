@@ -8,7 +8,7 @@
           </a>
         </div>
 
-        <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger is active" aria-label="menu"
+        <a (click)="toggleNavbar()" role="button" #navBurger class="navbar-burger burger" aria-label="menu"
           aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -17,12 +17,12 @@
 
         <div id="navbarBasicExample" class="navbar-menu" #navMenu>
           <div class="navbar-start level-left">
-            <div class="navbar-item has-dropdown is-hoverable" *ngFor="let nav of fillerNav">
-              <a class="navbar-link is-size-4 has-text-weight-bold">
+            <div (click)="toggleDropdown(navItem)" class="navbar-item has-dropdown is-hoverable" *ngFor="let nav of fillerNav">
+              <a class="navbar-link is-size-6 has-text-weight-bold">
                 {{nav.topic}}
               </a>
 
-              <div class="navbar-dropdown">
+              <div class="navbar-dropdown" #navItem>
                 <a class="navbar-item black-color" *ngFor="let li of nav.options" routerLink={{li.path}}
                   routerLinkActive="active">
                   <p>

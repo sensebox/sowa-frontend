@@ -104,7 +104,9 @@ export class PhenomenaEditComponent implements OnInit {
 
   addUnitFormGroup(): FormGroup {
     return this.fb.group({
-      unitUri: ['', [Validators.required]]
+      unitUri: ['', [Validators.required]],
+      min: ['', [Validators.required]],
+      max: ['', [Validators.required]]
     });
   }
 
@@ -154,7 +156,9 @@ export class PhenomenaEditComponent implements OnInit {
 
     unitSet.forEach(s => {
       formArray.push(this.fb.group({
-        unitUri: [s.unit.value, [Validators.required]]
+        unitUri: [s.unit.value, [Validators.required]],
+        min: [s.min.value, []],
+        max: [s.max.value, []]
       }));
     });
 
