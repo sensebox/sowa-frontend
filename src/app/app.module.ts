@@ -57,7 +57,7 @@ import { ErrorLogContainerComponent } from './error-log/error-log-container/erro
 import { ErrorLogModalComponent } from './error-log/error-log-modal/error-log-modal.component';
 
 import { ToastrModule } from 'ngx-toastr';
-import { FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 
@@ -106,8 +106,7 @@ import { FileSelectDirective } from 'ng2-file-upload';
     LoadingComponent,
     ErrorLogComponent,
     ErrorLogContainerComponent,
-    ErrorLogModalComponent,
-    FileSelectDirective
+    ErrorLogModalComponent
   ],
   imports: [
     BrowserModule,
@@ -117,7 +116,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     AppRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    FileUploadModule
   ],
   providers: [{
       provide: HTTP_INTERCEPTORS,
