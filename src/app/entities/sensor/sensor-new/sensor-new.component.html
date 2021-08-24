@@ -25,8 +25,8 @@
             <div class="control">
               <div class=" input-group">
                 <span class="input-group-addon" id="heroaddon">{{heroBannerString}}</span>
-                <input type="text" id="uri" formControlName="uri" class="input is-normal"
-                    (blur)="logValidationErrors()" aria-describedby="heroaddon"/>
+                <input type="text" id="uri" formControlName="uri" class="input is-normal" (blur)="logValidationErrors()"
+                  aria-describedby="heroaddon" />
               </div>
             </div>
             <span class="help-block">The Uniform Resource Identifier (URI) of a sensor is meant to uniquely identify
@@ -94,8 +94,8 @@
       [parentForm]="sensorForm" step="0.01" placeholder="0.00" addon="€"></senph-number>
 
     <!-- 1.2.8 DATASHEET -->
-    <senph-text [formErrors]="formErrors" label="Datasheet" id="datasheet"
-        [control]="this.sensorForm.get('datasheet')" [parentForm]="sensorForm"></senph-text>
+    <senph-text [formErrors]="formErrors" label="Datasheet" id="datasheet" [control]="this.sensorForm.get('datasheet')"
+      [parentForm]="sensorForm"></senph-text>
 
     <!-- 1.2.9 LIFEPERIOD -->
     <senph-number [formErrors]="formErrors" label="Lifeperiod" id="lifeperiod"
@@ -103,14 +103,24 @@
     </senph-number>
 
     <!-- 1.2.10 IMAGE -->
-    <!-- <senph-text [formErrors]="formErrors" label="Image" id="image" [control]="this.sensorForm.get('image')"
-        [parentForm]="sensorForm">
-    </senph-text> -->
-    <div class="container well some-space"> 
-      <div class="file-upload ">
-        <input type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg"/>
+    <div class="container well some-space columns is-vcentered">
+      <div class="column is-2"><b>Image: </b></div>
+      <div class="column file is-boxed">
+        <label class="file-label">
+          <input class="file-input" type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
+            accept="image/x-png,image/gif,image/jpeg" />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Upload image..
+            </span>
+          </span>
+        </label>
       </div>
     </div>
+
   </div>
 
 
