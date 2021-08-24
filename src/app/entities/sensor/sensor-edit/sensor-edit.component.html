@@ -104,21 +104,27 @@
     </senph-number>
 
     <!-- 1.2.10 IMAGE -->
-    <!-- <div class="file-upload">
-        <input type="file" name="imageUpload" ng2FileSelect [uploader]="uploader" accept="image/x-png,image/gif,image/jpeg"/>
-      </div> -->
-
     <div class="container well some-space">
-      <div class="file-upload ">
-        <input type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
-          accept="image/x-png,image/gif,image/jpeg" />
+      <div class="file is-large is-boxed">
+        <label class="file-label">
+          <input class="file-input" type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
+            accept="image/x-png,image/gif,image/jpeg" />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Upload image
+            </span>
+          </span>
+        </label>
       </div>
     </div>
 
-  <!-- 1.2.11 VALIDATION -->
-  <senph-valid [formErrors]="formErrors" label="VALIDATE" id="validation" [control]="this.sensorForm.get('validation')"
-    [parentForm]="sensorForm">
-  </senph-valid>
+    <!-- 1.2.11 VALIDATION -->
+    <senph-valid [formErrors]="formErrors" label="VALIDATE" id="validation"
+      [control]="this.sensorForm.get('validation')" [parentForm]="sensorForm">
+    </senph-valid>
   </div>
 
 

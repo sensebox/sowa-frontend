@@ -20,8 +20,9 @@ export class SensorEditComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({
     url: 'http://localhost:3000/image/upload',
     itemAlias: 'image',
+    authToken : window.localStorage.getItem('sb_accesstoken'),
     additionalParameter: {
-      sensorname: ""
+      uri: ""
     }
   })
 
@@ -252,6 +253,11 @@ export class SensorEditComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.uploader.setOptions({
+      additionalParameter: {
+        uri: this.sensorForm.get('uri').value
+      }
+    })
     // console.log(this.devicesArray);
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
@@ -289,6 +295,7 @@ export class SensorEditComponent implements OnInit {
             position: "top-center",
             duration: 5000
           });
+          this.uploader.uploadAll();
           this.redirectDetails(this.shortUri);
         },
         (error: any) => {

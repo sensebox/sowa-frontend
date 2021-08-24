@@ -8,6 +8,9 @@ import { ISensors } from "src/app/interfaces/ISensors";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
+import { environment } from 'src/environments/environment';
+
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: "senph-device-new",
@@ -15,6 +18,18 @@ import * as bulmaToast from "bulma-toast";
   styleUrls: ["./device-new.component.scss"],
 })
 export class DeviceNewComponent implements OnInit {
+
+  APIURL = environment.api_url;
+
+  public uploader: FileUploader = new FileUploader({
+    url: 'http://localhost:3000/image/upload',
+    itemAlias: 'image',
+    authToken : window.localStorage.getItem('sb_accesstoken'),
+    additionalParameter: {
+      uri: ""
+    }
+  })
+
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   deviceForm: FormGroup;
 
@@ -78,6 +93,14 @@ export class DeviceNewComponent implements OnInit {
     this.deviceForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.deviceForm);
     });
+
+    this.uploader.onAfterAddingFile = (file) => {
+      console.log(file);
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = (item: any, status: any) => {
+      console.log('Uploaded File Details:', item);
+    };
   }
 
   logValidationErrors(group: FormGroup = this.deviceForm): void {
@@ -126,6 +149,19 @@ export class DeviceNewComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+
+    this.uploader.setOptions({
+      additionalParameter: {
+        uri: this.deviceForm.get('uri').value
+      }
+    })
+
+    var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
+    var extension = inputValue.split('.')[1];
+    this.deviceForm.value.image = extension;
+    var imageFileName = this.deviceForm.get('uri').value + "." + extension;
+    this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
+
     console.log(this.deviceForm.getRawValue());
 
     if (this.deviceForm.invalid) {
@@ -156,6 +192,7 @@ export class DeviceNewComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
+          this.uploader.uploadAll();
           this._routerService.navigate(["/devices"]).then(() => {
             window.location.reload();
           });

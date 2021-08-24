@@ -76,9 +76,12 @@
       </senph-text>
 
       <!-- 1.2.5 IMAGE -->
-      <senph-text [formErrors]="formErrors" label="Image" id="image" [control]="this.deviceForm.get('image')"
-        [parentForm]="deviceForm">
-      </senph-text>
+      <div class="container well some-space">
+        <div class="file-upload ">
+          <input type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
+            accept="image/x-png,image/gif,image/jpeg" />
+        </div>
+      </div>
 
       <!-- 1.2.6 CONTACT -->
       <senph-text [formErrors]="formErrors" label="Contact" id="contact" [control]="this.deviceForm.get('contact')"

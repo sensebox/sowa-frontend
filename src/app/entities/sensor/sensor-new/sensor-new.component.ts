@@ -29,8 +29,9 @@ export class SensorNewComponent implements OnInit {
   public uploader: FileUploader = new FileUploader({
     url: this.APIURL + '/image/upload',
     itemAlias: 'image',
+    authToken : window.localStorage.getItem('sb_accesstoken'),
     additionalParameter: {
-      sensorUri: ""
+      uri: ""
     }
   })
 
@@ -177,7 +178,7 @@ export class SensorNewComponent implements OnInit {
     
     this.uploader.setOptions({
       additionalParameter: {
-        sensorUri: this.sensorForm.get('uri').value
+        uri: this.sensorForm.get('uri').value
       }
     })
     // console.log(this.devicesArray);
