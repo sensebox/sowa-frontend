@@ -6,6 +6,7 @@ import { LANGUAGES } from 'src/app/shared/mock-languages';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { ISensors } from 'src/app/interfaces/ISensors';
 import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'senph-devices-detail',
@@ -48,7 +49,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   sensorsArray;
   redirectDomain = redirectDomain;
 
-
+  APIURL = environment.api_url;
 
   constructor(
     private route: ActivatedRoute,

@@ -111,7 +111,7 @@ export class SensorEditComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.shortUri = params.get('id');
       if (this.shortUri) {
-        this.uploader.options.additionalParameter.sensorname = this.shortUri;
+        this.uploader.options.additionalParameter.uri = this.shortUri;
         this.getSensor(this.shortUri);
       }
     });
