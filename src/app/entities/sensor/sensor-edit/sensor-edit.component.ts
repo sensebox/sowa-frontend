@@ -106,12 +106,21 @@ export class SensorEditComponent implements OnInit {
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log('Uploaded File Details:', item);
+      bulmaToast.toast({
+        message: "Image successfully uploaded!",
+        type: "is-success",
+        dismissible: true,
+        closeOnClick: true,
+        animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+        position: "top-center",
+        duration: 5000,
+      });
     };
 
     this.route.paramMap.subscribe(params => {
       this.shortUri = params.get('id');
       if (this.shortUri) {
-        this.uploader.options.additionalParameter.sensorname = this.shortUri;
+        this.uploader.options.additionalParameter.uri = this.shortUri;
         this.getSensor(this.shortUri);
       }
     });
