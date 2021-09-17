@@ -105,7 +105,7 @@
     <!-- 1.2.10 IMAGE -->
     <div class="container well some-space columns is-vcentered">
       <div class="column is-2"><b>Image: </b></div>
-      <div class="column file is-boxed">
+      <div class="column file is-boxed has-name">
         <label class="file-label">
           <input class="file-input" type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
             accept="image/x-png,image/gif,image/jpeg" />
@@ -116,6 +116,9 @@
             <span class="file-label">
               Upload image..
             </span>
+          </span>
+          <span class="file-name" *ngIf="currentFile">
+            {{currentFile}}
           </span>
         </label>
       </div>

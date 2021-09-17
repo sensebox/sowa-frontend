@@ -31,6 +31,8 @@ export class SensorEditComponent implements OnInit {
   submitted = false;
   shortUri: string;
 
+  currentFile = null;
+
   validationMessages = {
     'uri': {
       'required': 'URI is required.',
@@ -103,6 +105,7 @@ export class SensorEditComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => {
       console.log(file);
       file.withCredentials = false;
+      this.currentFile = file.file.name;
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log('Uploaded File Details:', item);

@@ -30,6 +30,8 @@ export class DeviceNewComponent implements OnInit {
     }
   })
 
+  currentFile = null;
+
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   deviceForm: FormGroup;
 
@@ -97,6 +99,7 @@ export class DeviceNewComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => {
       console.log(file);
       file.withCredentials = false;
+      this.currentFile = file.file.name;
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log('Uploaded File Details:', item);
