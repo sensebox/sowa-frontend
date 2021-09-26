@@ -107,7 +107,8 @@ export class SensorEditComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingFile = (file) => {
-      console.log(file);
+      this.uploader.queue = [];
+      this.uploader.queue.push(file);
       file.withCredentials = false;
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)

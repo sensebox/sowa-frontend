@@ -127,7 +127,7 @@ export class DomainNewComponent implements OnInit {
           console.log(res);
           this.domainForm.reset();
           bulmaToast.toast({
-            message: "Edit successful!",
+            message: "New domain added successfully!",
             type: "is-success",
             dismissible: true,
             closeOnClick: true,

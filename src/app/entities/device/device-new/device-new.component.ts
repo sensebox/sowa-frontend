@@ -101,7 +101,8 @@ export class DeviceNewComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingFile = (file) => {
-      console.log(file);
+      this.uploader.queue = [];
+      this.uploader.queue.push(file);
       file.withCredentials = false;
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
     };
@@ -200,7 +201,7 @@ export class DeviceNewComponent implements OnInit {
           console.log(res);
           this.deviceForm.reset();
           bulmaToast.toast({
-            message: "Edit successful!",
+            message: "New device added successfully!",
             type: "is-success",
             dismissible: true,
             closeOnClick: true,
