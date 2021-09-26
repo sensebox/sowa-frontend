@@ -11,6 +11,7 @@ import * as bulmaToast from "bulma-toast";
 import { environment } from 'src/environments/environment';
 
 import { FileUploader } from 'ng2-file-upload';
+import { DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: "senph-device-new",
@@ -21,16 +22,16 @@ export class DeviceNewComponent implements OnInit {
 
   APIURL = environment.api_url;
 
+  previewPath: any;
+
   public uploader: FileUploader = new FileUploader({
-    url: 'http://localhost:3000/image/upload',
+    url: this.APIURL + "/image/upload",
     itemAlias: 'image',
     authToken : window.localStorage.getItem('sb_accesstoken'),
     additionalParameter: {
       uri: ""
     }
   })
-
-  currentFile = null;
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   deviceForm: FormGroup;
@@ -71,10 +72,13 @@ export class DeviceNewComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit() {
+    this.previewPath ='//:0';
+
     this.deviceForm = this.fb.group({
       uri: ["", [Validators.required, CustomValidators.uriSyntax]],
       label: this.fb.array([this.addLabelFormGroup()]),
@@ -99,7 +103,7 @@ export class DeviceNewComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => {
       console.log(file);
       file.withCredentials = false;
-      this.currentFile = file.file.name;
+      this.previewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log('Uploaded File Details:', item);

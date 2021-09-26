@@ -48,6 +48,25 @@
       <senph-label [parentForm]="sensorForm"></senph-label>
     </div>
 
+    <!-- Description with Markdown Editor -->
+    <div class="container well some-space">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Description:</label>
+        </div>
+        <div class="container well come-space">
+          <md-editor name="Content" [upload]="doUpload" [preRender]="preRenderFunc" [postRender]="postRenderFunc"
+            [height]="'400px'" [mode]="mode" [options]="options" required maxlength="500">
+          </md-editor>
+          <span class="help-block">Please enter a short description of the sensor and its capabilities using
+            markdown.</span>
+          <span class="help-block error-block" *ngIf="formErrors.description">
+            {{formErrors.description}}
+          </span>
+        </div>
+      </div>
+    </div>
+
 
     <!-- 1.2.3 DESCRIPTIONS -->
     <div class="container well some-space">
@@ -105,7 +124,7 @@
     <!-- 1.2.10 IMAGE -->
     <div class="container well some-space columns is-vcentered">
       <div class="column is-2"><b>Image: </b></div>
-      <div class="column file is-boxed has-name">
+      <div class="column file is-boxed">
         <label class="file-label">
           <input class="file-input" type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
             accept="image/x-png,image/gif,image/jpeg" />
@@ -117,10 +136,14 @@
               Upload image..
             </span>
           </span>
-          <span class="file-name" *ngIf="currentFile">
-            {{currentFile}}
-          </span>
         </label>
+      </div>
+      <div class="columns is-boxed is-centered">
+        <div class="column">
+          <figure class="image is-128x128">
+            <img class="is-rounded" [src]="previewPath">
+          </figure>
+        </div>
       </div>
     </div>
 

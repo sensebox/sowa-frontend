@@ -17,6 +17,7 @@ import * as bulmaToast from "bulma-toast";
 import { environment } from "src/environments/environment";
 
 import { FileUploader } from "ng2-file-upload";
+import { DomSanitizer} from '@angular/platform-browser';
 import { isQuote } from "@angular/compiler";
 import { ValidatorFn } from "@angular/forms";
 import { ValidationServiceService } from "src/app/services/validation-service.service";
@@ -35,7 +36,7 @@ export class SensorNewComponent implements OnInit {
 
   APIURL = environment.api_url;
 
-  currentFile = null;
+  previewPath: any;
 
   public uploader: FileUploader = new FileUploader({
     url: this.APIURL + "/image/upload",
@@ -93,9 +94,12 @@ export class SensorNewComponent implements OnInit {
     private errorService: ErrorModalService,
     private validationService : ValidationServiceService,
     private httpClient: HttpClient,
+    private sanitizer: DomSanitizer,
   ) {}
 
   ngOnInit() {
+    this.previewPath ='//:0';
+
     this.sensorForm = this.fb.group({
       uri: ["", [Validators.required, CustomValidators.uriSyntax], this.validationService.urlValidator(this.httpClient)],
       label: this.fb.array([this.addLabelFormGroup()]),
@@ -120,8 +124,9 @@ export class SensorNewComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => {
       console.log(file);
       file.withCredentials = false;
-      this.currentFile = file.file.name;
+      this.previewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
     };
+
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log("Uploaded File Details:", item);
       bulmaToast.toast({
