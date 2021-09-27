@@ -174,9 +174,9 @@ export class DeviceNewComponent implements OnInit {
     })
 
     var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
-    var extension = inputValue.split('.')[1];
+    var extension = inputValue.slice(inputValue.lastIndexOf('.'));
     this.deviceForm.value.image = extension;
-    var imageFileName = this.deviceForm.get('uri').value + "." + extension;
+    var imageFileName = this.deviceForm.get('uri').value + extension;
     this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     console.log(this.deviceForm.getRawValue());

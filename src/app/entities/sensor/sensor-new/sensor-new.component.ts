@@ -237,9 +237,9 @@ export class SensorNewComponent implements OnInit {
     // });
     var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
       .value;
-    var extension = inputValue.split(".")[1];
+    var extension = inputValue.slice(inputValue.lastIndexOf('.'));
     this.sensorForm.value.image = extension;
-    var imageFileName = this.sensorForm.get("uri").value + "." + extension;
+    var imageFileName = this.sensorForm.get("uri").value + extension;
     this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
@@ -255,7 +255,6 @@ export class SensorNewComponent implements OnInit {
         pauseOnHover: true,
         duration: 5000,
       });
-      //this.uploader.uploadAll();
     } else {
       console.log("valid");
       this.api.createSensor(this.sensorForm.getRawValue()).subscribe(
