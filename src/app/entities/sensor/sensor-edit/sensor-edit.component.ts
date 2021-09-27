@@ -280,8 +280,9 @@ export class SensorEditComponent implements OnInit {
   }
 
   redirectDetails(uri) {
-    console.log("check");
-    this._routerService.navigate(["/sensor/detail", uri]);
+    this._routerService.navigate(["/sensor/detail", uri]).then(() => {
+      window.location.reload();
+    });
   }
 
   onLoadButtonClick() {
@@ -302,7 +303,7 @@ export class SensorEditComponent implements OnInit {
     // });
     var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
       .value;
-    var extension = inputValue.slice(inputValue.lastIndexOf('.'));
+    var extension = inputValue.slice(inputValue.lastIndexOf("."));
     this.sensorForm.value.image = extension;
     var imageFileName = this.sensorForm.get("uri").value + extension;
     this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });

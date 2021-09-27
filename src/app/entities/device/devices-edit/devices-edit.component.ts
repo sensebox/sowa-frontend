@@ -224,7 +224,9 @@ export class DevicesEditComponent implements OnInit {
   }
 
   redirectDetails(uri) {
-    this._routerService.navigate(["/device/detail", uri]);
+    this._routerService.navigate(["/device/detail", uri]).then(() => {
+      window.location.reload();
+    });
   }
 
   onLoadButtonClick() {
@@ -242,7 +244,7 @@ export class DevicesEditComponent implements OnInit {
 
     var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
       .value;
-    var extension = inputValue.slice(inputValue.lastIndexOf('.'));
+    var extension = inputValue.slice(inputValue.lastIndexOf("."));
     this.deviceForm.value.image = extension;
     var imageFileName = this.deviceForm.get("uri").value + extension;
     this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
