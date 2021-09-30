@@ -214,6 +214,7 @@ export class SensorEditComponent implements OnInit {
       "device",
       this.setExistingDevices(sensor.devices)
     );
+    this.previewPath = this.APIURL + '/image/' + sensor.image.value;
   }
 
   setExistingSensorElements(sensorElementSet): FormArray {
