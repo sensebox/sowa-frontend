@@ -13,6 +13,8 @@ import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
 
+import $ from "jquery";
+
 @Component({
   selector: "senph-devices-edit",
   templateUrl: "./devices-edit.component.html",
@@ -86,10 +88,7 @@ export class DevicesEditComponent implements OnInit {
         { value: "", disabled: false },
         [Validators.required, CustomValidators.uriSyntax],
       ],
-      image: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
+      image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
       contact: [{ value: "", disabled: false }, [Validators.required]],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
@@ -106,6 +105,15 @@ export class DevicesEditComponent implements OnInit {
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.slice(inputValue.lastIndexOf("."));
+      this.deviceForm.value.image = extension;
+      var imageFileName = this.deviceForm.get("uri").value + extension;
+      this.deviceForm
+        .get("image")
+        .setValue(imageFileName, { emitEvent: false });
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log("Uploaded File Details:", item);
@@ -191,7 +199,7 @@ export class DevicesEditComponent implements OnInit {
       "sensor",
       this.setExistingSensors(device.sensors)
     );
-    this.previewPath = this.APIURL + '/image/' + device.image.value;
+    this.previewPath = this.APIURL + "/image/" + device.image.value;
   }
 
   setExistingSensors(sensorSet: ISensors[]): FormArray {
@@ -234,6 +242,32 @@ export class DevicesEditComponent implements OnInit {
     console.log(this.deviceForm.getRawValue());
   }
 
+  deleteImage() {
+    $.ajax({
+      url: this.APIURL + "/image/delete/" + this.deviceForm.value.image,
+      type: "DELETE",
+      success: function (result) {
+        console.log(result);
+        bulmaToast.toast({
+          message: "Delete successful!",
+          type: "is-success",
+          dismissible: true,
+          closeOnClick: true,
+          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+          position: "top-center",
+          duration: 5000,
+        });
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+    this.deviceForm.patchValue({ 'image': 'null' });
+    console.log(this.deviceForm.getRawValue());
+
+    document.getElementById("image").style.visibility = "hidden";
+  }
+
   onSubmit() {
     this.submitted = true;
 
@@ -242,13 +276,6 @@ export class DevicesEditComponent implements OnInit {
         uri: this.deviceForm.get("uri").value,
       },
     });
-
-    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
-      .value;
-    var extension = inputValue.slice(inputValue.lastIndexOf("."));
-    this.deviceForm.value.image = extension;
-    var imageFileName = this.deviceForm.get("uri").value + extension;
-    this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.deviceForm.invalid) {
       console.log("invalid");

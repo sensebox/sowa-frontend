@@ -12,6 +12,8 @@ import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
 
+import $ from "jquery";
+
 @Component({
   selector: "senph-sensor-edit",
   templateUrl: "./sensor-edit.component.html",
@@ -113,18 +115,18 @@ export class SensorEditComponent implements OnInit {
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.slice(inputValue.lastIndexOf("."));
+      this.sensorForm.value.image = extension;
+      var imageFileName = this.sensorForm.get("uri").value + extension;
+      this.sensorForm
+        .get("image")
+        .setValue(imageFileName, { emitEvent: false });
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log("Uploaded File Details:", item);
-      bulmaToast.toast({
-        message: "Image successfully uploaded!",
-        type: "is-success",
-        dismissible: true,
-        closeOnClick: true,
-        animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
-        position: "top-center",
-        duration: 5000,
-      });
     };
 
     this.route.paramMap.subscribe((params) => {
@@ -214,7 +216,7 @@ export class SensorEditComponent implements OnInit {
       "device",
       this.setExistingDevices(sensor.devices)
     );
-    this.previewPath = this.APIURL + '/image/' + sensor.image.value;
+    this.previewPath = this.APIURL + "/image/" + sensor.image.value;
   }
 
   setExistingSensorElements(sensorElementSet): FormArray {
@@ -291,6 +293,37 @@ export class SensorEditComponent implements OnInit {
     console.log(this.sensorForm.getRawValue());
   }
 
+  // onImgError(err) {
+  //   document.getElementById('image').style.visibility = "hidden";
+  // }
+
+  deleteImage() {
+    $.ajax({
+      url: this.APIURL + "/image/delete/" + this.sensorForm.value.image,
+      type: "DELETE",
+      success: function (result) {
+        console.log(result);
+        bulmaToast.toast({
+          message: "Delete successful!",
+          type: "is-success",
+          dismissible: true,
+          closeOnClick: true,
+          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+          position: "top-center",
+          duration: 5000,
+        });
+      },
+      error: function (error) {
+        console.log(error);
+      },
+    });
+    this.sensorForm.get('image').patchValue(null);
+    //this.sensorForm.patchValue({ 'image': null });
+    console.log(this.sensorForm.getRawValue());
+    
+    document.getElementById("image").style.visibility = "hidden";
+  }
+
   onSubmit() {
     this.submitted = true;
     this.uploader.setOptions({
@@ -298,16 +331,6 @@ export class SensorEditComponent implements OnInit {
         uri: this.sensorForm.get("uri").value,
       },
     });
-    // console.log(this.devicesArray);
-    // this.sensorForm.controls.sensorElement.forEach(element => {
-    //   element.accuracyValue.toFixed(10);
-    // });
-    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
-      .value;
-    var extension = inputValue.slice(inputValue.lastIndexOf("."));
-    this.sensorForm.value.image = extension;
-    var imageFileName = this.sensorForm.get("uri").value + extension;
-    this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
@@ -324,6 +347,7 @@ export class SensorEditComponent implements OnInit {
       });
     } else {
       console.log("valid");
+      console.log(this.sensorForm.getRawValue());
       this.api.editSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
           console.log(data);
