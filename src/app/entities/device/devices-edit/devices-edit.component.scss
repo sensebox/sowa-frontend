@@ -1,65 +1,73 @@
 .panel > .panel-heading {
-    background-image: none;
-    background-color: #ffd63e;;
-    color: rgb(68, 68, 68);
-    font-weight: bold;
+  background-image: none;
+  background-color: #ffd63e;
+  color: rgb(68, 68, 68);
+  font-weight: bold;
 }
 
 .well2 {
-        background: rgb(255, 255, 255)!important;
+  background: rgb(255, 255, 255) !important;
 }
 
 .btn-senph {
-    background-image: none;
-    background-color: #ffd63e!important;
-    color: rgb(68, 68, 68);
-    border-color: rgb(68, 68, 68);
+  background-image: none;
+  background-color: #ffd63e !important;
+  color: rgb(68, 68, 68);
+  border-color: rgb(68, 68, 68);
 }
 
-.btn-senph:disabled{
-    background-color: #ffd53e77!important;
-    color: rgb(122, 122, 122);
-
+.btn-senph:disabled {
+  background-color: #ffd53e77 !important;
+  color: rgb(122, 122, 122);
 }
 
-.panel{
-    color: rgb(68, 68, 68);
+.panel {
+  color: rgb(68, 68, 68);
 }
 .some-space {
-    margin: 1em auto;
+  margin: 1em auto;
 }
 
 .error-block {
-    color: hsl(348, 86%, 61%);
-  }
-  
-  select.ng-invalid.ng-dirty {
-    border-color: hsl(348, 86%, 61%);
-    background-color: hsla(348, 86%, 61%, 0.103);
-  }
-  
-  input.ng-invalid.ng-dirty {
-    border-color: hsl(348, 86%, 61%);
-    background-color: hsla(348, 86%, 61%, 0.103);
-  }
-  
-  select.ng-invalid.ng-touched {
-    border-color: hsl(348, 86%, 61%);
-    background-color: hsla(348, 86%, 61%, 0.103);
-  }
-  
-  input.ng-invalid.ng-touched {
-    border-color: hsl(348, 86%, 61%);
-    background-color: hsla(348, 86%, 61%, 0.103);
-  }
+  color: hsl(348, 86%, 61%);
+}
 
-  textarea.ng-invalid.ng-touched{
-    border-color: hsl(348, 86%, 61%);
-    background-color: hsla(348, 86%, 61%, 0.103);
-  }
+select.ng-invalid.ng-dirty {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
 
-  textarea.ng-invalid.ng-dirty{
-    border-color: hsl(348, 86%, 61%);
-    background-color: hsla(348, 86%, 61%, 0.103);
-  }
-  
+input.ng-invalid.ng-dirty {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+select.ng-invalid.ng-touched {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+input.ng-invalid.ng-touched {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+textarea.ng-invalid.ng-touched {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+textarea.ng-invalid.ng-dirty {
+  border-color: hsl(348, 86%, 61%);
+  background-color: hsla(348, 86%, 61%, 0.103);
+}
+
+.no-image {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 70px;
+  justify-content: center;
+  border-radius: 50%;
+  border: 5px solid #363636;
+}

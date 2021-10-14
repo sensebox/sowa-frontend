@@ -24,7 +24,6 @@ export class IDomain {
         this.phenomenon = [];
 
         res.forEach((element: any) => {
-            console.log(element);
             switch (Object.getOwnPropertyNames(element)[0]) {
 
                 case "description": {
@@ -54,7 +53,6 @@ export class IDomain {
 
 
                 default: {
-                    console.log("Invalid attribute");
                     break;
                 }
             }

@@ -127,9 +127,8 @@
                 </div>
               </article>
             </div>
-            <div class="tile is-parent"
-              *ngIf="device.image && device.image.value != 'undefined' && device.image.value != 'http://server/unset-base/undefined'">
-              <article class=" tile is-child notification is-dark">
+            <div class="tile is-parent">
+              <article *ngIf="device.image.value != 'null' else noImage" class=" tile is-child notification is-dark">
                 <figure class="image is-256x256">
                   <img class="is-rounded" src="{{APIURL}}/image/{{device.image.value}}">
                 </figure>
@@ -138,6 +137,13 @@
                 </p>
               </article>
             </div>
+            <ng-template #noImage>
+              <div class="no-image">
+                <span>
+                  ?
+                </span>
+              </div>
+            </ng-template>
           </div>
           <div class="tile is-parent">
 

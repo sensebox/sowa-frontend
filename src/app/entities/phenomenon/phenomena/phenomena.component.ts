@@ -21,13 +21,11 @@ export class PhenomenaComponent implements OnInit {
 
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
-        console.log(res);
       var tempArray: any = res;
     
       tempArray =  tempArray.filter(function (el){
         return el.phenomenon.type != 'bnode'
       })
-      // console.log(tempArray);
       tempArray.sort((a,b) => a.phenomenonLabel[0].value.localeCompare(b.phenomenonLabel[0].value));
       this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
       console.log(this.phenomenaArray);

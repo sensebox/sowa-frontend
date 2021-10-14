@@ -30,7 +30,6 @@ export class DomainsComponent implements OnInit {
       })
       // console.log(tempArray);
       tempArray.sort((a,b) => a.label[0].value.localeCompare(b.label[0].value));
-      console.log(tempArray)
       this.domainsArray = Array.from(tempArray, x => new IDomains(x));
     });
   }

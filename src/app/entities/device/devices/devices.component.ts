@@ -23,7 +23,6 @@ export class DevicesComponent implements OnInit {
   ngOnInit() {
     this.api.getDevices().subscribe(res => {
       // this.devicesArray = res;
-      (err) => console.log(err);
       var tempArray: any = res;
 
       tempArray = tempArray.filter(function (el) {
@@ -33,11 +32,9 @@ export class DevicesComponent implements OnInit {
         // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
       })
 
-      // console.log(this.devicessArray); 
-      console.log(tempArray)
+      // console.log(this.devicessArray);
       tempArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
 
-      console.log(tempArray)
       this.devicesArray = Array.from(tempArray, x => new IDevices(x));
       console.dir(this.devicesArray);
       // this.assignCopy();

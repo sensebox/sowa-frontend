@@ -49,21 +49,17 @@ export class PhenomenonComponent implements OnInit {
   }
 
   getValueFor(value) {
-    console.log(value);
   }
 
   retrievePhenomena() {
     this.api.getPhenomenaAllLabels().subscribe(res => {
-      console.log(res);
       var tempArray: any = res;
 
       tempArray = tempArray.filter(function (el) {
         return el.phenomenon.type != 'bnode'
       })
-      console.log(tempArray);
       tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
       this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
-      console.log(this.phenomenaArray);
     });
   }
 

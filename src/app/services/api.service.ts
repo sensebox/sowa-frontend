@@ -50,14 +50,12 @@ export class ApiService {
   }
 
   getPhenomenonHistory(iri) {
-    console.log(iri);
     return this.http.get(this.APIURL + "/phenomena/phenomenon-history/" + iri);
   }
 
   getPhenomenon(iri): Observable<any> {
     return this.http.get(this.APIURL + "/phenomena/phenomenon/" + iri).pipe(
       map((res: Array<any>) => {
-        console.log(res);
         let phenomenon = new IPhenomenon(res);
         // console.log(phenomenon);
         return phenomenon;
@@ -112,7 +110,6 @@ export class ApiService {
   }
 
   getSensorHistory(iri) {
-    console.log(iri);
     return this.http.get(this.APIURL + "/sensors/sensor-history/" + iri);
   }
 
@@ -128,9 +125,7 @@ export class ApiService {
   getHistoricSensor(iri): Observable<any> {
     return this.http.get(this.APIURL + "/sensors/historic-sensor/" + iri).pipe(
       map((res: Array<any>) => {
-        console.log(res);
         var I2Sensor = new ISensor(res);
-        console.log(I2Sensor);
         return I2Sensor;
       })
     );
@@ -166,16 +161,13 @@ export class ApiService {
   }
 
   getDeviceHistory(iri) {
-    console.log(iri);
     return this.http.get(this.APIURL + "/devices/device-history/" + iri);
   }
 
   getDevice(iri): Observable<any> {
     return this.http.get(this.APIURL + "/devices/device/" + iri).pipe(
       map((res: Array<any>) => {
-        console.log(res);
         let I2Device = new IDevice(res);
-        console.log(I2Device);
         return I2Device;
       })
     );
@@ -184,9 +176,7 @@ export class ApiService {
   getHistoricDevice(iri): Observable<any> {
     return this.http.get(this.APIURL + "/devices/historic-device/" + iri).pipe(
       map((res: Array<any>) => {
-        console.log(res);
         var I2Device = new IDevice(res);
-        console.log(I2Device);
         return I2Device;
       })
     );
@@ -224,16 +214,13 @@ export class ApiService {
   }
 
   getDomainHistory(iri) {
-    console.log(iri);
     return this.http.get(this.APIURL + "/domains/domain-history/" + iri);
   }
 
   getDomain(iri): Observable<any> {
     return this.http.get(this.APIURL + "/domains/domain/" + iri).pipe(
       map((res: Array<any>) => {
-        console.log(res);
         let I2Domain = new IDomain(res);
-        console.log(I2Domain);
         return I2Domain;
       })
     );
@@ -242,9 +229,7 @@ export class ApiService {
   getHistoricDomain(iri): Observable<any> {
     return this.http.get(this.APIURL + "/domains/historic-domain/" + iri).pipe(
       map((res: Array<any>) => {
-        console.log(res);
         let domain = new IDomain(res);
-        console.log(domain);
         return domain;
       })
     );
@@ -281,7 +266,6 @@ export class ApiService {
   }
 
   getUnitLabel(iri) {
-    console.log(iri);
     return this.http.get(
       this.APIURL + "/unit/http://purl.obolibrary.org/obo/" + iri.uri.slice(31)
     );

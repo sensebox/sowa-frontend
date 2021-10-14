@@ -124,7 +124,6 @@ export class SensorsDetailComponent implements OnInit {
   }
 
   button1(uri) {
-    console.log(this.historic)
     if (this.historic.button2) {
       this.editButtonClick(uri)
     }
@@ -144,13 +143,11 @@ export class SensorsDetailComponent implements OnInit {
 
   getHistory(shortUri) {
     this.api.getSensorHistory(shortUri).subscribe(res => {
-      console.log(res);
       this.sensorHistory = res;
     });
   }
 
   searchUnit(nameKey, myArray) {
-    console.log(nameKey)
     for (var i = 0; i < myArray.length; i++) {
       // console.log(myArray[i].y.value)
       if (myArray[i].y.value === nameKey) {

@@ -70,7 +70,6 @@ export class DomainsDetailComponent implements OnInit {
         this.api.getHistoricDomain(res.iri).subscribe((response: IDomain) => {
           this.domain = response;
           this.domain.labels.forEach(element => {
-            console.log(element["xml:lang"])
             if (element["xml:lang"] == "en") {
               this.prefLabel = element
               return
@@ -106,7 +105,6 @@ export class DomainsDetailComponent implements OnInit {
 
   getHistory(shortUri) {
     this.api.getDomainHistory(shortUri).subscribe(res => {
-      console.log(res);
       this.domainHistory = res;
     });
   }
@@ -116,7 +114,6 @@ export class DomainsDetailComponent implements OnInit {
     for (var i = 0; i < myArray.length; i++) {
       // console.log(myArray[i][val1])
       if (myArray[i][val1] === nameKey) {
-        console.log(myArray[i][val2]);
         return myArray[i][val2];
       }
     }

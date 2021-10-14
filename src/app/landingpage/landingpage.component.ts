@@ -24,7 +24,6 @@ export class LandingpageComponent implements OnInit {
 
   ngOnInit() {
     this.api.getAllEntities().subscribe(res => {
-      console.log(res);
       var tempArray: any = res;
 
       tempArray = tempArray.filter(function (el) {
@@ -33,13 +32,11 @@ export class LandingpageComponent implements OnInit {
       // console.log(tempArray);
       tempArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
       this.entityArray = tempArray;
-      console.log(this.entityArray);
     });
   }
 
   onSelect(entity) {
     this.selectedEntity = entity;
-    console.log(entity)
     this._routerService.navigate(['/' + entity.type.value.slice(34) + '/detail/', entity.entity.value.slice(34)]);
   }
 
