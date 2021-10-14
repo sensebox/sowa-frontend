@@ -50,7 +50,7 @@ export class SensorNewComponent implements OnInit {
     uri: {
       required: "URI is required.",
       uriSyntax: "No white spaces allowed in URI.",
-      urlValidator: "URI exists already."
+      urlValidator: "URI exists already.",
     },
     label: {
       required: "Label is required.",
@@ -84,35 +84,41 @@ export class SensorNewComponent implements OnInit {
 
   formErrors: FormErrors = {};
 
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private validationService : ValidationServiceService,
-    private httpClient: HttpClient,
+    private validationService: ValidationServiceService,
+    private httpClient: HttpClient
   ) {}
 
   ngOnInit() {
-    this.sensorForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax], this.validationService.urlValidator(this.httpClient)],
-      label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      markdown:["", [Validators.required]],
-      sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
-      device: this.fb.array([this.addDeviceFormGroup()]),
-      manufacturer: [{ value: "", disabled: false }, [Validators.required]],
-      price: [{ value: "", disabled: false }, [Validators.required]],
-      datasheet: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
-      image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
-      validation: [false, [Validators.required]],
-    },{updateOn: 'blur'});
+    this.sensorForm = this.fb.group(
+      {
+        uri: [
+          "",
+          [Validators.required, CustomValidators.uriSyntax],
+          this.validationService.urlValidator(this.httpClient),
+        ],
+        label: this.fb.array([this.addLabelFormGroup()]),
+        description: ["", [Validators.required]],
+        markdown: ["", [Validators.required]],
+        sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
+        device: this.fb.array([this.addDeviceFormGroup()]),
+        manufacturer: [{ value: "", disabled: false }, [Validators.required]],
+        price: [{ value: "", disabled: false }, [Validators.required]],
+        datasheet: [
+          { value: "", disabled: false },
+          [Validators.required, CustomValidators.uriSyntax],
+        ],
+        lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
+        image: [{ value: "null", disabled: false }, [CustomValidators.uriSyntax]],
+        validation: [false, [Validators.required]],
+      },
+      { updateOn: "blur" }
+    );
 
     this.sensorForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.sensorForm);
@@ -122,6 +128,15 @@ export class SensorNewComponent implements OnInit {
       console.log(file);
       file.withCredentials = false;
       this.currentFile = file.file.name;
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.split(".")[1];
+      this.sensorForm.value.image = extension;
+      var imageFileName = this.sensorForm.get("uri").value + "." + extension;
+      this.sensorForm
+        .get("image")
+        .setValue(imageFileName, { emitEvent: false });
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log("Uploaded File Details:", item);
@@ -234,12 +249,6 @@ export class SensorNewComponent implements OnInit {
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
     // });
-    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
-      .value;
-    var extension = inputValue.split(".")[1];
-    this.sensorForm.value.image = extension;
-    var imageFileName = this.sensorForm.get("uri").value + "." + extension;
-    this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
       console.log("invalid");
