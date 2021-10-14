@@ -130,7 +130,7 @@
             <div class="tile is-parent">
               <article *ngIf="device.image.value != 'null' else noImage" class=" tile is-child notification is-dark">
                 <figure class="image is-256x256">
-                  <img class="is-rounded" src="{{APIURL}}/image/{{device.image.value}}">
+                  <img class="is-rounded" src="{{APIURL}}/images/upload/{{device.image.value}}">
                 </figure>
                 <p>
                   The {{prefLabel?.value}}. <a href="{{device.image.value}}">Source</a>
