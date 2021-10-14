@@ -48,6 +48,14 @@
       <senph-label [parentForm]="sensorForm"></senph-label>
     </div>
 
+    <!-- Markdown Editor -->
+    <div class="container well some-space">
+      <label class="label">Markdown:</label>
+      <md-editor [upload]="doUpload" [preRender]="preRenderFunc" [postRender]="postRenderFunc"
+        [height]="'400px'" [mode]="mode" [options]="options" required maxlength="500">
+      </md-editor>
+    </div>
+
 
     <!-- 1.2.3 DESCRIPTIONS -->
     <div class="container well some-space">

@@ -217,6 +217,14 @@ export class SensorNewComponent implements OnInit {
     console.log(this.sensorForm.getRawValue());
   }
 
+  testButton() {
+    console.log(document.getElementById("markdownEditor").innerText);
+  }
+
+  postRenderFunc(content: string) {
+    console.log(content);
+  }
+
   onSubmit() {
     this.submitted = true;
 

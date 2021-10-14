@@ -59,6 +59,8 @@ import { ErrorLogModalComponent } from './error-log/error-log-modal/error-log-mo
 import { ToastrModule } from 'ngx-toastr';
 import { FileUploadModule } from 'ng2-file-upload';
 
+import { LMarkdownEditorModule } from 'ngx-markdown-editor';
+
 
 
 @NgModule({
@@ -117,7 +119,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     MaterialModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    LMarkdownEditorModule
   ],
   providers: [{
       provide: HTTP_INTERCEPTORS,
