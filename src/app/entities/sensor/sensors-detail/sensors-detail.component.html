@@ -266,4 +266,10 @@
       </div>
     </div>
   </section>
+  <article class="tile is-child notification">
+    <md-editor ngModel="{{sensor.markdown.value}}" name="Content" [upload]="doUpload" [preRender]="preRenderFunc"
+      [postRender]="postRenderFunc" [height]="'400px'" mode="preview" [options]="markddownOptions" required
+      maxlength="500">
+    </md-editor>
+  </article>
 </div>

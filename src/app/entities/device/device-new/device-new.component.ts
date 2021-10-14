@@ -8,9 +8,9 @@ import { ISensors } from "src/app/interfaces/ISensors";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
-import { environment } from 'src/environments/environment';
+import { environment } from "src/environments/environment";
 
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader } from "ng2-file-upload";
 
 @Component({
   selector: "senph-device-new",
@@ -18,17 +18,16 @@ import { FileUploader } from 'ng2-file-upload';
   styleUrls: ["./device-new.component.scss"],
 })
 export class DeviceNewComponent implements OnInit {
-
   APIURL = environment.api_url;
 
   public uploader: FileUploader = new FileUploader({
-    url: 'http://localhost:3000/image/upload',
-    itemAlias: 'image',
-    authToken : window.localStorage.getItem('sb_accesstoken'),
+    url: "http://localhost:3000/image/upload",
+    itemAlias: "image",
+    authToken: window.localStorage.getItem("sb_accesstoken"),
     additionalParameter: {
-      uri: ""
-    }
-  })
+      uri: "",
+    },
+  });
 
   currentFile = null;
 
@@ -84,7 +83,7 @@ export class DeviceNewComponent implements OnInit {
         [Validators.required, CustomValidators.uriSyntax],
       ],
       image: [
-        { value: "", disabled: false },
+        { value: "null", disabled: false },
         [Validators.required, CustomValidators.uriSyntax],
       ],
       contact: [{ value: "", disabled: false }, [Validators.required]],
@@ -100,9 +99,18 @@ export class DeviceNewComponent implements OnInit {
       console.log(file);
       file.withCredentials = false;
       this.currentFile = file.file.name;
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.split(".")[1];
+      this.deviceForm.value.image = extension;
+      var imageFileName = this.deviceForm.get("uri").value + "." + extension;
+      this.deviceForm
+        .get("image")
+        .setValue(imageFileName, { emitEvent: false });
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log('Uploaded File Details:', item);
+      console.log("Uploaded File Details:", item);
       bulmaToast.toast({
         message: "Image successfully uploaded!",
         type: "is-success",
@@ -164,15 +172,9 @@ export class DeviceNewComponent implements OnInit {
 
     this.uploader.setOptions({
       additionalParameter: {
-        uri: this.deviceForm.get('uri').value
-      }
-    })
-
-    var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
-    var extension = inputValue.split('.')[1];
-    this.deviceForm.value.image = extension;
-    var imageFileName = this.deviceForm.get('uri').value + "." + extension;
-    this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
+        uri: this.deviceForm.get("uri").value,
+      },
+    });
 
     console.log(this.deviceForm.getRawValue());
 
