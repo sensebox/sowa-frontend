@@ -100,6 +100,7 @@ export class SensorNewComponent implements OnInit {
       uri: ["", [Validators.required, CustomValidators.uriSyntax], this.validationService.urlValidator(this.httpClient)],
       label: this.fb.array([this.addLabelFormGroup()]),
       description: ["", [Validators.required]],
+      markdown:["", [Validators.required]],
       sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
       device: this.fb.array([this.addDeviceFormGroup()]),
       manufacturer: [{ value: "", disabled: false }, [Validators.required]],
@@ -217,12 +218,8 @@ export class SensorNewComponent implements OnInit {
     console.log(this.sensorForm.getRawValue());
   }
 
-  testButton() {
-    console.log(document.getElementById("markdownEditor").innerText);
-  }
-
-  postRenderFunc(content: string) {
-    console.log(content);
+  clickButton() {
+    console.log(this.sensorForm.getRawValue());
   }
 
   onSubmit() {
