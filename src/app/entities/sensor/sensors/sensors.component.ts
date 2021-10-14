@@ -21,8 +21,6 @@ export class SensorsComponent implements OnInit {
 
   ngOnInit() {
     this.api.getSensors().subscribe(res => {
-
-      console.log(res);
       var tempArray: any = res;
 
       tempArray = tempArray.filter(function (el) {
@@ -32,7 +30,6 @@ export class SensorsComponent implements OnInit {
       })
       // console.log(this.sensorssArray);
       tempArray.sort((a, b) => a.sensorLabel[0].value.localeCompare(b.sensorLabel[0].value));
-      console.log(tempArray)
       this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
       console.dir(this.sensorsArray);
     });

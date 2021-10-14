@@ -101,14 +101,11 @@ export class DomainNewComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.domainForm.getRawValue());
   }
 
   onSubmit() {
-    console.log(this.domainForm.value);
     this.submitted = true;
     if (this.domainForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -121,10 +118,8 @@ export class DomainNewComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.log("valid");
       this.api.createDomain(this.domainForm.value).subscribe(
         (res) => {
-          console.log(res);
           this.domainForm.reset();
           bulmaToast.toast({
             message: "New domain added successfully!",
@@ -140,7 +135,6 @@ export class DomainNewComponent implements OnInit {
           });
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }

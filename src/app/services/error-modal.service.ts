@@ -42,7 +42,6 @@ export class ErrorModalService {
     return this.errorModalOpen$.getValue();
   }
   setErrorModalOpen(open: boolean){
-    console.log()
     this.setErrorMessage(null);
     return this.errorModalOpen$.next(open);
   }

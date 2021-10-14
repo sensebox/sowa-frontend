@@ -129,7 +129,6 @@ export class SensorNewComponent implements OnInit {
     };
 
     this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log("Uploaded File Details:", item);
       bulmaToast.toast({
         message: "Image successfully uploaded!",
         type: "is-success",
@@ -219,8 +218,6 @@ export class SensorNewComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.sensorForm.value);
-    console.log(this.sensorForm.getRawValue());
   }
 
   onSubmit() {
@@ -243,7 +240,6 @@ export class SensorNewComponent implements OnInit {
     this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -256,10 +252,8 @@ export class SensorNewComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.log("valid");
       this.api.createSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
-          console.log(data);
           this.sensorForm.reset();
           bulmaToast.toast({
             message: "New sensor added successfully!",
@@ -276,7 +270,6 @@ export class SensorNewComponent implements OnInit {
           });
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }

@@ -12,7 +12,7 @@ import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
 
-import $ from "jquery";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "senph-sensor-edit",
@@ -81,7 +81,8 @@ export class SensorEditComponent implements OnInit {
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -126,7 +127,6 @@ export class SensorEditComponent implements OnInit {
         .setValue(imageFileName, { emitEvent: false });
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log("Uploaded File Details:", item);
     };
 
     this.route.paramMap.subscribe((params) => {
@@ -189,13 +189,11 @@ export class SensorEditComponent implements OnInit {
 
   getSensor(shortUri) {
     this.api.getSensor(shortUri).subscribe(
-      (sensor) => this.editSensor(sensor),
-      (err: any) => console.log(err)
+      (sensor) => this.editSensor(sensor)
     );
   }
 
   editSensor(sensor) {
-    console.log(sensor);
     this.sensorForm.patchValue({
       uri: sensor.iri.value.slice(34),
       description: sensor.description.value,
@@ -264,7 +262,6 @@ export class SensorEditComponent implements OnInit {
 
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    console.log(labelSet);
     labelSet.forEach((s) => {
       formArray.push(
         this.fb.group({
@@ -289,8 +286,6 @@ export class SensorEditComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.sensorForm.value);
-    console.log(this.sensorForm.getRawValue());
   }
 
   // onImgError(err) {
@@ -298,29 +293,25 @@ export class SensorEditComponent implements OnInit {
   // }
 
   deleteImage() {
-    $.ajax({
-      url: this.APIURL + "/image/delete/" + this.sensorForm.value.image,
-      type: "DELETE",
-      success: function (result) {
-        console.log(result);
-        bulmaToast.toast({
-          message: "Delete successful!",
-          type: "is-success",
-          dismissible: true,
-          closeOnClick: true,
-          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
-          position: "top-center",
-          duration: 5000,
-        });
-      },
-      error: function (error) {
-        console.log(error);
-      },
-    });
-    this.sensorForm.get('image').patchValue(null);
-    //this.sensorForm.patchValue({ 'image': null });
-    console.log(this.sensorForm.getRawValue());
-    
+    this.http
+      .delete(this.APIURL + "/image/delete/" + this.sensorForm.value.image)
+      .subscribe(
+        (response) => {
+          this.sensorForm.get("image").patchValue(null);
+          bulmaToast.toast({
+            message: "Delete successful!",
+            type: "is-success",
+            dismissible: true,
+            closeOnClick: true,
+            animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+            position: "top-center",
+            duration: 5000,
+          });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     document.getElementById("image").style.visibility = "hidden";
   }
 
@@ -333,7 +324,6 @@ export class SensorEditComponent implements OnInit {
     });
 
     if (this.sensorForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -346,11 +336,8 @@ export class SensorEditComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.log("valid");
-      console.log(this.sensorForm.getRawValue());
       this.api.editSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
-          console.log(data);
           bulmaToast.toast({
             message: "Edit successful!",
             type: "is-success",
@@ -364,7 +351,6 @@ export class SensorEditComponent implements OnInit {
           this.redirectDetails(this.shortUri);
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }
@@ -376,7 +362,6 @@ export class SensorEditComponent implements OnInit {
   onDelete() {
     this.api.deleteSensor(this.sensorForm.getRawValue()).subscribe(
       (data) => {
-        console.log(data);
         bulmaToast.toast({
           message: "Delete successful!",
           type: "is-success",
@@ -389,7 +374,6 @@ export class SensorEditComponent implements OnInit {
         this._routerService.navigate(["/sensors"]);
       },
       (error: any) => {
-        console.log(error);
         this.errorService.setErrorModalOpen(true);
         this.errorService.setErrorMessage(error);
       }

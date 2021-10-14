@@ -107,7 +107,6 @@ export class DeviceNewComponent implements OnInit {
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log('Uploaded File Details:', item);
       bulmaToast.toast({
         message: "Image successfully uploaded!",
         type: "is-success",
@@ -161,7 +160,6 @@ export class DeviceNewComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.deviceForm.getRawValue());
   }
 
   onSubmit() {
@@ -179,10 +177,7 @@ export class DeviceNewComponent implements OnInit {
     var imageFileName = this.deviceForm.get('uri').value + extension;
     this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
 
-    console.log(this.deviceForm.getRawValue());
-
     if (this.deviceForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -195,10 +190,8 @@ export class DeviceNewComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.log("valid");
       this.api.createDevice(this.deviceForm.getRawValue()).subscribe(
         (res) => {
-          console.log(res);
           this.deviceForm.reset();
           bulmaToast.toast({
             message: "New device added successfully!",
@@ -215,7 +208,6 @@ export class DeviceNewComponent implements OnInit {
           });
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }

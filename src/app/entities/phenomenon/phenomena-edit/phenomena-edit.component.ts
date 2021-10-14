@@ -184,16 +184,13 @@ export class PhenomenaEditComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.phenomenonForm.value);
   }
 
   onSubmit() {
-    console.log(this.phenomenonForm.value);
     this.submitted = true;
 
 
     if (this.phenomenonForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message: "Some necessary information is missing! Please check your form.",
         type: "is-danger",
@@ -206,10 +203,8 @@ export class PhenomenaEditComponent implements OnInit {
       });
     }
     else {
-      console.log("valid");
       this.api.editPhenomenon(this.phenomenonForm.value).subscribe(
         (res) => {
-          console.log(res);
           bulmaToast.toast({
             message: "Edit successful!",
             type: "is-success",
@@ -222,7 +217,6 @@ export class PhenomenaEditComponent implements OnInit {
           this.redirectDetails(this.shortUri);
         },
         (error: any) => {
-          console.log(error)
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }
@@ -235,7 +229,6 @@ export class PhenomenaEditComponent implements OnInit {
   onDelete() {
     this.api.deletePhenomenon(this.phenomenonForm.getRawValue()).subscribe(
       (data) => {
-        console.log(data);
         bulmaToast.toast({
           message: "Delete successful!",
           type: "is-success",
@@ -248,7 +241,6 @@ export class PhenomenaEditComponent implements OnInit {
         this._routerService.navigate(['/phenomena']);
       },
       (error: any) => {
-        console.log(error)
         this.errorService.setErrorModalOpen(true);
         this.errorService.setErrorMessage(error);
       }

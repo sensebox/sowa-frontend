@@ -12,7 +12,6 @@ export class FilterOptionsPipePipe implements PipeTransform {
     }
 
     return filterArray.filter(element => {
-      console.log(filterOptions.indexOf(element.type.value.slice(34).toLowerCase()) > -1);
       return filterOptions.indexOf(element.type.value.slice(34).toLowerCase()) > -1;
     })
   }

@@ -13,7 +13,7 @@ import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
 
-import $ from "jquery";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "senph-devices-edit",
@@ -74,7 +74,8 @@ export class DevicesEditComponent implements OnInit {
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -116,7 +117,6 @@ export class DevicesEditComponent implements OnInit {
         .setValue(imageFileName, { emitEvent: false });
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log("Uploaded File Details:", item);
       bulmaToast.toast({
         message: "Image successfully uploaded!",
         type: "is-success",
@@ -184,7 +184,6 @@ export class DevicesEditComponent implements OnInit {
   }
 
   editDevice(device) {
-    console.log(device);
     this.deviceForm.patchValue({
       uri: device.iri.value.slice(34),
       description: device.description.value,
@@ -218,7 +217,6 @@ export class DevicesEditComponent implements OnInit {
 
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    console.log(labelSet);
     labelSet.forEach((s) => {
       formArray.push(
         this.fb.group({
@@ -239,32 +237,28 @@ export class DevicesEditComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.deviceForm.getRawValue());
   }
 
   deleteImage() {
-    $.ajax({
-      url: this.APIURL + "/image/delete/" + this.deviceForm.value.image,
-      type: "DELETE",
-      success: function (result) {
-        console.log(result);
-        bulmaToast.toast({
-          message: "Delete successful!",
-          type: "is-success",
-          dismissible: true,
-          closeOnClick: true,
-          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
-          position: "top-center",
-          duration: 5000,
-        });
-      },
-      error: function (error) {
-        console.log(error);
-      },
-    });
-    this.deviceForm.patchValue({ 'image': 'null' });
-    console.log(this.deviceForm.getRawValue());
-
+    this.http
+      .delete(this.APIURL + "/image/delete/" + this.deviceForm.value.image)
+      .subscribe(
+        (response) => {
+          this.deviceForm.get("image").patchValue('null');
+          bulmaToast.toast({
+            message: "Delete successful!",
+            type: "is-success",
+            dismissible: true,
+            closeOnClick: true,
+            animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+            position: "top-center",
+            duration: 5000,
+          });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
     document.getElementById("image").style.visibility = "hidden";
   }
 
@@ -278,7 +272,6 @@ export class DevicesEditComponent implements OnInit {
     });
 
     if (this.deviceForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -291,10 +284,8 @@ export class DevicesEditComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.log("valid");
       this.api.editDevice(this.deviceForm.getRawValue()).subscribe(
         (res) => {
-          console.log(res);
           bulmaToast.toast({
             message: "Edit successful!",
             type: "is-success",
@@ -308,7 +299,6 @@ export class DevicesEditComponent implements OnInit {
           this.redirectDetails(this.shortUri);
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }
@@ -319,7 +309,6 @@ export class DevicesEditComponent implements OnInit {
   onDelete() {
     this.api.deleteDevice(this.deviceForm.getRawValue()).subscribe(
       (data) => {
-        console.log(data);
         bulmaToast.toast({
           message: "Delete successful!",
           type: "is-success",
@@ -332,7 +321,6 @@ export class DevicesEditComponent implements OnInit {
         this._routerService.navigate(["/devices"]);
       },
       (error: any) => {
-        console.log(error);
         this.errorService.setErrorModalOpen(true);
         this.errorService.setErrorMessage(error);
       }

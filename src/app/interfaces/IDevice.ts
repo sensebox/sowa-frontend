@@ -38,7 +38,6 @@ export class IDevice {
         this.sensors = [];
 
         res.forEach((element: any) => {
-            console.log(element);
             switch (Object.getOwnPropertyNames(element)[0]) {
 
                 case "description": {
@@ -83,7 +82,6 @@ export class IDevice {
 
 
                 default: {
-                    console.log("Invalid attribute");
                     break;
                 }
             }

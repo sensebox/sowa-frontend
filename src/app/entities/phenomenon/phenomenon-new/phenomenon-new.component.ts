@@ -114,14 +114,12 @@ export class PhenomenonNewComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.phenomenonForm.value);
   }
 
   onSubmit() {
     this.submitted = true;
 
     if (this.phenomenonForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -134,10 +132,8 @@ export class PhenomenonNewComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.log("valid");
       this.api.createPhenomenon(this.phenomenonForm.getRawValue()).subscribe(
         (res) => {
-          console.log(res);
           this.phenomenonForm.reset();
           bulmaToast.toast({
             message: "Edit successful!",
@@ -153,7 +149,6 @@ export class PhenomenonNewComponent implements OnInit {
           });
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }
