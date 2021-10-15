@@ -8,10 +8,10 @@ import { ISensors } from "src/app/interfaces/ISensors";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
-import { environment } from 'src/environments/environment';
+import { environment } from "src/environments/environment";
 
-import { FileUploader } from 'ng2-file-upload';
-import { DomSanitizer} from '@angular/platform-browser';
+import { FileUploader } from "ng2-file-upload";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "senph-device-new",
@@ -19,19 +19,18 @@ import { DomSanitizer} from '@angular/platform-browser';
   styleUrls: ["./device-new.component.scss"],
 })
 export class DeviceNewComponent implements OnInit {
-
   APIURL = environment.api_url;
 
   previewPath: any;
 
   public uploader: FileUploader = new FileUploader({
     url: this.APIURL + "/image/upload",
-    itemAlias: 'image',
-    authToken : window.localStorage.getItem('sb_accesstoken'),
+    itemAlias: "image",
+    authToken: window.localStorage.getItem("sb_accesstoken"),
     additionalParameter: {
-      uri: ""
-    }
-  })
+      uri: "",
+    },
+  });
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   deviceForm: FormGroup;
@@ -73,11 +72,11 @@ export class DeviceNewComponent implements OnInit {
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
-    this.previewPath ='//:0';
+    this.previewPath = "//:0";
 
     this.deviceForm = this.fb.group({
       uri: ["", [Validators.required, CustomValidators.uriSyntax]],
@@ -104,7 +103,9 @@ export class DeviceNewComponent implements OnInit {
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
-      this.previewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
+      this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(file._file)
+      );
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       bulmaToast.toast({
@@ -115,6 +116,9 @@ export class DeviceNewComponent implements OnInit {
         animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
         position: "top-center",
         duration: 5000,
+      });
+      this._routerService.navigate(["/devices"]).then(() => {
+        window.location.reload();
       });
     };
   }
@@ -159,22 +163,22 @@ export class DeviceNewComponent implements OnInit {
     });
   }
 
-  onLoadButtonClick() {
-  }
+  onLoadButtonClick() {}
 
   onSubmit() {
     this.submitted = true;
 
     this.uploader.setOptions({
       additionalParameter: {
-        uri: this.deviceForm.get('uri').value
-      }
-    })
+        uri: this.deviceForm.get("uri").value,
+      },
+    });
 
-    var inputValue = (<HTMLInputElement>document.getElementById('imageUpload')).value;
-    var extension = inputValue.slice(inputValue.lastIndexOf('.'));
+    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
+      .value;
+    var extension = inputValue.slice(inputValue.lastIndexOf("."));
     this.deviceForm.value.image = extension;
-    var imageFileName = this.deviceForm.get('uri').value + extension;
+    var imageFileName = this.deviceForm.get("uri").value + extension;
     this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.deviceForm.invalid) {
@@ -202,10 +206,13 @@ export class DeviceNewComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
-          this.uploader.uploadAll();
-          this._routerService.navigate(["/devices"]).then(() => {
-            window.location.reload();
-          });
+          if (this.uploader.queue.length == 1) {
+            this.uploader.uploadAll();
+          } else {
+            this._routerService.navigate(["/devices"]).then(() => {
+              window.location.reload();
+            });
+          }
         },
         (error: any) => {
           this.errorService.setErrorModalOpen(true);

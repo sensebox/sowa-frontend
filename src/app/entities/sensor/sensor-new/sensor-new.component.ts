@@ -17,7 +17,7 @@ import * as bulmaToast from "bulma-toast";
 import { environment } from "src/environments/environment";
 
 import { FileUploader } from "ng2-file-upload";
-import { DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from "@angular/platform-browser";
 import { isQuote } from "@angular/compiler";
 import { ValidatorFn } from "@angular/forms";
 import { ValidationServiceService } from "src/app/services/validation-service.service";
@@ -51,7 +51,7 @@ export class SensorNewComponent implements OnInit {
     uri: {
       required: "URI is required.",
       uriSyntax: "No white spaces allowed in URI.",
-      urlValidator: "URI exists already."
+      urlValidator: "URI exists already.",
     },
     label: {
       required: "Label is required.",
@@ -85,37 +85,43 @@ export class SensorNewComponent implements OnInit {
 
   formErrors: FormErrors = {};
 
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private validationService : ValidationServiceService,
+    private validationService: ValidationServiceService,
     private httpClient: HttpClient,
-    private sanitizer: DomSanitizer,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
-    this.previewPath ='//:0';
+    this.previewPath = "//:0";
 
-    this.sensorForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax], this.validationService.urlValidator(this.httpClient)],
-      label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
-      device: this.fb.array([this.addDeviceFormGroup()]),
-      manufacturer: [{ value: "", disabled: false }, [Validators.required]],
-      price: [{ value: "", disabled: false }, [Validators.required]],
-      datasheet: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
-      image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
-      validation: [false, [Validators.required]],
-    },{updateOn: 'blur'});
+    this.sensorForm = this.fb.group(
+      {
+        uri: [
+          "",
+          [Validators.required, CustomValidators.uriSyntax],
+          this.validationService.urlValidator(this.httpClient),
+        ],
+        label: this.fb.array([this.addLabelFormGroup()]),
+        description: ["", [Validators.required]],
+        sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
+        device: this.fb.array([this.addDeviceFormGroup()]),
+        manufacturer: [{ value: "", disabled: false }, [Validators.required]],
+        price: [{ value: "", disabled: false }, [Validators.required]],
+        datasheet: [
+          { value: "", disabled: false },
+          [Validators.required, CustomValidators.uriSyntax],
+        ],
+        lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
+        image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
+        validation: [false, [Validators.required]],
+      },
+      { updateOn: "blur" }
+    );
 
     this.sensorForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.sensorForm);
@@ -125,7 +131,9 @@ export class SensorNewComponent implements OnInit {
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
-      this.previewPath = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(file._file)));
+      this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(file._file)
+      );
     };
 
     this.uploader.onCompleteItem = (item: any, status: any) => {
@@ -137,6 +145,9 @@ export class SensorNewComponent implements OnInit {
         animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
         position: "top-center",
         duration: 5000,
+      });
+      this._routerService.navigate(["/devices"]).then(() => {
+        window.location.reload();
       });
     };
   }
@@ -217,8 +228,7 @@ export class SensorNewComponent implements OnInit {
     this._routerService.navigate(["/sensor/detail", uri]);
   }
 
-  onLoadButtonClick() {
-  }
+  onLoadButtonClick() {}
 
   onSubmit() {
     this.submitted = true;
@@ -234,7 +244,7 @@ export class SensorNewComponent implements OnInit {
     // });
     var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
       .value;
-    var extension = inputValue.slice(inputValue.lastIndexOf('.'));
+    var extension = inputValue.slice(inputValue.lastIndexOf("."));
     this.sensorForm.value.image = extension;
     var imageFileName = this.sensorForm.get("uri").value + extension;
     this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
@@ -264,10 +274,13 @@ export class SensorNewComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
-          this.uploader.uploadAll();
-          this._routerService.navigate(["/sensors"]).then(() => {
-            window.location.reload();
-          });
+          if (this.uploader.queue.length == 1) {
+            this.uploader.uploadAll();
+          } else {
+            this._routerService.navigate(["/sensors"]).then(() => {
+              window.location.reload();
+            });
+          }
         },
         (error: any) => {
           this.errorService.setErrorModalOpen(true);

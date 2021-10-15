@@ -127,6 +127,16 @@ export class SensorEditComponent implements OnInit {
         .setValue(imageFileName, { emitEvent: false });
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
+      bulmaToast.toast({
+        message: "Image successfully uploaded!",
+        type: "is-success",
+        dismissible: true,
+        closeOnClick: true,
+        animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+        position: "top-center",
+        duration: 5000,
+      });
+      this.redirectDetails(this.shortUri);
     };
 
     this.route.paramMap.subscribe((params) => {
@@ -188,9 +198,7 @@ export class SensorEditComponent implements OnInit {
   }
 
   getSensor(shortUri) {
-    this.api.getSensor(shortUri).subscribe(
-      (sensor) => this.editSensor(sensor)
-    );
+    this.api.getSensor(shortUri).subscribe((sensor) => this.editSensor(sensor));
   }
 
   editSensor(sensor) {
@@ -285,8 +293,7 @@ export class SensorEditComponent implements OnInit {
     });
   }
 
-  onLoadButtonClick() {
-  }
+  onLoadButtonClick() {}
 
   // onImgError(err) {
   //   document.getElementById('image').style.visibility = "hidden";
@@ -347,8 +354,11 @@ export class SensorEditComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
-          this.uploader.uploadAll();
-          this.redirectDetails(this.shortUri);
+          if (this.uploader.queue.length == 1) {
+            this.uploader.uploadAll();
+          } else {
+            this.redirectDetails(this.shortUri);
+          }
         },
         (error: any) => {
           this.errorService.setErrorModalOpen(true);
