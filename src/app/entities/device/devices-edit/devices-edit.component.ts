@@ -126,6 +126,7 @@ export class DevicesEditComponent implements OnInit {
         position: "top-center",
         duration: 5000,
       });
+      this.redirectDetails(this.shortUri);
     };
 
     this.route.paramMap.subscribe((params) => {
@@ -295,8 +296,9 @@ export class DevicesEditComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
-          this.uploader.uploadAll();
-          this.redirectDetails(this.shortUri);
+          if(this.uploader.queue.length == 1) {
+            this.uploader.uploadAll()
+          } else {this.redirectDetails(this.shortUri);}
         },
         (error: any) => {
           this.errorService.setErrorModalOpen(true);
