@@ -82,6 +82,7 @@ export class SensorEditComponent implements OnInit {
         this.addLabelFormGroup()
       ]),
       description: ['', [Validators.required]],
+      markdown: ["", [Validators.required]],
       sensorElement: this.fb.array([
         this.addSensorElementFormGroup()
       ]),

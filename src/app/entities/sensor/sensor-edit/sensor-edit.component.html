@@ -71,6 +71,20 @@
       </div>
     </div>
 
+    <!-- Markdown Editor -->
+    <div class="container well some-space">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Explanation:</label>
+        </div>
+        <div class="container well come-space">
+          <md-editor formControlName="markdown" name="Content" [upload]="doUpload" [preRender]="preRenderFunc"
+            [postRender]="postRenderFunc" [height]="'400px'" [mode]="mode" [options]="options" required maxlength="500">
+          </md-editor>
+        </div>
+      </div>
+    </div>
+
 
     <!-- 1.2.4 PHENOMENA/SENSORELEMENTS -->
     <div class="container well some-space">

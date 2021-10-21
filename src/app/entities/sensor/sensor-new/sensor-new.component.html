@@ -48,22 +48,8 @@
       <senph-label [parentForm]="sensorForm"></senph-label>
     </div>
 
-    <!-- Markdown Editor -->
-    <div class="container well some-space">
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Description:</label>
-        </div>
-        <div class="container well come-space">
-          <md-editor formControlName="markdown" name="Content" [upload]="doUpload" [preRender]="preRenderFunc" [postRender]="postRenderFunc"
-            [height]="'400px'" [mode]="mode" [options]="options" required maxlength="500">
-          </md-editor>
-        </div>
-      </div>
-      <button (click)="clickButton()">Test</button>
-    </div>
-
-
+    
+    
     <!-- 1.2.3 DESCRIPTIONS -->
     <div class="container well some-space">
       <div class="field is-horizontal">
@@ -74,7 +60,7 @@
           <div class="field">
             <div class="control">
               <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
-                (blur)="logValidationErrors()"></textarea>
+              (blur)="logValidationErrors()"></textarea>
             </div>
             <span class="help-block">Please enter a short description of the sensor and its capabilities.</span>
             <span class="help-block error-block" *ngIf="formErrors.description">
@@ -84,8 +70,21 @@
         </div>
       </div>
     </div>
-
-
+    
+    <!-- Markdown Editor -->
+    <div class="container well some-space">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Explanation:</label>
+        </div>
+        <div class="container well come-space">
+          <md-editor formControlName="markdown" name="Content" [upload]="doUpload" [preRender]="preRenderFunc" [postRender]="postRenderFunc"
+            [height]="'400px'" [mode]="mode" [options]="options" required maxlength="500">
+          </md-editor>
+        </div>
+      </div>
+    </div>
+    
     <!-- 1.2.4 PHENOMENA/SENSORELEMENTS -->
     <div class="container well some-space">
       <label for="sensorElement">Phenomena</label>
