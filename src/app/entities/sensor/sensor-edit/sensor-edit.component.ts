@@ -196,6 +196,7 @@ export class SensorEditComponent implements OnInit {
       datasheet: sensor.datasheet.value,
       lifeperiod: sensor.lifeperiod ? sensor.lifeperiod.value : '',
       image: sensor.image ? sensor.image.value : '',
+      markdown: sensor.markdown ? sensor.markdown.value : '',
     });
     this.sensorForm.setControl('label', this.setExistingLabels(sensor.labels))
 

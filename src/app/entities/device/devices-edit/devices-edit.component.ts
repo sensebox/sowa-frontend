@@ -172,6 +172,7 @@ export class DevicesEditComponent implements OnInit {
       website: device.website ? device.website.value : '',
       image: device.image ? device.image.value : '',
       contact: device.contact ? device.contact.value : '',
+      markdown: device.markdown ? device.markdown.value : ''
     });
 
     this.deviceForm.setControl('label', this.setExistingLabels(device.labels))

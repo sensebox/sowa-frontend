@@ -262,10 +262,11 @@
         </div>
       </div>
       <div class="tile is-parent">
+        <p class="title">Explanation</p>
         <article *ngIf="phenomenon.markdown" class="tile is-child notification">
-          <md-editor ngModel="{{phenomenon.markdown.value}}" name="Content" [upload]="doUpload" [preRender]="preRenderFunc"
-            [postRender]="postRenderFunc" [height]="'400px'" mode="preview" [options]="markdownOptions" required
-            maxlength="500">
+          <md-editor ngModel="{{phenomenon.markdown.value}}" name="Content" [upload]="doUpload"
+            [preRender]="preRenderFunc" [postRender]="postRenderFunc" [height]="'400px'" mode="preview"
+            [options]="markdownOptions" required maxlength="500">
           </md-editor>
         </article>
       </div>
