@@ -78,6 +78,7 @@ export class DevicesEditComponent implements OnInit {
         this.addLabelFormGroup()
       ]),
       description: ['', [Validators.required]],
+      markdown: ["", [Validators.required]],
       website: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       contact: [{ value: '', disabled: false }, [Validators.required]],
