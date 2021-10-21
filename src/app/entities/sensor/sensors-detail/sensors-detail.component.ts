@@ -193,8 +193,4 @@ export class SensorsDetailComponent implements OnInit {
     });
   }
 
-  markdownOptions = {
-
-  }
-
 }
