@@ -5,107 +5,120 @@
   <!-- <div class="panel panel-primary"> -->
 
 
-    <!-- 1.1 BANNER -->
-    <senph-hero-banner title="Create a Phenomenon:" [subtitle]="heroBannerString + phenomenonForm.get('uri').value">
-    </senph-hero-banner>
+  <!-- 1.1 BANNER -->
+  <senph-hero-banner title="Create a Phenomenon:" [subtitle]="heroBannerString + phenomenonForm.get('uri').value">
+  </senph-hero-banner>
 
 
-    <!-- 1.2 FORM-FIELDS -->
-    <div class="panel-body">
+  <!-- 1.2 FORM-FIELDS -->
+  <div class="panel-body">
 
 
-      <!-- 1.2.1 URI -->
-      <div class="container well some-space">
-        <div class="field is-horizontal is-grouped">
-          <div class="field-label is-normal">
-            <label class="label">URI:</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <div class=" input-group">
-                  <span class="input-group-addon" id="heroaddon">{{heroBannerString}}</span>
-                  <input type="text" id="uri" formControlName="uri" class="input is-normal"
-                    (blur)="logValidationErrors()" aria-describedby="heroaddon">
-                </div>
+    <!-- 1.2.1 URI -->
+    <div class="container well some-space">
+      <div class="field is-horizontal is-grouped">
+        <div class="field-label is-normal">
+          <label class="label">URI:</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <div class=" input-group">
+                <span class="input-group-addon" id="heroaddon">{{heroBannerString}}</span>
+                <input type="text" id="uri" formControlName="uri" class="input is-normal" (blur)="logValidationErrors()"
+                  aria-describedby="heroaddon">
               </div>
-              <span class="help-block error-block" *ngIf="formErrors.uri">
-                {{formErrors.uri}}
-              </span>
-              <span class="help-block">The Uniform Resource Identifier (URI) of a phenomenon is meant to uniquely
-                identify
-                it among other phenomena. For all phenomena being entered in this Wiki, it starts with
-                'http://www.opensensemap.org/SENPH#' followed by an unique extension. Once the URI is set it should not
-                be changed.
-              </span>
             </div>
+            <span class="help-block error-block" *ngIf="formErrors.uri">
+              {{formErrors.uri}}
+            </span>
+            <span class="help-block">The Uniform Resource Identifier (URI) of a phenomenon is meant to uniquely
+              identify
+              it among other phenomena. For all phenomena being entered in this Wiki, it starts with
+              'http://www.opensensemap.org/SENPH#' followed by an unique extension. Once the URI is set it should not
+              be changed.
+            </span>
           </div>
         </div>
-      </div>
-
-
-      <!-- 1.2.2 LABELS -->
-      <div class="container well some-space">
-        <label for="label">Labels</label>
-        <senph-label [parentForm]="phenomenonForm"></senph-label>
-      </div>
-
-
-      <!-- 1.2.3 DESCRIPTIONS -->
-      <div class="container well some-space">
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Description:</label>
-          </div>
-          <div class="field-body">
-            <div class="field">
-              <div class="control">
-                <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
-                  (blur)="logValidationErrors()"></textarea>
-              </div>
-              <span class="help-block">Please enter a short description of the phenomenon and its characteristcs.</span>
-              <span class="help-block error-block" *ngIf="formErrors.description">
-                {{formErrors.description}}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <!-- 1.2.4 DOMAINS -->
-      <div class="container well some-space">
-        <label for="domain">Domains</label>
-        <senph-domain [parentForm]="phenomenonForm"></senph-domain>
-      </div>
-
-
-      <!-- 1.2.5 UNITS -->
-      <div class="container well some-space">
-        <label for="unit">Range of values</label>
-        <senph-unit [parentForm]="phenomenonForm"></senph-unit>
       </div>
     </div>
 
 
-    <!-- 1.3 SUBMIT-BUTTONS -->
-    <div class="panel-footer">
-      <div class="field is-grouped">
-        <p class="control">
-          <button class="button is-success" type="submit">Save Changes</button>
-        </p>
-        <p class="control">
-          <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
-        </p>
-      </div>
-      <span class="help-block error-block" *ngIf="submitted && phenomenonForm.invalid">
-        Oups. There is information missing: <br>
-        To submit this form, please check inputs and provide all necessary information.
-      </span>
-      <span class="help-block" *ngIf="submitted && phenomenonForm.valid">
-        All problems resolved, you are ready to submit this form.
-      </span>
+    <!-- 1.2.2 LABELS -->
+    <div class="container well some-space">
+      <label for="label">Labels</label>
+      <senph-label [parentForm]="phenomenonForm"></senph-label>
     </div>
+
+
+    <!-- 1.2.3 DESCRIPTIONS -->
+    <div class="container well some-space">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Description:</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
+                (blur)="logValidationErrors()"></textarea>
+            </div>
+            <span class="help-block">Please enter a short description of the phenomenon and its characteristcs.</span>
+            <span class="help-block error-block" *ngIf="formErrors.description">
+              {{formErrors.description}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Markdown Editor -->
+    <div class="container well some-space">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Explanation:</label>
+        </div>
+        <div class="container well come-space">
+          <md-editor formControlName="markdown" name="Content" [upload]="doUpload" [preRender]="preRenderFunc"
+            [postRender]="postRenderFunc" [height]="'400px'" [mode]="mode" [options]="options" required maxlength="500">
+          </md-editor>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1.2.4 DOMAINS -->
+    <div class="container well some-space">
+      <label for="domain">Domains</label>
+      <senph-domain [parentForm]="phenomenonForm"></senph-domain>
+    </div>
+
+
+    <!-- 1.2.5 UNITS -->
+    <div class="container well some-space">
+      <label for="unit">Range of values</label>
+      <senph-unit [parentForm]="phenomenonForm"></senph-unit>
+    </div>
+  </div>
+
+
+  <!-- 1.3 SUBMIT-BUTTONS -->
+  <div class="panel-footer">
+    <div class="field is-grouped">
+      <p class="control">
+        <button class="button is-success" type="submit">Save Changes</button>
+      </p>
+      <p class="control">
+        <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
+      </p>
+    </div>
+    <span class="help-block error-block" *ngIf="submitted && phenomenonForm.invalid">
+      Oups. There is information missing: <br>
+      To submit this form, please check inputs and provide all necessary information.
+    </span>
+    <span class="help-block" *ngIf="submitted && phenomenonForm.valid">
+      All problems resolved, you are ready to submit this form.
+    </span>
+  </div>
 
 
   <!-- </div> -->

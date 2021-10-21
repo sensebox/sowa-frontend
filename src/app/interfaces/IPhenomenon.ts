@@ -15,6 +15,11 @@ export class IPhenomenon {
     value: string;
     "xml:lang": string;
   };
+  markdown: {
+    datatype: string,
+    type: string,
+    value: string
+  };
   units?: IUnit[];
   domains?: IDomains[];
   sensors?: ISensors[];
@@ -43,6 +48,11 @@ export class IPhenomenon {
       switch (Object.getOwnPropertyNames(element)[0]) {
 
         case "description": {
+          Object.assign(this, element);
+          break;
+        }
+
+        case "markdown": {
           Object.assign(this, element);
           break;
         }
