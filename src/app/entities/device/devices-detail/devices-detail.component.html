@@ -191,16 +191,16 @@
               </div>
             </article>
           </div>
+          <div class="tile is-parent">
+            <article *ngIf="device.markdown" class="tile is-child notification">
+              <p class="title">Explanation</p>
+              <md-editor ngModel="{{device.markdown.value}}" name="Content" [upload]="doUpload" [preRender]="preRenderFunc"
+                [postRender]="postRenderFunc" [height]="'400px'" mode="preview" [options]="markdownOptions" required
+                maxlength="500">
+              </md-editor>
+            </article>
+          </div>
         </div>
-      </div>
-      <div class="tile is-parent">
-        <article *ngIf="device.markdown" class="tile is-child notification">
-          <p class="title">Explanation</p>
-          <md-editor ngModel="{{device.markdown.value}}" name="Content" [upload]="doUpload" [preRender]="preRenderFunc"
-            [postRender]="postRenderFunc" [height]="'400px'" mode="preview" [options]="markdownOptions" required
-            maxlength="500">
-          </md-editor>
-        </article>
       </div>
     </div>
   </section>
