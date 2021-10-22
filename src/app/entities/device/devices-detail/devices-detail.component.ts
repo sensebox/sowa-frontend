@@ -162,4 +162,8 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
     });
   }
 
+  markdownOptions = {
+    enablePreviewContentClick: true
+  }
+
 }
