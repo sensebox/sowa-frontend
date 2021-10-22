@@ -262,9 +262,8 @@
           <div class="tile is-parent">
             <article *ngIf="phenomenon.markdown" class="tile is-child notification">
               <p class="title">Explanation</p>
-              <md-editor ngModel="{{phenomenon.markdown.value}}" name="Content" [upload]="doUpload"
-                [preRender]="preRenderFunc" [postRender]="postRenderFunc" [height]="'400px'" mode="preview"
-                [options]="markdownOptions" required maxlength="500">
+              <md-editor ngModel="{{phenomenon.markdown.value}}" name="Content" [upload]="doUpload" [height]="'auto'"
+                mode="preview" [options]="markdownOptions" required>
               </md-editor>
             </article>
           </div>

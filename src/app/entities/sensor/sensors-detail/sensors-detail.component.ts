@@ -41,6 +41,7 @@ export class SensorsDetailComponent implements OnInit {
   ngOnInit() {
     this.getSensorDetails()
     this.retrieveUnits()
+    
     // let units = this.api.getUnits();
     // let sensorDetails = this.route.params
     // .pipe(mergeMap(res => this.api.getSensor(res.iri)));
@@ -70,7 +71,6 @@ export class SensorsDetailComponent implements OnInit {
     // });
 
   }
-
 
   getSensorDetails() {
     if (this._routerService.url.search('/historic/') !== -1) {
