@@ -85,8 +85,6 @@ export class PhenomenaDetailComponent implements OnInit {
     if (this.historic.button2) {
       return this.route.params.subscribe(res => {
         this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
-          console.log("hier",response);
-          
           this.phenomenon = response;
           this.phenomenon.labels.forEach(element => {
             if (element["xml:lang"] == "en") {

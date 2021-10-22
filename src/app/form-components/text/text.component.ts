@@ -36,8 +36,6 @@ export class TextComponent implements OnInit {
   }
 
   toggleDisabled(e) {
-    console.log(e);
-    console.log(this.control)
     if (e.target.checked) {
       this.tempValue = this.control.value;
       this.control.disable();
@@ -47,6 +45,5 @@ export class TextComponent implements OnInit {
       this.control.enable();
       this.control.setValue(this.tempValue);
     }
-    console.log(this.control)
   }
 }

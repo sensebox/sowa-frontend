@@ -17,6 +17,7 @@ import * as bulmaToast from "bulma-toast";
 import { environment } from "src/environments/environment";
 
 import { FileUploader } from "ng2-file-upload";
+import { DomSanitizer } from "@angular/platform-browser";
 import { isQuote } from "@angular/compiler";
 import { ValidatorFn } from "@angular/forms";
 import { ValidationServiceService } from "src/app/services/validation-service.service";
@@ -35,7 +36,7 @@ export class SensorNewComponent implements OnInit {
 
   APIURL = environment.api_url;
 
-  currentFile = null;
+  previewPath: any;
 
   public uploader: FileUploader = new FileUploader({
     url: this.APIURL + "/image/upload",
@@ -91,10 +92,13 @@ export class SensorNewComponent implements OnInit {
     private _routerService: Router,
     private errorService: ErrorModalService,
     private validationService: ValidationServiceService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
+    this.previewPath = "//:0";
+
     this.sensorForm = this.fb.group(
       {
         uri: [
@@ -114,7 +118,7 @@ export class SensorNewComponent implements OnInit {
           [Validators.required, CustomValidators.uriSyntax],
         ],
         lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
-        image: [{ value: "null", disabled: false }, [CustomValidators.uriSyntax]],
+        image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
         validation: [false, [Validators.required]],
       },
       { updateOn: "blur" }
@@ -125,21 +129,16 @@ export class SensorNewComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingFile = (file) => {
-      console.log(file);
+      this.uploader.queue = [];
+      this.uploader.queue.push(file);
       file.withCredentials = false;
-      this.currentFile = file.file.name;
-      var inputValue = (<HTMLInputElement>(
-        document.getElementById("imageUpload")
-      )).value;
-      var extension = inputValue.split(".")[1];
-      this.sensorForm.value.image = extension;
-      var imageFileName = this.sensorForm.get("uri").value + "." + extension;
-      this.sensorForm
-        .get("image")
-        .setValue(imageFileName, { emitEvent: false });
+
+      this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(file._file)
+      );
     };
+
     this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log("Uploaded File Details:", item);
       bulmaToast.toast({
         message: "Image successfully uploaded!",
         type: "is-success",
@@ -148,6 +147,9 @@ export class SensorNewComponent implements OnInit {
         animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
         position: "top-center",
         duration: 5000,
+      });
+      this._routerService.navigate(["/devices"]).then(() => {
+        window.location.reload();
       });
     };
   }
@@ -228,10 +230,7 @@ export class SensorNewComponent implements OnInit {
     this._routerService.navigate(["/sensor/detail", uri]);
   }
 
-  onLoadButtonClick() {
-    console.log(this.sensorForm.value);
-    console.log(this.sensorForm.getRawValue());
-  }
+  onLoadButtonClick() {}
 
   clickButton() {
     console.log(this.sensorForm.getRawValue());
@@ -249,9 +248,14 @@ export class SensorNewComponent implements OnInit {
     // this.sensorForm.controls.sensorElement.forEach(element => {
     //   element.accuracyValue.toFixed(10);
     // });
+    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
+      .value;
+    var extension = inputValue.slice(inputValue.lastIndexOf("."));
+    this.sensorForm.value.image = extension;
+    var imageFileName = this.sensorForm.get("uri").value + extension;
+    this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.sensorForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -263,15 +267,12 @@ export class SensorNewComponent implements OnInit {
         pauseOnHover: true,
         duration: 5000,
       });
-      //this.uploader.uploadAll();
     } else {
-      console.log("valid");
       this.api.createSensor(this.sensorForm.getRawValue()).subscribe(
         (data) => {
-          console.log(data);
           this.sensorForm.reset();
           bulmaToast.toast({
-            message: "Edit successful!",
+            message: "New sensor added successfully!",
             type: "is-success",
             dismissible: true,
             closeOnClick: true,
@@ -279,13 +280,15 @@ export class SensorNewComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
-          this.uploader.uploadAll();
-          this._routerService.navigate(["/sensors"]).then(() => {
-            window.location.reload();
-          });
+          if (this.uploader.queue.length == 1) {
+            this.uploader.uploadAll();
+          } else {
+            this._routerService.navigate(["/sensors"]).then(() => {
+              window.location.reload();
+            });
+          }
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }

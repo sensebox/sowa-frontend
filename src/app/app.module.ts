@@ -114,6 +114,7 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    LMarkdownEditorModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,

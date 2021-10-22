@@ -27,7 +27,6 @@ export class NumberComponent implements OnInit {
   }
 
   toggleDisabled(e) {
-    console.log(e);
     if (e.target.checked) {
 
       this.tempValue = this.control.value;

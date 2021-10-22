@@ -11,6 +11,7 @@ import * as bulmaToast from "bulma-toast";
 import { environment } from "src/environments/environment";
 
 import { FileUploader } from "ng2-file-upload";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "senph-device-new",
@@ -20,16 +21,17 @@ import { FileUploader } from "ng2-file-upload";
 export class DeviceNewComponent implements OnInit {
   APIURL = environment.api_url;
 
+  previewPath: any;
+
   public uploader: FileUploader = new FileUploader({
-    url: "http://localhost:3000/image/upload",
+
+    url: this.APIURL + "/image/upload",
     itemAlias: "image",
     authToken: window.localStorage.getItem("sb_accesstoken"),
     additionalParameter: {
       uri: "",
     },
   });
-
-  currentFile = null;
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
   deviceForm: FormGroup;
@@ -70,10 +72,13 @@ export class DeviceNewComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
+    this.previewPath = "//:0";
+
     this.deviceForm = this.fb.group({
       uri: ["", [Validators.required, CustomValidators.uriSyntax]],
       label: this.fb.array([this.addLabelFormGroup()]),
@@ -97,21 +102,15 @@ export class DeviceNewComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingFile = (file) => {
-      console.log(file);
+      this.uploader.queue = [];
+      this.uploader.queue.push(file);
       file.withCredentials = false;
-      this.currentFile = file.file.name;
-      var inputValue = (<HTMLInputElement>(
-        document.getElementById("imageUpload")
-      )).value;
-      var extension = inputValue.split(".")[1];
-      this.deviceForm.value.image = extension;
-      var imageFileName = this.deviceForm.get("uri").value + "." + extension;
-      this.deviceForm
-        .get("image")
-        .setValue(imageFileName, { emitEvent: false });
+
+      this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
+        window.URL.createObjectURL(file._file)
+      );
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log("Uploaded File Details:", item);
       bulmaToast.toast({
         message: "Image successfully uploaded!",
         type: "is-success",
@@ -120,6 +119,9 @@ export class DeviceNewComponent implements OnInit {
         animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
         position: "top-center",
         duration: 5000,
+      });
+      this._routerService.navigate(["/devices"]).then(() => {
+        window.location.reload();
       });
     };
   }
@@ -164,9 +166,7 @@ export class DeviceNewComponent implements OnInit {
     });
   }
 
-  onLoadButtonClick() {
-    console.log(this.deviceForm.getRawValue());
-  }
+  onLoadButtonClick() {}
 
   onSubmit() {
     this.submitted = true;
@@ -177,10 +177,15 @@ export class DeviceNewComponent implements OnInit {
       },
     });
 
-    console.log(this.deviceForm.getRawValue());
+
+    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
+      .value;
+    var extension = inputValue.slice(inputValue.lastIndexOf("."));
+    this.deviceForm.value.image = extension;
+    var imageFileName = this.deviceForm.get("uri").value + extension;
+    this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
 
     if (this.deviceForm.invalid) {
-      console.log("invalid");
       bulmaToast.toast({
         message:
           "Some necessary information is missing! Please check your form.",
@@ -193,13 +198,11 @@ export class DeviceNewComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.log("valid");
       this.api.createDevice(this.deviceForm.getRawValue()).subscribe(
         (res) => {
-          console.log(res);
           this.deviceForm.reset();
           bulmaToast.toast({
-            message: "Edit successful!",
+            message: "New device added successfully!",
             type: "is-success",
             dismissible: true,
             closeOnClick: true,
@@ -207,13 +210,15 @@ export class DeviceNewComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
-          this.uploader.uploadAll();
-          this._routerService.navigate(["/devices"]).then(() => {
-            window.location.reload();
-          });
+          if (this.uploader.queue.length == 1) {
+            this.uploader.uploadAll();
+          } else {
+            this._routerService.navigate(["/devices"]).then(() => {
+              window.location.reload();
+            });
+          }
         },
         (error: any) => {
-          console.log(error);
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }

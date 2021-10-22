@@ -41,7 +41,6 @@ export class IPhenomenon {
     this.units = [];
     this.domains = [];
     this.sensors = [];
-    console.log(res);
 
 
     res.forEach((element: any) => {
@@ -89,7 +88,6 @@ export class IPhenomenon {
         }
 
         default: {
-          console.log("Invalid attribute", element);
           break;
         }
       }

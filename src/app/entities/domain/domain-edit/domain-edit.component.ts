@@ -43,12 +43,12 @@ export class DomainEditComponent implements OnInit {
   //     // });
   //   }
   //   onSubmit() { 
-  //     this.api.updateDomain(this.domainModel).subscribe(res => {console.log(res)});
+  //     this.api.updateDomain(this.domainModel).subscribe(res => {(res)});
   //     this.diagnostic(this.domainModel);
   //   }
 
   //   // TODO: Remove this when we're done
-  //   diagnostic(model) { console.log(model); }
+  //   diagnostic(model) { (model); }
   // }
 
   heroBannerString = "http://www.opensensemap.org/SENPH#";
@@ -150,12 +150,11 @@ export class DomainEditComponent implements OnInit {
   getDomain(shortUri) {
     this.api.getDomain(shortUri).subscribe(
       (domain) => this.editDomain(domain),
-      (err: any) => console.log(err)
+      (err: any) => (err)
     );
   }
 
   editDomain(domain) {
-    console.log(domain);
     this.domainForm.patchValue({
       uri: domain.iri.value.slice(34),
       description: domain.description.value
@@ -168,7 +167,7 @@ export class DomainEditComponent implements OnInit {
 
   setExistingPhenomena(phenomenaSet: IPhenomena[]): FormArray {
     const formArray = new FormArray([]);
-    console.log(phenomenaSet);
+    (phenomenaSet);
     phenomenaSet.forEach(s => {
       formArray.push(this.fb.group({
         // phenomenonObject: [{
@@ -185,7 +184,7 @@ export class DomainEditComponent implements OnInit {
 
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    console.log(labelSet);
+    (labelSet);
     labelSet.forEach(s => {
       formArray.push(this.fb.group({
         type: [s.type, [Validators.required]],
@@ -202,15 +201,15 @@ export class DomainEditComponent implements OnInit {
   }
 
   onLoadButtonClick() {
-    console.log(this.domainForm.getRawValue());
+    (this.domainForm.getRawValue());
   }
 
 
   onSubmit() {
-    console.log(this.domainForm.value);
+    (this.domainForm.value);
     this.submitted = true;
     if (this.domainForm.invalid) {
-      console.log("invalid");
+      ("invalid");
       bulmaToast.toast({
         message: "Some necessary information is missing! Please check your form.",
         type: "is-danger",
@@ -223,9 +222,9 @@ export class DomainEditComponent implements OnInit {
       });
     }
     else {
-      console.log("valid");
+      ("valid");
       this.api.editDomain(this.domainForm.value).subscribe(res => {
-        console.log(res);
+        (res);
         bulmaToast.toast({
           message: "Edit successful!",
           type: "is-success",
@@ -239,7 +238,7 @@ export class DomainEditComponent implements OnInit {
 
       },
         (error: any) => {
-          console.log(error)
+          (error)
           this.errorService.setErrorModalOpen(true);
           this.errorService.setErrorMessage(error);
         }
@@ -250,7 +249,7 @@ export class DomainEditComponent implements OnInit {
   onDelete() {
     this.api.deleteDomain(this.domainForm.getRawValue()).subscribe(
       (data) => {
-        console.log(data);
+        (data);
         bulmaToast.toast({
           message: "Delete successful!",
           type: "is-success",
@@ -263,7 +262,7 @@ export class DomainEditComponent implements OnInit {
         this._routerService.navigate(['/domains']);
       },
       (error: any) => {
-        console.log(error)
+        (error)
         this.errorService.setErrorModalOpen(true);
         this.errorService.setErrorMessage(error);
       }

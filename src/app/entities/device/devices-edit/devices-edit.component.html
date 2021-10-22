@@ -89,40 +89,51 @@
       [parentForm]="deviceForm">
     </senph-text>
 
-    <!-- 1.2.5 IMAGE -->
-    <div class="container well some-space columns is-vcentered">
-      <div class="column is-2"><b>Image: </b></div>
-      <div class="column file is-boxed">
-        <label class="file-label">
-          <input class="file-input" type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
-            accept="image/x-png,image/gif,image/jpeg" />
-          <span class="file-cta">
-            <span class="file-icon">
-              <i class="fa fa-upload"></i>
-            </span>
-            <span class="file-label">
-              Upload image..
-            </span>
-          </span>
-          <span class="file-name" *ngIf="currentFile">
-            {{currentFile}}
-          </span>
-        </label>
-      </div>
-    </div>
-
-    <!-- 1.2.6 CONTACT -->
+    <!-- 1.2.5 CONTACT -->
     <senph-text [formErrors]="formErrors" label="Contact" id="contact" [control]="this.deviceForm.get('contact')"
       [parentForm]="deviceForm">
     </senph-text>
 
-    <!-- 1.2.7 SENSORS -->
+    <!-- 1.2.6 SENSORS -->
     <div class="container well some-space">
       <label for="sensor">Sensors</label>
       <senph-sensor [parentForm]="deviceForm"></senph-sensor>
     </div>
 
-    <!-- 1.2.6 VALIDATION -->
+    <!-- 1.2.7 IMAGE -->
+    <div class="container well some-space columns is-vcentered">
+      <div class="column is-2"><b>Image: </b></div>
+      <div class="column is-8 file is-boxed">
+        <label class="file-label">
+          <input class="file-input" type="file" id="imageUpload" name="imageUpload" ng2FileSelect [uploader]="uploader"
+            accept="image/x-png,image/gif,image/jpeg,image/png" />
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fa fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Select image..
+            </span>
+          </span>
+        </label>
+      </div>
+      <div *ngIf="deviceForm.value.image != 'null' else noImage" id="image" class="column is-2">
+        <figure class="image is-128x128">
+          <img id="previewImage" class="is-rounded" [src]="previewPath">
+          <a (click)="deleteImage()" class="delete is-medium has-background-danger"
+            style="position: absolute; top: 0; right: 0;"></a>
+        </figure>
+      </div>
+      <ng-template #noImage>
+        <div class="no-image">
+          <span>
+            ?
+          </span>
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- 1.2.8 VALIDATION -->
     <senph-valid [formErrors]="formErrors" label="VALIDATE" id="validation"
       [control]="this.deviceForm.get('validation')" [parentForm]="deviceForm">
     </senph-valid>
