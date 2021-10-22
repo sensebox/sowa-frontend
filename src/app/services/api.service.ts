@@ -117,6 +117,7 @@ export class ApiService {
     return this.http.get(this.APIURL + "/sensors/sensor/" + iri).pipe(
       map((res: Array<any>) => {
         var I2Sensor = new ISensor(res);
+        console.log(I2Sensor);
         return I2Sensor;
       })
     );

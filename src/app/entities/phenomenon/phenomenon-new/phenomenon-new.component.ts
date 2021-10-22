@@ -49,6 +49,7 @@ export class PhenomenonNewComponent implements OnInit {
       uri: ["", [Validators.required, CustomValidators.uriSyntax]],
       label: this.fb.array([this.addLabelFormGroup()]),
       description: ["", [Validators.required]],
+      markdown: ["", [Validators.required]],
       domain: this.fb.array([this.addDomainFormGroup()]),
       unit: this.fb.array([this.addUnitFormGroup()]),
       validation: [false, [Validators.required]],

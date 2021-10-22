@@ -270,6 +270,16 @@
           </div>
         </div>
       </div>
+      <div class="tile is-ancestor">
+        <div class="tile is-parent">
+          <article *ngIf="sensor.markdown" class="tile is-child notification">
+            <p class="title">Explanation</p>
+            <md-editor ngModel="{{sensor.markdown.value}}" name="Content" [upload]="doUpload" [height]="'auto'" mode="preview"
+              [options]="markdownOptions">
+            </md-editor>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
 </div>

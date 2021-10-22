@@ -89,25 +89,31 @@ export class SensorEditComponent implements OnInit {
     this.previewPath = "//:0";
 
     this.sensorForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
-      label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
-      device: this.fb.array([this.addDeviceFormGroup()]),
-      manufacturer: [{ value: "", disabled: false }, [Validators.required]],
-      price: [{ value: "", disabled: false }, [Validators.required]],
-      datasheet: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
-      image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
-      validation: [false, [Validators.required]],
-    });
+      uri: ['', [Validators.required, CustomValidators.uriSyntax]],
+      label: this.fb.array([
+        this.addLabelFormGroup()
+      ]),
+      description: ['', [Validators.required]],
+      markdown: ["", [Validators.required]],
+      sensorElement: this.fb.array([
+        this.addSensorElementFormGroup()
+      ]),
+      device: this.fb.array([
+        this.addDeviceFormGroup()
+      ]),
+      manufacturer: [{ value: '', disabled: false }, [Validators.required]],
+      price: [{ value: '', disabled: false }, [Validators.required]],
+      datasheet: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      lifeperiod: [{ value: '', disabled: false }, [Validators.required]],
+      image: [{ value: '', disabled: false }, [CustomValidators.uriSyntax]],
+      validation: [false, [Validators.required]]
+    })
 
-    this.sensorForm.valueChanges.subscribe((data) => {
-      this.logValidationErrors(this.sensorForm);
-    });
+    this.sensorForm.valueChanges.subscribe(
+      (data) => {
+        this.logValidationErrors(this.sensorForm);
+      }
+    );
 
     this.uploader.onAfterAddingFile = (file) => {
       this.uploader.queue = [];
@@ -208,8 +214,9 @@ export class SensorEditComponent implements OnInit {
       manufacturer: sensor.manufacturer.value,
       price: sensor.price.value,
       datasheet: sensor.datasheet.value,
-      lifeperiod: sensor.lifeperiod ? sensor.lifeperiod.value : "",
-      image: sensor.image ? sensor.image.value : "",
+      lifeperiod: sensor.lifeperiod ? sensor.lifeperiod.value : '',
+      image: sensor.image ? sensor.image.value : '',
+      markdown: sensor.markdown ? sensor.markdown.value : '',
     });
     this.sensorForm.setControl("label", this.setExistingLabels(sensor.labels));
 

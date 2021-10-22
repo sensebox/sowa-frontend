@@ -82,22 +82,26 @@ export class DevicesEditComponent implements OnInit {
     this.previewPath = "//:0";
 
     this.deviceForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
-      label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      website: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
-      contact: [{ value: "", disabled: false }, [Validators.required]],
-      sensor: this.fb.array([this.addSensorFormGroup()]),
-      validation: [false, [Validators.required]],
-    });
+      uri: ['', [Validators.required, CustomValidators.uriSyntax]],
+      label: this.fb.array([
+        this.addLabelFormGroup()
+      ]),
+      description: ['', [Validators.required]],
+      markdown: ["", [Validators.required]],
+      website: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      contact: [{ value: '', disabled: false }, [Validators.required]],
+      sensor: this.fb.array([
+        this.addSensorFormGroup()
+      ]),
+      validation: [false, [Validators.required]]
+    })
 
-    this.deviceForm.valueChanges.subscribe((data) => {
-      this.logValidationErrors(this.deviceForm);
-    });
+    this.deviceForm.valueChanges.subscribe(
+      (data) => {
+        this.logValidationErrors(this.deviceForm);
+      }
+    );
 
     this.uploader.onAfterAddingFile = (file) => {
       this.uploader.queue = [];
@@ -188,9 +192,10 @@ export class DevicesEditComponent implements OnInit {
     this.deviceForm.patchValue({
       uri: device.iri.value.slice(34),
       description: device.description.value,
-      website: device.website ? device.website.value : "",
-      image: device.image ? device.image.value : "",
-      contact: device.contact ? device.contact.value : "",
+      website: device.website ? device.website.value : '',
+      image: device.image ? device.image.value : '',
+      contact: device.contact ? device.contact.value : '',
+      markdown: device.markdown ? device.markdown.value : ''
     });
 
     this.deviceForm.setControl("label", this.setExistingLabels(device.labels));

@@ -120,7 +120,8 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
     MaterialModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    LMarkdownEditorModule
   ],
   providers: [{
       provide: HTTP_INTERCEPTORS,

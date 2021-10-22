@@ -41,6 +41,11 @@ export class ISensor {
     type: string,
     value: string
   };
+  markdown: {
+    datatype: string,
+    type: string,
+    value: string
+  }
   validation: {
     datatype: string,
     type: string,
@@ -91,6 +96,10 @@ export class ISensor {
           break;
         }
 
+        case "markdown": {
+          Object.assign(this, element);
+          break;
+        }
 
         case "validation": {
           Object.assign(this, element);

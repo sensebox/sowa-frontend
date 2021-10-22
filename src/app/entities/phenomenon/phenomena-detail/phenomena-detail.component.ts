@@ -166,6 +166,10 @@ export class PhenomenaDetailComponent implements OnInit {
       }
     }
   }
+
+  markdownOptions = {
+    enablePreviewContentClick: true
+  }
 }
 
 

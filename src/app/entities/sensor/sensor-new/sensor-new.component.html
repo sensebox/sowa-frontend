@@ -47,7 +47,7 @@
       <label for="label">Labels</label>
       <senph-label [parentForm]="sensorForm"></senph-label>
     </div>
-    
+
     <!-- 1.2.3 DESCRIPTIONS -->
     <div class="container well some-space">
       <div class="field is-horizontal">
@@ -69,6 +69,18 @@
       </div>
     </div>
 
+    <!-- Markdown Editor -->
+    <div class="container well some-space">
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Explanation:</label>
+        </div>
+        <div class="container well come-space">
+          <md-editor formControlName="markdown" name="Content" [height]="'400px'">
+          </md-editor>
+        </div>
+      </div>
+    </div>
 
     <!-- 1.2.4 PHENOMENA/SENSORELEMENTS -->
     <div class="container well some-space">

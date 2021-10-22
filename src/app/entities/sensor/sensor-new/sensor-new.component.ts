@@ -108,6 +108,7 @@ export class SensorNewComponent implements OnInit {
         ],
         label: this.fb.array([this.addLabelFormGroup()]),
         description: ["", [Validators.required]],
+        markdown: ["", [Validators.required]],
         sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
         device: this.fb.array([this.addDeviceFormGroup()]),
         manufacturer: [{ value: "", disabled: false }, [Validators.required]],
@@ -131,6 +132,7 @@ export class SensorNewComponent implements OnInit {
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
+
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
@@ -229,6 +231,10 @@ export class SensorNewComponent implements OnInit {
   }
 
   onLoadButtonClick() {}
+
+  clickButton() {
+    console.log(this.sensorForm.getRawValue());
+  }
 
   onSubmit() {
     this.submitted = true;

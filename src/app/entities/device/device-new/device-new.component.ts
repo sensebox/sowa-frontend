@@ -24,6 +24,7 @@ export class DeviceNewComponent implements OnInit {
   previewPath: any;
 
   public uploader: FileUploader = new FileUploader({
+
     url: this.APIURL + "/image/upload",
     itemAlias: "image",
     authToken: window.localStorage.getItem("sb_accesstoken"),
@@ -82,12 +83,13 @@ export class DeviceNewComponent implements OnInit {
       uri: ["", [Validators.required, CustomValidators.uriSyntax]],
       label: this.fb.array([this.addLabelFormGroup()]),
       description: ["", [Validators.required]],
+      markdown: ["", [Validators.required]],
       website: [
         { value: "", disabled: false },
         [Validators.required, CustomValidators.uriSyntax],
       ],
       image: [
-        { value: "", disabled: false },
+        { value: "null", disabled: false },
         [Validators.required, CustomValidators.uriSyntax],
       ],
       contact: [{ value: "", disabled: false }, [Validators.required]],
@@ -103,6 +105,7 @@ export class DeviceNewComponent implements OnInit {
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
+
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
@@ -173,6 +176,7 @@ export class DeviceNewComponent implements OnInit {
         uri: this.deviceForm.get("uri").value,
       },
     });
+
 
     var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
       .value;
