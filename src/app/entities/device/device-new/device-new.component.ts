@@ -83,7 +83,7 @@ export class DeviceNewComponent implements OnInit {
       uri: ["", [Validators.required, CustomValidators.uriSyntax]],
       label: this.fb.array([this.addLabelFormGroup()]),
       description: ["", [Validators.required]],
-      markdown: ["", [Validators.required]],
+      markdown: [""],
       website: [
         { value: "", disabled: false },
         [Validators.required, CustomValidators.uriSyntax],

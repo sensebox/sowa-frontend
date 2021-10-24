@@ -272,7 +272,7 @@
       </div>
       <div class="tile is-ancestor">
         <div class="tile is-parent">
-          <article *ngIf="sensor.markdown" class="tile is-child notification">
+          <article *ngIf="sensor.markdown && sensor.markdown.value != ''" class="tile is-child notification">
             <p class="title">Explanation</p>
             <md-editor ngModel="{{sensor.markdown.value}}" name="Content" [upload]="doUpload" [height]="'auto'" mode="preview"
               [options]="markdownOptions">

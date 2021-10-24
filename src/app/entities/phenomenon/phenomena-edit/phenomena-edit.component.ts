@@ -52,7 +52,7 @@ export class PhenomenaEditComponent implements OnInit {
         this.addLabelFormGroup()
       ]),
       description: ['', [Validators.required]],
-      markdown: ['', [Validators.required]],
+      markdown: [''],
       domain: this.fb.array([
         this.addDomainFormGroup()
       ]),

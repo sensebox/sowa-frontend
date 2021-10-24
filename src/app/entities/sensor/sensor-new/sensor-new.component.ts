@@ -108,7 +108,7 @@ export class SensorNewComponent implements OnInit {
         ],
         label: this.fb.array([this.addLabelFormGroup()]),
         description: ["", [Validators.required]],
-        markdown: ["", [Validators.required]],
+        markdown: [""],
         sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
         device: this.fb.array([this.addDeviceFormGroup()]),
         manufacturer: [{ value: "", disabled: false }, [Validators.required]],

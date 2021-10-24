@@ -260,7 +260,7 @@
             </article>
           </div>
           <div class="tile is-parent">
-            <article *ngIf="phenomenon.markdown" class="tile is-child notification">
+            <article *ngIf="phenomenon.markdown && phenomenon.markdown.value != ''" class="tile is-child notification">
               <p class="title">Explanation</p>
               <md-editor ngModel="{{phenomenon.markdown.value}}" name="Content" [upload]="doUpload" [height]="'auto'"
                 mode="preview" [options]="markdownOptions">
