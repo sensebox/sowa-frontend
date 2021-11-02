@@ -23,6 +23,8 @@ import { ValidatorFn } from "@angular/forms";
 import { ValidationServiceService } from "src/app/services/validation-service.service";
 import { HttpClient } from "@angular/common/http";
 
+import { UploadResult } from "src/app/interfaces/uploadResult";
+
 @Component({
   selector: "senph-sensor-new",
   templateUrl: "./sensor-new.component.html",
@@ -93,8 +95,11 @@ export class SensorNewComponent implements OnInit {
     private errorService: ErrorModalService,
     private validationService: ValidationServiceService,
     private httpClient: HttpClient,
-    private sanitizer: DomSanitizer
-  ) {}
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
+  ) {
+    this.doUpload = this.doUpload.bind(this);
+  }
 
   ngOnInit() {
     this.previewPath = "//:0";
@@ -234,6 +239,35 @@ export class SensorNewComponent implements OnInit {
 
   clickButton() {
     console.log(this.sensorForm.getRawValue());
+  }
+
+  doUpload(files: Array<File>): Promise<Array<UploadResult>> {
+    let result: Array<UploadResult> = [];
+    var fd = new FormData();
+    for (let file of files) {
+      fd.append("files", file);
+    }
+    this.http
+      .post<File>(this.APIURL + "/image/upload/markdown", fd, {
+        headers: {
+          Authorization: window.localStorage.getItem("sb_accesstoken"),
+        },
+      })
+      .subscribe((res) => {
+        console.log(res);
+      });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        for (let file of files) {
+          result.push({
+            name: file.name,
+            url: this.APIURL + `/images/markdown/${file.name}`,
+            isImg: file.type.indexOf("image") !== -1,
+          });
+        }
+        resolve(result);
+      }, 3000);
+    });
   }
 
   onSubmit() {

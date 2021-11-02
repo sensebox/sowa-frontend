@@ -14,6 +14,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
 
 import { HttpClient } from "@angular/common/http";
+import { UploadResult } from "src/app/interfaces/uploadResult";
 
 @Component({
   selector: "senph-devices-edit",
@@ -76,32 +77,34 @@ export class DevicesEditComponent implements OnInit {
     private errorService: ErrorModalService,
     private sanitizer: DomSanitizer,
     private http: HttpClient
-  ) {}
+  ) {
+    this.doUpload = this.doUpload.bind(this);
+  }
 
   ngOnInit() {
     this.previewPath = "//:0";
 
     this.deviceForm = this.fb.group({
-      uri: ['', [Validators.required, CustomValidators.uriSyntax]],
-      label: this.fb.array([
-        this.addLabelFormGroup()
-      ]),
-      description: ['', [Validators.required]],
+      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
+      label: this.fb.array([this.addLabelFormGroup()]),
+      description: ["", [Validators.required]],
       markdown: [""],
-      website: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
-      image: [{ value: '', disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
-      contact: [{ value: '', disabled: false }, [Validators.required]],
-      sensor: this.fb.array([
-        this.addSensorFormGroup()
-      ]),
-      validation: [false, [Validators.required]]
-    })
+      website: [
+        { value: "", disabled: false },
+        [Validators.required, CustomValidators.uriSyntax],
+      ],
+      image: [
+        { value: "", disabled: false },
+        [Validators.required, CustomValidators.uriSyntax],
+      ],
+      contact: [{ value: "", disabled: false }, [Validators.required]],
+      sensor: this.fb.array([this.addSensorFormGroup()]),
+      validation: [false, [Validators.required]],
+    });
 
-    this.deviceForm.valueChanges.subscribe(
-      (data) => {
-        this.logValidationErrors(this.deviceForm);
-      }
-    );
+    this.deviceForm.valueChanges.subscribe((data) => {
+      this.logValidationErrors(this.deviceForm);
+    });
 
     this.uploader.onAfterAddingFile = (file) => {
       this.uploader.queue = [];
@@ -192,10 +195,10 @@ export class DevicesEditComponent implements OnInit {
     this.deviceForm.patchValue({
       uri: device.iri.value.slice(34),
       description: device.description.value,
-      website: device.website ? device.website.value : '',
-      image: device.image ? device.image.value : '',
-      contact: device.contact ? device.contact.value : '',
-      markdown: device.markdown ? device.markdown.value : ''
+      website: device.website ? device.website.value : "",
+      image: device.image ? device.image.value : "",
+      contact: device.contact ? device.contact.value : "",
+      markdown: device.markdown ? device.markdown.value : "",
     });
 
     this.deviceForm.setControl("label", this.setExistingLabels(device.labels));
@@ -242,15 +245,14 @@ export class DevicesEditComponent implements OnInit {
     });
   }
 
-  onLoadButtonClick() {
-  }
+  onLoadButtonClick() {}
 
   deleteImage() {
     this.http
       .delete(this.APIURL + "/image/delete/" + this.deviceForm.value.image)
       .subscribe(
         (response) => {
-          this.deviceForm.get("image").patchValue('null');
+          this.deviceForm.get("image").patchValue("null");
           bulmaToast.toast({
             message: "Delete successful!",
             type: "is-success",
@@ -266,6 +268,35 @@ export class DevicesEditComponent implements OnInit {
         }
       );
     document.getElementById("image").style.visibility = "hidden";
+  }
+
+  doUpload(files: Array<File>): Promise<Array<UploadResult>> {
+    let result: Array<UploadResult> = [];
+    var fd = new FormData();
+    for (let file of files) {
+      fd.append("files", file);
+    }
+    this.http
+      .post<File>(this.APIURL + "/image/upload/markdown", fd, {
+        headers: {
+          Authorization: window.localStorage.getItem("sb_accesstoken"),
+        },
+      })
+      .subscribe((res) => {
+        console.log(res);
+      });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        for (let file of files) {
+          result.push({
+            name: file.name,
+            url: this.APIURL + `/images/markdown/${file.name}`,
+            isImg: file.type.indexOf("image") !== -1,
+          });
+        }
+        resolve(result);
+      }, 3000);
+    });
   }
 
   onSubmit() {
@@ -301,9 +332,11 @@ export class DevicesEditComponent implements OnInit {
             position: "top-center",
             duration: 5000,
           });
-          if(this.uploader.queue.length == 1) {
-            this.uploader.uploadAll()
-          } else {this.redirectDetails(this.shortUri);}
+          if (this.uploader.queue.length == 1) {
+            this.uploader.uploadAll();
+          } else {
+            this.redirectDetails(this.shortUri);
+          }
         },
         (error: any) => {
           this.errorService.setErrorModalOpen(true);
