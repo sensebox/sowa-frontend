@@ -179,6 +179,8 @@ export class DeviceNewComponent implements OnInit {
     let result: Array<UploadResult> = [];
     var fd = new FormData();
     for (let file of files) {
+      var random = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + "_";
+      fd.set('random', random);
       fd.append("files", file);
     }
     this.http
@@ -195,7 +197,7 @@ export class DeviceNewComponent implements OnInit {
         for (let file of files) {
           result.push({
             name: file.name,
-            url: this.APIURL + `/images/markdown/${file.name}`,
+            url: this.APIURL + '/images/markdown/' + random + file.name,
             isImg: file.type.indexOf("image") !== -1,
           });
         }
