@@ -34,7 +34,7 @@ export class DevicesEditComponent implements OnInit {
 
   previewPath: any;
 
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensor.wiki/#";
   deviceForm: FormGroup;
 
   validationMessages = {

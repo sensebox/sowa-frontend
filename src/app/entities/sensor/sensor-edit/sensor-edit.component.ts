@@ -31,7 +31,7 @@ export class SensorEditComponent implements OnInit {
     },
   });
 
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensor.wiki/#";
   sensorForm: FormGroup;
   submitted = false;
   shortUri: string;

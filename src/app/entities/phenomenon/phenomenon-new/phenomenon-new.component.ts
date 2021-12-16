@@ -16,7 +16,7 @@ import * as bulmaToast from "bulma-toast";
   styleUrls: ["./phenomenon-new.component.scss"],
 })
 export class PhenomenonNewComponent implements OnInit {
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensor.wiki/#";
   phenomenonForm: FormGroup;
   submitted = false;
   shortUri: string;
