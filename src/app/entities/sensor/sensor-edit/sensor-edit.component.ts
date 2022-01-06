@@ -31,7 +31,7 @@ export class SensorEditComponent implements OnInit {
     },
   });
 
-  heroBannerString = "http://sensor.wiki/#";
+  heroBannerString = "http://sensor.wiki/SENPH#";
   sensorForm: FormGroup;
   submitted = false;
   shortUri: string;

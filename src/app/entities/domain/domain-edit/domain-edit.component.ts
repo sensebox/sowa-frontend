@@ -51,7 +51,7 @@ export class DomainEditComponent implements OnInit {
   //   diagnostic(model) { (model); }
   // }
 
-  heroBannerString = "http://sensor.wiki/#";
+  heroBannerString = "http://sensor.wiki/SENPH#";
   domainForm: FormGroup;
 
   validationMessages = {

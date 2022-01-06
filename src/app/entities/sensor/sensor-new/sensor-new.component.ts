@@ -29,7 +29,7 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./sensor-new.component.scss"],
 })
 export class SensorNewComponent implements OnInit {
-  heroBannerString = "http://sensor.wiki/#";
+  heroBannerString = "http://sensor.wiki/SENPH#";
   sensorForm: FormGroup;
   submitted = false;
   shortUri: string;
