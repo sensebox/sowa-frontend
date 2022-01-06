@@ -16,6 +16,7 @@ export class LandingpageComponent implements OnInit {
   filterOptionsArray = ['phenomenon', "sensor", "domain", "device"];
   sortCategory = 'label';
   sortAsc = true;
+  senphurl = 'http://sensor.wiki/SENPH#';
 
   constructor(
     private api: ApiService,
@@ -37,7 +38,7 @@ export class LandingpageComponent implements OnInit {
 
   onSelect(entity) {
     this.selectedEntity = entity;
-    this._routerService.navigate(['/' + entity.type.value.slice(34) + '/detail/', entity.entity.value.slice(34)]);
+    this._routerService.navigate(['/' + entity.type.value.slice(this.senphurl.length) + '/detail/', entity.entity.value.slice(this.senphurl.length)]);
   }
 
   sortBy(category, array) {

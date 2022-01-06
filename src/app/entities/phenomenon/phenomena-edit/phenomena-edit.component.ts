@@ -130,7 +130,7 @@ export class PhenomenaEditComponent implements OnInit {
   editPhenomenon(phenomenon) {
     // console.log(phenomenon);
     this.phenomenonForm.patchValue({
-      uri: phenomenon.iri.value.slice(34),
+      uri: phenomenon.iri.value.slice(this.heroBannerString.length),
       description: phenomenon.description ? phenomenon.description.value : '',
       markdown: phenomenon.markdown ? phenomenon.markdown.value : '',
     });

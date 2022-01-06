@@ -156,7 +156,7 @@ export class DomainEditComponent implements OnInit {
 
   editDomain(domain) {
     this.domainForm.patchValue({
-      uri: domain.iri.value.slice(34),
+      uri: domain.iri.value.slice(this.heroBannerString.length),
       description: domain.description.value
     });
 

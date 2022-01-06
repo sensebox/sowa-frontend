@@ -5,6 +5,7 @@ import { GenericEntityLabel } from '../interfaces/generic-entity-label';
   name: 'filterOptionsPipe'
 })
 export class FilterOptionsPipePipe implements PipeTransform {
+  senphurl = 'http://sensor.wiki/SENPH#';
 
   transform(filterArray: any[], filterOptions: string[]): any[] {
     if (!filterArray) {
@@ -12,7 +13,7 @@ export class FilterOptionsPipePipe implements PipeTransform {
     }
 
     return filterArray.filter(element => {
-      return filterOptions.indexOf(element.type.value.slice(34).toLowerCase()) > -1;
+      return filterOptions.indexOf(element.type.value.slice(this.senphurl.length).toLowerCase()) > -1;
     })
   }
 

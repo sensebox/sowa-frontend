@@ -48,6 +48,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   prefLabel: ILabel;
   sensorsArray;
   redirectDomain = redirectDomain;
+  senphurl = 'http://sensor.wiki/SENPH#';
 
   APIURL = environment.api_url;
 
@@ -80,7 +81,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
         this.api.getDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
           this.setPrefLabel();
-          this.uri = this.device.iri.value.slice(34);
+          this.uri = this.device.iri.value.slice(this.senphurl.length);
         });
       })
     }
@@ -89,7 +90,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
         this.api.getHistoricDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
           this.setPrefLabel();
-          this.uri = this.device.iri.value.slice(34);
+          this.uri = this.device.iri.value.slice(this.senphurl.length);
         });
       })
     }
@@ -121,7 +122,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   }
 
   redirectHistoricDetails(uri, historicUri) {
-    this._routerService.navigate(['/device/detail/' + uri + '/historic', historicUri.slice(34)]);
+    this._routerService.navigate(['/device/detail/' + uri + '/historic', historicUri.slice(this.senphurl.length)]);
   }
 
   getHistory(shortUri) {

@@ -204,7 +204,7 @@ export class SensorEditComponent implements OnInit {
 
   editSensor(sensor) {
     this.sensorForm.patchValue({
-      uri: sensor.iri.value.slice(34),
+      uri: sensor.iri.value.slice(this.heroBannerString.length),
       description: sensor.description.value,
       manufacturer: sensor.manufacturer.value,
       price: sensor.price.value,

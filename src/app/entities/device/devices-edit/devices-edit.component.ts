@@ -190,7 +190,7 @@ export class DevicesEditComponent implements OnInit {
 
   editDevice(device) {
     this.deviceForm.patchValue({
-      uri: device.iri.value.slice(34),
+      uri: device.iri.value.slice(this.heroBannerString.length),
       description: device.description.value,
       website: device.website ? device.website.value : '',
       image: device.image ? device.image.value : '',

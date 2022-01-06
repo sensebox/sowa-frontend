@@ -26,6 +26,7 @@ export class SensorsDetailComponent implements OnInit {
     button2: undefined
   };
   prefLabel: ILabel;
+  senphurl = 'http://sensor.wiki/SENPH#';
 
   redirectDomain = redirectDomain;
 
@@ -57,7 +58,7 @@ export class SensorsDetailComponent implements OnInit {
     //   // console.log(sD);
 
     //   this.sensor = sD;
-    //   this.uri = this.sensor.iri.value.slice(34);
+    //   this.uri = this.sensor.iri.value.slice(this.senphurl.length);
     //   console.log(this.sensor);
 
     //   this.unitsArray = u;
@@ -91,7 +92,7 @@ export class SensorsDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.sensor.iri.value.slice(34);
+          this.uri = this.sensor.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
       })
@@ -106,7 +107,7 @@ export class SensorsDetailComponent implements OnInit {
               return
             }
           });
-          this.uri = this.sensor.iri.value.slice(34);
+          this.uri = this.sensor.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
       })
@@ -117,7 +118,7 @@ export class SensorsDetailComponent implements OnInit {
     return this.route.params.subscribe(res => {
       this.api.getSensor(res.iri).subscribe((response: ISensor) => {
         this.sensor = response;
-        this.uri = this.sensor.iri.value.slice(34);
+        this.uri = this.sensor.iri.value.slice(this.senphurl.length);
         // this.pushLabelNames(response);
       });
     })
@@ -138,7 +139,7 @@ export class SensorsDetailComponent implements OnInit {
   }
 
   redirectHistoricDetails(uri, historicUri) {
-    this._routerService.navigate(['/sensor/detail/' + uri + '/historic', historicUri.slice(34)]);
+    this._routerService.navigate(['/sensor/detail/' + uri + '/historic', historicUri.slice(this.senphurl.length)]);
   }
 
   getHistory(shortUri) {
