@@ -13,6 +13,7 @@ export class SensorsComponent implements OnInit {
   selectedSensor;
   searchTerm;
   pageLoadActive = "0";
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   constructor(
     private api: ApiService,
@@ -38,7 +39,7 @@ export class SensorsComponent implements OnInit {
   onSelect(sensor) {
     this.acitivatePageLoad();
     this.selectedSensor = sensor;
-    this._routerService.navigate(['/sensor/detail/', sensor.sensor.value.slice(34)]);
+    this._routerService.navigate(['/sensor/detail/', sensor.sensor.value.slice(this.senphurl.length)]);
 
   }
 
@@ -47,7 +48,7 @@ export class SensorsComponent implements OnInit {
   }
 
   createRoute(i) {
-    return (['/sensor', this.sensorsArray[i].sensor.value.slice(34)]);
+    return (['/sensor', this.sensorsArray[i].sensor.value.slice(this.senphurl.length)]);
   }
 
   acitivatePageLoad() {

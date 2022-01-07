@@ -13,6 +13,7 @@ export class DevicesComponent implements OnInit {
   selectedDevice;
   searchTerm;
   pageLoadActive = "0";
+  senphurl = 'http://sensors.wiki/SENPH#';
 
 
   constructor(
@@ -44,7 +45,7 @@ export class DevicesComponent implements OnInit {
   onSelect(device) {
     this.acitivatePageLoad();
     this.selectedDevice = device;
-    this._routerService.navigate(['/device/detail/', device.device.value.slice(34)]);
+    this._routerService.navigate(['/device/detail/', device.device.value.slice(this.senphurl.length)]);
 
   }
 
@@ -60,7 +61,7 @@ export class DevicesComponent implements OnInit {
   // }
 
   createRoute(i) {
-    return (['/device', this.devicesArray[i].device.value.slice(34)]);
+    return (['/device', this.devicesArray[i].device.value.slice(this.senphurl.length)]);
   }
 
   acitivatePageLoad() {

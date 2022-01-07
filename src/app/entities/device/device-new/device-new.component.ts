@@ -37,7 +37,7 @@ export class DeviceNewComponent implements OnInit {
     },
   });
 
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   deviceForm: FormGroup;
 
   validationMessages = {

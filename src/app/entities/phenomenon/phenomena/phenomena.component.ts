@@ -13,6 +13,7 @@ export class PhenomenaComponent implements OnInit {
   phenomenaArray;
   selectedPhenomenon;
   searchTerm;
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   constructor(
       private api:ApiService,
@@ -34,6 +35,6 @@ export class PhenomenaComponent implements OnInit {
 
   onSelect(phenomenon){
     this.selectedPhenomenon = phenomenon;
-    this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon.value.slice(34)]);
+    this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon.value.slice(this.senphurl.length)]);
   }
 }

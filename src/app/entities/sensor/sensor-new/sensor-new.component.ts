@@ -31,7 +31,7 @@ import { UploadResult } from "src/app/interfaces/uploadResult";
   styleUrls: ["./sensor-new.component.scss"],
 })
 export class SensorNewComponent implements OnInit {
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   sensorForm: FormGroup;
   submitted = false;
   shortUri: string;

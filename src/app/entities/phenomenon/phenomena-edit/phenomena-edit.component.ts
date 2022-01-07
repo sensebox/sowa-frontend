@@ -20,9 +20,9 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./phenomena-edit.component.scss"],
 })
 export class PhenomenaEditComponent implements OnInit {
+  heroBannerString = "http://sensors.wiki/SENPH#";
   APIURL = environment.api_url;
 
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
   phenomenonForm: FormGroup;
   validationMessages = {
     uri: {
@@ -133,9 +133,9 @@ export class PhenomenaEditComponent implements OnInit {
   editPhenomenon(phenomenon) {
     // console.log(phenomenon);
     this.phenomenonForm.patchValue({
-      uri: phenomenon.iri.value.slice(34),
-      description: phenomenon.description ? phenomenon.description.value : "",
-      markdown: phenomenon.markdown ? phenomenon.markdown.value : "",
+      uri: phenomenon.iri.value.slice(this.heroBannerString.length),
+      description: phenomenon.description ? phenomenon.description.value : '',
+      markdown: phenomenon.markdown ? phenomenon.markdown.value : '',
     });
     this.phenomenonForm.setControl(
       "label",

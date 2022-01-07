@@ -15,6 +15,7 @@ export class DomainsComponent implements OnInit {
   selectedDomain;
   searchTerm;
   pageLoadActive = "0";
+  senphurl = 'http://sensors.wiki/SENPH#';
 
 
   constructor( 
@@ -37,7 +38,7 @@ export class DomainsComponent implements OnInit {
   onSelect(domain){
     this.acitivatePageLoad();
     this.selectedDomain = domain; 
-    this._routerService.navigate(['/domain/detail/', domain.domain.value.slice(34)]);
+    this._routerService.navigate(['/domain/detail/', domain.domain.value.slice(this.senphurl.length)]);
 
   }
 
@@ -55,7 +56,7 @@ export class DomainsComponent implements OnInit {
 
 
   createRoute(i){
-    return(['/domain', this.domainsArray[i].domain.value.slice(34) ]);
+    return(['/domain', this.domainsArray[i].domain.value.slice(this.senphurl.length)]);
   }
 
   acitivatePageLoad() {

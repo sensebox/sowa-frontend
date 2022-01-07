@@ -20,9 +20,9 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./phenomenon-new.component.scss"],
 })
 export class PhenomenonNewComponent implements OnInit {
-  APIURL = environment.api_url;
 
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
+  APIURL = environment.api_url;
   phenomenonForm: FormGroup;
   submitted = false;
   shortUri: string;

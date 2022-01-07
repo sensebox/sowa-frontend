@@ -15,7 +15,7 @@ import * as bulmaToast from "bulma-toast";
   styleUrls: ["./domain-new.component.scss"],
 })
 export class DomainNewComponent implements OnInit {
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   domainForm: FormGroup;
   validationMessages = {
     uri: {

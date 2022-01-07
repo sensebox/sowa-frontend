@@ -25,6 +25,7 @@ export class DomainsDetailComponent implements OnInit {
   };
   prefLabel: ILabel;
   phenomenaArray: any[];
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   redirectDomain = redirectDomain;
 
@@ -60,7 +61,7 @@ export class DomainsDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.domain.iri.value.slice(34);
+          this.uri = this.domain.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
       })
@@ -76,7 +77,7 @@ export class DomainsDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.domain.iri.value.slice(34);
+          this.uri = this.domain.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
       })
@@ -100,7 +101,7 @@ export class DomainsDetailComponent implements OnInit {
   }
 
   redirectHistoricDetails(uri, historicUri) {
-    this._routerService.navigate(['/domain/detail/' + uri + '/historic', historicUri.slice(34)]);
+    this._routerService.navigate(['/domain/detail/' + uri + '/historic', historicUri.slice(this.senphurl.length)]);
   }
 
   getHistory(shortUri) {

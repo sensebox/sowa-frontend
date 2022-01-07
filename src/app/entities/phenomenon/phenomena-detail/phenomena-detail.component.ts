@@ -49,7 +49,7 @@ export class PhenomenaDetailComponent implements OnInit {
 
 
 
-  heroBannerString = "http://www.opensensemap.org/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   phenomenonForm: FormGroup;
   validationMessages = {
     'uri': {
@@ -93,7 +93,7 @@ export class PhenomenaDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.phenomenon.iri.value.slice(34);
+          this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })
     }
@@ -108,7 +108,7 @@ export class PhenomenaDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.phenomenon.iri.value.slice(34);
+          this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })
     }
@@ -131,7 +131,7 @@ export class PhenomenaDetailComponent implements OnInit {
 
 
   redirectHistoricDetails(uri, historicUri) {
-    this._routerService.navigate(['/phenomenon/detail/' + uri + '/historic', historicUri.slice(34)]);
+    this._routerService.navigate(['/phenomenon/detail/' + uri + '/historic', historicUri.slice(this.heroBannerString.length)]);
   }
 
   getHistory(shortUri) {
