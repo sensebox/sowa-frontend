@@ -13,7 +13,7 @@ export class SensorsComponent implements OnInit {
   selectedSensor;
   searchTerm;
   pageLoadActive = "0";
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   constructor(
     private api: ApiService,

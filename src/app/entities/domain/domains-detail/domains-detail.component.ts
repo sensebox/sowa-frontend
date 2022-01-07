@@ -25,7 +25,7 @@ export class DomainsDetailComponent implements OnInit {
   };
   prefLabel: ILabel;
   phenomenaArray: any[];
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   redirectDomain = redirectDomain;
 

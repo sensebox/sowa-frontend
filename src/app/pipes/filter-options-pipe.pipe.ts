@@ -5,7 +5,7 @@ import { GenericEntityLabel } from '../interfaces/generic-entity-label';
   name: 'filterOptionsPipe'
 })
 export class FilterOptionsPipePipe implements PipeTransform {
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   transform(filterArray: any[], filterOptions: string[]): any[] {
     if (!filterArray) {

@@ -48,7 +48,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   prefLabel: ILabel;
   sensorsArray;
   redirectDomain = redirectDomain;
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   APIURL = environment.api_url;
 

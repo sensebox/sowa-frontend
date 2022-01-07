@@ -16,7 +16,7 @@ export class LandingpageComponent implements OnInit {
   filterOptionsArray = ['phenomenon', "sensor", "domain", "device"];
   sortCategory = 'label';
   sortAsc = true;
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   constructor(
     private api: ApiService,

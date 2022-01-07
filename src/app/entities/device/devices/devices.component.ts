@@ -13,7 +13,7 @@ export class DevicesComponent implements OnInit {
   selectedDevice;
   searchTerm;
   pageLoadActive = "0";
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
 
   constructor(

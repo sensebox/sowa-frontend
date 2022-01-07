@@ -16,7 +16,7 @@ import * as bulmaToast from "bulma-toast";
   styleUrls: ['./phenomena-edit.component.scss']
 })
 export class PhenomenaEditComponent implements OnInit {
-  heroBannerString = "http://sensor.wiki/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   phenomenonForm: FormGroup;
   validationMessages = {
     'uri': {

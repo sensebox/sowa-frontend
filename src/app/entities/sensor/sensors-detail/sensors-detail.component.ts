@@ -26,7 +26,7 @@ export class SensorsDetailComponent implements OnInit {
     button2: undefined
   };
   prefLabel: ILabel;
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   redirectDomain = redirectDomain;
 

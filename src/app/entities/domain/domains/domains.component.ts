@@ -15,7 +15,7 @@ export class DomainsComponent implements OnInit {
   selectedDomain;
   searchTerm;
   pageLoadActive = "0";
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
 
   constructor( 

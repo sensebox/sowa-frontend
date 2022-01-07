@@ -49,7 +49,7 @@ export class PhenomenaDetailComponent implements OnInit {
 
 
 
-  heroBannerString = "http://sensor.wiki/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   phenomenonForm: FormGroup;
   validationMessages = {
     'uri': {

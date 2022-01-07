@@ -13,7 +13,7 @@ export class PhenomenaComponent implements OnInit {
   phenomenaArray;
   selectedPhenomenon;
   searchTerm;
-  senphurl = 'http://sensor.wiki/SENPH#';
+  senphurl = 'http://sensors.wiki/SENPH#';
 
   constructor(
       private api:ApiService,

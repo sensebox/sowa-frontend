@@ -34,7 +34,7 @@ export class DevicesEditComponent implements OnInit {
 
   previewPath: any;
 
-  heroBannerString = "http://sensor.wiki/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   deviceForm: FormGroup;
 
   validationMessages = {

@@ -33,7 +33,7 @@ export class DeviceNewComponent implements OnInit {
     },
   });
 
-  heroBannerString = "http://sensor.wiki/SENPH#";
+  heroBannerString = "http://sensors.wiki/SENPH#";
   deviceForm: FormGroup;
 
   validationMessages = {
