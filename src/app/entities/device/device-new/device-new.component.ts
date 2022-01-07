@@ -13,6 +13,10 @@ import { environment } from "src/environments/environment";
 import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
 
+import { UploadResult } from "src/app/interfaces/uploadResult";
+import { HttpClient } from "@angular/common/http";
+
+
 @Component({
   selector: "senph-device-new",
   templateUrl: "./device-new.component.html",
@@ -73,8 +77,11 @@ export class DeviceNewComponent implements OnInit {
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private sanitizer: DomSanitizer
-  ) {}
+    private sanitizer: DomSanitizer,
+    private http: HttpClient
+  ) {
+    this.doUpload = this.doUpload.bind(this);
+  }
 
   ngOnInit() {
     this.previewPath = "//:0";
@@ -167,6 +174,37 @@ export class DeviceNewComponent implements OnInit {
   }
 
   onLoadButtonClick() {}
+
+  doUpload(files: Array<File>): Promise<Array<UploadResult>> {
+    let result: Array<UploadResult> = [];
+    var fd = new FormData();
+    for (let file of files) {
+      var random = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15) + "_";
+      fd.set('random', random);
+      fd.append("files", file);
+    }
+    this.http
+      .post<File>(this.APIURL + "/image/upload/markdown", fd, {
+        headers: {
+          Authorization: window.localStorage.getItem("sb_accesstoken"),
+        },
+      })
+      .subscribe((res) => {
+        console.log(res);
+      });
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        for (let file of files) {
+          result.push({
+            name: file.name,
+            url: this.APIURL + '/images/markdown/' + random + file.name,
+            isImg: file.type.indexOf("image") !== -1,
+          });
+        }
+        resolve(result);
+      }, 3000);
+    });
+  }
 
   onSubmit() {
     this.submitted = true;
