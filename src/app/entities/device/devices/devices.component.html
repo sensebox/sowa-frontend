@@ -18,14 +18,9 @@
           <div class="column is-1">
 
           </div>
-          <div class="column is-5">
+          <div class="column is-10">
             <strong>
               Label
-            </strong>
-          </div>
-          <div class="column is-5">
-            <strong>
-              URI
             </strong>
           </div>
           <div class="column is-1">
@@ -41,11 +36,8 @@
           <div class="column is-1">
             {{i+1}}
           </div>
-          <div class="column is-5">
-            {{devices.deviceLabel[0]?.value}}
-          </div>
-          <div class="column is-5">
-            {{devices.device.value}}
+          <div class="column is-10">
+            {{devices.deviceLabel}}
           </div>
           <div class="column is-1">
             <span class="fa fa-stack fa-xs" *ngIf="devices.validation[0]?.value == 'true'">

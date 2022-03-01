@@ -26,15 +26,15 @@ export class DevicesComponent implements OnInit {
       // this.devicesArray = res;
       var tempArray: any = res;
 
-      tempArray = tempArray.filter(function (el) {
-        // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
-        return el.device.type === 'uri'
+      // tempArray = tempArray.filter(function (el) {
+      //   // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
+      //   return el.device.type === 'uri'
 
-        // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
-      })
+      //   // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
+      // })
 
       // console.log(this.devicessArray);
-      tempArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      tempArray.sort((a, b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
 
       this.devicesArray = Array.from(tempArray, x => new IDevices(x));
       console.dir(this.devicesArray);

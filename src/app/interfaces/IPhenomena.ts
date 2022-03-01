@@ -13,8 +13,8 @@ export class IPhenomena {
 
   
     constructor(resPhenomenon: any) {
-        this.phenomenon = resPhenomenon.phenomenon;
-        this.phenomenonLabel = resPhenomenon.phenomenonLabel;
+        this.phenomenon = resPhenomenon.id;
+        this.phenomenonLabel = resPhenomenon.label.item[1].text;
         this.validation = resPhenomenon.validation;
     }
 };

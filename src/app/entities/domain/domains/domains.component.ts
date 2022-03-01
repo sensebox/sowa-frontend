@@ -26,12 +26,13 @@ export class DomainsComponent implements OnInit {
   ngOnInit() {
     this.api.getDomains().subscribe(res => {
       var tempArray: any = res;
-      tempArray =  tempArray.filter(function (el){
-        return el.domain.type != 'bnode'
-      })
+      // tempArray =  tempArray.filter(function (el){
+      //   return el.domain.type != 'bnode'
+      // })
       // console.log(tempArray);
-      tempArray.sort((a,b) => a.label[0].value.localeCompare(b.label[0].value));
+      tempArray.sort((a,b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
       this.domainsArray = Array.from(tempArray, x => new IDomains(x));
+      console.dir(this.domainsArray);
     });
   }
 

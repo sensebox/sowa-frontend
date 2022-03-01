@@ -18,14 +18,9 @@
           <div class="column is-1">
 
           </div>
-          <div class="column is-5">
+          <div class="column is-10">
             <strong>
               Label
-            </strong>
-          </div>
-          <div class="column is-5">
-            <strong>
-              URI
             </strong>
           </div>
           <div class="column is-1">
@@ -35,17 +30,14 @@
           </div>
         </div>
       </div>
-      <div class="list-item" *ngFor="let sensors of sensorsArray | filterPipe:searchTerm;let i = index"
+      <div class="list-item cursor-pointer" *ngFor="let sensors of sensorsArray | filterPipe:searchTerm;let i = index"
         [class.selected]="sensors === selectedSensor" (click)=onSelect(sensors)>
         <div class="columns is-mobile is-multiline is-centered">
           <div class="column is-1">
             {{i+1}}
           </div>
-          <div class="column is-5">
-            {{sensors.sensorLabel[0]?.value}}
-          </div>
-          <div class="column is-5">
-            {{sensors.sensor.value}}
+          <div class="column is-10">
+            {{sensors.sensorLabel}}
           </div>
           <div class="column is-1">
             <span class="fa fa-stack fa-xs" *ngIf="sensors.validation[0]?.value == 'true'">

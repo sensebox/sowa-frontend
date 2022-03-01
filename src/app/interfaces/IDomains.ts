@@ -16,7 +16,7 @@ export class IDomains {
 
     constructor(res: any) {
         this.domain = res.domain;
-        this.domainLabel = res.label;
+        this.domainLabel = res.label.item[1].text;
         this.validation = res.validation;
     }
 

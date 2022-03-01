@@ -16,8 +16,8 @@ export class ISensors {
     };
 
     constructor(resSensor: any) {
-        this.sensor = resSensor.sensor;
-        this.sensorLabel = resSensor.sensorLabel;
+        this.sensor = resSensor.id;
+        this.sensorLabel = resSensor.label.item[1].text;
         this.validation = resSensor.validation;
     }
 };

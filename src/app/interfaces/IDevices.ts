@@ -27,8 +27,8 @@ export class IDevices {
         //     value: resDevice.label[0].value,
         //     "xml:lang": resDevice.label[0]["xml:lang"]
         // }
-        this.device = resDevice.device;
-        this.deviceLabel = resDevice.label;
+        this.device = resDevice.id;
+        this.deviceLabel = resDevice.label.item[1].text;
         this.validation = resDevice.validation;
 
         }

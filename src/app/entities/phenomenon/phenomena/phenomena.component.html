@@ -38,16 +38,10 @@
       <div class="list-item">
         <div class="columns is-mobile is-multiline is-centered">
           <div class="column is-1">
-
           </div>
-          <div class="column is-5">
+          <div class="column is-10">
             <strong>
               Label
-            </strong>
-          </div>
-          <div class="column is-5">
-            <strong>
-              URI
             </strong>
           </div>
           <div class="column is-1">
@@ -57,17 +51,14 @@
           </div>
         </div>
       </div>
-      <div class="list-item" *ngFor="let phenomena of phenomenaArray | filterPipe:searchTerm;let i = index"
+      <div class="list-item cursor-pointer" *ngFor="let phenomena of phenomenaArray | filterPipe:searchTerm;let i = index"
         [class.selected]="phenomena === selectedPhenomenon" (click)="onSelect(phenomena)">
         <div class="columns is-mobile is-multiline is-centered">
           <div class="column is-1">
             {{i+1}}
           </div>
-          <div class="column is-5">
-            {{phenomena.phenomenonLabel[0]?.value}}
-          </div>
-          <div class="column is-5">
-            {{phenomena.phenomenon.value}}
+          <div class="column is-10">
+            {{phenomena.phenomenonLabel}}
           </div>
           <div class="column is-1">
             <span class="fa fa-stack fa-xs" *ngIf="phenomena.validation[0]?.value == 'true'">
