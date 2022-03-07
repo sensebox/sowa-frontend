@@ -56,6 +56,7 @@ export class ApiService {
   getPhenomenon(iri): Observable<any> {
     return this.http.get(this.APIURL + "/phenomena/phenomenon/" + iri).pipe(
       map((res: Array<any>) => {
+        console.log(res)
         let phenomenon = new IPhenomenon(res);
         // console.log(phenomenon);
         return phenomenon;
@@ -116,8 +117,9 @@ export class ApiService {
   getSensor(iri): Observable<any> {
     return this.http.get(this.APIURL + "/sensors/sensor/" + iri).pipe(
       map((res: Array<any>) => {
+        // console.log(res)
         var I2Sensor = new ISensor(res);
-        console.log(I2Sensor);
+        // console.log(I2Sensor);
         return I2Sensor;
       })
     );

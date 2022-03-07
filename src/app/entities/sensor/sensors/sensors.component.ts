@@ -23,7 +23,6 @@ export class SensorsComponent implements OnInit {
   ngOnInit() {
     this.api.getSensors().subscribe(res => {
       var tempArray: any = res;
-      console.log(tempArray)
 
       // tempArray = tempArray.filter(function (el) {
       //   // return (el.sensorLabel != undefined && el.sensorLabel[0] != undefined)
@@ -40,7 +39,7 @@ export class SensorsComponent implements OnInit {
   onSelect(sensor) {
     this.acitivatePageLoad();
     this.selectedSensor = sensor;
-    this._routerService.navigate(['/sensor/detail/', sensor.sensor.value.slice(this.senphurl.length)]);
+    this._routerService.navigate(['/sensor/detail/', sensor.sensor]);
 
   }
 

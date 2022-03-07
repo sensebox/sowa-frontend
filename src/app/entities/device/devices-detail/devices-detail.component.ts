@@ -60,7 +60,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getDeviceDetails();
-    this.retrieveSensors();
+    // this.retrieveSensors();
 
   }
 
@@ -81,7 +81,8 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
         this.api.getDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
           this.setPrefLabel();
-          this.uri = this.device.iri.value.slice(this.senphurl.length);
+          this.uri = this.device.labels[0].text;
+          //this.uri = this.device.iri.value.slice(this.senphurl.length);
         });
       })
     }
@@ -90,7 +91,8 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
         this.api.getHistoricDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
           this.setPrefLabel();
-          this.uri = this.device.iri.value.slice(this.senphurl.length);
+          this.uri = this.device.labels[0].text;
+          // this.uri = this.device.iri.value.slice(this.senphurl.length);
         });
       })
     }
@@ -98,7 +100,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   
   setPrefLabel(){
     this.device.labels.forEach(element => {
-      if (element["xml:lang"] == "en") {
+      if (element["languageCode"] == "en") {
         this.prefLabel = element
         return
       }

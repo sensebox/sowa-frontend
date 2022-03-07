@@ -45,7 +45,7 @@ export class DevicesComponent implements OnInit {
   onSelect(device) {
     this.acitivatePageLoad();
     this.selectedDevice = device;
-    this._routerService.navigate(['/device/detail/', device.device.value.slice(this.senphurl.length)]);
+    this._routerService.navigate(['/device/detail/', device.device]);
 
   }
 

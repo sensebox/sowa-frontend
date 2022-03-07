@@ -41,7 +41,7 @@ export class SensorsDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getSensorDetails()
-    this.retrieveUnits()
+    // this.retrieveUnits()
     
     // let units = this.api.getUnits();
     // let sensorDetails = this.route.params
@@ -85,14 +85,16 @@ export class SensorsDetailComponent implements OnInit {
       return this.route.params.subscribe(res => {
         this.api.getSensor(res.iri).subscribe((response: ISensor) => {
           this.sensor = response;
+          console.log(this.sensor)
           this.sensor.labels.forEach(element => {
-            if (element["xml:lang"] == "en") {
+            if (element["languageCode"] == "en") {
               this.prefLabel = element
               return
             }
             this.prefLabel = element;
           });
-          this.uri = this.sensor.iri.value.slice(this.senphurl.length);
+          this.uri = this.sensor.labels[0].text
+          // this.uri = this.sensor.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
       })
@@ -102,12 +104,13 @@ export class SensorsDetailComponent implements OnInit {
         this.api.getHistoricSensor(res.iri).subscribe((response: ISensor) => {
           this.sensor = response;
           this.sensor.labels.forEach(element => {
-            if (element["xml:lang"] == "en") {
+            if (element["languageCode"] == "en") {
               this.prefLabel = element
               return
             }
           });
-          this.uri = this.sensor.iri.value.slice(this.senphurl.length);
+          this.uri = this.sensor.labels[0].text
+          // this.uri = this.sensor.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
       })
@@ -118,7 +121,8 @@ export class SensorsDetailComponent implements OnInit {
     return this.route.params.subscribe(res => {
       this.api.getSensor(res.iri).subscribe((response: ISensor) => {
         this.sensor = response;
-        this.uri = this.sensor.iri.value.slice(this.senphurl.length);
+        this.uri = this.sensor.labels[0].text
+        // this.uri = this.sensor.iri.value.slice(this.senphurl.length);
         // this.pushLabelNames(response);
       });
     })
