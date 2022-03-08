@@ -1,6 +1,6 @@
 <div *ngIf="phenomenon != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.value" [valid]="phenomenon.validation?.value" [subtitle]="phenomenon.iri.value"
+  <senph-hero-banner [title]="prefLabel?.text" [valid]="phenomenon.validation" [subtitle]="uri"
     (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">>
   </senph-hero-banner>
 
@@ -66,14 +66,14 @@
                 <p class="title">URI</p>
                 <div class="content">
                   <strong>
-                    {{phenomenon.iri.value}}
+                    {{phenomenon.labels[1].text}}
                   </strong>
                 </div>
               </article>
               <article class="tile is-child notification is-warning">
                 <p class="title">Labels</p>
                 <p class="subtitle">These are the available labels in various languages for the
-                  {{prefLabel?.value}}:</p>
+                  {{prefLabel?.text}}:</p>
                 <div class="columns is-mobile is-multiline is-centered">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
@@ -106,12 +106,13 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{label.value}}
+                      {{label.text}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{search(label, languageArray)}}
+                      <!-- {{search(phenomenon.labels[i].languageCode, languageArray)}} -->
+                      {{search(label.languageCode, "val", languageArray, "show")}}
                     </p>
                   </div>
                 </div>
@@ -122,7 +123,7 @@
                 <p class="title">Description</p>
                 <div class="content">
                   <strong *ngIf="phenomenon.description">
-                    {{phenomenon.description.value}}
+                    {{phenomenon.description.item[1].text}}
                   </strong>
                 </div>
               </article>
@@ -134,7 +135,7 @@
             <article class="tile is-child notification is-danger">
               <p class="title">Domains</p>
               <p class="subtitle">
-                {{prefLabel?.value}} is part of the following domains:
+                {{prefLabel?.text}} is part of the following domains:
               </p>
               <div class="content">
                 <div class="columns is-mobile is-multiline is-centered">
@@ -167,13 +168,13 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{domain.domainLabel?.value}}
+                      {{domain.domainLabel}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a (click)="redirectDomain(domain.domain.value, '/phenomenon/detail/')">
-                        {{domain.domain.value}}
+                      <a (click)="redirectDomain(domain.domain, '/domain/detail/')">
+                        {{domain.domain}}
                       </a>
                     </p>
                   </div>
@@ -187,7 +188,7 @@
             <article class="tile is-child notification is-danger">
               <p class="title">Units</p>
               <p class="subtitle">
-                These are the units that can describe {{prefLabel?.value}}
+                These are the units that can describe {{prefLabel?.text}}
               </p>
               <div class="content">
                 <div class="columns is-mobile is-multiline is-centered">
@@ -229,29 +230,29 @@
                     </p>
                   </div>
                   <div class="column is-fullwidth">
-                    <p class="bd-notification is-primary" *ngIf="unitsArray">
-                      {{searchPheno(unit.unit.value, "y", unitsArray , "label")}}
-                      <!-- {{unit.unitLabel.value}} -->
+                    <p class="bd-notification is-primary" >
+                      <!-- {{searchPheno(unit.id, "y", unitsArray , "label")}} -->
+                      {{unit.unitLabel}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
                       <a>
-                        {{unit.min.value}}
+                        {{unit.min}}
                       </a>
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
                       <a>
-                        {{unit.max.value}}
+                        {{unit.max}}
                       </a>
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a (click)="redirectDomain(unit.unit.value, '/phenomenon/detail/')">
-                        {{unit.unit.value}}
+                      <a (click)="redirectDomain(unit.id, '/phenomenon/detail/')">
+                        {{unit.id}}
                       </a>
                     </p>
                   </div>
@@ -259,6 +260,7 @@
               </div>
             </article>
           </div>
+          
           <div class="tile is-parent">
             <article *ngIf="phenomenon.markdown && phenomenon.markdown.value != ''" class="tile is-child notification">
               <p class="title">Explanation</p>

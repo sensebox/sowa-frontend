@@ -175,7 +175,7 @@
                         (click)="redirectDomain(selem.phenomenon.value, '/phenomenon/detail/')">{{sensor.sensorElements[i].phenomenonName}}</a>
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="selem.unit?.value != 'http://server/unset-base/undefined'">
+                  <div class="column is-fullwidth" *ngIf="sensor.sensorElements[i].unit != null">
                     <p class="bd-notification is-primary">
                       <a class="" href="" target="_blank">
                         <!-- TODO: FIX link on unit ISSUE -->
@@ -184,12 +184,12 @@
                       </a>
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="selem.unit?.value === 'http://server/unset-base/undefined'">
+                  <div class="column is-fullwidth" *ngIf="sensor.sensorElements[i].unit === null">
                     <p class="bd-notification is-primary">
                       Not specified.
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="selem.accVal?.value != 'undefined'">
+                  <div class="column is-fullwidth" *ngIf="sensor.sensorElements[i].accuracy != null">
                     <p class="bd-notification is-primary">
                       &plusmn; {{sensor.sensorElements[i].accuracy}}
                     </p>

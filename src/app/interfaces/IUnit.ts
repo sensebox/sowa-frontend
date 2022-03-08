@@ -1,21 +1,13 @@
-export interface IUnit {
-    unit: {
-        type: string,
-        value: string,
-        min: number,
-        max: number
-    };
-    unitLabel: {
-        datatype: string;
-        type: string;
-        value: string;
-    };
-    min: {
-        type: number,
-        value: number
-    };
-    max: {
-        type: number,
-        value: number
-    };
+export class IUnit {
+    id: number;
+    unitLabel: string;
+    min: number;
+    max: number;
+
+    constructor(resUnit: any) {
+        this.id = resUnit.unit.id;
+        this.unitLabel = resUnit.unit.name;
+        this.min = resUnit.min;
+        this.max = resUnit.max;
+    }
 }

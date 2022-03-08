@@ -279,8 +279,8 @@ export class SensorEditComponent implements OnInit {
     labelSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          type: [s.type, [Validators.required]],
-          value: [s.value, [Validators.required]],
+          type: [s, [Validators.required]],
+          value: [s, [Validators.required]],
           lang: [s["xml:lang"], [Validators.required]],
         })
       );

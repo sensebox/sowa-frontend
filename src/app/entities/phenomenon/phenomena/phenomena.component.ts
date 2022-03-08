@@ -23,7 +23,6 @@ export class PhenomenaComponent implements OnInit {
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
       var tempArray: any = res;
-      console.log(tempArray);
     
       // tempArray =  tempArray.filter(function (el){
       //   return el.phenomenon.type != 'bnode'
@@ -36,6 +35,7 @@ export class PhenomenaComponent implements OnInit {
 
   onSelect(phenomenon){
     this.selectedPhenomenon = phenomenon;
-    this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon.value.slice(this.senphurl.length)]);
+    console.log(phenomenon)
+    this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon]);
   }
 }

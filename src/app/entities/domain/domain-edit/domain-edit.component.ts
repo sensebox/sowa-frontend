@@ -171,7 +171,7 @@ export class DomainEditComponent implements OnInit {
     phenomenaSet.forEach(s => {
       formArray.push(this.fb.group({
         // phenomenonObject: [{
-        phenomenonURI: [s.phenomenon.value,
+        phenomenonURI: [s.phenomenon,
         // 'phenomenonLabel': s.phenomenonLabel.value}, 
         [Validators.required]]
       }));
@@ -187,8 +187,8 @@ export class DomainEditComponent implements OnInit {
     (labelSet);
     labelSet.forEach(s => {
       formArray.push(this.fb.group({
-        type: [s.type, [Validators.required]],
-        value: [s.value, [Validators.required]],
+        type: [s, [Validators.required]],
+        value: [s, [Validators.required]],
         lang: [s["xml:lang"], [Validators.required]]
       }));
     });

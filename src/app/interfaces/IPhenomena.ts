@@ -1,15 +1,7 @@
-import { ILabel } from './ILabel';
-
 export class IPhenomena {
-    phenomenon: {
-        type: string,
-        value: string,
-    };
-    phenomenonLabel: ILabel;
-    validation: {
-        type: string,
-        value: string,
-    };
+    phenomenon: number
+    phenomenonLabel: string;
+    validation: boolean;
 
   
     constructor(resPhenomenon: any) {
@@ -17,4 +9,4 @@ export class IPhenomena {
         this.phenomenonLabel = resPhenomenon.label.item[1].text;
         this.validation = resPhenomenon.validation;
     }
-};
+}

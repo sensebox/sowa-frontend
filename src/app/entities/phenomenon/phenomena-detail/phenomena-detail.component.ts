@@ -69,7 +69,7 @@ export class PhenomenaDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getPhenomenonDetails();
-    this.retrieveUnits();
+    //this.retrieveUnits();
 
   }
 
@@ -84,16 +84,24 @@ export class PhenomenaDetailComponent implements OnInit {
     };
     if (this.historic.button2) {
       return this.route.params.subscribe(res => {
+        console.log(this.route.params)
+        console.log(res)
         this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
           this.phenomenon = response;
+          console.log(response)
           this.phenomenon.labels.forEach(element => {
-            if (element["xml:lang"] == "en") {
+            if (element["languageCode"] == "de") {
               this.prefLabel = element
               return
             }
-            this.prefLabel = element;
+            if (element["languageCode"] == "en") {
+              this.prefLabel = element
+              return
+            }
           });
-          this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
+          console.log(this.prefLabel.text)
+          this.uri = this.phenomenon.labels[0].text;
+          //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })
     }
@@ -108,7 +116,7 @@ export class PhenomenaDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
+          //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })
     }
@@ -159,13 +167,23 @@ export class PhenomenaDetailComponent implements OnInit {
     }
   }
 
-  search(nameKey, myArray) {
+  search(nameKey, val1, myArray, val2) {
+    // console.log(nameKey)
     for (var i = 0; i < myArray.length; i++) {
-      if (myArray[i].val === nameKey["xml:lang"]) {
-        return myArray[i].show;
+      // console.log(myArray[i][val1])
+      if (myArray[i][val1] === nameKey) {
+        return myArray[i][val2];
       }
     }
   }
+
+  // search(nameKey, myArray) {
+  //   for (var i = 0; i < myArray.length; i++) {
+  //     if (myArray[i].val === nameKey["xml:lang"]) {
+  //       return myArray[i].show;
+  //     }
+  //   }
+  // }
 
   markdownOptions = {
     enablePreviewContentClick: true
