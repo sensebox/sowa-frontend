@@ -173,9 +173,9 @@ export class PhenomenaEditComponent implements OnInit {
     unitSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          unitUri: [s.unit.value, [Validators.required]],
-          min: [s.min.value, []],
-          max: [s.max.value, []],
+          unitUri: [s.id, [Validators.required]],
+          min: [s.min, []],
+          max: [s.max, []],
         })
       );
     });
