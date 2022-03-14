@@ -92,7 +92,7 @@ export class DomainNewComponent implements OnInit {
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
       // phenomenonObject: [{
-      phenomenonURI: [
+      phenomenon: [
         "",
         // phenomenonLabel: ''},
         [Validators.required],

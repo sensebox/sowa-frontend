@@ -38,28 +38,29 @@ export class PhenomenonComponent implements OnInit {
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
       // phenomenonObject: [{
-        phenomenonURI: ['',
+        phenomenon: ['',
         // phenomenonLabel: ''}, 
         [Validators.required]]
     });
   }
 
   getSelectedPhenomenon(id) {
-    return this.parentForm.value.phenomenon[id].phenomenonURI;
+    return this.parentForm.value.phenomenon[id].phenomenon;
   }
 
   getValueFor(value) {
   }
 
   retrievePhenomena() {
-    this.api.getPhenomenaAllLabels().subscribe(res => {
-      var tempArray: any = res;
+    this.api.getPhenomena().subscribe(res => {
+      // var tempArray: any = res;
 
-      tempArray = tempArray.filter(function (el) {
-        return el.phenomenon.type != 'bnode'
-      })
-      tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
-      this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
+      // tempArray = tempArray.filter(function (el) {
+      //   return el.phenomenon.type != 'bnode'
+      // })
+      // tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
+      this.phenomenaArray = res;
+      console.log(res);
     });
   }
 

@@ -19,8 +19,8 @@
                                     <div class="select">
                                         <select [id]="'phenomenonURI' + i" formControlName="phenomenonURI">
                                             <option value=""> Choose a phenomenon</option>
-                                            <option *ngFor="let pheno of phenomenaArray" [ngValue]="pheno.phenomenon.value">
-                                                {{pheno.phenomenonLabel.value}} (URI: {{pheno.phenomenon.value | slice:33}})
+                                            <option *ngFor="let pheno of phenomenaArray" [ngValue]="pheno">
+                                                {{pheno.label.item[0] ? pheno.label.item[0].text : 'undefined'}}
                                             </option>
                                         </select>
                                     </div>
