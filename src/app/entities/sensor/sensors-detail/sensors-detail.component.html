@@ -106,12 +106,12 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{sensor.labels[i].text}}
+                      {{label.text}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{search(sensor.labels[i].languageCode, "val", languageArray)}}
+                      {{search(label.languageCode, "val", languageArray)}}
                     </p>
                   </div>
                 </div>
@@ -161,7 +161,7 @@
                   </div>
                 </div>
                 <div class="columns is-mobile is-multiline is-centered"
-                  *ngFor="let selem of sensor.sensorElements;let i = index">
+                  *ngFor="let sensorElement of sensor.sensorElements;let i = index">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
                       <strong>
@@ -172,29 +172,29 @@
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
                       <a class=""
-                        (click)="redirectDomain(selem.phenomenon.value, '/phenomenon/detail/')">{{sensor.sensorElements[i].phenomenonName}}</a>
+                        (click)="redirectDomain(sensorElement.phenomenonId, '/phenomenon/detail/')">{{sensorElement.phenomenonName}}</a>
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="sensor.sensorElements[i].unit != null">
+                  <div class="column is-fullwidth" *ngIf="sensorElement.unit != null">
                     <p class="bd-notification is-primary">
                       <a class="" href="" target="_blank">
                         <!-- TODO: FIX link on unit ISSUE -->
                         <!-- {{searchUnit(sensor.sensorElements[i].unit, unitsArray)}} -->
-                        {{sensor.sensorElements[i].unit}}
+                        {{sensorElement.unit}}
                       </a>
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="sensor.sensorElements[i].unit === null">
+                  <div class="column is-fullwidth" *ngIf="sensorElement.unit === null">
                     <p class="bd-notification is-primary">
                       Not specified.
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="sensor.sensorElements[i].accuracy != null">
+                  <div class="column is-fullwidth" *ngIf="sensorElement.accuracy != null">
                     <p class="bd-notification is-primary">
-                      &plusmn; {{sensor.sensorElements[i].accuracy}}
+                      &plusmn; {{sensorElement.accuracy}}
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="sensor.sensorElements[i].accuracy === null">
+                  <div class="column is-fullwidth" *ngIf="sensorElement.accuracy === null">
                     <p class="bd-notification is-primary">
                       Not specified.
                     </p>

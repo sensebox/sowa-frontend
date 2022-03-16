@@ -29,8 +29,6 @@ export class ISensor {
   constructor(res: any) {
     this.labels = [];
     this.sensorElements = [];
-    // this.sensorElements = [];
-    // this.devices = [];
 
     console.log(res)
 
@@ -95,77 +93,6 @@ export class ISensor {
         }
       }
     }
-
-    // res.forEach((element: any) => {
-    //   // console.log(element);
-    //   switch (Object.getOwnPropertyNames(element)[0]) {
-
-    //     case "description": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "iri": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "manufacturer": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "price": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "datasheet": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "lifeperiod": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "image": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "markdown": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "validation": {
-    //       Object.assign(this, element);
-    //       break;
-    //     }
-
-    //     case "label": {
-    //       this.labels.push(new ILabel(element));
-    //       break;
-    //     }
-
-    //     case "device": {
-    //       this.devices.push(new IDevices(element));
-    //       break;
-    //     }
-
-    //     case "sensorElement": {
-    //       this.sensorElements.push(new ISensorElement(element));
-    //       break;
-    //     }
-
-    //     default: {
-    //       console.log("Invalid attribute", element);
-    //       break;
-    //     }
-    //   }
-    // })
   }
 
 }
