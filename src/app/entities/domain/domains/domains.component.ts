@@ -30,7 +30,7 @@ export class DomainsComponent implements OnInit {
       //   return el.domain.type != 'bnode'
       // })
       // console.log(tempArray);
-      tempArray.sort((a,b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
+      tempArray.sort((a,b) => a.label.item[0].text.localeCompare(b.label.item[0].text));
       this.domainsArray = Array.from(tempArray, x => new IDomains(x));
       console.dir(this.domainsArray);
     });

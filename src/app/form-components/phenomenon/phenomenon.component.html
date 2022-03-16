@@ -17,7 +17,7 @@
                             <div class="field is-narrow">
                                 <div class="control">
                                     <div class="select">
-                                        <select [id]="'phenomenonURI' + i" formControlName="phenomenonURI">
+                                        <select [id]="'phenomenon' + i" formControlName="phenomenon">
                                             <option value=""> Choose a phenomenon</option>
                                             <option *ngFor="let pheno of phenomenaArray" [ngValue]="pheno">
                                                 {{pheno.label.item[0] ? pheno.label.item[0].text : 'undefined'}}
@@ -27,8 +27,8 @@
                                     
                                 </div>
                                 <span class="help-block error-block"
-                                    *ngIf="phenomenon.controls[i].get('phenomenonURI').errors?.required &&
-                                (phenomenon.controls[i].get('phenomenonURI').touched || !phenomenon.controls[i].get('phenomenonURI').pristine)">
+                                    *ngIf="phenomenon.controls[i].get('phenomenon').errors?.required &&
+                                (phenomenon.controls[i].get('phenomenon').touched || !phenomenon.controls[i].get('phenomenon').pristine)">
                                     {{validationMessages.phenomenon.required}}
                                 </span>
                             </div>
