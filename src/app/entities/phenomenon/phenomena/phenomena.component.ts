@@ -35,7 +35,7 @@ export class PhenomenaComponent implements OnInit {
 
   onSelect(phenomenon){
     this.selectedPhenomenon = phenomenon;
-    console.log(phenomenon)
+    // console.log(phenomenon)
     this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon]);
   }
 }

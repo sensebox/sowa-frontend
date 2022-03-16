@@ -30,8 +30,6 @@ export class ISensor {
     this.labels = [];
     this.sensorElements = [];
 
-    console.log(res)
-
     for (let property in res) {
       switch(property){
 

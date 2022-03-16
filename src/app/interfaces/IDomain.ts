@@ -13,8 +13,6 @@ export class IDomain {
         this.labels = [];
         this.phenomena = [];
 
-        console.log(res)
-
         for (let property in res) {
             switch(property){
       
