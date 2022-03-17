@@ -50,42 +50,5 @@ export class IDomain {
               }
             }
           }
-
-
-
-        // res.forEach((element: any) => {
-        //     switch (Object.getOwnPropertyNames(element)[0]) {
-
-        //         case "description": {
-        //             Object.assign(this, element);
-        //             break;
-        //         }
-
-        //         case "iri": {
-        //             Object.assign(this, element);
-        //             break;
-        //         }
-
-        //         case "label": {
-        //             this.labels.push(new ILabel(element));
-        //             break;
-        //         }
-
-        //         case "phenomenon": {
-        //             this.phenomenon.push(new IPhenomena(element));
-        //             break;
-        //         }
-
-        //         case "validation": {
-        //             Object.assign(this, element);
-        //             break;
-        //         }
-
-
-        //         default: {
-        //             break;
-        //         }
-        //     }
-        // })
     }
 }

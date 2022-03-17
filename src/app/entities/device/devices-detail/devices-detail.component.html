@@ -66,7 +66,7 @@
                 <p class="title">URI</p>
                 <div class="content">
                   <strong>
-                    <!-- {{device.iri.value}} -->
+                    {{device.labels[1].text}}
                   </strong>
                 </div>
               </article>
@@ -106,12 +106,12 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{device.labels[i].text}}
+                      {{label.text}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{search(device.labels[i].languageCode, "val", languageArray, "show")}}
+                      {{search(label.languageCode, "val", languageArray, "show")}}
                     </p>
                   </div>
                 </div>
@@ -163,11 +163,6 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <strong>URI</strong>
-                    </p>
-                  </div>
-                  <div class="column is-fullwidth">
-                    <p class="bd-notification is-primary">
                       <strong>Label</strong>
                     </p>
                   </div>
@@ -179,11 +174,6 @@
                       <strong>
                         {{i+1}}
                       </strong>
-                    </p>
-                  </div>
-                  <div class="column is-fullwidth">
-                    <p class="bd-notification is-primary">
-                      <a class="" (click)="redirectDomain(sensor.sensor, '/sensor/detail/')">{{sensor.sensor}}</a>
                     </p>
                   </div>
                   <div class="column is-fullwidth">

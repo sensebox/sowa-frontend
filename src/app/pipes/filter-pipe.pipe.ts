@@ -13,10 +13,16 @@ export class FilterPipePipe implements PipeTransform {
     }
 
     return filterArray.filter(element => {
-      for (let obj of Object.values(element)) {
-        return ((Array.isArray(obj) && obj[0].value.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-          || (!Array.isArray(obj)) && obj.value.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-      }
+      // console.log(element)
+      let array = Object.values(element)
+      return (array[1].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+      // console.log(array)
+
+
+      // for (let obj of Object.values(element)) {
+        // return ((Array.isArray(element) && array[1].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+        //   || (!Array.isArray(element)) && array[1].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+      // }
     })
   }
 

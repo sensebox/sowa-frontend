@@ -84,11 +84,9 @@ export class PhenomenaDetailComponent implements OnInit {
     };
     if (this.historic.button2) {
       return this.route.params.subscribe(res => {
-        console.log(this.route.params)
-        console.log(res)
         this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
           this.phenomenon = response;
-          console.log(response)
+          console.log(this.phenomenon)
           this.phenomenon.labels.forEach(element => {
             if (element["languageCode"] == "de") {
               this.prefLabel = element
@@ -99,7 +97,6 @@ export class PhenomenaDetailComponent implements OnInit {
               return
             }
           });
-          console.log(this.prefLabel.text)
           this.uri = this.phenomenon.labels[0].text;
           //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });

@@ -2,6 +2,7 @@ export class ISensorElement {
     id: number
     accuracy: number;
     phenomenonName: string;
+    phenomenonId: number;
     unit?: string
 
 
@@ -14,6 +15,7 @@ export class ISensorElement {
             this.unit = null;
         } else {
             this.unit = resSensorElement.accuracyUnit.name;
-        } 
+        };
+        this.phenomenonId = resSensorElement.phenomena.id
     }
 };
