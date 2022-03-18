@@ -58,7 +58,7 @@
             {{i+1}}
           </div>
           <div class="column is-10">
-            {{phenomena.label.item[0].text}}
+            {{phenomena.phenomenonLabel | labelLanguagePipe}}
           </div>
           <div class="column is-1">
             <span class="fa fa-stack fa-xs" *ngIf="phenomena.validation == true">

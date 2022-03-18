@@ -6,7 +6,7 @@ export class IPhenomena {
   
     constructor(resPhenomenon: any) {
         this.phenomenon = resPhenomenon.id;
-        this.phenomenonLabel = resPhenomenon.label.item[1].text;
+        this.phenomenonLabel = resPhenomenon.label.item;
         this.validation = resPhenomenon.validation;
     }
 }
