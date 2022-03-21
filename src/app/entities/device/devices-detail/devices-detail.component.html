@@ -1,5 +1,5 @@
 <div *ngIf="device">
-  <senph-hero-banner [title]="prefLabel?.text" [valid]="device.validation" [subtitle]="uri"
+  <senph-hero-banner [title]="device.labels | labelLanguagePipe" [valid]="device.validation" [subtitle]="uri"
     (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">>
   </senph-hero-banner>
 
@@ -66,14 +66,13 @@
                 <p class="title">URI</p>
                 <div class="content">
                   <strong>
-                    {{device.labels[1].text}}
+                    {{device.labels | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
               <article class="tile is-child notification is-warning">
                 <p class="title">Labels</p>
-                <p class="subtitle">These are the available labels in various languages for the
-                  {{prefLabel?.text}}:</p>
+                <p class="subtitle">These are the available labels in various languages for the {{device.labels | labelLanguagePipe}}:</p>
                 <div class="columns is-mobile is-multiline is-centered">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
@@ -133,7 +132,7 @@
                   <img class="is-rounded" src="{{APIURL}}/images/upload/{{device.image}}">
                 </figure>
                 <p>
-                  The {{prefLabel?.text}}. <a href="{{device.image}}">Source</a>
+                  The {{device.labels | labelLanguagePipe}}. <a href="{{device.image}}">Source</a>
                 </p>
               </article>
             </div>
@@ -149,7 +148,7 @@
 
             <article class="tile is-child notification is-danger">
               <p class="title">Sensors</p>
-              <p class="subtitle">These are the sensors that are part of the {{prefLabel?.text}}
+              <p class="subtitle">These are the sensors that are part of the {{device.labels | labelLanguagePipe}}
                 Device:
               </p>
               <div class="content">
@@ -180,7 +179,7 @@
                     <p class="bd-notification is-primary">
                       <a class=""  (click)="redirectDomain(sensor.sensor, '/sensor/detail/')">
                         <!-- {{searchPheno(dom.sensor.value, "sensor", sensorsArray , "sensorLabel")}} -->
-                        {{sensor.sensorLabel}}
+                        {{sensor.sensorLabel | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>

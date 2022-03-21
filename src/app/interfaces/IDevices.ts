@@ -6,7 +6,7 @@ export class IDevices {
 
     constructor(resDevice: any) {
         this.device = resDevice.id;
-        this.deviceLabel = resDevice.label.item[1].text;
+        this.deviceLabel = resDevice.label.item;
         this.validation = resDevice.validation;
     }
 }

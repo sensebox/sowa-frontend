@@ -1,6 +1,6 @@
 <div *ngIf="phenomenon != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.text" [valid]="phenomenon.validation" [subtitle]="uri"
+  <senph-hero-banner [title]="phenomenon.labels | labelLanguagePipe" [valid]="phenomenon.validation" [subtitle]="uri"
     (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">>
   </senph-hero-banner>
 
@@ -66,7 +66,7 @@
                 <p class="title">URI</p>
                 <div class="content">
                   <strong>
-                    {{phenomenon.labels[1].text}}
+                    {{phenomenon.labels | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
@@ -164,7 +164,7 @@
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
                       <a (click)="redirectDomain(domain.domain, '/domain/detail/')">
-                        {{domain.domainLabel}}
+                        {{domain.domainLabel | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>

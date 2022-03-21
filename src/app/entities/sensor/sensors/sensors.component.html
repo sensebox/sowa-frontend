@@ -37,7 +37,7 @@
             {{i+1}}
           </div>
           <div class="column is-10">
-            {{sensors.sensorLabel}}
+            {{sensors.sensorLabel | labelLanguagePipe}}
           </div>
           <div class="column is-1">
             <span class="fa fa-stack fa-xs" *ngIf="sensors.validation == true">

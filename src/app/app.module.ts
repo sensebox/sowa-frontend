@@ -60,6 +60,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
+import { LabelLanguagePipePipe } from './pipes/label-language-pipe.pipe';
 
 
 
@@ -108,7 +109,8 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
     LoadingComponent,
     ErrorLogComponent,
     ErrorLogContainerComponent,
-    ErrorLogModalComponent
+    ErrorLogModalComponent,
+    LabelLanguagePipePipe
   ],
   imports: [
     BrowserModule,

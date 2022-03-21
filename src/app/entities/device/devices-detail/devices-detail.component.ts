@@ -81,7 +81,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
         this.api.getDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
           console.log(this.device)
-          this.setPrefLabel();
+          // this.setPrefLabel();
           this.uri = this.device.labels[0].text;
           //this.uri = this.device.iri.value.slice(this.senphurl.length);
         });

@@ -55,13 +55,13 @@ export class DomainsDetailComponent implements OnInit {
         this.api.getDomain(res.iri).subscribe((response: IDomain) => {
           this.domain = response;
           console.log(this.domain)
-          this.domain.labels.forEach(element => {
-            if (element["languageCode"] == "en") {
-              this.prefLabel = element
-              return
-            }
-            this.prefLabel = element;
-          });
+          // this.domain.labels.forEach(element => {
+          //   if (element["languageCode"] == "en") {
+          //     this.prefLabel = element
+          //     return
+          //   }
+          //   this.prefLabel = element;
+          // });
           this.uri = this.domain.labels[0].text;
           // this.uri = this.domain.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
