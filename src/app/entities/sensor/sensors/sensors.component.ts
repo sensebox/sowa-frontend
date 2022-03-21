@@ -22,7 +22,7 @@ export class SensorsComponent implements OnInit {
 
   ngOnInit() {
     this.api.getSensors().subscribe(res => {
-      var tempArray: any = res;
+      this.sensorsArray = res;
 
       // tempArray = tempArray.filter(function (el) {
       //   // return (el.sensorLabel != undefined && el.sensorLabel[0] != undefined)
@@ -30,16 +30,16 @@ export class SensorsComponent implements OnInit {
 
       // })
       // console.log(this.sensorssArray);
-      tempArray.sort((a, b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
-      this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
-      console.dir(this.sensorsArray);
+      // tempArray.sort((a, b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
+      // this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
+      // console.dir(this.sensorsArray);
     });
   }
 
   onSelect(sensor) {
     this.acitivatePageLoad();
     this.selectedSensor = sensor;
-    this._routerService.navigate(['/sensor/detail/', sensor.sensor]);
+    this._routerService.navigate(['/sensor/detail/', sensor.id]);
 
   }
 

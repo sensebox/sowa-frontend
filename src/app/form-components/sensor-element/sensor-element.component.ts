@@ -56,7 +56,7 @@ export class SensorElementComponent implements OnInit {
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
-      phenomenonUri: ['', [Validators.required]],
+      phenomenon: ['', [Validators.required]],
       unitOfAccuracy: [{ value: '', disabled: false }, [Validators.required]],
       unitUndefined:[false],
       accuracyValue: [{ value: '', disabled: false }, [Validators.required]],
@@ -71,14 +71,14 @@ export class SensorElementComponent implements OnInit {
   retrievePhenomena() {
     this.api.getPhenomena().subscribe(res => {
       // console.log(res);
-      var tempArray: any = res;
+      this.phenomenaArray = res;
 
-      tempArray = tempArray.filter(function (el) {
-        return el.phenomenon.type != 'bnode'
-      })
-      // console.log(tempArray);
-      tempArray.sort((a, b) => a.phenomenonLabel[0].value.localeCompare(b.phenomenonLabel[0].value));
-      this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
+      // tempArray = tempArray.filter(function (el) {
+      //   return el.phenomenon.type != 'bnode'
+      // })
+      // // console.log(tempArray);
+      // // tempArray.sort((a, b) => a.phenomenonLabel[0].value.localeCompare(b.phenomenonLabel[0].value));
+      // this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
       // console.log(this.phenomenaArray);
     });
   }
@@ -87,7 +87,7 @@ export class SensorElementComponent implements OnInit {
     this.api.getUnits().subscribe(res => {
       this.unitsArray = res;
       // console.log(this.unitsArray);
-      this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
+      // this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
       // console.log(this.unitsArray);
     });
   }

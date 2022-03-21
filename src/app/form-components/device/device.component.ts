@@ -35,22 +35,22 @@ export class DeviceComponent implements OnInit {
 
   addDeviceFormGroup(): FormGroup {
     return this.fb.group({
-      deviceUri: ['', [Validators.required]]
+      device: ['', [Validators.required]]
     });
   }
 
   getSelectedDevice(id) {
-    return this.parentForm.value.device[id].deviceUri;
+    return this.parentForm.value.device[id].device;
   }
 
   retrieveDevices() {
     this.api.getDevices().subscribe(res => {
       this.devicesArray = res;
-      this.devicesArray = this.devicesArray.filter(function (el) {
-        return el.device.type != 'bnode'
-      })
+      // this.devicesArray = this.devicesArray.filter(function (el) {
+      //   return el.device.type != 'bnode'
+      // })
       // console.log(this.devicesArray);
-      this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      // this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
 
       // console.dir(this.devicesArray);
     });

@@ -206,7 +206,7 @@ export class SensorNewComponent implements OnInit {
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
-      phenomenonUri: ["", [Validators.required]],
+      phenomenon: ["", [Validators.required]],
       unitOfAccuracy: [{ value: "", disabled: false }, [Validators.required]],
       unitUndefined: [false],
       accuracyValue: [{ value: "", disabled: false }, [Validators.required]],
@@ -216,7 +216,7 @@ export class SensorNewComponent implements OnInit {
 
   addDeviceFormGroup(): FormGroup {
     return this.fb.group({
-      deviceUri: ["", [Validators.required]],
+      device: ["", [Validators.required]],
     });
   }
 
@@ -231,8 +231,8 @@ export class SensorNewComponent implements OnInit {
     return this.sensorForm.get("image") as FormArray;
   }
 
-  redirectDetails(uri) {
-    this._routerService.navigate(["/sensor/detail", uri]);
+  redirectDetails(id) {
+    this._routerService.navigate(["/sensor/detail", id]);
   }
 
   onLoadButtonClick() {}

@@ -20,18 +20,18 @@
                                     <div class="field is-narrow">
                                         <div class="control">
                                             <div class="select ">
-                                                <select [id]="'phenomenonUri' + i" formControlName="phenomenonUri">
+                                                <select [id]="'phenomenon' + i" formControlName="phenomenon">
                                                     <option value=""> Choose a phenomenon</option>
                                                     <option *ngFor="let phenomenon of phenomenaArray"
-                                                        [ngValue]="phenomenon.phenomenon.value">
-                                                        {{phenomenon.phenomenonLabel[0].value}}
+                                                        [ngValue]="phenomenon.id">
+                                                        {{phenomenon.label.item | labelLanguagePipe }}
                                                     </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <span class="help-block error-block"
-                                            *ngIf="sensorElement.controls[i].get('phenomenonUri').errors?.required &&
-                                                            (sensorElement.controls[i].get('phenomenonUri').touched || !sensorElement.controls[i].get('phenomenonUri').pristine)">
+                                            *ngIf="sensorElement.controls[i].get('phenomenon').errors?.required &&
+                                                            (sensorElement.controls[i].get('phenomenon').touched || !sensorElement.controls[i].get('phenomenon').pristine)">
                                             {{validationMessages.label.required}}
                                         </span>
                                     </div>
@@ -88,8 +88,8 @@
                                             <div class="select ">
                                                 <select [id]="'unitOfAccuracy' + i" formControlName="unitOfAccuracy">
                                                     <option value=""> Choose a unit</option>
-                                                    <option *ngFor="let unit of unitsArray" [ngValue]="unit.y.value">
-                                                        {{unit.label.value}}
+                                                    <option *ngFor="let unit of unitsArray" [ngValue]="unit.id">
+                                                        {{unit.name}}
                                                     </option>
                                                 </select>
                                             </div>
