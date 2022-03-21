@@ -28,8 +28,9 @@ export class IPhenomenon {
         }
 
         case "label": {
-          this.labels.push(new ILabel(res[property].item[0]));
-          this.labels.push(new ILabel(res[property].item[1]));
+          res[property].item.forEach(item => {
+            this.labels.push(new ILabel(item))
+          })
           break;
         }
 

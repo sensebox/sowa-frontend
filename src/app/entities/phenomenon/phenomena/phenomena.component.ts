@@ -22,20 +22,20 @@ export class PhenomenaComponent implements OnInit {
 
   ngOnInit() {
     this.api.getPhenomena().subscribe(res => {
-      var tempArray: any = res;
+      // var tempArray: any = res;
     
       // tempArray =  tempArray.filter(function (el){
-      //   return el.phenomenon.type != 'bnode'
-      // })
-      tempArray.sort((a,b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
-      this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
-      console.dir(this.phenomenaArray);
+        //   return el.phenomenon.type != 'bnode'
+        // })
+        // tempArray.sort((a,b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
+        // this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
+        this.phenomenaArray = res;
     });
   }
 
   onSelect(phenomenon){
     this.selectedPhenomenon = phenomenon;
     // console.log(phenomenon)
-    this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon]);
+    this._routerService.navigate(['/phenomenon/detail/', phenomenon.id]);
   }
 }

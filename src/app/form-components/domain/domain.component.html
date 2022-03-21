@@ -17,17 +17,17 @@
                             <div class="field is-narrow">
                                 <div class="control">
                                     <div class="select ">
-                                        <select [id]="'domainUri' + i" formControlName="domainUri">
+                                        <select [id]="'domain' + i" formControlName="domain">
                                             <option value=""> Choose a domain</option>
-                                            <option *ngFor="let domain of domainsArray" [ngValue]="domain.domain.value">
-                                                {{domain.label[0]?.value}}
+                                            <option *ngFor="let domain of domainsArray" [ngValue]="domain.id">
+                                                {{domain.label.item | labelLanguagePipe}}
                                             </option>
                                         </select>
                                     </div>
                                 </div>
                                 <span class="help-block error-block"
-                                    *ngIf="domain.controls[i].get('domainUri').errors?.required &&
-                                (domain.controls[i].get('domainUri').touched || !domain.controls[i].get('domainUri').pristine)">
+                                    *ngIf="domain.controls[i].get('domain').errors?.required &&
+                                (domain.controls[i].get('domain').touched || !domain.controls[i].get('domain').pristine)">
                                     {{validationMessages.domain.required}}
                                 </span>
                             </div>

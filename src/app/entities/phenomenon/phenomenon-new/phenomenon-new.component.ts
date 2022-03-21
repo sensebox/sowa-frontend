@@ -103,7 +103,7 @@ export class PhenomenonNewComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domainUri: ["", [Validators.required]],
+      domain: ["", [Validators.required]],
     });
   }
 
@@ -161,6 +161,7 @@ export class PhenomenonNewComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    console.log(this.phenomenonForm);
 
     if (this.phenomenonForm.invalid) {
       bulmaToast.toast({

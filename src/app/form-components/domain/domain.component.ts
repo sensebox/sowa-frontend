@@ -35,22 +35,23 @@ export class DomainComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domainUri: ['', [Validators.required]]
+      domain: ['', [Validators.required]]
     });
   }
 
   getSelectedDomain(id) {
-    return this.parentForm.value.domain[id].domainUri;
+    return this.parentForm.value.domain[id].domain;
   }
 
   retrieveDomains() {
     this.api.getDomains().subscribe(res => {
       this.domainsArray = res;
-      this.domainsArray = this.domainsArray.filter(function (el) {
-        return el.domain.type != 'bnode'
-      })
+      console.log("DOMAINS",res)
+      // this.domainsArray = this.domainsArray.filter(function (el) {
+      //   return el.domain.type != 'bnode'
+      // })
       // console.log(this.domainsArray);
-      this.domainsArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      // this.domainsArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
 
       // console.dir(this.domainsArray);
     });

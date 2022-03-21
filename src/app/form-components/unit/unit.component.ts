@@ -50,7 +50,7 @@ export class UnitComponent implements OnInit {
     this.api.getUnits().subscribe(res => {
       this.unitsArray = res;
       // console.log(this.unitsArray);
-      this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
+      // this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
       // console.log(this.unitsArray);
     });
   }

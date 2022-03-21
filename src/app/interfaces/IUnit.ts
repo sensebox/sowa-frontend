@@ -1,8 +1,9 @@
 export class IUnit {
     id: number;
     unitLabel: string;
-    min: number;
-    max: number;
+    unitAbbr: string;
+    min?: number;
+    max?: number;
 
     constructor(resUnit: any) {
         this.id = resUnit.unit.id;
