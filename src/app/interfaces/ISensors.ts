@@ -6,7 +6,7 @@ export class ISensors {
     
     constructor(resSensor: any) {
         this.sensor = resSensor.id;
-        this.sensorLabel = resSensor.label.item[1].text;
+        this.sensorLabel = resSensor.label.item;
         this.validation = resSensor.validation;
     }
 };

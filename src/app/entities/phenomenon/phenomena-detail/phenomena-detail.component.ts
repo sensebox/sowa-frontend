@@ -87,16 +87,16 @@ export class PhenomenaDetailComponent implements OnInit {
         this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
           this.phenomenon = response;
           console.log(this.phenomenon)
-          this.phenomenon.labels.forEach(element => {
-            if (element["languageCode"] == "de") {
-              this.prefLabel = element
-              return
-            }
-            if (element["languageCode"] == "en") {
-              this.prefLabel = element
-              return
-            }
-          });
+          // this.phenomenon.labels.forEach(element => {
+          //   if (element["languageCode"] == "de") {
+          //     this.prefLabel = element
+          //     return
+          //   }
+          //   if (element["languageCode"] == "en") {
+          //     this.prefLabel = element
+          //     return
+          //   }
+          // });
           this.uri = this.phenomenon.labels[0].text;
           //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });

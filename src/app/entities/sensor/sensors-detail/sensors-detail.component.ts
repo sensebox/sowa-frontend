@@ -86,13 +86,13 @@ export class SensorsDetailComponent implements OnInit {
         this.api.getSensor(res.iri).subscribe((response: ISensor) => {
           this.sensor = response;
           console.log(this.sensor)
-          this.sensor.labels.forEach(element => {
-            if (element["languageCode"] == "en") {
-              this.prefLabel = element
-              return
-            }
-            this.prefLabel = element;
-          });
+          // this.sensor.labels.forEach(element => {
+          //   if (element["languageCode"] == "en") {
+          //     this.prefLabel = element
+          //     return
+          //   }
+          //   this.prefLabel = element;
+          // });
           this.uri = this.sensor.labels[0].text
           // this.uri = this.sensor.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);

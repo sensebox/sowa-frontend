@@ -1,6 +1,6 @@
 <div *ngIf="domain != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.text" [valid]="domain.validation" [subtitle]="domain.labels[0].text"
+  <senph-hero-banner [title]="domain.labels | labelLanguagePipe" [valid]="domain.validation" [subtitle]="uri"
     (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
   </senph-hero-banner>
 
@@ -67,14 +67,13 @@
                 <p class="title">URI</p>
                 <div class="content">
                   <strong>
-                    {{domain.labels[1].text}}
+                    {{domain.labels | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
               <article class="tile is-child notification is-warning">
                 <p class="title">Labels</p>
-                <p class="subtitle">These are the available labels in various languages for the
-                  {{prefLabel?.text}}:</p>
+                <p class="subtitle">These are the available labels in various languages for the {{domain.labels | labelLanguagePipe}}:</p>
                 <div class="columns is-mobile is-multiline is-centered">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
@@ -133,8 +132,7 @@
 
             <article class="tile is-child notification is-danger">
               <p class="title">Phenomena</p>
-              <p class="subtitle">These are the phenomena that can be measured using the {{prefLabel?.text}}
-                Sensor:
+              <p class="subtitle">These are the phenomena that can be measured using the {{domain.labels | labelLanguagePipe}} Sensor:
               </p>
               <div class="content">
                 <div class="columns is-mobile is-multiline is-centered">
@@ -163,7 +161,7 @@
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
                       <a class="" (click)="redirectDomain(phenomenon.phenomenon, '/phenomenon/detail/')">
-                        {{phenomenon.phenomenonLabel}}
+                        {{phenomenon.phenomenonLabel | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>
