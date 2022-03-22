@@ -16,7 +16,6 @@ export class FilterPipePipe implements PipeTransform {
     return filterArray.filter(element => {
       // console.log(element)
       let translationArray = Object.values(element)[1];
-      console.log(translationArray)
       if (translationArray.length > 1) {
         for (let i = 0; i < translationArray.length; i++) {
           if(translationArray[i].languageCode === "en") {
@@ -27,17 +26,6 @@ export class FilterPipePipe implements PipeTransform {
       } else {
         return (translationArray[0].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
       }
-
-
-      
-      // return (translationArray[0].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-      // console.log(array)
-
-
-      // for (let obj of Object.values(element)) {
-        // return ((Array.isArray(element) && array[1].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-        //   || (!Array.isArray(element)) && array[1].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-      // }
     })
   }
 
