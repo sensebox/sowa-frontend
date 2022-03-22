@@ -48,7 +48,7 @@ export class SensorsComponent implements OnInit {
   }
 
   createRoute(i) {
-    return (['/sensor', this.sensorsArray[i].sensor.value.slice(this.senphurl.length)]);
+    return (['/sensor', this.sensorsArray[i].sensor.id]);
   }
 
   acitivatePageLoad() {

@@ -169,7 +169,7 @@ export class DeviceNewComponent implements OnInit {
 
   addSensorFormGroup(): FormGroup {
     return this.fb.group({
-      sensorUri: ["", [Validators.required]],
+      sensor: ["", [Validators.required]],
     });
   }
 
