@@ -20,6 +20,7 @@ export class UnitComponent implements OnInit {
       'required': 'Please select a unit.'
     }
   };
+  deletedUnits = new FormArray([]);
 
   ngOnInit() {
     this.retrieveUnits();
@@ -37,7 +38,8 @@ export class UnitComponent implements OnInit {
     return this.fb.group({
       unitUri: ['', [Validators.required]],
       min: ['', []],
-      max: ['', []]
+      max: ['', []],
+      rovId: null
     });
   }
 
@@ -56,6 +58,18 @@ export class UnitComponent implements OnInit {
   }
 
   removeUnitButtonClick(skillGroupIndex: number): void {
+
+    let deletedUnit = (<FormArray>this.parentForm.get('unit')).at(skillGroupIndex);
+    // console.log(deletedUnit.value.rovId)
+    if (deletedUnit.value.rovId !== null) {
+      this.deletedUnits.push(deletedUnit);
+      console.log(this.deletedUnits)
+      this.parentForm.setControl(
+        "deletedUnits",
+        this.deletedUnits
+      )
+    }
+
     (<FormArray>this.parentForm.get('unit')).removeAt(skillGroupIndex);
   }
 }

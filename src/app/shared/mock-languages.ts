@@ -2,7 +2,9 @@ import { Language } from '../interfaces/Language';
 
 export const LANGUAGES: Language[] = [
     { val: "de", show: "German"},
-    { val: "en", show: "English"}
+    { val: "en", show: "English"},
+    { val: "fr", show: "French" },
+    { val: "es", show: "Spanish" },
 ]
 // export const LANGUAGES: Language[] = [
 //     { val: "ab", show: "Abkhazian" },

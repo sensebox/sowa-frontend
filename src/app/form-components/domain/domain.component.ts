@@ -20,6 +20,7 @@ export class DomainComponent implements OnInit {
       'required': 'Please select a domain.'
     } 
   };
+  deletedDomains = new FormArray([]);
 
   ngOnInit() {
     this.retrieveDomains();
@@ -35,7 +36,8 @@ export class DomainComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domain: ['', [Validators.required]]
+      domain: ['', [Validators.required]],
+      exists: [false, [Validators.required]]
     });
   }
 
@@ -46,7 +48,7 @@ export class DomainComponent implements OnInit {
   retrieveDomains() {
     this.api.getDomains().subscribe(res => {
       this.domainsArray = res;
-      console.log("DOMAINS",res)
+      // console.log("DOMAINS",res)
       // this.domainsArray = this.domainsArray.filter(function (el) {
       //   return el.domain.type != 'bnode'
       // })
@@ -58,6 +60,18 @@ export class DomainComponent implements OnInit {
   }
 
   removeDomainButtonClick(skillGroupIndex: number): void {
+
+    let deletedDomain = (<FormArray>this.parentForm.get('domain')).at(skillGroupIndex);
+    console.log(deletedDomain.value)
+    if (deletedDomain.value.exists === true) {
+      this.deletedDomains.push(deletedDomain);
+      console.log(this.deletedDomains)
+      this.parentForm.setControl(
+        "deletedDomains",
+        this.deletedDomains
+      )
+    }
+
     (<FormArray>this.parentForm.get('domain')).removeAt(skillGroupIndex);
   }
 }

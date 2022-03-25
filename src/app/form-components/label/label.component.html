@@ -30,8 +30,8 @@
                             </div>
                             <div class="field">
                                 <div class="control is-expanded">
-                                    <div class="select ">
-                                        <select [id]="'lang' + i" formControlName="lang">
+                                    <div class="select " >
+                                        <select [id]="'lang' + i" formControlName="lang" [disabled]="label.controls[i].get('translationId').value == 38">
                                             <option value=""> Choose a language</option>
                                             <option *ngFor="let language of languageArray" [ngValue]="language.val">
                                                 {{language.show}}

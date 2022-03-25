@@ -97,7 +97,7 @@ export class PhenomenaDetailComponent implements OnInit {
           //     return
           //   }
           // });
-          this.uri = this.phenomenon.labels[0].text;
+          this.uri = this.phenomenon.id;
           //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })

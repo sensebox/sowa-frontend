@@ -1,9 +1,9 @@
 import { IUnit } from '../interfaces/IUnit';
 
 export const UNITS: IUnit[] = [
-    { id: 1, unitLabel: "Degree Celsius", unitAbbr: "°C"},
-    { id: 2, unitLabel: "Parts per million", unitAbbr: "ppm"},
-    { id: 3, unitLabel: "Pascal", unitAbbr: "P"},
-    { id: 4, unitLabel: "Percent", unitAbbr: "%"},
-    { id: 5, unitLabel: "Degree Fahrenheut", unitAbbr: "°F"}
+    { unitId: 1, unitLabel: "Degree Celsius", unitAbbr: "°C"},
+    { unitId: 2, unitLabel: "Parts per million", unitAbbr: "ppm"},
+    { unitId: 3, unitLabel: "Pascal", unitAbbr: "P"},
+    { unitId: 4, unitLabel: "Percent", unitAbbr: "%"},
+    { unitId: 5, unitLabel: "Degree Fahrenheit", unitAbbr: "°F"}
 ]
