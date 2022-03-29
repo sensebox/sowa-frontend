@@ -27,17 +27,6 @@ export class FilterPipePipe implements PipeTransform {
       } else {
         return (translationArray[0].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
       }
-
-
-      
-      // return (translationArray[0].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-      // console.log(array)
-
-
-      // for (let obj of Object.values(element)) {
-        // return ((Array.isArray(element) && array[1].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-        //   || (!Array.isArray(element)) && array[1].toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-      // }
     })
   }
 
