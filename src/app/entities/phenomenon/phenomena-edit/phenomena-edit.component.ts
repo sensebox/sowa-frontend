@@ -154,7 +154,7 @@ export class PhenomenaEditComponent implements OnInit {
   }
 
   editPhenomenon(phenomenon) {
-    console.log(phenomenon);
+    // console.log(phenomenon);
     this.phenomenonForm.patchValue({
       id: phenomenon.id,
     });
@@ -251,7 +251,7 @@ export class PhenomenaEditComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      console.dir(this.phenomenonForm.value)
+      //console.dir(this.phenomenonForm.value)
       this.api.editPhenomenon(this.phenomenonForm.value).subscribe(
         (res) => {
           bulmaToast.toast({
