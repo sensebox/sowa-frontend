@@ -13,6 +13,7 @@ import * as bulmaToast from "bulma-toast";
 import { UploadResult } from "src/app/interfaces/uploadResult";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { IPhenomenon } from "src/app/interfaces/IPhenomenon";
 
 @Component({
   selector: "senph-phenomena-edit",
@@ -20,7 +21,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./phenomena-edit.component.scss"],
 })
 export class PhenomenaEditComponent implements OnInit {
-  heroBannerString = "http://sensors.wiki/SENPH#";
+  // heroBannerString = "http://sensors.wiki/SENPH#";
   APIURL = environment.api_url;
 
   phenomenonForm: FormGroup;
@@ -64,6 +65,7 @@ export class PhenomenaEditComponent implements OnInit {
       deletedLabels: this.fb.array([]),
       deletedDomains: this.fb.array([]),
       deletedUnits: this.fb.array([]),
+      translationIds: [[], [Validators.required]]
     });
 
     // this.phenomenonForm.valueChanges.subscribe((data) => {
@@ -183,6 +185,10 @@ export class PhenomenaEditComponent implements OnInit {
       "unit",
       this.setExistingUnits(phenomenon.units)
     );
+
+    this.phenomenonForm.patchValue({
+      translationIds: this.setTranslationIds(phenomenon),
+    })
   }
 
   setExistingDomains(domainSet: IDomains[]): FormArray {
@@ -228,6 +234,15 @@ export class PhenomenaEditComponent implements OnInit {
     });
     return formArray;
   }
+
+  setTranslationIds(phenomenon: IPhenomenon) {
+    console.log(phenomenon)
+    const array = [];
+    array.push(phenomenon.labels[0].translationId);
+    array.push(phenomenon.description["item"][0].translationId);
+    array.push(phenomenon.markdown["item"][0].translationId);
+    return array;
+  } 
 
   redirectDetails(uri) {
     this._routerService.navigate(["/phenomenon/detail", uri]);
@@ -310,6 +325,7 @@ export class PhenomenaEditComponent implements OnInit {
   }
 
   onDelete() {
+    console.log(this.phenomenonForm.getRawValue())
     this.api.deletePhenomenon(this.phenomenonForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({
