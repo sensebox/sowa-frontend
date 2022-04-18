@@ -150,6 +150,7 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+
   deleteSensor(sensor) {
     return this.http
       .post(this.APIURL + "/sensors/sensor/delete/", sensor, {

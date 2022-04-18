@@ -36,13 +36,13 @@ export class DomainComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domain: ['', [Validators.required]],
+      domain: [null, [Validators.required]],
       exists: [false, [Validators.required]]
     });
   }
 
   getSelectedDomain(id) {
-    return this.parentForm.value.domain[id].domain;
+    return this.parentForm.getRawValue().domain[id].domain;
   }
 
   retrieveDomains() {

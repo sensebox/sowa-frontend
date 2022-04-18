@@ -13,6 +13,7 @@ export class IDevice {
     this.labels = [];
     this.sensors = [];
 
+
     for (let property in res) {
       switch(property){
 

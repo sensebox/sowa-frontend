@@ -82,7 +82,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
           this.device = response;
           console.log(this.device)
           // this.setPrefLabel();
-          this.uri = this.device.labels[0].text;
+          this.uri = this.device.id;
           //this.uri = this.device.iri.value.slice(this.senphurl.length);
         });
       })
@@ -120,8 +120,8 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editButtonClick(shortUri) {
-    this._routerService.navigate(['/device/edit', shortUri]);
+  editButtonClick(uri) {
+    this._routerService.navigate(['/device/edit', uri]);
   }
 
   redirectHistoricDetails(uri, historicUri) {

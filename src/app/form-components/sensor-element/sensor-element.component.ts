@@ -40,11 +40,13 @@ export class SensorElementComponent implements OnInit {
       'required': 'Please select a value of accuracy.'
     }
   };
+  deletedSensorElements = new FormArray([]);
 
   ngOnInit() {
     this.retrievePhenomena();
     this.retrieveUnits();
   }
+  
 
   get sensorElement(): FormArray {
     return this.parentForm.get('sensorElement') as FormArray;
@@ -56,22 +58,26 @@ export class SensorElementComponent implements OnInit {
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
-      phenomenon: ['', [Validators.required]],
-      unitOfAccuracy: [{ value: '', disabled: false }, [Validators.required]],
+      sensorElementId: [null, [Validators.required]],
+      phenomenonId: [null, [Validators.required]],
+      unitId: [null, [Validators.required]],
+      // unitOfAccuracy: [{ value: null, disabled: false }, [Validators.required]],
       unitUndefined:[false],
-      accuracyValue: [{ value: '', disabled: false }, [Validators.required]],
+      accuracyValue: [{ value: null, disabled: false }, [Validators.required]],
       accValUndefined: [false],
+      exists: [false, [Validators.required]]
     });
   }
 
   getSelectedPhenomenon(id) {
-    return this.parentForm.value.sensorElement[id].phenomenonUri;
+    return this.parentForm.value.sensorElement[id].phenomenonId;
   }
 
   retrievePhenomena() {
     this.api.getPhenomena().subscribe(res => {
-      // console.log(res);
       this.phenomenaArray = res;
+      //console.log(res);
+      // console.log(this.phenomenaArray)
 
       // tempArray = tempArray.filter(function (el) {
       //   return el.phenomenon.type != 'bnode'
@@ -86,7 +92,6 @@ export class SensorElementComponent implements OnInit {
   retrieveUnits() {
     this.api.getUnits().subscribe(res => {
       this.unitsArray = res;
-      // console.log(this.unitsArray);
       // this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
       // console.log(this.unitsArray);
     });
@@ -95,18 +100,31 @@ export class SensorElementComponent implements OnInit {
   toggleDisabled(e, dom, i) {
     console.log(e);
     if (e.target.checked) {
-      // this.tempValue[i] = dom.value;
+      this.tempValue[i] = dom.value;
       dom.disable();
-      dom.setValue('undefined');
+      dom.setValue(null);
     }
     else {
       dom.enable();
-      dom.setValue('');
+      dom.setValue(this.tempValue[i]);
     }
   }
 
 
   removeSensorElementButtonClick(skillGroupIndex: number): void {
+
+    let deletedSensorElement = (<FormArray>this.parentForm.get('sensorElement')).at(skillGroupIndex);
+    console.log(deletedSensorElement.value)
+    if (deletedSensorElement.value.exists === true) {
+      this.deletedSensorElements.push(deletedSensorElement);
+      console.log(this.deletedSensorElements)
+      this.parentForm.setControl(
+        "deletedSensorElements",
+        this.deletedSensorElements
+      )
+    }
+
+
     (<FormArray>this.parentForm.get('sensorElement')).removeAt(skillGroupIndex);
   }
 }

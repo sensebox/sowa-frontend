@@ -106,11 +106,7 @@ export class SensorNewComponent implements OnInit {
 
     this.sensorForm = this.fb.group(
       {
-        uri: [
-          "",
-          [Validators.required, CustomValidators.uriSyntax],
-          this.validationService.urlValidator(this.httpClient),
-        ],
+        id: [null, [Validators.required]],
         label: this.fb.array([this.addLabelFormGroup()]),
         description: ["", [Validators.required]],
         markdown: [""],
@@ -118,10 +114,7 @@ export class SensorNewComponent implements OnInit {
         device: this.fb.array([this.addDeviceFormGroup()]),
         manufacturer: [{ value: "", disabled: false }, [Validators.required]],
         price: [{ value: "", disabled: false }, [Validators.required]],
-        datasheet: [
-          { value: "", disabled: false },
-          [Validators.required, CustomValidators.uriSyntax],
-        ],
+        datasheet: [{ value: "", disabled: false },[Validators.required, CustomValidators.uriSyntax],],
         lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
         image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
         validation: [false, [Validators.required]],
@@ -206,7 +199,8 @@ export class SensorNewComponent implements OnInit {
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
-      phenomenon: ["", [Validators.required]],
+      phenomenonId: ["", [Validators.required]],
+      unitId: [null, [Validators.required]],
       unitOfAccuracy: [{ value: "", disabled: false }, [Validators.required]],
       unitUndefined: [false],
       accuracyValue: [{ value: "", disabled: false }, [Validators.required]],

@@ -22,13 +22,16 @@ export class ISensor {
   datasheet: string;
   validation: boolean;
   sensorElements: ISensorElement[];
-  
+  devices: IDevices[];
   
   
 
   constructor(res: any) {
     this.labels = [];
     this.sensorElements = [];
+    this.devices = [];
+
+    console.log(res)
 
     for (let property in res) {
       switch(property){
@@ -39,8 +42,8 @@ export class ISensor {
         }
 
         case "label": {
-          res[property].item.forEach(item => {
-            this.labels.push(new ILabel(item))
+          res[property].item.forEach(element => {
+            this.labels.push(new ILabel(element))
           })
           break;
         }
@@ -83,6 +86,13 @@ export class ISensor {
         case "elements": {
           res[property].forEach((element: any) => {
             this.sensorElements.push(new ISensorElement(element));
+          })
+          break;
+        }
+
+        case "devices": {
+          res[property].forEach((element: any) => {
+            this.devices.push(new IDevices(element));
           })
           break;
         }

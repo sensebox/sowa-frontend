@@ -3,7 +3,7 @@
         <div [formGroupName]="i" style=" padding:1em;">
             <article class="message is-small is-inverted ">
                 <div class="message-header">
-                    <p>{{getSelectedPhenomenon(i)}}</p>
+                    <!-- <p>{{getSelectedPhenomenon(i)}}</p> -->
                     <button class="button is-small is-danger" (click)="removeSensorElementButtonClick(i)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
@@ -20,8 +20,8 @@
                                     <div class="field is-narrow">
                                         <div class="control">
                                             <div class="select ">
-                                                <select [id]="'phenomenon' + i" formControlName="phenomenon">
-                                                    <option value=""> Choose a phenomenon</option>
+                                                <select [id]="'phenomenonId' + i" formControlName="phenomenonId">
+                                                    <option value="null"> Choose a phenomenon</option>
                                                     <option *ngFor="let phenomenon of phenomenaArray"
                                                         [ngValue]="phenomenon.id">
                                                         {{phenomenon.label.item | labelLanguagePipe }}
@@ -30,8 +30,8 @@
                                             </div>
                                         </div>
                                         <span class="help-block error-block"
-                                            *ngIf="sensorElement.controls[i].get('phenomenon').errors?.required &&
-                                                            (sensorElement.controls[i].get('phenomenon').touched || !sensorElement.controls[i].get('phenomenon').pristine)">
+                                            *ngIf="sensorElement.controls[i].get('phenomenonId').errors?.required &&
+                                                            (sensorElement.controls[i].get('phenomenonId').touched || !sensorElement.controls[i].get('phenomenonId').pristine)">
                                             {{validationMessages.label.required}}
                                         </span>
                                     </div>
@@ -49,7 +49,7 @@
                                     <div class="field is-narrow">
                                         <div class="control">
                                             <input class="input is-normal" type="number" step="0.0000000001"
-                                                placeholder="0.0000000001" [id]="'accuracyValue' + i"
+                                                placeholder="0.0" [id]="'accuracyValue' + i"
                                                 formControlName="accuracyValue">
                                         </div>
                                         <span class="help-block error-block"
@@ -86,8 +86,8 @@
                                     <div class="field is-narrow">
                                         <div class="control">
                                             <div class="select ">
-                                                <select [id]="'unitOfAccuracy' + i" formControlName="unitOfAccuracy">
-                                                    <option value=""> Choose a unit</option>
+                                                <select [id]="'unitId' + i" formControlName="unitId">
+                                                    <option value="null"> Choose a unit</option>
                                                     <option *ngFor="let unit of unitsArray" [ngValue]="unit.id">
                                                         {{unit.name}}
                                                     </option>
@@ -95,8 +95,8 @@
                                             </div>
                                         </div>
                                         <span class="help-block error-block"
-                                            *ngIf="sensorElement.controls[i].get('unitOfAccuracy').errors?.required &&
-                                                            (sensorElement.controls[i].get('unitOfAccuracy').touched || !sensorElement.controls[i].get('unitOfAccuracy').pristine 
+                                            *ngIf="sensorElement.controls[i].get('unitId').errors?.required &&
+                                                            (sensorElement.controls[i].get('unitId').touched || !sensorElement.controls[i].get('unitId').pristine 
                                                             || sensorElement.controls[i].get('unitUndefined').touched || !sensorElement.controls[i].get('unitUndefined').pristine)">
                                             {{validationMessages.unitOfAccuracy.required}}
                                         </span>
@@ -109,7 +109,7 @@
                                 <div class="control">
                                     <label class="checkbox">
                                         <input type="checkbox" [id]="unitRadio + i" formControlName='unitUndefined'
-                                            (change)="toggleDisabled($event, dom.get('unitOfAccuracy'), unit)">
+                                            (change)="toggleDisabled($event, dom.get('unitId'), unit)">
                                         Unknown
                                     </label>
                                 </div>

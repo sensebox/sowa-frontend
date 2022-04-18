@@ -21,6 +21,7 @@ export class SensorComponent implements OnInit {
       'required': 'Please select a sensor.'
     } 
   };
+  deletedSensors = new FormArray([]);
 
   ngOnInit() {
     this.retrieveSensors();
@@ -36,27 +37,41 @@ export class SensorComponent implements OnInit {
 
   addSensorFormGroup(): FormGroup {
     return this.fb.group({
-      sensorUri: ['', [Validators.required]]
+      sensor: [null, [Validators.required]],
+      exists: [false, [Validators.required]]
+
     });
   }
 
   getSelectedSensor(id) {
-    return this.parentForm.value.sensor[id].sensorUri;
+    return this.parentForm.getRawValue().sensor[id].sensor;
   }
 
   retrieveSensors() {
     this.api.getSensors().subscribe(res => {
       this.sensorsArray = res;
-      this.sensorsArray = this.sensorsArray.filter(function (el) {
-        return el.sensor.type != 'bnode'
-      })
-      this.sensorsArray.sort((a, b) => a.sensorLabel[0].value.localeCompare(b.sensorLabel[0].value));
+      // this.sensorsArray = this.sensorsArray.filter(function (el) {
+      //   return el.sensor.type != 'bnode'
+      // })
+      // this.sensorsArray.sort((a, b) => a.sensorLabel[0].value.localeCompare(b.sensorLabel[0].value));
 
       // console.dir(this.sensorsArray);
     });
   }
 
   removeSensorButtonClick(skillGroupIndex: number): void {
+
+    let deletedSensor = (<FormArray>this.parentForm.get('sensor')).at(skillGroupIndex);
+    console.log(deletedSensor.value)
+    if (deletedSensor.value.exists === true) {
+      this.deletedSensors.push(deletedSensor);
+      console.log(this.deletedSensors)
+      this.parentForm.setControl(
+        "deletedSensors",
+        this.deletedSensors
+      )
+    }
+
     (<FormArray>this.parentForm.get('sensor')).removeAt(skillGroupIndex);
   }
 }

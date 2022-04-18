@@ -18,7 +18,7 @@
                                 <div class="control">
                                     <div class="select ">
                                         <select [id]="'domain' + i" formControlName="domain">
-                                            <option value=""> Choose a domain</option>
+                                            <option value="null"> Choose a domain</option>
                                             <option *ngFor="let domain of domainsArray" [ngValue]="domain.id">
                                                 {{domain.label.item | labelLanguagePipe}}
                                             </option>

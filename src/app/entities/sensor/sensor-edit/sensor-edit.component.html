@@ -6,7 +6,7 @@
 
 
   <!-- 1.1 BANNER -->
-  <senph-hero-banner title="Edit Sensor:" [subtitle]="heroBannerString + sensorForm.get('uri').value"
+  <senph-hero-banner title="Edit Sensor:" [subtitle]="shortUri"
     button="Back to Detail-View" (myEvent)="redirectDetails(shortUri)">
   </senph-hero-banner>
 
@@ -16,7 +16,7 @@
 
 
     <!-- 1.2.1 URI -->
-    <div class="container well some-space">
+    <!-- <div class="container well some-space">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">URI:</label>
@@ -40,7 +40,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
     <!-- 1.2.2 LABELS -->
@@ -58,8 +58,8 @@
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="control">
-              <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
+            <div formGroupName="description" class="control">
+              <textarea class="textarea is-normal" type="text" id="description" formControlName="text"
                 (blur)="logValidationErrors()"></textarea>
             </div>
             <span class="help-block">Please enter a short description of the sensor and its capabilities.</span>
@@ -71,18 +71,18 @@
       </div>
     </div>
 
-    <!-- Markdown Editor -->
+    <!-- Markdown Editor
     <div class="container well some-space">
       <div class="field is-horizontal">
         <div class="field-label is-normal">
           <label class="label">Explanation:</label>
         </div>
-        <div class="container well come-space">
-          <md-editor formControlName="markdown" name="Content" [height]="'400px'" [upload]="doUpload">
+        <div formGroupName="markdown" class="container well come-space">
+          <md-editor formControlName="text" name="Content" [height]="'400px'" [upload]="doUpload">
           </md-editor>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
     <!-- 1.2.4 PHENOMENA/SENSORELEMENTS -->
@@ -91,13 +91,11 @@
       <senph-sensor-element [parentForm]="sensorForm"></senph-sensor-element>
     </div>
 
-
     <!-- 1.2.5 DEVICES -->
     <div class="container well some-space">
       <label for="device">Devices</label>
       <senph-device [parentForm]="sensorForm"></senph-device>
     </div>
-
 
     <!-- 1.2.6 MANUFACTURER -->
     <senph-text [formErrors]="formErrors" label="Manufacturer" id="manufacturer"
@@ -133,7 +131,7 @@
           </span>
         </label>
       </div>
-      <div *ngIf="sensorForm.value.image != 'null' else noImage" id="image" class="column is-2">
+      <div *ngIf="sensorForm.value.image != null else noImage" id="image" class="column is-2">
         <figure class="image is-128x128">
           <img id="previewImage" class="is-rounded" [src]="previewPath">
           <a (click)="deleteImage()" class="delete is-medium has-background-danger"

@@ -18,7 +18,7 @@
                                 <div class="control">
                                     <div class="select ">
                                         <select [id]="'unitUri' + i" formControlName="unitUri">
-                                            <option value=""> Choose a unit</option>
+                                            <option value="null"> Choose a unit</option>
                                             <option *ngFor="let unit of unitsArray" [ngValue]="unit.id">
                                                 {{unit.name}}
                                             </option>

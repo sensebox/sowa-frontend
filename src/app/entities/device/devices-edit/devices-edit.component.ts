@@ -29,7 +29,8 @@ export class DevicesEditComponent implements OnInit {
     itemAlias: "image",
     authToken: window.localStorage.getItem("sb_accesstoken"),
     additionalParameter: {
-      uri: "",
+      uri: null,
+      name: null
     },
   });
 
@@ -85,21 +86,17 @@ export class DevicesEditComponent implements OnInit {
     this.previewPath = "//:0";
 
     this.deviceForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
+      id: [null, [Validators.required]],
       label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      markdown: [""],
-      website: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      image: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      contact: [{ value: "", disabled: false }, [Validators.required]],
+      description: this.addDescriptionFormGroup(),
+      markdown: this.addMarkdownFormGroup(),
+      // website: [{ value: null, disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      image: [{ value: null, disabled: false }],
+      // contact: [{ value: null, disabled: false }, [Validators.required]],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
+      deletedLabels: this.fb.array([]),
+      deletedSensors: this.fb.array([]),
     });
 
     this.deviceForm.valueChanges.subscribe((data) => {
@@ -107,22 +104,31 @@ export class DevicesEditComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingFile = (file) => {
+
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.slice(inputValue.lastIndexOf("."));
+      // this.deviceForm.value.image = extension;
+      var imageFileName = this.deviceForm.get("label").value[0].value + extension;
+      this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
+      this.deviceForm.patchValue({
+        image: imageFileName,
+      });
+      console.log(this.deviceForm.get("image").value)
+
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
-      var inputValue = (<HTMLInputElement>(
-        document.getElementById("imageUpload")
-      )).value;
-      var extension = inputValue.slice(inputValue.lastIndexOf("."));
-      this.deviceForm.value.image = extension;
-      var imageFileName = this.deviceForm.get("uri").value + extension;
-      this.deviceForm
-        .get("image")
-        .setValue(imageFileName, { emitEvent: false });
+      
+      this.uploader.options.additionalParameter.uri = this.deviceForm.value.id;
+      this.uploader.options.additionalParameter.name = imageFileName;
+      
     };
+
     this.uploader.onCompleteItem = (item: any, status: any) => {
       bulmaToast.toast({
         message: "Image successfully uploaded!",
@@ -172,15 +178,30 @@ export class DevicesEditComponent implements OnInit {
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
+      translationId: [null, [Validators.required]],
       value: ["", [Validators.required]],
       lang: ["", [Validators.required]],
     });
   }
 
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [""]
+    })
+  }
+
+  addMarkdownFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [""]
+    })
+  }
+
   addSensorFormGroup(): FormGroup {
     return this.fb.group({
-      sensorUri: ["", [Validators.required]],
+      sensor: [null, [Validators.required]],
+      exists: [true, [Validators.required]]
     });
   }
 
@@ -192,22 +213,41 @@ export class DevicesEditComponent implements OnInit {
   }
 
   editDevice(device) {
+    console.log(device)
     this.deviceForm.patchValue({
-      uri: device.iri.value.slice(this.heroBannerString.length),
-      description: device.description.value,
-      website: device.website ? device.website.value : "",
-      image: device.image ? device.image.value : "",
-      contact: device.contact ? device.contact.value : "",
-      markdown: device.markdown ? device.markdown.value : "",
+      id: device.id,
+      image: device.image,
+      // contact: device.contact ? device.contact.value : "",
+      // website: device.website ? device.website.value : "",
+      
     });
 
-    this.deviceForm.setControl("label", this.setExistingLabels(device.labels));
+    this.deviceForm.setControl(
+      "label", 
+      this.setExistingLabels(device.labels));
+
+    this.deviceForm.controls['description'].patchValue({
+      translationId: device.description.item[1].translationId,
+      text: device.description ? device.description.item[1].text : '',
+    });
+
+    this.deviceForm.controls['markdown'].patchValue({
+      translationId: device.markdown.item[1].translationId,
+      text: device.markdown ? device.markdown.item[1].text : '',
+    });
 
     this.deviceForm.setControl(
       "sensor",
       this.setExistingSensors(device.sensors)
     );
-    this.previewPath = this.APIURL + "/images/upload/" + device.image.value;
+
+    if (device.image !== null) {
+      this.previewPath = this.APIURL + "/images/upload/" + device.image;
+    }
+
+    this.deviceForm.patchValue({
+      translationIds: this.setTranslationIds(device),
+    })
   }
 
   setExistingSensors(sensorSet: ISensors[]): FormArray {
@@ -216,11 +256,11 @@ export class DevicesEditComponent implements OnInit {
     sensorSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          sensorUri: [s.sensor, [Validators.required]],
+          sensor: [{value: s.sensor, disabled: true}, [Validators.required]],
+          exists: [true, [Validators.required]],
         })
       );
     });
-
     return formArray;
   }
 
@@ -229,15 +269,22 @@ export class DevicesEditComponent implements OnInit {
     labelSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          type: [s, [Validators.required]],
-          value: [s, [Validators.required]],
-          lang: [s["xml:lang"], [Validators.required]],
+          translationId: [s.translationId, [Validators.required]],
+          value: [s.text, [Validators.required]],
+          lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
         })
       );
     });
-
     return formArray;
   }
+
+  setTranslationIds(device: any) {
+    const array = [];
+    array.push(device.labels[0].translationId);
+    array.push(device.description["item"][0].translationId);
+    array.push(device.markdown["item"][0].translationId);
+    return array;
+  } 
 
   redirectDetails(uri) {
     this._routerService.navigate(["/device/detail", uri]).then(() => {
@@ -252,7 +299,7 @@ export class DevicesEditComponent implements OnInit {
       .delete(this.APIURL + "/image/delete/" + this.deviceForm.value.image)
       .subscribe(
         (response) => {
-          this.deviceForm.get("image").patchValue("null");
+          this.deviceForm.get("image").patchValue(null);
           bulmaToast.toast({
             message: "Delete successful!",
             type: "is-success",
@@ -302,13 +349,15 @@ export class DevicesEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.deviceForm.value)
     this.submitted = true;
 
-    this.uploader.setOptions({
-      additionalParameter: {
-        uri: this.deviceForm.get("uri").value,
-      },
-    });
+    // this.uploader.setOptions({
+    //   additionalParameter: {
+    //     uri: this.deviceForm.value.id,
+    //     name: this.deviceForm.value.image,
+    //   },
+    // });
 
     if (this.deviceForm.invalid) {
       bulmaToast.toast({

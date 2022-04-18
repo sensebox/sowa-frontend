@@ -83,15 +83,13 @@ export class DomainEditComponent implements OnInit {
 
   ngOnInit() {
     this.domainForm = this.fb.group({
-      uri: ['', [Validators.required, CustomValidators.uriSyntax]],
-      label: this.fb.array([
-        this.addLabelFormGroup()
-      ]),
-      description: ['', [Validators.required]],
-      phenomenon: this.fb.array([
-        this.addPhenomenonFormGroup()
-      ]),
-      validation: [false, [Validators.required]]
+      id: ['', [Validators.required, CustomValidators.uriSyntax]],
+      label: this.fb.array([this.addLabelFormGroup()]),
+      description: this.addDescriptionFormGroup(),
+      phenomenon: this.fb.array([this.addPhenomenonFormGroup()]),
+      validation: [false, [Validators.required]],
+      deletedLabels: this.fb.array([]),
+      deletedPhenomena: this.fb.array([]),
     })
 
     this.domainForm.valueChanges.subscribe(
@@ -129,21 +127,25 @@ export class DomainEditComponent implements OnInit {
     });
   }
 
-
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
-      value: ['', [Validators.required]],
-      lang: ['', [Validators.required]]
+      translationId: [null, [Validators.required]],
+      value: [null, [Validators.required]],
+      lang: [null, [Validators.required]],
     });
+  }
+
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [""]
+    })
   }
 
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
-      // phenomenonObject: [{
-      phenomenonURI: ['',
-        // phenomenonLabel: ''}, 
-        [Validators.required]]
+      phenomenon: [null, [Validators.required]],
+      exists: [true, [Validators.required]]
     });
   }
 
@@ -155,14 +157,26 @@ export class DomainEditComponent implements OnInit {
   }
 
   editDomain(domain) {
+    console.log(domain)
     this.domainForm.patchValue({
-      uri: domain.iri.value.slice(this.heroBannerString.length),
-      description: domain.description.value
+      id: domain.id,
+      validation: domain.validation
     });
 
-    this.domainForm.setControl('label', this.setExistingLabels(domain.labels))
+    this.domainForm.setControl(
+      'label', 
+      this.setExistingLabels(domain.labels)
+    );
 
-    this.domainForm.setControl('phenomenon', this.setExistingPhenomena(domain.phenomenon))
+    this.domainForm.controls['description'].patchValue({
+      translationId: domain.description.item[1].translationId,
+      text: domain.description ? domain.description.item[1].text : '',
+    });
+
+    this.domainForm.setControl(
+      'phenomenon', 
+      this.setExistingPhenomena(domain.phenomena)
+    );
   }
 
   setExistingPhenomena(phenomenaSet: IPhenomena[]): FormArray {
@@ -170,13 +184,10 @@ export class DomainEditComponent implements OnInit {
     (phenomenaSet);
     phenomenaSet.forEach(s => {
       formArray.push(this.fb.group({
-        // phenomenonObject: [{
-        phenomenonURI: [s.phenomenon,
-        // 'phenomenonLabel': s.phenomenonLabel.value}, 
-        [Validators.required]]
+        phenomenon: [{value: s.phenomenon, disabled: true}, [Validators.required]],
+        exists: [true, [Validators.required]]
       }));
     });
-
     return formArray;
   }
 
@@ -184,15 +195,15 @@ export class DomainEditComponent implements OnInit {
 
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    (labelSet);
-    labelSet.forEach(s => {
-      formArray.push(this.fb.group({
-        type: [s, [Validators.required]],
-        value: [s, [Validators.required]],
-        lang: [s["xml:lang"], [Validators.required]]
-      }));
+    labelSet.forEach((s) => {
+      formArray.push(
+        this.fb.group({
+          translationId: [s.translationId, [Validators.required]],
+          value: [s.text, [Validators.required]],
+          lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
+        })
+      );
     });
-
     return formArray;
   }
 
@@ -206,7 +217,8 @@ export class DomainEditComponent implements OnInit {
 
 
   onSubmit() {
-    (this.domainForm.value);
+    console.log(this.domainForm.getRawValue())
+    // (this.domainForm.value);
     this.submitted = true;
     if (this.domainForm.invalid) {
       ("invalid");
@@ -223,7 +235,7 @@ export class DomainEditComponent implements OnInit {
     }
     else {
       ("valid");
-      this.api.editDomain(this.domainForm.value).subscribe(res => {
+      this.api.editDomain(this.domainForm.getRawValue()).subscribe(res => {
         (res);
         bulmaToast.toast({
           message: "Edit successful!",

@@ -62,7 +62,7 @@ export class DomainsDetailComponent implements OnInit {
           //   }
           //   this.prefLabel = element;
           // });
-          this.uri = this.domain.labels[0].text;
+          this.uri = this.domain.id;
           // this.uri = this.domain.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
