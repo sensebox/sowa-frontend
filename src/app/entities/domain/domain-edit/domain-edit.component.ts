@@ -4,10 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
+import { IDomain } from 'src/app/interfaces/IDomain';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+
 
 @Component({
   selector: 'senph-domain-edit',
@@ -90,6 +92,7 @@ export class DomainEditComponent implements OnInit {
       validation: [false, [Validators.required]],
       deletedLabels: this.fb.array([]),
       deletedPhenomena: this.fb.array([]),
+      translationIds: [[], [Validators.required]]
     })
 
     this.domainForm.valueChanges.subscribe(
@@ -177,6 +180,10 @@ export class DomainEditComponent implements OnInit {
       'phenomenon', 
       this.setExistingPhenomena(domain.phenomena)
     );
+
+    this.domainForm.patchValue({
+      translationIds: this.setTranslationIds(domain),
+    })
   }
 
   setExistingPhenomena(phenomenaSet: IPhenomena[]): FormArray {
@@ -191,8 +198,6 @@ export class DomainEditComponent implements OnInit {
     return formArray;
   }
 
-
-
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
     labelSet.forEach((s) => {
@@ -206,6 +211,14 @@ export class DomainEditComponent implements OnInit {
     });
     return formArray;
   }
+
+  setTranslationIds(sensor: IDomain) {
+    console.log(sensor)
+    const array = [];
+    array.push(sensor.labels[0].translationId);
+    array.push(sensor.description["item"][0].translationId);
+    return array;
+  } 
 
   redirectDetails(uri) {
     this._routerService.navigate(['/domain/detail', uri]);

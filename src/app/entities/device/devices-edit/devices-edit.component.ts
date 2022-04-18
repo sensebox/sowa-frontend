@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
 import { CustomValidators } from "../../../shared/custom.validators";
 import { ILabel } from "src/app/interfaces/ILabel";
+import { IDevice } from "src/app/interfaces/IDevice";
 import { ISensors } from "src/app/interfaces/ISensors";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
@@ -15,6 +16,7 @@ import { environment } from "src/environments/environment";
 
 import { HttpClient } from "@angular/common/http";
 import { UploadResult } from "src/app/interfaces/uploadResult";
+
 
 @Component({
   selector: "senph-devices-edit",
@@ -97,6 +99,7 @@ export class DevicesEditComponent implements OnInit {
       validation: [false, [Validators.required]],
       deletedLabels: this.fb.array([]),
       deletedSensors: this.fb.array([]),
+      translationIds: [[], [Validators.required]]
     });
 
     this.deviceForm.valueChanges.subscribe((data) => {
@@ -278,7 +281,7 @@ export class DevicesEditComponent implements OnInit {
     return formArray;
   }
 
-  setTranslationIds(device: any) {
+  setTranslationIds(device: IDevice) {
     const array = [];
     array.push(device.labels[0].translationId);
     array.push(device.description["item"][0].translationId);

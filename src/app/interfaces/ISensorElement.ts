@@ -8,6 +8,8 @@ export class ISensorElement {
 
 
     constructor(resSensorElement: any) {
+
+        console.log(resSensorElement)
         
         this.id = resSensorElement.id;
         this.accuracy = resSensorElement.accuracy;
@@ -17,7 +19,11 @@ export class ISensorElement {
         } else {
             this.unit = resSensorElement.accuracyUnit.name;
         };
-        this.unitId = resSensorElement.accuracyUnit.id;
+        if (resSensorElement.accuracyUnit == null) {
+            this.unitId = null;
+        } else {
+            this.unitId = resSensorElement.accuracyUnit.id;
+        };
         this.phenomenonId = resSensorElement.phenomena.id
     }
 };

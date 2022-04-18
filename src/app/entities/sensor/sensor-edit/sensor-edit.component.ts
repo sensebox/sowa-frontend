@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
 import { CustomValidators } from "../../../shared/custom.validators";
 import { ILabel } from "src/app/interfaces/ILabel";
+import { ISensor } from "src/app/interfaces/ISensor";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
@@ -107,6 +108,7 @@ export class SensorEditComponent implements OnInit {
       deletedLabels: this.fb.array([]),
       deletedDevices: this.fb.array([]),
       deletedSensorElements: this.fb.array([]),
+      translationIds: [[], [Validators.required]]
     });
 
     this.sensorForm.valueChanges.subscribe((data) => {
@@ -276,7 +278,9 @@ export class SensorEditComponent implements OnInit {
       this.previewPath = this.APIURL + "/images/upload/" + sensor.image;
     }
     
-    console.log(this.sensorForm.value)
+    this.sensorForm.patchValue({
+      translationIds: this.setTranslationIds(sensor),
+    })
 
   }
 
@@ -340,6 +344,14 @@ export class SensorEditComponent implements OnInit {
   get image(): FormArray {
     return this.sensorForm.get("image") as FormArray;
   }
+
+  setTranslationIds(sensor: ISensor) {
+    console.log(sensor)
+    const array = [];
+    array.push(sensor.labels[0].translationId);
+    array.push(sensor.description["item"][0].translationId);
+    return array;
+  } 
 
   redirectDetails(uri) {
     this._routerService.navigate(["/sensor/detail", uri]).then(() => {
