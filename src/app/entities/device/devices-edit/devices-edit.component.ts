@@ -40,32 +40,30 @@ export class DevicesEditComponent implements OnInit {
 
   heroBannerString = "http://sensors.wiki/SENPH#";
   deviceForm: FormGroup;
+  deleteDeviceForm: FormGroup;
 
   validationMessages = {
-    uri: {
-      required: "URI is required.",
-      uriSyntax: "No white spaces allowed in URI.",
-    },
+    // id: {
+    //   required: "URI is required.",
+    //   uriSyntax: "No white spaces allowed in URI.",
+    // },
     label: {
       required: "Label is required.",
     },
     description: {
       required: "Description is required.",
     },
-    website: {
-      required:
-        "Provide a datasheet link or use the checkbox to set its value to undefined.",
-      uriSyntax: "No white spaces allowed in Datasheet-URL.",
-    },
-    contact: {
-      required:
-        "Provide a lifeperiod or use the checkbox to set its value to undefined.",
-    },
     image: {
       required:
         "Provide an image link or use the checkbox to set its value to undefined.",
       uriSyntax: "No white spaces allowed in Image-URL.",
     },
+    sensor: {
+      required: "Sensors are required."
+    },
+    translationIds: {
+      required: "TranslationIds are required."
+    }
   };
 
   formErrors: FormErrors = {};
@@ -92,9 +90,7 @@ export class DevicesEditComponent implements OnInit {
       label: this.fb.array([this.addLabelFormGroup()]),
       description: this.addDescriptionFormGroup(),
       markdown: this.addMarkdownFormGroup(),
-      // website: [{ value: null, disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       image: [{ value: null, disabled: false }],
-      // contact: [{ value: null, disabled: false }, [Validators.required]],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
       deletedLabels: this.fb.array([]),
@@ -160,14 +156,7 @@ export class DevicesEditComponent implements OnInit {
         this.logValidationErrors(abstractControl);
       } else {
         this.formErrors[key] = "";
-        if (
-          abstractControl &&
-          !abstractControl.valid &&
-          (abstractControl.touched ||
-            abstractControl.dirty ||
-            abstractControl.value !== "" ||
-            this.submitted)
-        ) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== null || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -219,10 +208,7 @@ export class DevicesEditComponent implements OnInit {
     console.log(device)
     this.deviceForm.patchValue({
       id: device.id,
-      image: device.image,
-      // contact: device.contact ? device.contact.value : "",
-      // website: device.website ? device.website.value : "",
-      
+      image: device.image,      
     });
 
     this.deviceForm.setControl(
@@ -251,6 +237,8 @@ export class DevicesEditComponent implements OnInit {
     this.deviceForm.patchValue({
       translationIds: this.setTranslationIds(device),
     })
+    
+    this.deleteDeviceForm = this.deviceForm
   }
 
   setExistingSensors(sensorSet: ISensors[]): FormArray {
@@ -401,7 +389,7 @@ export class DevicesEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.api.deleteDevice(this.deviceForm.getRawValue()).subscribe(
+    this.api.deleteDevice(this.deleteDeviceForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({
           message: "Delete successful!",

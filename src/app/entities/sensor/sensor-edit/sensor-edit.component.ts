@@ -35,6 +35,7 @@ export class SensorEditComponent implements OnInit {
 
   heroBannerString = "http://sensors.wiki/SENPH#";
   sensorForm: FormGroup;
+  deleteSensorForm: FormGroup;
   submitted = false;
   shortUri: string;
 
@@ -72,6 +73,12 @@ export class SensorEditComponent implements OnInit {
       required:
         "Provide an image link or use the checkbox to set its value to undefined.",
       uriSyntax: "No white spaces allowed in Image-URL.",
+    },
+    translationId: {
+      required: 'Translation ID is required.'
+    },
+    translationIds: {
+      required: 'Translation IDs are required.'
     },
   };
 
@@ -170,14 +177,7 @@ export class SensorEditComponent implements OnInit {
         this.logValidationErrors(abstractControl);
       } else {
         this.formErrors[key] = "";
-        if (
-          abstractControl &&
-          !abstractControl.valid &&
-          (abstractControl.touched ||
-            abstractControl.dirty ||
-            abstractControl.value !== "" ||
-            this.submitted)
-        ) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== "" || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -282,6 +282,7 @@ export class SensorEditComponent implements OnInit {
       translationIds: this.setTranslationIds(sensor),
     })
 
+    this.deleteSensorForm = this.sensorForm;
   }
 
   setExistingSensorElements(sensorElementSet): FormArray {
@@ -481,7 +482,7 @@ export class SensorEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.api.deleteSensor(this.sensorForm.getRawValue()).subscribe(
+    this.api.deleteSensor(this.deleteSensorForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({
           message: "Delete successful!",

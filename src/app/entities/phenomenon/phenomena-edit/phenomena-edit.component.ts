@@ -25,6 +25,7 @@ export class PhenomenaEditComponent implements OnInit {
   APIURL = environment.api_url;
 
   phenomenonForm: FormGroup;
+  deletePhenomenonForm: FormGroup;
   validationMessages = {
     // uri: {
     //   required: "URI is required.",
@@ -35,6 +36,12 @@ export class PhenomenaEditComponent implements OnInit {
     },
     description: {
       required: "Description is required.",
+    },
+    translationId: {
+      required: 'Translation ID is required.'
+    },
+    translationIds: {
+      required: 'Translation IDs are required.'
     },
   };
 
@@ -68,9 +75,9 @@ export class PhenomenaEditComponent implements OnInit {
       translationIds: [[], [Validators.required]]
     });
 
-    // this.phenomenonForm.valueChanges.subscribe((data) => {
-    //   this.logValidationErrors(this.phenomenonForm);
-    // });
+    this.phenomenonForm.valueChanges.subscribe((data) => {
+      this.logValidationErrors(this.phenomenonForm);
+    });
 
     this.route.paramMap.subscribe((params) => {
       // console.log(params)
@@ -81,34 +88,25 @@ export class PhenomenaEditComponent implements OnInit {
     });
   }
 
-  // logValidationErrors(group: FormGroup = this.phenomenonForm): void {
-  //   console.log(group.controls)
-  //   console.log(this.formErrors)
-  //   Object.keys(group.controls).forEach((key: string) => {
-  //     const abstractControl = group.get(key);
-  //     // console.log(abstractControl)
-  //     if (abstractControl instanceof FormGroup) {
-  //       this.logValidationErrors(abstractControl);
-  //     } else {
-  //       this.formErrors[key] = "";
-  //       if (
-  //         abstractControl &&
-  //         !abstractControl.valid &&
-  //         (abstractControl.touched ||
-  //           abstractControl.dirty ||
-  //           abstractControl.value !== "" ||
-  //           this.submitted)
-  //       ) {
-  //         const messages = this.validationMessages[key];
-  //         for (const errorKey in abstractControl.errors) {
-  //           if (errorKey) {
-  //             this.formErrors[key] += messages[errorKey] + " ";
-  //           }
-  //         }
-  //       }
-  //     }
-  //   });
-  // }
+  logValidationErrors(group: FormGroup = this.phenomenonForm): void {
+    Object.keys(group.controls).forEach((key: string) => {
+      const abstractControl = group.get(key);
+      // console.log(abstractControl)
+      if (abstractControl instanceof FormGroup) {
+        this.logValidationErrors(abstractControl);
+      } else {
+        this.formErrors[key] = "";
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== "" || this.submitted)) {
+          const messages = this.validationMessages[key];
+          for (const errorKey in abstractControl.errors) {
+            if (errorKey) {
+              this.formErrors[key] += messages[errorKey] + " ";
+            }
+          }
+        }
+      }
+    });
+  }
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
@@ -189,6 +187,8 @@ export class PhenomenaEditComponent implements OnInit {
     this.phenomenonForm.patchValue({
       translationIds: this.setTranslationIds(phenomenon),
     })
+
+    this.deletePhenomenonForm = this.phenomenonForm;
   }
 
   setExistingDomains(domainSet: IDomains[]): FormArray {
@@ -326,7 +326,7 @@ export class PhenomenaEditComponent implements OnInit {
 
   onDelete() {
     console.log(this.phenomenonForm.getRawValue())
-    this.api.deletePhenomenon(this.phenomenonForm.getRawValue()).subscribe(
+    this.api.deletePhenomenon(this.deletePhenomenonForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({
           message: "Delete successful!",

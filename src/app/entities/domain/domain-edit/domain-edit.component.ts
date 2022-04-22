@@ -55,6 +55,7 @@ export class DomainEditComponent implements OnInit {
 
   heroBannerString = "http://sensors.wiki/SENPH#";
   domainForm: FormGroup;
+  deleteDomainForm: FormGroup;
 
   validationMessages = {
     'uri': {
@@ -66,7 +67,13 @@ export class DomainEditComponent implements OnInit {
     },
     'description': {
       'required': 'Description is required.'
-    }
+    },
+    'translationId': {
+      'required': 'Translation ID is required.'
+    },
+    'translationIds': {
+      'required': 'Translation IDs are required.'
+    },
   };
 
   formErrors: FormErrors = {
@@ -184,6 +191,8 @@ export class DomainEditComponent implements OnInit {
     this.domainForm.patchValue({
       translationIds: this.setTranslationIds(domain),
     })
+
+    this.deleteDomainForm = this.domainForm;
   }
 
   setExistingPhenomena(phenomenaSet: IPhenomena[]): FormArray {
@@ -248,7 +257,7 @@ export class DomainEditComponent implements OnInit {
     }
     else {
       ("valid");
-      this.api.editDomain(this.domainForm.getRawValue()).subscribe(res => {
+      this.api.editDomain(this.deleteDomainForm.getRawValue()).subscribe(res => {
         (res);
         bulmaToast.toast({
           message: "Edit successful!",
