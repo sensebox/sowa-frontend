@@ -23,6 +23,7 @@ export class SensorsComponent implements OnInit {
   ngOnInit() {
     this.api.getSensors().subscribe(res => {
       this.sensorsArray = res;
+      console.log(this.sensorsArray)
 
       // tempArray = tempArray.filter(function (el) {
       //   // return (el.sensorLabel != undefined && el.sensorLabel[0] != undefined)

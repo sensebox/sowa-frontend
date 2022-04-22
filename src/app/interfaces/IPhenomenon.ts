@@ -18,8 +18,6 @@ export class IPhenomenon {
     this.domains = [];
     this.units = [];
 
-    //console.log(res)
-
     for (const property in res) {
       switch(property){
 

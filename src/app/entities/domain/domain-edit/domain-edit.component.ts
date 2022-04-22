@@ -58,21 +58,21 @@ export class DomainEditComponent implements OnInit {
   deleteDomainForm: FormGroup;
 
   validationMessages = {
-    'uri': {
-      'required': 'URI is required.',
-      'uriSyntax': 'No white spaces allowed in URI.'
+    uri: {
+      required: 'URI is required.',
+      uriSyntax: 'No white spaces allowed in URI.'
     },
-    'label': {
-      'required': 'Label is required.'
+    label: {
+      required: 'Label is required.'
     },
-    'description': {
-      'required': 'Description is required.'
+    description: {
+      required: 'Description is required.'
     },
-    'translationId': {
-      'required': 'Translation ID is required.'
+    translationId: {
+      required: 'Translation ID is required.'
     },
-    'translationIds': {
-      'required': 'Translation IDs are required.'
+    translationIds: {
+      required: 'Translation IDs are required.'
     },
   };
 
