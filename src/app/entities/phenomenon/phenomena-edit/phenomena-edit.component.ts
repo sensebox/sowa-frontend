@@ -110,39 +110,39 @@ export class PhenomenaEditComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domain: ["", [Validators.required]],
+      domain: [null, [Validators.required]],
       exists: [true, [Validators.required]]
     });
   }
 
   addUnitFormGroup(): FormGroup {
     return this.fb.group({
-      unitUri: ["", [Validators.required]],
-      min: ["", [Validators.required]],
-      max: ["", [Validators.required]],
-      rovId: ["", [Validators.required]]
+      unitUri: [null, [Validators.required]],
+      min: [null, [Validators.required]],
+      max: [null, [Validators.required]],
+      rovId: [null, [Validators.required]]
     });
   }
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
       translationId: [null, [Validators.required]],
-      value: ["", [Validators.required]],
-      lang: ["", [Validators.required]],
+      value: [null, [Validators.required]],
+      lang: [null, [Validators.required]],
     });
   }
 
   addDescriptionFormGroup(): FormGroup {
     return this.fb.group({
       translationId: [null, [Validators.required]],
-      text: [""]
+      text: [null]
     })
   }
 
   addMarkdownFormGroup(): FormGroup {
     return this.fb.group({
       translationId: [null, [Validators.required]],
-      text: [""]
+      text: [null]
     })
   }
 

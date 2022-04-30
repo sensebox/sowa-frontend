@@ -26,7 +26,6 @@ export class NumberComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      console.log(this.control)
       if (this.control.value === null) {
         this.checkboxState = true;
         this.toggleDisabled(

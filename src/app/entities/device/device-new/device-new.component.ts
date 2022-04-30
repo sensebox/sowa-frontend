@@ -33,7 +33,8 @@ export class DeviceNewComponent implements OnInit {
     itemAlias: "image",
     authToken: window.localStorage.getItem("sb_accesstoken"),
     additionalParameter: {
-      uri: "",
+      uri: null,
+      name: null,
     },
   });
 
@@ -65,6 +66,9 @@ export class DeviceNewComponent implements OnInit {
         "Provide an image link or use the checkbox to set its value to undefined.",
       uriSyntax: "No white spaces allowed in Image-URL.",
     },
+    translationId: {
+      required: 'Translation ID is required.'
+    },
   };
 
   formErrors: FormErrors = {};
@@ -87,19 +91,13 @@ export class DeviceNewComponent implements OnInit {
     this.previewPath = "//:0";
 
     this.deviceForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
+      id: [null],
       label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      markdown: [""],
-      website: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      image: [
-        { value: "null", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
+      description: this.addDescriptionFormGroup(),
+      markdown: this.addMarkdownFormGroup(),
+      website: [{ value: "", disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       contact: [{ value: "", disabled: false }, [Validators.required]],
+      image: [{ value: null, disabled: false }, [Validators.required]],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
     });
@@ -109,6 +107,18 @@ export class DeviceNewComponent implements OnInit {
     });
 
     this.uploader.onAfterAddingFile = (file) => {
+
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.slice(inputValue.lastIndexOf("."));
+      var imageFileName = this.deviceForm.get("label").value[0].value + extension;
+      this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
+      this.deviceForm.patchValue({
+        image: imageFileName,
+      });
+      console.log(this.deviceForm.get("image").value)
+
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
@@ -116,6 +126,11 @@ export class DeviceNewComponent implements OnInit {
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
+      console.log(this.uploader.queue)
+
+      this.uploader.options.additionalParameter.uri = this.deviceForm.value.id;
+      this.uploader.options.additionalParameter.name = imageFileName;
+
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       bulmaToast.toast({
@@ -161,15 +176,30 @@ export class DeviceNewComponent implements OnInit {
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
+      translationId: [null],
       value: ["", [Validators.required]],
       lang: ["", [Validators.required]],
     });
   }
 
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null],
+      text: [""]
+    })
+  }
+
+  addMarkdownFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null],
+      text: [""]
+    })
+  }
+
   addSensorFormGroup(): FormGroup {
     return this.fb.group({
-      sensorUri: ["", [Validators.required]],
+      sensor: [null, [Validators.required]],
+      exists: [false, [Validators.required]]
     });
   }
 
@@ -206,22 +236,43 @@ export class DeviceNewComponent implements OnInit {
     });
   }
 
+  deleteImage() {
+    this.deviceForm.get("image").setValue(null);
+    this.uploader.queue.pop()
+    bulmaToast.toast({
+      message: "Delete successful!",
+      type: "is-success",
+      dismissible: true,
+      closeOnClick: true,
+      animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+      position: "top-center",
+      duration: 5000,
+    });
+    // document.getElementById("image").style.visibility = "hidden";
+  }
+
   onSubmit() {
     this.submitted = true;
+    console.log(this.deviceForm)
 
-    this.uploader.setOptions({
-      additionalParameter: {
-        uri: this.deviceForm.get("uri").value,
-      },
-    });
+    // this.uploader.setOptions({
+    //   additionalParameter: {
+    //     uri: this.deviceForm.get("uri").value,
+    //   },
+    // });
 
 
-    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload"))
-      .value;
+    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload")).value;
     var extension = inputValue.slice(inputValue.lastIndexOf("."));
-    this.deviceForm.value.image = extension;
-    var imageFileName = this.deviceForm.get("uri").value + extension;
+    var imageFileName = this.deviceForm.get("label").value[0].value + extension;
     this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
+    this.deviceForm.patchValue({
+      image: imageFileName,
+    });
+    console.log(this.deviceForm.get("image").value)
+    this.uploader.options.additionalParameter.uri = this.deviceForm.value.id;
+    this.uploader.options.additionalParameter.name = imageFileName;
+    console.log(this.uploader.options.additionalParameter);
 
     if (this.deviceForm.invalid) {
       bulmaToast.toast({

@@ -37,9 +37,9 @@ export class LabelComponent implements OnInit {
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      translationId: null,
-      value: ['', [Validators.required]],
-      lang: ['', [Validators.required]]
+      translationId: [null],
+      value: ["", [Validators.required]],
+      lang: ["", [Validators.required]]
     });
   }
 
@@ -48,7 +48,7 @@ export class LabelComponent implements OnInit {
 
     // console.log((<FormArray>this.parentForm.get('deletedLabels')).value);
     let deletedLabel = (<FormArray>this.parentForm.get('label')).at(skillGroupIndex);
-    console.log(deletedLabel.value.translationId)
+    // console.log(deletedLabel.value.translationId)
     if (deletedLabel.value.translationId !== null) {
       this.deletedLabels.push(deletedLabel);
       console.log(this.deletedLabels)
@@ -58,9 +58,9 @@ export class LabelComponent implements OnInit {
       )
     }
     // (<FormArray>this.parentForm.get('deletedLabels')).push(deletedLabel);
-    console.log((<FormArray>this.parentForm.get('deletedLabels')).value);
+    // console.log((<FormArray>this.parentForm.get('deletedLabels')).value);
 
-    console.log((<FormArray>this.parentForm.get('label')).at(skillGroupIndex).value);    
+    // console.log((<FormArray>this.parentForm.get('label')).at(skillGroupIndex).value);    
     (<FormArray>this.parentForm.get('label')).removeAt(skillGroupIndex);
     // console.log((<FormArray>this.parentForm.get('label')).at(skillGroupIndex).value);
   }

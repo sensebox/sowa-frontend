@@ -103,7 +103,6 @@ export class SensorEditComponent implements OnInit {
       id: [null, [Validators.required]],
       label: this.fb.array([this.addLabelFormGroup()]),
       description: this.addDescriptionFormGroup(),
-      // markdown: this.addMarkdownFormGroup(),
       sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
       device: this.fb.array([this.addDeviceFormGroup()]),
       manufacturer: [{ value: null, disabled: false }, [Validators.required]],
@@ -198,7 +197,7 @@ export class SensorEditComponent implements OnInit {
       unitUndefined: [false],
       accuracyValue: [{ value: null, disabled: false }, [Validators.required]],
       accValUndefined: [false],
-      exists: [true, [Validators.required]]
+      exists: [false, [Validators.required]]
     });
   }
 

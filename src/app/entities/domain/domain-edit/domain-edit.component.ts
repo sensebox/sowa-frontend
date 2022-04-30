@@ -58,7 +58,7 @@ export class DomainEditComponent implements OnInit {
   deleteDomainForm: FormGroup;
 
   validationMessages = {
-    uri: {
+    id: {
       required: 'URI is required.',
       uriSyntax: 'No white spaces allowed in URI.'
     },

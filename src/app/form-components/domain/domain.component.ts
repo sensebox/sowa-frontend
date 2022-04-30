@@ -36,7 +36,7 @@ export class DomainComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domain: [null, [Validators.required]],
+      domain: ["", [Validators.required]],
       exists: [false, [Validators.required]]
     });
   }

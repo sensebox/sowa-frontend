@@ -50,7 +50,7 @@ export class SensorComponent implements OnInit {
   retrieveSensors() {
     this.api.getSensors().subscribe(res => {
       this.sensorsArray = res;
-      console.log(res)
+      // console.log(res)
       // this.sensorsArray = this.sensorsArray.filter(function (el) {
       //   return el.sensor.type != 'bnode'
       // })

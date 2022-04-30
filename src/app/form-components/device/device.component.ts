@@ -36,7 +36,7 @@ export class DeviceComponent implements OnInit {
 
   addDeviceFormGroup(): FormGroup {
     return this.fb.group({
-      device: ['', [Validators.required]],
+      device: ["", [Validators.required]],
       exists: [false, [Validators.required]],
     });
   }

@@ -37,7 +37,6 @@ export class TextComponent implements OnInit {
 
 
   toggleDisabled(e) {
-    console.log(this.control)
     if (e.target.checked) {
       this.tempValue = this.control.value;
       this.control.disable();
@@ -49,19 +48,20 @@ export class TextComponent implements OnInit {
     }
   }
 
-  // setInitCheckBoxState() {
-  //   // console.log(this.control.value)
-  //   if (this.control.value === "") {
-  //     this.checkboxState = true;
-  //     this.toggleDisabled(
-  //       {
-  //         target: {
-  //           checked: this.checkboxState
-  //         }
-  //       }
-  //     )
-  //   }
-  // }
+  setInitCheckBoxState() {
+    // console.log(this.control.value)
+    if (this.control.value === "") {
+      this.control.setValue(null);
+      this.checkboxState = true;
+      this.toggleDisabled(
+        {
+          target: {
+            checked: this.checkboxState
+          }
+        }
+      )
+    }
+  }
 
 
 }

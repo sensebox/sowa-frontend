@@ -90,6 +90,8 @@ export class DevicesEditComponent implements OnInit {
       label: this.fb.array([this.addLabelFormGroup()]),
       description: this.addDescriptionFormGroup(),
       markdown: this.addMarkdownFormGroup(),
+      website: [{ value: null, disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      contact: [{ value: null, disabled: false }, [Validators.required]],
       image: [{ value: null, disabled: false }],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
@@ -208,7 +210,9 @@ export class DevicesEditComponent implements OnInit {
     console.log(device)
     this.deviceForm.patchValue({
       id: device.id,
-      image: device.image,      
+      image: device.image,
+      website: device.website,
+      contact: device.contact,      
     });
 
     this.deviceForm.setControl(
