@@ -31,7 +31,7 @@
 
         </div>
       </div>
-      <div class="list-item" *ngFor="let domains of domainsArray | filterPipe:searchTerm;let i = index"
+      <div class="list-item cursor-pointer" *ngFor="let domains of domainsArray | filterPipe:searchTerm;let i = index"
         [class.selected]="domains === selectedDomain" (click)=onSelect(domains)>
         <div class="columns is-mobile is-multiline is-centered">
           <div class="column is-1">

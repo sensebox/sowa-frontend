@@ -53,7 +53,7 @@ export class PhenomenonComponent implements OnInit {
   retrievePhenomena() {
     this.api.getPhenomena().subscribe(res => {
       this.phenomenaArray = res;
-      console.log(this.phenomenaArray);
+      // console.log(this.phenomenaArray);
 
       // var tempArray: any = res;
       // tempArray = tempArray.filter(function (el) {

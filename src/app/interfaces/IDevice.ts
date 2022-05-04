@@ -5,6 +5,8 @@ export class IDevice {
   labels: ILabel[];
   description: Object;
   markdown: Object;
+  contact: String;
+  website: String;
   image: String;
   sensors: ISensors[];
   validation: boolean;
@@ -40,6 +42,16 @@ export class IDevice {
 
         case "image": {
           this.image = res[property];
+          break;
+        }
+
+        case "website": {
+          this.website = res[property];
+          break;
+        }
+
+        case "contact": {
+          this.contact = res[property];
           break;
         }
 
