@@ -122,7 +122,7 @@ export class SensorNewComponent implements OnInit {
         price: [{ value: "", disabled: false }, [Validators.required]],
         datasheet: [{ value: "", disabled: false },[Validators.required],],
         lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
-        image: [{ value: null, disabled: false }, [Validators.required]],
+        image: [{ value: null, disabled: false }],
         validation: [false, [Validators.required]],
       },
       { updateOn: "blur" }
@@ -331,17 +331,17 @@ export class SensorNewComponent implements OnInit {
     //   element.accuracyValue.toFixed(10);
     // });
     
-    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload")).value;
-    var extension = inputValue.slice(inputValue.lastIndexOf("."));
-    var imageFileName = this.sensorForm.get("label").value[0].value + extension;
-    this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
-    this.sensorForm.patchValue({
-      image: imageFileName,
-    });
-    console.log(this.sensorForm.get("image").value)
-    this.uploader.options.additionalParameter.uri = this.sensorForm.value.id;
-    this.uploader.options.additionalParameter.name = imageFileName;
-    console.log(this.uploader.options.additionalParameter);
+    // var inputValue = (<HTMLInputElement>document.getElementById("imageUpload")).value;
+    // var extension = inputValue.slice(inputValue.lastIndexOf("."));
+    // var imageFileName = this.sensorForm.get("label").value[0].value + extension;
+    // this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
+    // this.sensorForm.patchValue({
+    //   image: imageFileName,
+    // });
+    // console.log(this.sensorForm.get("image").value)
+    // this.uploader.options.additionalParameter.uri = this.sensorForm.value.id;
+    // this.uploader.options.additionalParameter.name = imageFileName;
+    // console.log(this.uploader.options.additionalParameter);
 
     if (this.sensorForm.invalid) {
       bulmaToast.toast({

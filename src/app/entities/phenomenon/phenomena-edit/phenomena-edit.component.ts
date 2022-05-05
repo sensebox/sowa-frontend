@@ -80,7 +80,6 @@ export class PhenomenaEditComponent implements OnInit {
     });
 
     this.route.paramMap.subscribe((params) => {
-      // console.log(params)
       this.shortUri = params.get("id");
       if (this.shortUri) {
         this.getPhenomenon(this.shortUri);
@@ -91,7 +90,6 @@ export class PhenomenaEditComponent implements OnInit {
   logValidationErrors(group: FormGroup = this.phenomenonForm): void {
     Object.keys(group.controls).forEach((key: string) => {
       const abstractControl = group.get(key);
-      // console.log(abstractControl)
       if (abstractControl instanceof FormGroup) {
         this.logValidationErrors(abstractControl);
       } else {
@@ -165,13 +163,13 @@ export class PhenomenaEditComponent implements OnInit {
     );
     
     this.phenomenonForm.controls['description'].patchValue({
-      translationId: phenomenon.description.item[1].translationId,
-      text: phenomenon.description ? phenomenon.description.item[1].text : '',
+      translationId: phenomenon.description.item[0].translationId,
+      text: phenomenon.description ? phenomenon.description.item[0].text : '',
     });
 
     this.phenomenonForm.controls['markdown'].patchValue({
-      translationId: phenomenon.markdown.item[1].translationId,
-      text: phenomenon.markdown ? phenomenon.markdown.item[1].text : '',
+      translationId: phenomenon.markdown.item[0].translationId,
+      text: phenomenon.markdown ? phenomenon.markdown.item[0].text : '',
     });
 
     this.phenomenonForm.setControl(
@@ -236,7 +234,6 @@ export class PhenomenaEditComponent implements OnInit {
   }
 
   setTranslationIds(phenomenon: IPhenomenon) {
-    console.log(phenomenon)
     const array = [];
     array.push(phenomenon.labels[0].translationId);
     array.push(phenomenon.description["item"][0].translationId);
@@ -325,7 +322,6 @@ export class PhenomenaEditComponent implements OnInit {
   }
 
   onDelete() {
-    console.log(this.phenomenonForm.getRawValue())
     this.api.deletePhenomenon(this.deletePhenomenonForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({

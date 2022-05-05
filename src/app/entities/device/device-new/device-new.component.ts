@@ -255,25 +255,6 @@ export class DeviceNewComponent implements OnInit {
     this.submitted = true;
     console.log(this.deviceForm)
 
-    // this.uploader.setOptions({
-    //   additionalParameter: {
-    //     uri: this.deviceForm.get("uri").value,
-    //   },
-    // });
-
-
-    var inputValue = (<HTMLInputElement>document.getElementById("imageUpload")).value;
-    var extension = inputValue.slice(inputValue.lastIndexOf("."));
-    var imageFileName = this.deviceForm.get("label").value[0].value + extension;
-    this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
-    this.deviceForm.patchValue({
-      image: imageFileName,
-    });
-    console.log(this.deviceForm.get("image").value)
-    this.uploader.options.additionalParameter.uri = this.deviceForm.value.id;
-    this.uploader.options.additionalParameter.name = imageFileName;
-    console.log(this.uploader.options.additionalParameter);
-
     if (this.deviceForm.invalid) {
       bulmaToast.toast({
         message:

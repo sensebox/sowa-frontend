@@ -220,13 +220,13 @@ export class DevicesEditComponent implements OnInit {
       this.setExistingLabels(device.labels));
 
     this.deviceForm.controls['description'].patchValue({
-      translationId: device.description.item[1].translationId,
-      text: device.description ? device.description.item[1].text : '',
+      translationId: device.description.item[0].translationId,
+      text: device.description ? device.description.item[0].text : '',
     });
 
     this.deviceForm.controls['markdown'].patchValue({
-      translationId: device.markdown.item[1].translationId,
-      text: device.markdown ? device.markdown.item[1].text : '',
+      translationId: device.markdown.item[0].translationId,
+      text: device.markdown ? device.markdown.item[0].text : '',
     });
 
     this.deviceForm.setControl(

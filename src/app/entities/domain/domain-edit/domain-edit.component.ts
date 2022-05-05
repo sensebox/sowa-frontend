@@ -179,8 +179,8 @@ export class DomainEditComponent implements OnInit {
     );
 
     this.domainForm.controls['description'].patchValue({
-      translationId: domain.description.item[1].translationId,
-      text: domain.description ? domain.description.item[1].text : '',
+      translationId: domain.description.item[0].translationId,
+      text: domain.description ? domain.description.item[0].text : '',
     });
 
     this.domainForm.setControl(

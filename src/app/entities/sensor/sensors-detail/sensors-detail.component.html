@@ -120,8 +120,8 @@
               <article class="tile is-child notification is-warning">
                 <p class="title">Description</p>
                 <div class="content">
-                  <strong>
-                    {{sensor.description.item[1].text}}
+                  <strong *ngIf="sensor.description">
+                    {{sensor.description.item[0].text}}
                   </strong>
                 </div>
               </article>

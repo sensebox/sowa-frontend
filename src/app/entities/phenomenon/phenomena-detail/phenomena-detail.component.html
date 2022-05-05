@@ -122,8 +122,8 @@
               <article class="tile is-child notification is-warning">
                 <p class="title">Description</p>
                 <div class="content">
-                  <strong *ngIf="phenomenon.description">
-                    {{phenomenon.description.item[1].text}}
+                  <strong *ngIf="phenomenon.description && phenomenon.description.item[0]">
+                    {{phenomenon.description.item[0].text}}
                   </strong>
                 </div>
               </article>
@@ -241,7 +241,7 @@
           </div>
           
           <div class="tile is-parent">
-            <article *ngIf="phenomenon.markdown.item[1].text != ''" class="tile is-child notification">
+            <article *ngIf="phenomenon.markdown && phenomenon.markdown.item[0].text != ''" class="tile is-child notification">
               <p class="title">Explanation</p>
               <md-editor ngModel="{{phenomenon.markdown.item | labelLanguagePipe}}" name="Content" [upload]="doUpload" [height]="'auto'"
                 mode="preview" [options]="markdownOptions">

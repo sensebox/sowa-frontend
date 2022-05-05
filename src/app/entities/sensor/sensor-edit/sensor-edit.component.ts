@@ -254,13 +254,13 @@ export class SensorEditComponent implements OnInit {
     );
 
     this.sensorForm.controls['description'].patchValue({
-      translationId: sensor.description.item[1].translationId,
-      text: sensor.description ? sensor.description.item[1].text : '',
+      translationId: sensor.description.item[0].translationId,
+      text: sensor.description ? sensor.description.item[0].text : '',
     });
 
     // this.sensorForm.controls['markdown'].patchValue({
-    //   translationId: sensor.markdown.item[1].translationId,
-    //   text: sensor.markdown ? sensor.markdown.item[1].text : '',
+    //   translationId: sensor.markdown.item[0].translationId,
+    //   text: sensor.markdown ? sensor.markdown.item[0].text : '',
     // });
 
     this.sensorForm.setControl(

@@ -121,7 +121,7 @@
                 <p class="title">Description</p>
                 <div class="content">
                   <strong>
-                    {{device.description.item[1].text}}
+                    {{device.description.item[0].text}}
                   </strong>
                 </div>
               </article>
@@ -188,7 +188,7 @@
             </article>
           </div>
           <div class="tile is-parent">
-            <article *ngIf="device.markdown.item[1].text != ''" class="tile is-child notification">
+            <article *ngIf="device.markdown.item[0].text != ''" class="tile is-child notification">
               <p class="title">Explanation</p>
               <md-editor ngModel="{{device.markdown.item | labelLanguagePipe}}" name="Content" [upload]="doUpload" [height]="'auto'"
                 mode="preview" [options]="markdownOptions">
