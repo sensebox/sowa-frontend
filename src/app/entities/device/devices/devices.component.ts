@@ -34,7 +34,7 @@ export class DevicesComponent implements OnInit {
       // })
 
       // console.log(this.devicessArray);
-      tempArray.sort((a, b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
+      // tempArray.sort((a, b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
 
       this.devicesArray = Array.from(tempArray, x => new IDevices(x));
       console.dir(this.devicesArray);
