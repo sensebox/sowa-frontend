@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
-import { IDomain } from 'src/app/interfaces/IDomain';
 import { IDomains } from 'src/app/interfaces/IDomains';
 
 @Component({

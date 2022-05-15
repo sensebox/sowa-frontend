@@ -15,29 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class DevicesDetailComponent implements OnInit, AfterViewInit {
   device: IDevice;
-  // I2Device = {
-  //   website: '',
-  //   labels: '',
-  //   image: '',
-  //   description: '',
-  //   contact: '',
-  //   iri: {
-  //     type: '',
-  //     value: ''
-  //   },
-  //   sensors:[]
-  // };
-  // sensor = {
-  //   sensors: '',
-  //   sensorsLabel: ''
-  // };
   uri;
-  // names = [];
-  // descriptions = [];
-  // sensors =[];
-  // website =[];
-  // image =[];
-  // contact =[];
 
   languageArray = LANGUAGES;
   deviceHistory: Object;
@@ -61,7 +39,6 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.getDeviceDetails();
     // this.retrieveSensors();
-
   }
 
   ngAfterViewInit() {

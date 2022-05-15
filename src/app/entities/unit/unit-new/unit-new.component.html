@@ -1,1 +1,77 @@
-<p>unit-new works!</p>
+<form class="form-horizontal" (ngSubmit)="onSubmit()" [formGroup]="unitForm">
+
+  
+  
+    <!-- 1.1 BANNER -->
+    <senph-hero-banner title="Create Unit:" [subtitle]="shortUri"></senph-hero-banner>
+
+
+    <!-- 1.2 FORM-FIELDS -->
+    <div class="panel-body">  
+
+        <!-- Unit name -->
+        <div class="container well some-space">
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Name:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" [id]="id" formControlName="name" class="input is-normal">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="help-block error-block" *ngIf="formErrors[id]">
+                {{formErrors[id]}}
+            </span>
+        </div>
+
+        <!-- 1.2.3 DESCRIPTIONS -->
+        <div class="container well some-space">
+            <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Description:</label>
+            </div>
+            <div class="field-body">
+                <div class="field">
+                <div formGroupName="description" class="control">
+                    <textarea class="textarea is-normal" type="text" id="description" formControlName="text"
+                    (blur)="logValidationErrors()"></textarea>
+                </div>
+                <span class="help-block">Please enter a short description of the unit and its capabilities.</span>
+                <span class="help-block error-block" *ngIf="formErrors.description">
+                    {{formErrors.description}}
+                </span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+
+    
+
+
+    <!-- 1.3 SUBMIT-BUTTONS -->
+    <div class="panel-footer">
+        <div class="field is-grouped">
+            <p class="control">
+                <button class="button is-success" type="submit">Save Changes</button>
+            </p>
+            <p class="control">
+                <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
+            </p>
+        </div>
+        <span class="help-block" *ngIf="submitted && unitForm.invalid">
+            There are invalid fields in the form, please review your inputs to submit this form.
+        </span>
+        <span class="help-block" *ngIf="submitted && unitForm.valid">
+            All problems resolved, you are ready to submit this form.
+        </span>
+    </div>
+
+    
+  
+</form>

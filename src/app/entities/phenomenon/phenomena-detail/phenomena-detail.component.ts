@@ -5,7 +5,7 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service'
 import { IDomains } from '../../../interfaces/IDomains';
-import { IUnit } from '../../../interfaces/IUnit';
+import { IRoV } from '../../../interfaces/IRoV';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
 import { redirectDomain } from 'src/app/shared/helpers/helper-functions';

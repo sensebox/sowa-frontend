@@ -1,1 +1,45 @@
-<p>units works!</p>
+<senph-hero-banner title="Units" subtitle="Discover all units registered in SOWA below"></senph-hero-banner>
+
+
+<div class="container is-fluid">
+  <div class="notification">
+    <div class="field is-grouped">
+      <p class="control  has-icons-left is-expanded">
+        <input class="input" type="text" #myInput placeholder="Type to filter units..." [(ngModel)]="searchTerm">
+        <span class="icon is-left">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </span>
+      </p>
+    </div>
+
+    <div class="list is-hoverable">
+      <div class="list-item">
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-1">
+
+          </div>
+          <div class="column is-10">
+            <strong>
+              Label
+            </strong>
+          </div>
+        </div>
+      </div>
+      <div class="list-item cursor-pointer" *ngFor="let unit of unitsArray | filterPipe:searchTerm;let i = index"
+        [class.selected]="unit === selectedUnit" (click)=onSelect(unit)>
+        <div class="columns is-mobile is-multiline is-centered">
+          <div class="column is-1">
+            {{i+1}}
+          </div>
+          <div class="column is-10">
+            {{unit.name}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pageloader is-bottom-to-top" [ngClass]="{'is-active': pageLoadActive === '1' }"><span
+        class="title">Pageloader</span></div>
+
+  </div>
+</div>

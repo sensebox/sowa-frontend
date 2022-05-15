@@ -1,5 +1,5 @@
 import { IIri } from './IIri';
-import { IUnit } from './IUnit';
+import { IRoV } from './IRoV';
 import { IDomains } from './IDomains';
 import { ILabel } from './ILabel';
 import { ISensors } from './ISensors';
@@ -9,7 +9,7 @@ export class IPhenomenon {
   labels: ILabel[];
   description: Object
   markdown: Object;
-  units: IUnit[];
+  units: IRoV[];
   domains: IDomains[];
   validation: boolean;
 
@@ -45,7 +45,7 @@ export class IPhenomenon {
 
         case "rov": {
           res[property].forEach((element: any) => {
-            this.units.push(new IUnit(element));
+            this.units.push(new IRoV(element));
           });
           break;
         }

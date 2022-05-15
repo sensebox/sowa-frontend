@@ -1,6 +1,6 @@
-import { IUnit } from '../interfaces/IUnit';
+import { IRoV } from '../interfaces/IRoV';
 
-export const UNITS: IUnit[] = [
+export const UNITS: IRoV[] = [
     { unitId: 1, unitLabel: "Degree Celsius", unitAbbr: "°C"},
     { unitId: 2, unitLabel: "Parts per million", unitAbbr: "ppm"},
     { unitId: 3, unitLabel: "Pascal", unitAbbr: "P"},

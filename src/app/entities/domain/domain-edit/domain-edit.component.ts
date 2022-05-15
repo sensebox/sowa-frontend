@@ -221,11 +221,11 @@ export class DomainEditComponent implements OnInit {
     return formArray;
   }
 
-  setTranslationIds(sensor: IDomain) {
-    console.log(sensor)
+  setTranslationIds(domain: IDomain) {
+    console.log(domain)
     const array = [];
-    array.push(sensor.labels[0].translationId);
-    array.push(sensor.description["item"][0].translationId);
+    array.push(domain.labels[0].translationId);
+    array.push(domain.description["item"][0].translationId);
     return array;
   } 
 
@@ -257,7 +257,7 @@ export class DomainEditComponent implements OnInit {
     }
     else {
       ("valid");
-      this.api.editDomain(this.deleteDomainForm.getRawValue()).subscribe(res => {
+      this.api.editDomain(this.domainForm.getRawValue()).subscribe(res => {
         (res);
         bulmaToast.toast({
           message: "Edit successful!",
@@ -281,7 +281,7 @@ export class DomainEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.api.deleteDomain(this.domainForm.getRawValue()).subscribe(
+    this.api.deleteDomain(this.deleteDomainForm.getRawValue()).subscribe(
       (data) => {
         (data);
         bulmaToast.toast({
