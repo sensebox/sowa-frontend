@@ -2,7 +2,8 @@ import { ISensorElement } from "./ISensorElement";
 import { IRoV } from "./IRoV";
 
 export class IUnit {
-    unit: number;
+    id: number;
+    slug: string;
     name: string;
     description: Object;
     sensorElements: ISensorElement[];
@@ -14,17 +15,19 @@ export class IUnit {
 
         this.sensorElements = [];
         this.rovs = [];
-        
-        this.unit = res.id;
-        this.name = res.name
 
         for (let property in res) {
             switch(property){
       
                 case "id": {
-                    this.unit = res[property];
+                    this.id = res[property];
                     break;
                 }
+
+                case "slug": {
+                    this.slug = res[property];
+                    break;
+                  }
         
                 case "name": {
                     this.name = res[property];

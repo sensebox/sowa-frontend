@@ -3,6 +3,7 @@ import { IPhenomena } from './IPhenomena';
 
 export class IDomain {
     id: number;
+    slug: string
     labels: ILabel[];
     description: Object;
     validation: boolean;
@@ -18,6 +19,11 @@ export class IDomain {
       
               case "id": {
                 this.id = res[property];
+                break;
+              }
+
+              case "slug": {
+                this.slug = res[property];
                 break;
               }
       

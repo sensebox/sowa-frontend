@@ -1,11 +1,10 @@
-import { IIri } from './IIri';
 import { IRoV } from './IRoV';
 import { IDomains } from './IDomains';
 import { ILabel } from './ILabel';
-import { ISensors } from './ISensors';
 
 export class IPhenomenon {
   id: number;
+  slug: string;
   labels: ILabel[];
   description: Object
   markdown: Object;
@@ -23,6 +22,11 @@ export class IPhenomenon {
 
         case "id": {
           this.id = res[property];
+          break;
+        }
+
+        case "slug": {
+          this.slug = res[property];
           break;
         }
 

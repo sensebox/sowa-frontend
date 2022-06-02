@@ -87,6 +87,7 @@ export class DevicesEditComponent implements OnInit {
 
     this.deviceForm = this.fb.group({
       id: [null, [Validators.required]],
+      slug: [null, [Validators.required]],
       label: this.fb.array([this.addLabelFormGroup()]),
       description: this.addDescriptionFormGroup(),
       markdown: this.addMarkdownFormGroup(),
@@ -111,7 +112,7 @@ export class DevicesEditComponent implements OnInit {
       )).value;
       var extension = inputValue.slice(inputValue.lastIndexOf("."));
       // this.deviceForm.value.image = extension;
-      var imageFileName = this.deviceForm.get("label").value[0].value + extension;
+      var imageFileName = this.deviceForm.get("slug").value + extension;
       this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
       this.deviceForm.patchValue({
         image: imageFileName,
@@ -210,6 +211,7 @@ export class DevicesEditComponent implements OnInit {
     console.log(device)
     this.deviceForm.patchValue({
       id: device.id,
+      slug: device.slug,
       image: device.image,
       website: device.website,
       contact: device.contact,      

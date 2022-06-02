@@ -139,7 +139,7 @@ export class SensorsDetailComponent implements OnInit {
     }
   }
   editButtonClick(shortUri) {
-    this._routerService.navigate(['/sensor/edit', shortUri]);
+    this._routerService.navigate(['/sensor/edit', this.sensor.slug]);
   }
 
   redirectHistoricDetails(uri, historicUri) {

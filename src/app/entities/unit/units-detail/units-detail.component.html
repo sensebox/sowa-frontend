@@ -125,7 +125,7 @@
                     </div>
                     <div class="column is-3">
                       <p class="bd-notification is-primary">
-                        <a class="" (click)="redirectUnit(element.sensorId, '/sensor/detail/')">
+                        <a class="" (click)="redirectUnit(element.sensorSlug, '/sensor/detail/')">
                           {{element.sensorLabels | labelLanguagePipe}}
                         </a>
                       </p>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="column is-fullwidth">
                         <p class="bd-notification is-primary">
-                          <a class="" (click)="redirectUnit(element.phenomenonId, '/phenomenon/detail/')">
+                          <a class="" (click)="redirectUnit(element.phenomenonSlug, '/phenomenon/detail/')">
                             {{element.phenomenonLabels | labelLanguagePipe}}
                           </a>
                         </p>

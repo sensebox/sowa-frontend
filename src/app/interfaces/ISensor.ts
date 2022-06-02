@@ -13,6 +13,7 @@ export class ISensor {
   // markdown: string,
 
   id: number;
+  slug: string;
   labels: ILabel[];
   description: Object;
   price: null;
@@ -36,6 +37,11 @@ export class ISensor {
 
         case "id": {
           this.id = res[property];
+          break;
+        }
+
+        case "slug": {
+          this.slug = res[property];
           break;
         }
 

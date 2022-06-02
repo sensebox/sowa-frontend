@@ -168,13 +168,14 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a class=""
-                        (click)="redirectDomain(sensorElement.phenomenonId, '/phenomenon/detail/')">{{sensorElement.phenomenonLabels | labelLanguagePipe}}</a>
+                      <a class="" (click)="redirectDomain(sensorElement.phenomenonSlug, '/phenomenon/detail/')">
+                        {{sensorElement.phenomenonLabels | labelLanguagePipe}}
+                      </a>
                     </p>
                   </div>
                   <div class="column is-fullwidth" *ngIf="sensorElement.unit != null">
                     <p class="bd-notification is-primary">
-                      <a class="" href="" target="_blank">
+                      <a class="" (click)="redirectDomain(sensorElement.unitSlug, '/unit/detail/')">
                         <!-- TODO: FIX link on unit ISSUE -->
                         <!-- {{searchUnit(sensor.sensorElements[i].unit, unitsArray)}} -->
                         {{sensorElement.unit}}

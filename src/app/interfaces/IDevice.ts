@@ -2,6 +2,7 @@ import { ISensors } from "./ISensors";
 import { ILabel } from "./ILabel";
 export class IDevice {
   id: number;
+  slug: string
   labels: ILabel[];
   description: Object;
   markdown: Object;
@@ -20,6 +21,11 @@ export class IDevice {
 
         case "id": {
           this.id = res[property];
+          break;
+        }
+
+        case "slug": {
+          this.slug = res[property];
           break;
         }
 

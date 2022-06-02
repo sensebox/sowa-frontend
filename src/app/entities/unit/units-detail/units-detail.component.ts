@@ -57,7 +57,7 @@ export class UnitsDetailComponent implements OnInit, AfterViewInit {
           this.unit = response;
           console.log(this.unit)
           // this.setPrefLabel();
-          this.uri = this.unit.unit;
+          this.uri = this.unit.id;
           //this.uri = this.device.iri.value.slice(this.senphurl.length);
         });
       })
@@ -85,7 +85,7 @@ export class UnitsDetailComponent implements OnInit, AfterViewInit {
   }
   
   editButtonClick(shortUri) {
-    this._routerService.navigate(['/unit/edit', shortUri]);
+    this._routerService.navigate(['/unit/edit', this.unit.slug]);
   }
 
 }

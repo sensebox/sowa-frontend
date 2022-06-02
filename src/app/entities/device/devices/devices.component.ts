@@ -24,7 +24,7 @@ export class DevicesComponent implements OnInit {
   ngOnInit() {
     this.api.getDevices().subscribe(res => {
       // this.devicesArray = res;
-      var tempArray: any = res;
+     
 
       // tempArray = tempArray.filter(function (el) {
       //   // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
@@ -35,7 +35,7 @@ export class DevicesComponent implements OnInit {
 
       // console.log(this.devicessArray);
       // tempArray.sort((a, b) => a.label.item[1].text.localeCompare(b.label.item[1].text));
-
+      var tempArray: any = res;
       this.devicesArray = Array.from(tempArray, x => new IDevices(x));
       console.dir(this.devicesArray);
       // this.assignCopy();
@@ -45,7 +45,7 @@ export class DevicesComponent implements OnInit {
   onSelect(device) {
     this.acitivatePageLoad();
     this.selectedDevice = device;
-    this._routerService.navigate(['/device/detail/', device.device]);
+    this._routerService.navigate(['/device/detail/', device.deviceSlug]);
 
   }
 

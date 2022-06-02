@@ -100,7 +100,7 @@ export class DomainsDetailComponent implements OnInit {
   }
   
   editButtonClick(shortUri) {
-    this._routerService.navigate(['/domain/edit', shortUri]);
+    this._routerService.navigate(['/domain/edit', this.domain.slug]);
   }
 
   redirectHistoricDetails(uri, historicUri) {

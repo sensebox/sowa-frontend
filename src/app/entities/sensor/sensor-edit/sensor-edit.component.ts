@@ -101,6 +101,7 @@ export class SensorEditComponent implements OnInit {
 
     this.sensorForm = this.fb.group({
       id: [null, [Validators.required]],
+      slug: [null, [Validators.required]],
       label: this.fb.array([this.addLabelFormGroup()]),
       description: this.addDescriptionFormGroup(),
       sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
@@ -127,7 +128,7 @@ export class SensorEditComponent implements OnInit {
         document.getElementById("imageUpload")
       )).value;
       var extension = inputValue.slice(inputValue.lastIndexOf("."));
-      var imageFileName = this.sensorForm.get("label").value[0].value + extension;
+      var imageFileName = this.sensorForm.get("slug").value + extension;
       this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
       this.sensorForm.patchValue({
         image: imageFileName,
@@ -240,6 +241,7 @@ export class SensorEditComponent implements OnInit {
     console.log(sensor);
     this.sensorForm.patchValue({
       id: sensor.id,
+      slug: sensor.slug,
       manufacturer: sensor.manufacturer,
       price: sensor.price,
       datasheet: sensor.datasheet,

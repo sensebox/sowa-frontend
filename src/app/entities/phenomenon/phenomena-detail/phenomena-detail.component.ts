@@ -8,7 +8,7 @@ import { IDomains } from '../../../interfaces/IDomains';
 import { IRoV } from '../../../interfaces/IRoV';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
-import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
+import { redirectDomain, redirectUnit } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'senph-phenomena-detail',
@@ -28,6 +28,7 @@ export class PhenomenaDetailComponent implements OnInit {
   unitsArray;
 
   redirectDomain = redirectDomain;
+  redirectUnit = redirectUnit
 
 
   constructor(
@@ -131,7 +132,7 @@ export class PhenomenaDetailComponent implements OnInit {
   }
 
   editButtonClick(uri) {
-    this._routerService.navigate(['/phenomenon/edit', uri]);
+    this._routerService.navigate(['/phenomenon/edit', this.phenomenon.slug]);
   }
 
 

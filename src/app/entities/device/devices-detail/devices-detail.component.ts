@@ -98,7 +98,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   }
 
   editButtonClick(uri) {
-    this._routerService.navigate(['/device/edit', uri]);
+    this._routerService.navigate(['/device/edit', this.device.slug]);
   }
 
   redirectHistoricDetails(uri, historicUri) {

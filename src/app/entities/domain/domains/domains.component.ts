@@ -38,7 +38,7 @@ export class DomainsComponent implements OnInit {
   onSelect(domain){
     this.acitivatePageLoad();
     this.selectedDomain = domain; 
-    this._routerService.navigate(['/domain/detail/', domain.domain]);
+    this._routerService.navigate(['/domain/detail/', domain.domainSlug]);
 
   }
 
