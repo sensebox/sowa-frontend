@@ -27,10 +27,10 @@ export class DevicesComponent implements OnInit {
      
 
       // tempArray = tempArray.filter(function (el) {
-      //   // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
+      //   // return (el.label != undefined && el.label[0] != undefined)
       //   return el.device.type === 'uri'
 
-      //   // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
+      //   // return (el.label != undefined && el.label[0] != undefined)
       // })
 
       // console.log(this.devicessArray);

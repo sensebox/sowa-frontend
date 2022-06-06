@@ -59,7 +59,7 @@ export class PhenomenonComponent implements OnInit {
       // tempArray = tempArray.filter(function (el) {
       //   return el.phenomenon.type != 'bnode'
       // })
-      // tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
+      // tempArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
     });
   }
 

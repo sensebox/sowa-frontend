@@ -178,8 +178,8 @@
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
                       <a class=""  (click)="redirectDomain(sensor.sensorSlug, '/sensor/detail/')">
-                        <!-- {{searchPheno(dom.sensor.value, "sensor", sensorsArray , "sensorLabel")}} -->
-                        {{sensor.sensorLabel | labelLanguagePipe}}
+                        <!-- {{searchPheno(dom.sensor.value, "sensor", sensorsArray , "label")}} -->
+                        {{sensor.label | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>
@@ -187,8 +187,9 @@
               </div>
             </article>
           </div>
+
           <div class="tile is-parent">
-            <article *ngIf="device.markdown.item[0].text != ''" class="tile is-child notification">
+            <article *ngIf="device.markdown && device.markdown.item[1].text != ''" class="tile is-child notification">
               <p class="title">Explanation</p>
               <md-editor ngModel="{{device.markdown.item | labelLanguagePipe}}" name="Content" [upload]="doUpload" [height]="'auto'"
                 mode="preview" [options]="markdownOptions">

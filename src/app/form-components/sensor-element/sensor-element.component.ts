@@ -83,7 +83,7 @@ export class SensorElementComponent implements OnInit {
       //   return el.phenomenon.type != 'bnode'
       // })
       // // console.log(tempArray);
-      // // tempArray.sort((a, b) => a.phenomenonLabel[0].value.localeCompare(b.phenomenonLabel[0].value));
+      // // tempArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
       // this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
       // console.log(this.phenomenaArray);
     });

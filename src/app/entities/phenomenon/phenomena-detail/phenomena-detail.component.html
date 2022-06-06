@@ -164,7 +164,7 @@
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
                       <a (click)="redirectDomain(domain.domainSlug, '/domain/detail/')">
-                        {{domain.domainLabel | labelLanguagePipe}}
+                        {{domain.label | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>
@@ -241,7 +241,7 @@
           </div>
           
           <div class="tile is-parent">
-            <article *ngIf="phenomenon.markdown && phenomenon.markdown.item[0].text != ''" class="tile is-child notification">
+            <article *ngIf="phenomenon.markdown && phenomenon.markdown.item[1].text != ''" class="tile is-child notification">
               <p class="title">Explanation</p>
               <md-editor ngModel="{{phenomenon.markdown.item | labelLanguagePipe}}" name="Content" [upload]="doUpload" [height]="'auto'"
                 mode="preview" [options]="markdownOptions">

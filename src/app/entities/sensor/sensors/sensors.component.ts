@@ -28,7 +28,7 @@ export class SensorsComponent implements OnInit {
       console.dir(this.sensorsArray);
 
       // tempArray = tempArray.filter(function (el) {
-      //   // return (el.sensorLabel != undefined && el.sensorLabel[0] != undefined)
+      //   // return (el.label != undefined && el.label[0] != undefined)
       //   return el.sensor.type === 'uri'
 
       // })

@@ -15,17 +15,22 @@ export class FilterPipePipe implements PipeTransform {
     // console.log(filterArray)
     return filterArray.filter(element => {
       // console.log(element["label"].item)
-      let translationArray = element["label"].item;
-      // console.log(translationArray)
-      if (translationArray.length > 1) {
-        for (let i = 0; i < translationArray.length; i++) {
-          if(translationArray[i].languageCode === "en") {
-            // console.log(translationArray[i].text);
-            return (translationArray[i].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+      let translationArray = element["label"];
+      if (Array.isArray(translationArray)) {
+        if (translationArray.length > 1) {
+          for (let i = 0; i < translationArray.length; i++) {
+            if(translationArray[i].languageCode === "en") {
+              // console.log(translationArray[i].text);
+              return (translationArray[i].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+            }
           }
+        } else {
+          return (translationArray[0].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
         }
-      } else {
-        return (translationArray[0].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+      }
+       else {
+        //console.log(translationArray)
+        return (translationArray.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
       }
     })
   }
