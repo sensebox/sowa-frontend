@@ -98,7 +98,7 @@ export class PhenomenaDetailComponent implements OnInit {
           //     return
           //   }
           // });
-          this.uri = this.phenomenon.id;
+          this.uri = this.phenomenon.slug;
           //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })
@@ -114,7 +114,7 @@ export class PhenomenaDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
+          this.uri = this.phenomenon.slug;
         });
       })
     }

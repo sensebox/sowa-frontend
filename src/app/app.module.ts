@@ -138,7 +138,8 @@ import { UnitsDetailComponent } from './entities/unit/units-detail/units-detail.
       useClass: TokenInterceptor,
       multi: true
     },
-    AuthService
+    AuthService,
+    LabelLanguagePipePipe
   ],
   bootstrap: [AppComponent]
 

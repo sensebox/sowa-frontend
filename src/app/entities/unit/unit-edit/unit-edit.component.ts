@@ -6,7 +6,10 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+
 import { IUnit } from 'src/app/interfaces/IUnit';
+import { IRoV } from 'src/app/interfaces/IRoV';
+import { LabelLanguagePipePipe } from 'src/app/pipes/label-language-pipe.pipe'
 
 @Component({
   selector: 'senph-unit-edit',
@@ -27,6 +30,9 @@ export class UnitEditComponent implements OnInit {
     name: {
       required: "Name is required.",
     },
+    notation: {
+      required: "Notation is required.",
+    },
     description: {
       required: 'Description is required.'
     },
@@ -36,6 +42,9 @@ export class UnitEditComponent implements OnInit {
     translationIds: {
       required: 'Translation IDs are required.'
     },
+    validation: {
+      required: 'Validation is required.'
+    }
   };
 
   formErrors: FormErrors = {};
@@ -48,14 +57,18 @@ export class UnitEditComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) { }
 
   ngOnInit() {
     this.unitForm = this.fb.group({
       id: ['', [Validators.required, CustomValidators.uriSyntax]],
       name: ['', [Validators.required]],
+      notation: ['', [Validators.required]],
       description: this.addDescriptionFormGroup(),
+      sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
+      rov: this.fb.array([this.addRovFormGroup()]),
       translationIds: [[], [Validators.required]]
     })
 
@@ -101,6 +114,18 @@ export class UnitEditComponent implements OnInit {
     })
   }
 
+  addSensorElementFormGroup(): FormGroup {
+    return this.fb.group({
+      sensorElementId: [null, [Validators.required]],
+    });
+  }
+
+  addRovFormGroup(): FormGroup {
+    return this.fb.group({
+      rovId: [null, [Validators.required]],
+    });
+  }
+
   getUnit(shortUri) {
     this.api.getUnit(shortUri).subscribe(
       (domain) => this.editUnit(domain),
@@ -112,22 +137,59 @@ export class UnitEditComponent implements OnInit {
   editUnit(unit) {
     console.log(unit)
     this.unitForm.patchValue({
-      id: unit.unit,
-      name: unit.name
+      id: unit.id,
+      name: unit.name,
+      notation: unit.notation
     });
 
     this.unitForm.controls['name'].disable();
+    this.unitForm.controls['notation'].disable();
 
     this.unitForm.controls['description'].patchValue({
       translationId: unit.description.item[0].translationId,
-      text: unit.description ? unit.description.item[0].text : '',
+      text: unit.description ? this.labelLanguagePipe.transform(unit.description.item) : '',
     });
+
+    this.unitForm.setControl(
+      "sensorElement",
+      this.setExistingSensorElements(unit.sensorElements)
+    );
+
+    this.unitForm.setControl(
+      "rov",
+      this.setExistingRovs(unit.rovs)
+    );
 
     this.unitForm.patchValue({
       translationIds: this.setTranslationIds(unit),
     })
 
     this.deleteUnitForm = this.unitForm;
+  }
+
+  setExistingSensorElements(sensorElementSet): FormArray {
+    const formArray = new FormArray([]);
+    sensorElementSet.forEach((s) => {
+      formArray.push(
+        this.fb.group({
+          sensorElementId: [s.id, [Validators.required]],
+        })
+      );
+    });
+    return formArray;
+  }
+
+  setExistingRovs(rovSet: IRoV[]): FormArray {
+    const formArray = new FormArray([]);
+    rovSet.forEach((s) => {
+      formArray.push(
+        this.fb.group({
+          rovId: [s.rovId, [Validators.required]]
+        })
+      );
+    });
+
+    return formArray;
   }
 
   setTranslationIds(unit: IUnit) {

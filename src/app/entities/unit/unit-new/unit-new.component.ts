@@ -25,6 +25,9 @@ export class UnitNewComponent implements OnInit {
     name: {
       required: "Name is required.",
     },
+    notation: {
+      required: "Notation is required.",
+    },
     description: {
       required: "Description is required.",
     },
@@ -45,7 +48,9 @@ export class UnitNewComponent implements OnInit {
     this.unitForm = this.fb.group({
       id: [null],
       name: ["", [Validators.required]],
+      notation: ["", [Validators.required]],
       description: this.addDescriptionFormGroup(),
+      validation: [false, [Validators.required]],
     });
 
     this.unitForm.valueChanges.subscribe((data) => {

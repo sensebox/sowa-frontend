@@ -59,8 +59,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
           this.device = response;
           console.log(this.device)
           // this.setPrefLabel();
-          this.uri = this.device.id;
-          //this.uri = this.device.iri.value.slice(this.senphurl.length);
+          this.uri = this.device.slug;
         });
       })
     }
@@ -69,8 +68,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
         this.api.getHistoricDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
           this.setPrefLabel();
-          this.uri = this.device.labels[0].text;
-          // this.uri = this.device.iri.value.slice(this.senphurl.length);
+          this.uri = this.device.slug;
         });
       })
     }

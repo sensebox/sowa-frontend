@@ -32,8 +32,27 @@
                 {{formErrors[id]}}
             </span>
         </div>
+
+        <!-- 1.2.2 Notation -->
+        <div class="container well some-space">
+          <div class="field is-horizontal">
+              <div class="field-label is-normal">
+                  <label class="label">Notation:</label>
+              </div>
+              <div class="field-body">
+                  <div class="field">
+                      <div class="control">
+                          <input type="text" [id]="id" formControlName="notation" class="input is-normal">
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <span class="help-block error-block" *ngIf="formErrors[id]">
+              {{formErrors[id]}}
+          </span>
+      </div>
   
-        <!-- 1.2.2 DESCRIPTIONS -->
+        <!-- 1.2.3 DESCRIPTIONS -->
         <div class="container well some-space">
           <div class="field is-horizontal">
             <div class="field-label is-normal">
@@ -66,13 +85,13 @@
             <button class="button is-success" type="submit">Save Changes</button>
           </p>
           <p class="control">
-            <button class="button is-danger" type="button" (click)="onDelete()">DELETE DOMAIN</button>
+            <button class="button is-danger" type="button" (click)="onDelete()">DELETE UNIT</button>
           </p>
         </div>
-        <span class="help-block" *ngIf="submitted && domainForm.invalid">
+        <span class="help-block" *ngIf="submitted && unitForm.invalid">
           There are invalid fields in the form, please review your inputs to submit this form.
         </span>
-        <span class="help-block" *ngIf="submitted && domainForm.valid">
+        <span class="help-block" *ngIf="submitted && unitForm.valid">
           All problems resolved, you are ready to submit this form.
         </span>
       </div>

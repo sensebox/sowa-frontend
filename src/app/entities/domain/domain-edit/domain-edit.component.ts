@@ -9,6 +9,7 @@ import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+import { LabelLanguagePipePipe } from 'src/app/pipes/label-language-pipe.pipe'
 
 
 @Component({
@@ -87,7 +88,8 @@ export class DomainEditComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) { }
 
   ngOnInit() {
@@ -180,7 +182,7 @@ export class DomainEditComponent implements OnInit {
 
     this.domainForm.controls['description'].patchValue({
       translationId: domain.description.item[0].translationId,
-      text: domain.description ? domain.description.item[0].text : '',
+      text: domain.description ? this.labelLanguagePipe.transform(domain.description.item) : '',
     });
 
     this.domainForm.setControl(
@@ -217,6 +219,9 @@ export class DomainEditComponent implements OnInit {
           lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
         })
       );
+      // if (s.languageCode == 'en') {
+      //   formArray.controls[formArray.length-1].disable()//[formArray.length-1]) //.controls['value'].disable();
+      // };
     });
     return formArray;
   }

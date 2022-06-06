@@ -5,6 +5,7 @@ export class IUnit {
     id: number;
     slug: string;
     name: string;
+    notation: string;
     description: Object;
     sensorElements: ISensorElement[];
     rovs: IRoV[];
@@ -34,6 +35,11 @@ export class IUnit {
                     break;
                 }
 
+                case "notation": {
+                    this.notation = res[property];
+                    break;
+                }
+
                 case "description": {
                     this.description = res[property];
                     break;
@@ -46,7 +52,7 @@ export class IUnit {
                     break;
                 }
 
-                case "RoV": {
+                case "rov": {
                     res[property].forEach((element: any) => {
                         this.rovs.push(new IRoV(element));
                     })

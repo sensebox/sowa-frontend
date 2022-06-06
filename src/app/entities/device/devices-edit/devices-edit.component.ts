@@ -10,6 +10,8 @@ import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
 
+import { LabelLanguagePipePipe } from 'src/app/pipes/label-language-pipe.pipe'
+
 import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
@@ -77,7 +79,8 @@ export class DevicesEditComponent implements OnInit {
     private _routerService: Router,
     private errorService: ErrorModalService,
     private sanitizer: DomSanitizer,
-    private http: HttpClient
+    private http: HttpClient,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) {
     this.doUpload = this.doUpload.bind(this);
   }
@@ -223,12 +226,12 @@ export class DevicesEditComponent implements OnInit {
 
     this.deviceForm.controls['description'].patchValue({
       translationId: device.description.item[0].translationId,
-      text: device.description ? device.description.item[0].text : '',
+      text: device.description ? this.labelLanguagePipe.transform(device.description.item) : '',
     });
 
     this.deviceForm.controls['markdown'].patchValue({
       translationId: device.markdown.item[0].translationId,
-      text: device.markdown ? device.markdown.item[0].text : '',
+      text: device.markdown ? this.labelLanguagePipe.transform(device.markdown.item) : '',
     });
 
     this.deviceForm.setControl(
@@ -271,6 +274,9 @@ export class DevicesEditComponent implements OnInit {
           lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
         })
       );
+      // if (s.languageCode == 'en') {
+      //   formArray.controls[formArray.length-1].disable()//[formArray.length-1]) //.controls['value'].disable();
+      // };
     });
     return formArray;
   }

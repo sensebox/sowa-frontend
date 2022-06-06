@@ -1,6 +1,6 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
 
-AbstractControl
+// AbstractControl
 
 export class CustomValidators {
     
@@ -12,6 +12,18 @@ export class CustomValidators {
         } else {
           return null;
         }
+    }
+
+    static englishLabel(control: FormArray): { [key: string]: any} | null {
+      // console.log(control.controls)
+      const labelArray = control.controls;
+      // labelArray.forEach((element: FormGroup) => {
+      //   // console.log(element)
+      //   if (element.getRawValue().lang === '') {
+      //      return null;
+      //    }
+      // })
+      return { 'englishLabel': false};
     }
       
 }

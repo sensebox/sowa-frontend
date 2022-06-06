@@ -123,7 +123,7 @@
                 <p class="title">Description</p>
                 <div class="content">
                   <strong *ngIf="phenomenon.description && phenomenon.description.item[0]">
-                    {{phenomenon.description.item[0].text}}
+                    {{phenomenon.description.item | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
@@ -217,7 +217,7 @@
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary" >
                       <a (click)="redirectDomain(unit.unitSlug, '/unit/detail/')">
-                        {{unit.unitLabel}}
+                        {{unit.unitLabel}} ({{unit.unitNotation}})
                       </a>
                     </p>
                   </div>

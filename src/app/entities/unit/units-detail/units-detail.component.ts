@@ -57,7 +57,7 @@ export class UnitsDetailComponent implements OnInit, AfterViewInit {
           this.unit = response;
           console.log(this.unit)
           // this.setPrefLabel();
-          this.uri = this.unit.id;
+          this.uri = this.unit.slug;
           //this.uri = this.device.iri.value.slice(this.senphurl.length);
         });
       })

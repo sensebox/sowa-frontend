@@ -121,7 +121,7 @@
                 <p class="title">Description</p>
                 <div class="content">
                   <strong *ngIf="sensor.description">
-                    {{sensor.description.item[0].text}}
+                    {{sensor.description.item | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>

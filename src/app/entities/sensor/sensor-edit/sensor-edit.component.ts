@@ -14,6 +14,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UploadResult } from "src/app/interfaces/uploadResult";
+import { LabelLanguagePipePipe } from "src/app/pipes/label-language-pipe.pipe";
 
 @Component({
   selector: "senph-sensor-edit",
@@ -91,7 +92,8 @@ export class SensorEditComponent implements OnInit {
     private _routerService: Router,
     private errorService: ErrorModalService,
     private sanitizer: DomSanitizer,
-    private http: HttpClient
+    private http: HttpClient,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) {
     this.doUpload = this.doUpload.bind(this);
   }
@@ -102,7 +104,7 @@ export class SensorEditComponent implements OnInit {
     this.sensorForm = this.fb.group({
       id: [null, [Validators.required]],
       slug: [null, [Validators.required]],
-      label: this.fb.array([this.addLabelFormGroup()]),
+      label: this.fb.array([this.addLabelFormGroup()], [CustomValidators.englishLabel]),
       description: this.addDescriptionFormGroup(),
       sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
       device: this.fb.array([this.addDeviceFormGroup()]),
@@ -257,7 +259,7 @@ export class SensorEditComponent implements OnInit {
 
     this.sensorForm.controls['description'].patchValue({
       translationId: sensor.description.item[0].translationId,
-      text: sensor.description ? sensor.description.item[0].text : '',
+      text: sensor.description ? this.labelLanguagePipe.transform(sensor.description.item) : '',
     });
 
     // this.sensorForm.controls['markdown'].patchValue({
@@ -348,7 +350,6 @@ export class SensorEditComponent implements OnInit {
   }
 
   setTranslationIds(sensor: ISensor) {
-    console.log(sensor)
     const array = [];
     array.push(sensor.labels[0].translationId);
     array.push(sensor.description["item"][0].translationId);
@@ -361,7 +362,9 @@ export class SensorEditComponent implements OnInit {
     });
   }
 
-  onLoadButtonClick() {}
+  onLoadButtonClick() {
+    console.log(this.sensorForm.get('label'));
+  }
 
   doUpload(files: Array<File>): Promise<Array<UploadResult>> {
     let result: Array<UploadResult> = [];

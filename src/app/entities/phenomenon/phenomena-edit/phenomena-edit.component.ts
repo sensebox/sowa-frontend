@@ -15,6 +15,8 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { IPhenomenon } from "src/app/interfaces/IPhenomenon";
 
+import { LabelLanguagePipePipe } from "src/app/pipes/label-language-pipe.pipe";
+
 @Component({
   selector: "senph-phenomena-edit",
   templateUrl: "./phenomena-edit.component.html",
@@ -55,7 +57,8 @@ export class PhenomenaEditComponent implements OnInit {
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private http: HttpClient
+    private http: HttpClient,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) {
     this.doUpload = this.doUpload.bind(this);
   }
@@ -164,12 +167,12 @@ export class PhenomenaEditComponent implements OnInit {
     
     this.phenomenonForm.controls['description'].patchValue({
       translationId: phenomenon.description.item[0].translationId,
-      text: phenomenon.description ? phenomenon.description.item[0].text : '',
+      text: phenomenon.description ? this.labelLanguagePipe.transform(phenomenon.description.item) : '',
     });
 
     this.phenomenonForm.controls['markdown'].patchValue({
       translationId: phenomenon.markdown.item[0].translationId,
-      text: phenomenon.markdown ? phenomenon.markdown.item[0].text : '',
+      text: phenomenon.markdown ? this.labelLanguagePipe.transform(phenomenon.markdown.item) : '',
     });
 
     this.phenomenonForm.setControl(

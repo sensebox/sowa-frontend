@@ -9,7 +9,7 @@
     <!-- 1.2 FORM-FIELDS -->
     <div class="panel-body">  
 
-        <!-- Unit name -->
+        <!-- 1.2.1 Name -->
         <div class="container well some-space">
             <div class="field is-horizontal">
                 <div class="field-label is-normal">
@@ -28,7 +28,26 @@
             </span>
         </div>
 
-        <!-- 1.2.3 DESCRIPTIONS -->
+        <!-- 1.2.2 Notation -->
+        <div class="container well some-space">
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Notation:</label>
+                </div>
+                <div class="field-body">
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" [id]="id" formControlName="notation" class="input is-normal">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="help-block error-block" *ngIf="formErrors[id]">
+                {{formErrors[id]}}
+            </span>
+        </div>
+
+        <!-- 1.2.3 Description -->
         <div class="container well some-space">
             <div class="field is-horizontal">
             <div class="field-label is-normal">

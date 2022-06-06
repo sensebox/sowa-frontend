@@ -3,7 +3,7 @@ export class IRoV {
     unitId: number;
     unitLabel: string;
     unitSlug: string;
-    unitAbbr: string;
+    unitNotation: string;
     min?: number;
     max?: number;
 
@@ -12,6 +12,7 @@ export class IRoV {
         this.unitId = resRoV.unit.id;
         this.unitLabel = resRoV.unit.name;
         this.unitSlug = resRoV.unit.slug;
+        this.unitNotation = resRoV.unit.notation;
         this.min = resRoV.min;
         this.max = resRoV.max;
     }
