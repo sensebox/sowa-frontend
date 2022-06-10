@@ -43,9 +43,12 @@ export class SensorEditComponent implements OnInit {
   previewPath: any;
 
   validationMessages = {
-    uri: {
+    id: {
       required: "URI is required.",
       uriSyntax: "No white spaces allowed in URI.",
+    },
+    slug: {
+      required: "slug is required"
     },
     label: {
       required: "Label is required.",
@@ -183,6 +186,7 @@ export class SensorEditComponent implements OnInit {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
+              // console.log(key)
               this.formErrors[key] += messages[errorKey] + " ";
             }
           }

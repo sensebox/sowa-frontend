@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service'
-import { IPhenomena } from 'src/app/interfaces/IPhenomena';
-
 
 @Component({
   selector: 'senph-sensor-element',
@@ -58,7 +56,7 @@ export class SensorElementComponent implements OnInit {
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
-      sensorElementId: [null, [Validators.required]],
+      sensorElementId: [null],
       phenomenonId: [null, [Validators.required]],
       unitId: [null, [Validators.required]],
       // unitOfAccuracy: [{ value: null, disabled: false }, [Validators.required]],
