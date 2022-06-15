@@ -125,7 +125,9 @@ export class SensorNewComponent implements OnInit {
         image: [{ value: null, disabled: false }],
         validation: [false, [Validators.required]],
       },
-      { updateOn: "blur" }
+      { updateOn: "blur",
+        validators: [CustomValidators.englishLabel],
+      }
     );
 
     this.sensorForm.valueChanges.subscribe((data) => {
@@ -320,28 +322,6 @@ export class SensorNewComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     console.log(this.sensorForm)
-
-    // this.uploader.setOptions({
-    //   additionalParameter: {
-    //     uri: this.sensorForm.get("id").value,
-    //   },
-    // });
-    // console.log(this.devicesArray);
-    // this.sensorForm.controls.sensorElement.forEach(element => {
-    //   element.accuracyValue.toFixed(10);
-    // });
-    
-    // var inputValue = (<HTMLInputElement>document.getElementById("imageUpload")).value;
-    // var extension = inputValue.slice(inputValue.lastIndexOf("."));
-    // var imageFileName = this.sensorForm.get("label").value[0].value + extension;
-    // this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
-    // this.sensorForm.patchValue({
-    //   image: imageFileName,
-    // });
-    // console.log(this.sensorForm.get("image").value)
-    // this.uploader.options.additionalParameter.uri = this.sensorForm.value.id;
-    // this.uploader.options.additionalParameter.name = imageFileName;
-    // console.log(this.uploader.options.additionalParameter);
 
     if (this.sensorForm.invalid) {
       bulmaToast.toast({

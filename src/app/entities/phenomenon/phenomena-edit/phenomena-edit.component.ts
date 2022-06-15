@@ -76,7 +76,7 @@ export class PhenomenaEditComponent implements OnInit {
       deletedDomains: this.fb.array([]),
       deletedUnits: this.fb.array([]),
       translationIds: [[], [Validators.required]]
-    });
+    }, {validators: CustomValidators.englishLabel});
 
     this.phenomenonForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.phenomenonForm);
@@ -267,7 +267,7 @@ export class PhenomenaEditComponent implements OnInit {
       });
     } else {
       //console.dir(this.phenomenonForm.value)
-      this.api.editPhenomenon(this.phenomenonForm.value).subscribe(
+      this.api.editPhenomenon(this.phenomenonForm.getRawValue()).subscribe(
         (res) => {
           bulmaToast.toast({
             message: "Edit successful!",

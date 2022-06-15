@@ -100,7 +100,7 @@ export class DeviceNewComponent implements OnInit {
       image: [{ value: null, disabled: false }, [Validators.required]],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
-    });
+    }, {validators: CustomValidators.englishLabel});
 
     this.deviceForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.deviceForm);

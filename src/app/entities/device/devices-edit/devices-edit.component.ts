@@ -102,7 +102,7 @@ export class DevicesEditComponent implements OnInit {
       deletedLabels: this.fb.array([]),
       deletedSensors: this.fb.array([]),
       translationIds: [[], [Validators.required]]
-    });
+    }, {validators: CustomValidators.englishLabel});
 
     this.deviceForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.deviceForm);

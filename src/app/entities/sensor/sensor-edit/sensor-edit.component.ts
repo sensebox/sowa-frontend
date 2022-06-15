@@ -107,7 +107,7 @@ export class SensorEditComponent implements OnInit {
     this.sensorForm = this.fb.group({
       id: [null, [Validators.required]],
       slug: [null, [Validators.required]],
-      label: this.fb.array([this.addLabelFormGroup()], [CustomValidators.englishLabel]),
+      label: this.fb.array([this.addLabelFormGroup()]),
       description: this.addDescriptionFormGroup(),
       sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
       device: this.fb.array([this.addDeviceFormGroup()]),
@@ -120,8 +120,8 @@ export class SensorEditComponent implements OnInit {
       deletedLabels: this.fb.array([]),
       deletedDevices: this.fb.array([]),
       deletedSensorElements: this.fb.array([]),
-      translationIds: [[], [Validators.required]]
-    });
+      translationIds: [[], [Validators.required]],
+    }, {validators: CustomValidators.englishLabel});
 
     this.sensorForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.sensorForm);

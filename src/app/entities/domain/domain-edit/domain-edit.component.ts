@@ -102,7 +102,7 @@ export class DomainEditComponent implements OnInit {
       deletedLabels: this.fb.array([]),
       deletedPhenomena: this.fb.array([]),
       translationIds: [[], [Validators.required]]
-    })
+    }, {validators: CustomValidators.englishLabel});
 
     this.domainForm.valueChanges.subscribe(
       (data) => {

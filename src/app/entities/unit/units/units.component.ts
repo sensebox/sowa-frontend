@@ -23,6 +23,9 @@ export class UnitsComponent implements OnInit {
   ngOnInit() {
     this.api.getUnits().subscribe(res => {
       var tempArray: any = res;
+
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+
       this.unitsArray = Array.from(tempArray, x => new IUnits(x));
       console.log(this.unitsArray)
     });

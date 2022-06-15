@@ -61,7 +61,7 @@ export class PhenomenonNewComponent implements OnInit {
       domain: this.fb.array([this.addDomainFormGroup()]),
       unit: this.fb.array([this.addUnitFormGroup()]),
       validation: [false, [Validators.required]],
-    });
+    }, {validators: CustomValidators.englishLabel});
 
     this.phenomenonForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.phenomenonForm);

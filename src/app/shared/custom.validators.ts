@@ -5,6 +5,7 @@ import { AbstractControl, FormArray, FormGroup } from "@angular/forms";
 export class CustomValidators {
     
     static uriSyntax(control: AbstractControl): { [key: string]: any } | null {
+        // console.log(control)
         const uri: string = control.value;
         const hasWhiteSpace = /\s/g.test(uri);
         if(hasWhiteSpace){
@@ -14,16 +15,18 @@ export class CustomValidators {
         }
     }
 
-    static englishLabel(control: FormArray): { [key: string]: any} | null {
-      // console.log(control.controls)
-      const labelArray = control.controls;
-      // labelArray.forEach((element: FormGroup) => {
-      //   // console.log(element)
-      //   if (element.getRawValue().lang === '') {
-      //      return null;
-      //    }
-      // })
-      return { 'englishLabel': false};
+    static englishLabel(control: FormGroup): { [key: string]: any} | null {
+      console.log(control)
+      const labelArray = control.getRawValue().label;
+      let isEnglishLabel = arr => arr.some(x => {
+        // console.log(`Testing ${x.lang}`);
+        return (x.lang === 'en');
+      });
+      // console.log(isEnglishLabel(labelArray))
+      if (isEnglishLabel(labelArray)) {
+        return null;
+      } else {
+        return { 'englishLabel': true };
+      }
     }
-      
 }

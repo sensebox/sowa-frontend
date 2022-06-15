@@ -54,7 +54,7 @@ export class DomainNewComponent implements OnInit {
       description: this.addDescriptionFormGroup(),
       phenomenon: this.fb.array([this.addPhenomenonFormGroup()]),
       validation: [false, [Validators.required]],
-    });
+    }, {validators: CustomValidators.englishLabel});
 
     this.domainForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.domainForm);
@@ -127,7 +127,7 @@ export class DomainNewComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      this.api.createDomain(this.domainForm.value).subscribe(
+      this.api.createDomain(this.domainForm.getRawValue()).subscribe(
         (res) => {
           this.domainForm.reset();
           bulmaToast.toast({
