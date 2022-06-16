@@ -1,12 +1,14 @@
 export class IDomains {
     domain: number
-    domainLabel: string;
+    domainSlug: string
+    label: string;
     validation: boolean;
 
 
     constructor(resDomain: any) {
         this.domain = resDomain.id;
-        this.domainLabel = resDomain.label.item;
+        this.domainSlug = resDomain.slug;
+        this.label = resDomain.label.item;
         this.validation = resDomain.validation;
     }
 }

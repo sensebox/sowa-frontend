@@ -1,9 +1,11 @@
 export class ILabel {
         text: string;
         languageCode: string;
+        translationId: number;
 
-    constructor(reslabel: any) {
-        this.text = reslabel.text;
-        this.languageCode = reslabel.languageCode;
+    constructor(resLabel: any) {
+        this.text = resLabel.text;
+        this.languageCode = resLabel.languageCode;
+        this.translationId = resLabel.translationId;
     }
 };

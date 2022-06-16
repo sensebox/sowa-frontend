@@ -13,6 +13,7 @@ export class ISensor {
   // markdown: string,
 
   id: number;
+  slug: string;
   labels: ILabel[];
   description: Object;
   price: null;
@@ -22,13 +23,14 @@ export class ISensor {
   datasheet: string;
   validation: boolean;
   sensorElements: ISensorElement[];
-  
+  devices: IDevices[];
   
   
 
   constructor(res: any) {
     this.labels = [];
     this.sensorElements = [];
+    this.devices = [];
 
     for (let property in res) {
       switch(property){
@@ -38,9 +40,15 @@ export class ISensor {
           break;
         }
 
+        case "slug": {
+          this.slug = res[property];
+          break;
+        }
+
         case "label": {
-          this.labels.push(new ILabel(res[property].item[0]));
-          this.labels.push(new ILabel(res[property].item[1]));
+          res[property].item.forEach(element => {
+            this.labels.push(new ILabel(element))
+          })
           break;
         }
 
@@ -82,6 +90,13 @@ export class ISensor {
         case "elements": {
           res[property].forEach((element: any) => {
             this.sensorElements.push(new ISensorElement(element));
+          })
+          break;
+        }
+
+        case "devices": {
+          res[property].forEach((element: any) => {
+            this.devices.push(new IDevices(element));
           })
           break;
         }

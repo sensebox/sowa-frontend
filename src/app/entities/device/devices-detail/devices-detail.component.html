@@ -121,13 +121,13 @@
                 <p class="title">Description</p>
                 <div class="content">
                   <strong>
-                    {{device.description.item[1].text}}
+                    {{ device.description.item | labelLanguagePipe }}
                   </strong>
                 </div>
               </article>
             </div>
             <div class="tile is-parent">
-              <article *ngIf="device.image != 'null' else noImage" class=" tile is-child notification is-dark">
+              <article *ngIf="device.image != null else noImage" class=" tile is-child notification is-dark">
                 <figure class="image is-256x256">
                   <img class="is-rounded" src="{{APIURL}}/images/upload/{{device.image}}">
                 </figure>
@@ -177,9 +177,9 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a class=""  (click)="redirectDomain(sensor.sensor, '/sensor/detail/')">
-                        <!-- {{searchPheno(dom.sensor.value, "sensor", sensorsArray , "sensorLabel")}} -->
-                        {{sensor.sensorLabel | labelLanguagePipe}}
+                      <a class=""  (click)="redirectDomain(sensor.sensorSlug, '/sensor/detail/')">
+                        <!-- {{searchPheno(dom.sensor.value, "sensor", sensorsArray , "label")}} -->
+                        {{sensor.label | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>
@@ -187,10 +187,11 @@
               </div>
             </article>
           </div>
+
           <div class="tile is-parent">
-            <article *ngIf="device.markdown && device.markdown.value != ''" class="tile is-child notification">
+            <article *ngIf="device.markdown" class="tile is-child notification">
               <p class="title">Explanation</p>
-              <md-editor ngModel="{{device.markdown.value}}" name="Content" [upload]="doUpload" [height]="'auto'"
+              <md-editor ngModel="{{device.markdown.item | labelLanguagePipe}}" name="Content" [upload]="doUpload" [height]="'auto'"
                 mode="preview" [options]="markdownOptions">
               </md-editor>
             </article>

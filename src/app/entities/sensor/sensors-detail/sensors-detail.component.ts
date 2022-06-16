@@ -93,7 +93,7 @@ export class SensorsDetailComponent implements OnInit {
           //   }
           //   this.prefLabel = element;
           // });
-          this.uri = this.sensor.labels[0].text
+          this.uri = this.sensor.slug;
           // this.uri = this.sensor.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
@@ -109,7 +109,7 @@ export class SensorsDetailComponent implements OnInit {
               return
             }
           });
-          this.uri = this.sensor.labels[0].text
+          this.uri = this.sensor.slug
           // this.uri = this.sensor.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
@@ -139,7 +139,7 @@ export class SensorsDetailComponent implements OnInit {
     }
   }
   editButtonClick(shortUri) {
-    this._routerService.navigate(['/sensor/edit', shortUri]);
+    this._routerService.navigate(['/sensor/edit', this.sensor.slug]);
   }
 
   redirectHistoricDetails(uri, historicUri) {

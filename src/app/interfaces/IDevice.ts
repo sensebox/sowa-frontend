@@ -2,9 +2,12 @@ import { ISensors } from "./ISensors";
 import { ILabel } from "./ILabel";
 export class IDevice {
   id: number;
+  slug: string
   labels: ILabel[];
   description: Object;
   markdown: Object;
+  contact: String;
+  website: String;
   image: String;
   sensors: ISensors[];
   validation: boolean;
@@ -21,9 +24,15 @@ export class IDevice {
           break;
         }
 
+        case "slug": {
+          this.slug = res[property];
+          break;
+        }
+
         case "label": {
-          this.labels.push(new ILabel(res[property].item[0]));
-          this.labels.push(new ILabel(res[property].item[1]));
+          res[property].item.forEach(item => {
+            this.labels.push(new ILabel(item))
+          })
           break;
         }
 
@@ -42,10 +51,21 @@ export class IDevice {
           break;
         }
 
+        case "website": {
+          this.website = res[property];
+          break;
+        }
+
+        case "contact": {
+          this.contact = res[property];
+          break;
+        }
+
         case "sensors": {
           res[property].forEach((element: any) => {
             this.sensors.push(new ISensors(element));
-          }) 
+          })
+          this.sensors.sort((a, b) => a.sensorSlug.localeCompare(b.sensorSlug));
           break;
         }
 

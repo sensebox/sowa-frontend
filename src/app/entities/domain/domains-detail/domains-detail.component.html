@@ -122,7 +122,7 @@
                 <p class="title">Description</p>
                 <div class="content">
                   <strong>
-                    {{domain.description.item[1].text}}
+                    {{domain.description.item | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
@@ -160,8 +160,8 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a class="" (click)="redirectDomain(phenomenon.phenomenon, '/phenomenon/detail/')">
-                        {{phenomenon.phenomenonLabel | labelLanguagePipe}}
+                      <a class="" (click)="redirectDomain(phenomenon.phenomenonSlug, '/phenomenon/detail/')">
+                        {{phenomenon.label | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>

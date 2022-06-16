@@ -5,10 +5,10 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service'
 import { IDomains } from '../../../interfaces/IDomains';
-import { IUnit } from '../../../interfaces/IUnit';
+import { IRoV } from '../../../interfaces/IRoV';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
-import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
+import { redirectDomain, redirectUnit } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'senph-phenomena-detail',
@@ -28,6 +28,7 @@ export class PhenomenaDetailComponent implements OnInit {
   unitsArray;
 
   redirectDomain = redirectDomain;
+  redirectUnit = redirectUnit
 
 
   constructor(
@@ -97,7 +98,7 @@ export class PhenomenaDetailComponent implements OnInit {
           //     return
           //   }
           // });
-          this.uri = this.phenomenon.labels[0].text;
+          this.uri = this.phenomenon.slug;
           //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })
@@ -113,7 +114,7 @@ export class PhenomenaDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
+          this.uri = this.phenomenon.slug;
         });
       })
     }
@@ -131,7 +132,7 @@ export class PhenomenaDetailComponent implements OnInit {
   }
 
   editButtonClick(uri) {
-    this._routerService.navigate(['/phenomenon/edit', uri]);
+    this._routerService.navigate(['/phenomenon/edit', this.phenomenon.slug]);
   }
 
 

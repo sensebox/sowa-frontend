@@ -6,7 +6,7 @@
 
 
   <!-- 1.1 BANNER -->
-  <senph-hero-banner title="Create a Phenomenon:" [subtitle]="heroBannerString + phenomenonForm.get('uri').value">
+  <senph-hero-banner title="Create a Phenomenon:" [subtitle]="shortUri">
   </senph-hero-banner>
 
 
@@ -14,7 +14,7 @@
   <div class="panel-body">
 
 
-    <!-- 1.2.1 URI -->
+    <!-- 1.2.1 URI
     <div class="container well some-space">
       <div class="field is-horizontal is-grouped">
         <div class="field-label is-normal">
@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
     <!-- 1.2.2 LABELS -->
@@ -59,9 +59,8 @@
         </div>
         <div class="field-body">
           <div class="field">
-            <div class="control">
-              <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
-                (blur)="logValidationErrors()"></textarea>
+            <div formGroupName="description" class="control">
+              <textarea class="textarea is-normal" type="text" id="description" formControlName="text" (blur)="logValidationErrors()"></textarea>
             </div>
             <span class="help-block">Please enter a short description of the phenomenon and its characteristcs.</span>
             <span class="help-block error-block" *ngIf="formErrors.description">
@@ -78,8 +77,8 @@
         <div class="field-label is-normal">
           <label class="label">Explanation:</label>
         </div>
-        <div class="container well come-space">
-          <md-editor formControlName="markdown" name="Content" [height]="'400px'" [upload]="doUpload">
+        <div formGroupName="markdown" class="container well come-space">
+          <md-editor formControlName="text" name="Content" [height]="'400px'" [upload]="doUpload">
           </md-editor>
         </div>
       </div>

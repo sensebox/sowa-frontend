@@ -62,9 +62,7 @@ export class DomainsDetailComponent implements OnInit {
           //   }
           //   this.prefLabel = element;
           // });
-          this.uri = this.domain.labels[0].text;
-          // this.uri = this.domain.iri.value.slice(this.senphurl.length);
-          // this.pushLabelNames(response);
+          this.uri = this.domain.slug;
         });
       })
     }
@@ -79,7 +77,7 @@ export class DomainsDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.domain.labels[0].text;
+          this.uri = this.domain.slug;
           //this.uri = this.domain.iri.value.slice(this.senphurl.length);
           // this.pushLabelNames(response);
         });
@@ -100,7 +98,7 @@ export class DomainsDetailComponent implements OnInit {
   }
   
   editButtonClick(shortUri) {
-    this._routerService.navigate(['/domain/edit', shortUri]);
+    this._routerService.navigate(['/domain/edit', this.domain.slug]);
   }
 
   redirectHistoricDetails(uri, historicUri) {
@@ -142,7 +140,7 @@ export class DomainsDetailComponent implements OnInit {
       tempArray = tempArray.filter(function (el) {
         return el.phenomenon.type != 'bnode'
       })
-      tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
+      tempArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
       this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
     });
   }

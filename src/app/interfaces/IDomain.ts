@@ -3,6 +3,7 @@ import { IPhenomena } from './IPhenomena';
 
 export class IDomain {
     id: number;
+    slug: string
     labels: ILabel[];
     description: Object;
     validation: boolean;
@@ -18,6 +19,11 @@ export class IDomain {
       
               case "id": {
                 this.id = res[property];
+                break;
+              }
+
+              case "slug": {
+                this.slug = res[property];
                 break;
               }
       
@@ -37,6 +43,7 @@ export class IDomain {
                 res[property].forEach((element: any) => {
                   this.phenomena.push(new IPhenomena(element));
                 }) 
+                this.phenomena.sort((a, b) => a.phenomenonSlug.localeCompare(b.phenomenonSlug));
                 break;
               }
       

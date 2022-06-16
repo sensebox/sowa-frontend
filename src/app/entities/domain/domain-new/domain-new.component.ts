@@ -18,7 +18,7 @@ export class DomainNewComponent implements OnInit {
   heroBannerString = "http://sensors.wiki/SENPH#";
   domainForm: FormGroup;
   validationMessages = {
-    uri: {
+    id: {
       required: "URI is required.",
       uriSyntax: "No white spaces allowed in URI.",
     },
@@ -27,6 +27,12 @@ export class DomainNewComponent implements OnInit {
     },
     description: {
       required: "Description is required.",
+    },
+    translationId: {
+      required: 'Translation ID is required.'
+    },
+    translationIds: {
+      required: 'Translation IDs are required.'
     },
   };
   formErrors: FormErrors = {};
@@ -43,12 +49,12 @@ export class DomainNewComponent implements OnInit {
 
   ngOnInit() {
     this.domainForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
+      id: [null],
       label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
+      description: this.addDescriptionFormGroup(),
       phenomenon: this.fb.array([this.addPhenomenonFormGroup()]),
       validation: [false, [Validators.required]],
-    });
+    }, {validators: CustomValidators.englishLabel});
 
     this.domainForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.domainForm);
@@ -83,20 +89,23 @@ export class DomainNewComponent implements OnInit {
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
-      value: ["", [Validators.required]],
+      translationId: [null],
+      value: [null, [Validators.required]],
       lang: ["", [Validators.required]],
     });
   }
 
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null],
+      text: [""]
+    })
+  }
+
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
-      // phenomenonObject: [{
-      phenomenon: [
-        "",
-        // phenomenonLabel: ''},
-        [Validators.required],
-      ],
+      phenomenon: [null, [Validators.required]],
+      exists: [true, [Validators.required]]
     });
   }
 
@@ -118,7 +127,7 @@ export class DomainNewComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      this.api.createDomain(this.domainForm.value).subscribe(
+      this.api.createDomain(this.domainForm.getRawValue()).subscribe(
         (res) => {
           this.domainForm.reset();
           bulmaToast.toast({

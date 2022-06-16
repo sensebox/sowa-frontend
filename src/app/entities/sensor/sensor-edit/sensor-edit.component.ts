@@ -4,17 +4,17 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
 import { CustomValidators } from "../../../shared/custom.validators";
 import { ILabel } from "src/app/interfaces/ILabel";
+import { ISensor } from "src/app/interfaces/ISensor";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
 
-import { FileUploader } from "ng2-file-upload";
+import { FileItem, FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
-
-import { HttpClient } from "@angular/common/http";
-
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { UploadResult } from "src/app/interfaces/uploadResult";
+import { LabelLanguagePipePipe } from "src/app/pipes/label-language-pipe.pipe";
 
 @Component({
   selector: "senph-sensor-edit",
@@ -29,21 +29,26 @@ export class SensorEditComponent implements OnInit {
     itemAlias: "image",
     authToken: window.localStorage.getItem("sb_accesstoken"),
     additionalParameter: {
-      uri: "",
+      uri: null,
+      name: null,
     },
   });
 
   heroBannerString = "http://sensors.wiki/SENPH#";
   sensorForm: FormGroup;
+  deleteSensorForm: FormGroup;
   submitted = false;
   shortUri: string;
 
   previewPath: any;
 
   validationMessages = {
-    uri: {
+    id: {
       required: "URI is required.",
       uriSyntax: "No white spaces allowed in URI.",
+    },
+    slug: {
+      required: "slug is required"
     },
     label: {
       required: "Label is required.",
@@ -73,6 +78,12 @@ export class SensorEditComponent implements OnInit {
         "Provide an image link or use the checkbox to set its value to undefined.",
       uriSyntax: "No white spaces allowed in Image-URL.",
     },
+    translationId: {
+      required: 'Translation ID is required.'
+    },
+    translationIds: {
+      required: 'Translation IDs are required.'
+    },
   };
 
   formErrors: FormErrors = {};
@@ -84,7 +95,8 @@ export class SensorEditComponent implements OnInit {
     private _routerService: Router,
     private errorService: ErrorModalService,
     private sanitizer: DomSanitizer,
-    private http: HttpClient
+    private http: HttpClient,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) {
     this.doUpload = this.doUpload.bind(this);
   }
@@ -93,44 +105,55 @@ export class SensorEditComponent implements OnInit {
     this.previewPath = "//:0";
 
     this.sensorForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
+      id: [null, [Validators.required]],
+      slug: [null, [Validators.required]],
       label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      markdown: [""],
+      description: this.addDescriptionFormGroup(),
       sensorElement: this.fb.array([this.addSensorElementFormGroup()]),
       device: this.fb.array([this.addDeviceFormGroup()]),
-      manufacturer: [{ value: "", disabled: false }, [Validators.required]],
-      price: [{ value: "", disabled: false }, [Validators.required]],
-      datasheet: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      lifeperiod: [{ value: "", disabled: false }, [Validators.required]],
-      image: [{ value: "", disabled: false }, [CustomValidators.uriSyntax]],
+      manufacturer: [{ value: null, disabled: false }, [Validators.required]],
+      price: [{ value: null, disabled: false }, [Validators.required]],
+      datasheet: [{ value: null, disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      lifeperiod: [{ value: null, disabled: false }, [Validators.required]],
+      image: [{ value: null, disabled: false }, [CustomValidators.uriSyntax]],
       validation: [false, [Validators.required]],
-    });
+      deletedLabels: this.fb.array([]),
+      deletedDevices: this.fb.array([]),
+      deletedSensorElements: this.fb.array([]),
+      translationIds: [[], [Validators.required]],
+    }, {validators: CustomValidators.englishLabel});
 
     this.sensorForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.sensorForm);
     });
 
     this.uploader.onAfterAddingFile = (file) => {
+
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.slice(inputValue.lastIndexOf("."));
+      var imageFileName = this.sensorForm.get("slug").value + extension;
+      this.sensorForm.get("image").setValue(imageFileName, { emitEvent: false });
+      this.sensorForm.patchValue({
+        image: imageFileName,
+      });
+      console.log(this.sensorForm.get("image").value)
+
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
-      var inputValue = (<HTMLInputElement>(
-        document.getElementById("imageUpload")
-      )).value;
-      var extension = inputValue.slice(inputValue.lastIndexOf("."));
-      this.sensorForm.value.image = extension;
-      var imageFileName = this.sensorForm.get("uri").value + extension;
-      this.sensorForm
-        .get("image")
-        .setValue(imageFileName, { emitEvent: false });
+      
+      this.uploader.options.additionalParameter.uri = this.sensorForm.value.id;
+      this.uploader.options.additionalParameter.name = imageFileName;
+      
+      // console.log(this.sensorForm.value.image)
+      // console.log(this.uploader)
     };
+
     this.uploader.onCompleteItem = (item: any, status: any) => {
       bulmaToast.toast({
         message: "Image successfully uploaded!",
@@ -147,7 +170,6 @@ export class SensorEditComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.shortUri = params.get("id");
       if (this.shortUri) {
-        this.uploader.options.additionalParameter.uri = this.shortUri;
         this.getSensor(this.shortUri);
       }
     });
@@ -160,17 +182,11 @@ export class SensorEditComponent implements OnInit {
         this.logValidationErrors(abstractControl);
       } else {
         this.formErrors[key] = "";
-        if (
-          abstractControl &&
-          !abstractControl.valid &&
-          (abstractControl.touched ||
-            abstractControl.dirty ||
-            abstractControl.value !== "" ||
-            this.submitted)
-        ) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== "" || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
+              // console.log(key)
               this.formErrors[key] += messages[errorKey] + " ";
             }
           }
@@ -181,43 +197,79 @@ export class SensorEditComponent implements OnInit {
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
-      phenomenonUri: ["", [Validators.required]],
-      unitOfAccuracy: [{ value: "", disabled: false }, [Validators.required]],
+      sensorElementId: [null, [Validators.required]],
+      phenomenonId: [null, [Validators.required]],
+      unitId: [null, [Validators.required]],
+      // unitOfAccuracy: [{ value: null, disabled: false }, [Validators.required]],
       unitUndefined: [false],
-      accuracyValue: [{ value: "", disabled: false }, [Validators.required]],
+      accuracyValue: [{ value: null, disabled: false }, [Validators.required]],
       accValUndefined: [false],
+      exists: [false, [Validators.required]]
     });
   }
 
   addDeviceFormGroup(): FormGroup {
     return this.fb.group({
-      deviceUri: ["", [Validators.required]],
+      device: ["", [Validators.required]],
+      exists: [true, [Validators.required]]
     });
   }
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
+      translationId: [null, [Validators.required]],
       value: ["", [Validators.required]],
       lang: ["", [Validators.required]],
     });
   }
 
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [""]
+    })
+  }
+
+  // addMarkdownFormGroup(): FormGroup {
+  //   return this.fb.group({
+  //     translationId: [null, [Validators.required]],
+  //     text: [""]
+  //   })
+  // }
+
   getSensor(shortUri) {
-    this.api.getSensor(shortUri).subscribe((sensor) => this.editSensor(sensor));
+    this.api.getSensor(shortUri).subscribe(
+      (sensor) => this.editSensor(sensor)
+    );
   }
 
   editSensor(sensor) {
+    // console.log(sensor);
     this.sensorForm.patchValue({
-      uri: sensor.iri.value.slice(this.heroBannerString.length),
-      description: sensor.description.value,
-      manufacturer: sensor.manufacturer.value,
-      price: sensor.price.value,
-      datasheet: sensor.datasheet.value,
-      lifeperiod: sensor.lifeperiod ? sensor.lifeperiod.value : "",
-      image: sensor.image ? sensor.image.value : "",
-      markdown: sensor.markdown ? sensor.markdown.value : "",
+      id: sensor.id,
+      slug: sensor.slug,
+      manufacturer: sensor.manufacturer,
+      price: sensor.price,
+      datasheet: sensor.datasheet,
+      lifeperiod: sensor.lifePeriod,
+      image: sensor.image,
+      validation: sensor.validation
+    })
+
+    this.sensorForm.setControl(
+      "label", 
+      this.setExistingLabels(sensor.labels)
+    );
+
+    this.sensorForm.controls['description'].patchValue({
+      translationId: sensor.description.item[0].translationId,
+      text: sensor.description ? this.labelLanguagePipe.transform(sensor.description.item) : '',
     });
-    this.sensorForm.setControl("label", this.setExistingLabels(sensor.labels));
+
+    // this.sensorForm.controls['markdown'].patchValue({
+    //   translationId: sensor.markdown.item[0].translationId,
+    //   text: sensor.markdown ? sensor.markdown.item[0].text : '',
+    // });
 
     this.sensorForm.setControl(
       "sensorElement",
@@ -228,49 +280,58 @@ export class SensorEditComponent implements OnInit {
       "device",
       this.setExistingDevices(sensor.devices)
     );
-    this.previewPath = this.APIURL + "/images/upload/" + sensor.image.value;
+    
+    if (sensor.image !== null) {
+      this.previewPath = this.APIURL + "/images/upload/" + sensor.image;
+    }
+    
+    this.sensorForm.patchValue({
+      translationIds: this.setTranslationIds(sensor),
+    })
+
+    this.deleteSensorForm = this.sensorForm;
   }
 
   setExistingSensorElements(sensorElementSet): FormArray {
     const formArray = new FormArray([]);
-    // console.log(sensorElementSet);
     sensorElementSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          phenomenonUri: [s.phenomenon.value, [Validators.required]],
-          unitOfAccuracy: [
-            {
-              value: s.unit.value,
-              disabled: s.unit.value === "http://server/unset-base/undefined",
-            },
-            [Validators.required],
-          ],
+          sensorElementId: [s.id, [Validators.required]],
+          phenomenonId: [s.phenomenonId, [Validators.required]],
+          unitId: [s.unitId, [Validators.required]],
+          // unitOfAccuracy: [
+          //   {
+          //     value: s.unit,
+          //     disabled: s.unit === null,
+          //   },
+          //   [Validators.required],
+          // ],
           unitUndefined: [
-            s.unit.value === "http://server/unset-base/undefined",
+            s.unit === null,
           ],
           accuracyValue: [
-            { value: s.accVal.value, disabled: s.accVal.value == "undefined" },
+            { value: s.accuracy, disabled: s.accuracy === null },
             [Validators.required],
           ],
-          accValUndefined: [s.accVal.value === "undefined"],
+          accValUndefined: [s.accuracy === null],
+          exists: [true, [Validators.required]],
         })
       );
     });
-
     return formArray;
   }
 
   setExistingDevices(deviceSet): FormArray {
     const formArray = new FormArray([]);
-    // console.log(deviceSet);
     deviceSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          deviceUri: [s.device.value, [Validators.required]],
+          device: [{value: s.device, disabled: true}, [Validators.required]],
+          exists: [true, [Validators.required]],
         })
       );
     });
-
     return formArray;
   }
 
@@ -279,13 +340,12 @@ export class SensorEditComponent implements OnInit {
     labelSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          type: [s, [Validators.required]],
-          value: [s, [Validators.required]],
-          lang: [s["xml:lang"], [Validators.required]],
+          translationId: [s.translationId, [Validators.required]],
+          value: [s.text, [Validators.required]],
+          lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
         })
       );
     });
-
     return formArray;
   }
 
@@ -293,13 +353,22 @@ export class SensorEditComponent implements OnInit {
     return this.sensorForm.get("image") as FormArray;
   }
 
+  setTranslationIds(sensor: ISensor) {
+    const array = [];
+    array.push(sensor.labels[0].translationId);
+    array.push(sensor.description["item"][0].translationId);
+    return array;
+  } 
+
   redirectDetails(uri) {
     this._routerService.navigate(["/sensor/detail", uri]).then(() => {
       window.location.reload();
     });
   }
 
-  onLoadButtonClick() {}
+  onLoadButtonClick() {
+    console.log(this.sensorForm.get('label'));
+  }
 
   doUpload(files: Array<File>): Promise<Array<UploadResult>> {
     let result: Array<UploadResult> = [];
@@ -336,35 +405,50 @@ export class SensorEditComponent implements OnInit {
   }
 
   deleteImage() {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        uri: this.sensorForm.value.id,
+        name: this.sensorForm.value.image
+      }
+    }
+
     this.http
-      .delete(this.APIURL + "/image/delete/" + this.sensorForm.value.image)
-      .subscribe(
-        (response) => {
-          this.sensorForm.get("image").patchValue(null);
-          bulmaToast.toast({
-            message: "Delete successful!",
-            type: "is-success",
-            dismissible: true,
-            closeOnClick: true,
-            animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
-            position: "top-center",
-            duration: 5000,
-          });
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    .delete(this.APIURL + "/image/delete/" + this.sensorForm.value.image, options)
+    .subscribe(
+      (response) => {
+        this.sensorForm.get("image").setValue(null);
+        this.uploader.queue.pop()
+        console.log(this.sensorForm.value)
+        console.log(this.uploader.queue)
+        bulmaToast.toast({
+          message: "Delete successful!",
+          type: "is-success",
+          dismissible: true,
+          closeOnClick: true,
+          animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
+          position: "top-center",
+          duration: 5000,
+        });
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
     document.getElementById("image").style.visibility = "hidden";
   }
 
   onSubmit() {
     this.submitted = true;
-    this.uploader.setOptions({
-      additionalParameter: {
-        uri: this.sensorForm.get("uri").value,
-      },
-    });
+    // this.uploader.setOptions({
+    //   additionalParameter: {
+    //     uri: this.sensorForm.value.id,
+    //     name: this.sensorForm.value.image,
+    //   },
+    // });
+    // console.dir(this.uploader.options)
 
     if (this.sensorForm.invalid) {
       bulmaToast.toast({
@@ -393,6 +477,7 @@ export class SensorEditComponent implements OnInit {
           if (this.uploader.queue.length == 1) {
             this.uploader.uploadAll();
           } else {
+            console.log(this.shortUri)
             this.redirectDetails(this.shortUri);
           }
         },
@@ -406,7 +491,7 @@ export class SensorEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.api.deleteSensor(this.sensorForm.getRawValue()).subscribe(
+    this.api.deleteSensor(this.deleteSensorForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({
           message: "Delete successful!",

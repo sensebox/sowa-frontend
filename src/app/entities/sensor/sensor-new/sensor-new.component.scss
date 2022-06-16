@@ -63,3 +63,12 @@
     background-color: hsla(348, 86%, 61%, 0.103);
   }
   
+  .no-image {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 70px;
+    justify-content: center;
+    border-radius: 50%;
+    border: 5px solid #363636;
+  }

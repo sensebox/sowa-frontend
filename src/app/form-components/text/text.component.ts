@@ -20,10 +20,38 @@ export class TextComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    setTimeout(() => {
+      if (this.control.value === null) {
+        this.checkboxState = true;
+        this.toggleDisabled(
+          {
+            target: {
+              checked: this.checkboxState
+            }
+          }
+        )
+      }
+    }, 100)
+    // console.log(this.control)
+  }
+
+
+  toggleDisabled(e) {
+    if (e.target.checked) {
+      this.tempValue = this.control.value;
+      this.control.disable();
+      this.control.setValue(null);
+    }
+    else {
+      this.control.enable();
+      this.control.setValue(this.tempValue);
+    }
   }
 
   setInitCheckBoxState() {
-    if (this.control.value === 'undefined') {
+    // console.log(this.control.value)
+    if (this.control.value === "") {
+      this.control.setValue(null);
       this.checkboxState = true;
       this.toggleDisabled(
         {
@@ -35,15 +63,5 @@ export class TextComponent implements OnInit {
     }
   }
 
-  toggleDisabled(e) {
-    if (e.target.checked) {
-      this.tempValue = this.control.value;
-      this.control.disable();
-      this.control.setValue('undefined');
-    }
-    else {
-      this.control.enable();
-      this.control.setValue(this.tempValue);
-    }
-  }
+
 }

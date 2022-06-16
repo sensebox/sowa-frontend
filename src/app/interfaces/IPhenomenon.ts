@@ -1,15 +1,14 @@
-import { IIri } from './IIri';
-import { IUnit } from './IUnit';
+import { IRoV } from './IRoV';
 import { IDomains } from './IDomains';
 import { ILabel } from './ILabel';
-import { ISensors } from './ISensors';
 
 export class IPhenomenon {
   id: number;
+  slug: string;
   labels: ILabel[];
   description: Object
   markdown: Object;
-  units: IUnit[];
+  units: IRoV[];
   domains: IDomains[];
   validation: boolean;
 
@@ -17,7 +16,6 @@ export class IPhenomenon {
     this.labels = [];
     this.domains = [];
     this.units = [];
-
 
     for (const property in res) {
       switch(property){
@@ -27,9 +25,15 @@ export class IPhenomenon {
           break;
         }
 
+        case "slug": {
+          this.slug = res[property];
+          break;
+        }
+
         case "label": {
-          this.labels.push(new ILabel(res[property].item[0]));
-          this.labels.push(new ILabel(res[property].item[1]));
+          res[property].item.forEach(item => {
+            this.labels.push(new ILabel(item))
+          })
           break;
         }
 
@@ -45,7 +49,7 @@ export class IPhenomenon {
 
         case "rov": {
           res[property].forEach((element: any) => {
-            this.units.push(new IUnit(element));
+            this.units.push(new IRoV(element));
           });
           break;
         }

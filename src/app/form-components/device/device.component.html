@@ -17,17 +17,17 @@
                             <div class="field is-narrow">
                                 <div class="control">
                                     <div class="select ">
-                                        <select [id]="'deviceUri' + i" formControlName="deviceUri">
+                                        <select [id]="'device' + i" formControlName="device">
                                             <option value=""> Choose a device</option>
-                                            <option *ngFor="let device of devicesArray" [ngValue]="device.device.value">
-                                                {{device.label[0].value}}
+                                            <option *ngFor="let device of devicesArray" [ngValue]="device.id">
+                                                {{device.label.item | labelLanguagePipe}}
                                             </option>
                                         </select>
                                     </div>
                                 </div>
                                 <span class="help-block error-block"
-                                    *ngIf="device.controls[i].get('deviceUri').errors?.required &&
-                                (device.controls[i].get('deviceUri').touched || !device.controls[i].get('deviceUri').pristine)">
+                                    *ngIf="device.controls[i].get('device').errors?.required &&
+                                (device.controls[i].get('device').touched || !device.controls[i].get('device').pristine)">
                                     {{validationMessages.device.required}}
                                 </span>
                             </div>

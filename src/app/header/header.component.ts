@@ -65,6 +65,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
           title: 'Add a domain'
         }
       ]
+    },
+    {
+      topic: 'Units',
+      options: [
+        {
+          path: 'units',
+          title: 'All units'
+        },
+        {
+          path: 'unit/add',
+          title: 'Add a unit'
+        }
+      ]
     }
   ];
 

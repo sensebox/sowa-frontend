@@ -20,18 +20,30 @@ export class NumberComponent implements OnInit {
 
 
   tempValue: number;
+  checkboxState = false;
 
   constructor() { }
 
   ngOnInit() {
+    setTimeout(() => {
+      if (this.control.value === null) {
+        this.checkboxState = true;
+        this.toggleDisabled(
+          {
+            target: {
+              checked: this.checkboxState
+            }
+          }
+        )
+      }
+    }, 100)
   }
 
   toggleDisabled(e) {
     if (e.target.checked) {
-
       this.tempValue = this.control.value;
       this.control.disable();
-      this.control.setValue('undefined');
+      this.control.setValue(null);
     }
     else {
       this.control.enable();

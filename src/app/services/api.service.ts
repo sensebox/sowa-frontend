@@ -13,6 +13,8 @@ import { ISensor } from "../interfaces/ISensor";
 import { Sensor } from "../phenomenon";
 import { IDomain } from "../interfaces/IDomain";
 import { environment } from "../../environments/environment";
+import { IRoV } from "../interfaces/IRoV";
+import { IUnit } from "../interfaces/IUnit";
 
 @Injectable({
   providedIn: "root",
@@ -150,6 +152,7 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+
   deleteSensor(sensor) {
     return this.http
       .post(this.APIURL + "/sensors/sensor/delete/", sensor, {
@@ -265,7 +268,15 @@ export class ApiService {
   /**-------------------Units------------------- */
 
   getUnits() {
-    return this.http.get(this.APIURL + "/units");
+    return this.http.get(this.APIURL + "/units/all");
+  }
+  getUnit(iri): Observable<any> {
+    return this.http.get(this.APIURL + "/units/unit/" + iri).pipe(
+      map((res: Array<any>) => {
+        let I2Unit = new IUnit(res);
+        return I2Unit;
+      })
+    );
   }
 
   getUnitLabel(iri) {
@@ -278,6 +289,30 @@ export class ApiService {
     return this.http.get(this.APIURL + "/all", {
       headers: this.createHeaders(),
     });
+  }
+
+  editUnit(unit) {
+    return this.http
+      .post(this.APIURL + "/units/unit/edit", unit, {
+        headers: this.createHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  createUnit(unit) {
+    return this.http
+      .post(this.APIURL + "/units/unit/create", unit, {
+        headers: this.createHeaders(),
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteUnit(unit) {
+    return this.http
+      .post(this.APIURL + "/units/unit/delete/", unit, {
+        headers: this.createHeaders(),
+      })
+      .pipe(catchError(this.handleError));
   }
 
   private handleError(errorResponse: HttpErrorResponse) {

@@ -18,9 +18,9 @@
                                 <div class="control">
                                     <div class="select">
                                         <select [id]="'phenomenon' + i" formControlName="phenomenon">
-                                            <option value=""> Choose a phenomenon</option>
-                                            <option *ngFor="let pheno of phenomenaArray" [ngValue]="pheno">
-                                                {{pheno.label.item[0] ? pheno.label.item[0].text : 'undefined'}}
+                                            <option value="null"> Choose a phenomenon</option>
+                                            <option *ngFor="let phenomenon of phenomenaArray" [ngValue]="phenomenon.id">
+                                                {{phenomenon.label.item | labelLanguagePipe}}
                                             </option>
                                         </select>
                                     </div>

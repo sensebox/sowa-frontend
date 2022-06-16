@@ -4,10 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { CustomValidators } from '../../../shared/custom.validators';
 import { ILabel } from 'src/app/interfaces/ILabel';
+import { IDomain } from 'src/app/interfaces/IDomain';
 import { IPhenomena } from 'src/app/interfaces/IPhenomena';
 import { FormErrors } from 'src/app/interfaces/form-errors';
 import { ErrorModalService } from 'src/app/services/error-modal.service';
 import * as bulmaToast from "bulma-toast";
+import { LabelLanguagePipePipe } from 'src/app/pipes/label-language-pipe.pipe'
+
 
 @Component({
   selector: 'senph-domain-edit',
@@ -53,18 +56,25 @@ export class DomainEditComponent implements OnInit {
 
   heroBannerString = "http://sensors.wiki/SENPH#";
   domainForm: FormGroup;
+  deleteDomainForm: FormGroup;
 
   validationMessages = {
-    'uri': {
-      'required': 'URI is required.',
-      'uriSyntax': 'No white spaces allowed in URI.'
+    id: {
+      required: 'URI is required.',
+      uriSyntax: 'No white spaces allowed in URI.'
     },
-    'label': {
-      'required': 'Label is required.'
+    label: {
+      required: 'Label is required.'
     },
-    'description': {
-      'required': 'Description is required.'
-    }
+    description: {
+      required: 'Description is required.'
+    },
+    translationId: {
+      required: 'Translation ID is required.'
+    },
+    translationIds: {
+      required: 'Translation IDs are required.'
+    },
   };
 
   formErrors: FormErrors = {
@@ -78,21 +88,21 @@ export class DomainEditComponent implements OnInit {
     private route: ActivatedRoute,
     private api: ApiService,
     private _routerService: Router,
-    private errorService: ErrorModalService
+    private errorService: ErrorModalService,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) { }
 
   ngOnInit() {
     this.domainForm = this.fb.group({
-      uri: ['', [Validators.required, CustomValidators.uriSyntax]],
-      label: this.fb.array([
-        this.addLabelFormGroup()
-      ]),
-      description: ['', [Validators.required]],
-      phenomenon: this.fb.array([
-        this.addPhenomenonFormGroup()
-      ]),
-      validation: [false, [Validators.required]]
-    })
+      id: ['', [Validators.required, CustomValidators.uriSyntax]],
+      label: this.fb.array([this.addLabelFormGroup()]),
+      description: this.addDescriptionFormGroup(),
+      phenomenon: this.fb.array([this.addPhenomenonFormGroup()]),
+      validation: [false, [Validators.required]],
+      deletedLabels: this.fb.array([]),
+      deletedPhenomena: this.fb.array([]),
+      translationIds: [[], [Validators.required]]
+    }, {validators: CustomValidators.englishLabel});
 
     this.domainForm.valueChanges.subscribe(
       (data) => {
@@ -129,21 +139,25 @@ export class DomainEditComponent implements OnInit {
     });
   }
 
-
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
-      value: ['', [Validators.required]],
-      lang: ['', [Validators.required]]
+      translationId: [null, [Validators.required]],
+      value: [null, [Validators.required]],
+      lang: [null, [Validators.required]],
     });
+  }
+
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [""]
+    })
   }
 
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
-      // phenomenonObject: [{
-      phenomenonURI: ['',
-        // phenomenonLabel: ''}, 
-        [Validators.required]]
+      phenomenon: [null, [Validators.required]],
+      exists: [true, [Validators.required]]
     });
   }
 
@@ -155,14 +169,32 @@ export class DomainEditComponent implements OnInit {
   }
 
   editDomain(domain) {
+    // console.log(domain)
     this.domainForm.patchValue({
-      uri: domain.iri.value.slice(this.heroBannerString.length),
-      description: domain.description.value
+      id: domain.id,
+      validation: domain.validation
     });
 
-    this.domainForm.setControl('label', this.setExistingLabels(domain.labels))
+    this.domainForm.setControl(
+      'label', 
+      this.setExistingLabels(domain.labels)
+    );
 
-    this.domainForm.setControl('phenomenon', this.setExistingPhenomena(domain.phenomenon))
+    this.domainForm.controls['description'].patchValue({
+      translationId: domain.description.item[0].translationId,
+      text: domain.description ? this.labelLanguagePipe.transform(domain.description.item) : '',
+    });
+
+    this.domainForm.setControl(
+      'phenomenon', 
+      this.setExistingPhenomena(domain.phenomena)
+    );
+
+    this.domainForm.patchValue({
+      translationIds: this.setTranslationIds(domain),
+    })
+
+    this.deleteDomainForm = this.domainForm;
   }
 
   setExistingPhenomena(phenomenaSet: IPhenomena[]): FormArray {
@@ -170,31 +202,37 @@ export class DomainEditComponent implements OnInit {
     (phenomenaSet);
     phenomenaSet.forEach(s => {
       formArray.push(this.fb.group({
-        // phenomenonObject: [{
-        phenomenonURI: [s.phenomenon,
-        // 'phenomenonLabel': s.phenomenonLabel.value}, 
-        [Validators.required]]
+        phenomenon: [{value: s.phenomenon, disabled: true}, [Validators.required]],
+        exists: [true, [Validators.required]]
       }));
     });
-
     return formArray;
   }
-
-
 
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    (labelSet);
-    labelSet.forEach(s => {
-      formArray.push(this.fb.group({
-        type: [s, [Validators.required]],
-        value: [s, [Validators.required]],
-        lang: [s["xml:lang"], [Validators.required]]
-      }));
+    labelSet.forEach((s) => {
+      formArray.push(
+        this.fb.group({
+          translationId: [s.translationId, [Validators.required]],
+          value: [s.text, [Validators.required]],
+          lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
+        })
+      );
+      // if (s.languageCode == 'en') {
+      //   formArray.controls[formArray.length-1].disable()//[formArray.length-1]) //.controls['value'].disable();
+      // };
     });
-
     return formArray;
   }
+
+  setTranslationIds(domain: IDomain) {
+    console.log(domain)
+    const array = [];
+    array.push(domain.labels[0].translationId);
+    array.push(domain.description["item"][0].translationId);
+    return array;
+  } 
 
   redirectDetails(uri) {
     this._routerService.navigate(['/domain/detail', uri]);
@@ -206,7 +244,8 @@ export class DomainEditComponent implements OnInit {
 
 
   onSubmit() {
-    (this.domainForm.value);
+    console.log(this.domainForm.getRawValue())
+    // (this.domainForm.value);
     this.submitted = true;
     if (this.domainForm.invalid) {
       ("invalid");
@@ -223,7 +262,7 @@ export class DomainEditComponent implements OnInit {
     }
     else {
       ("valid");
-      this.api.editDomain(this.domainForm.value).subscribe(res => {
+      this.api.editDomain(this.domainForm.getRawValue()).subscribe(res => {
         (res);
         bulmaToast.toast({
           message: "Edit successful!",
@@ -247,7 +286,7 @@ export class DomainEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.api.deleteDomain(this.domainForm.getRawValue()).subscribe(
+    this.api.deleteDomain(this.deleteDomainForm.getRawValue()).subscribe(
       (data) => {
         (data);
         bulmaToast.toast({

@@ -20,6 +20,7 @@ export class DeviceComponent implements OnInit {
       'required': 'Please select a device.'
     } 
   };
+  deletedDevices = new FormArray([]);
 
   ngOnInit() {
     this.retrieveDevices();
@@ -35,28 +36,41 @@ export class DeviceComponent implements OnInit {
 
   addDeviceFormGroup(): FormGroup {
     return this.fb.group({
-      deviceUri: ['', [Validators.required]]
+      device: ["", [Validators.required]],
+      exists: [false, [Validators.required]],
     });
   }
 
   getSelectedDevice(id) {
-    return this.parentForm.value.device[id].deviceUri;
+    return this.parentForm.getRawValue().device[id].device;
   }
 
   retrieveDevices() {
     this.api.getDevices().subscribe(res => {
       this.devicesArray = res;
-      this.devicesArray = this.devicesArray.filter(function (el) {
-        return el.device.type != 'bnode'
-      })
+      // console.log(this.devicesArray)
+      // this.devicesArray = this.devicesArray.filter(function (el) {
+      //   return el.device.type != 'bnode'
+      // })
       // console.log(this.devicesArray);
-      this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
-
+      // this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
       // console.dir(this.devicesArray);
     });
   }
 
   removeDeviceButtonClick(skillGroupIndex: number): void {
+
+    let deletedDevice = (<FormArray>this.parentForm.get('device')).at(skillGroupIndex);
+    console.log(deletedDevice.value)
+    if (deletedDevice.value.exists === true) {
+      this.deletedDevices.push(deletedDevice);
+      console.log(this.deletedDevices)
+      this.parentForm.setControl(
+        "deletedDevices",
+        this.deletedDevices
+      )
+    }
+
     (<FormArray>this.parentForm.get('device')).removeAt(skillGroupIndex);
   }
 }

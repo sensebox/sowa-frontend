@@ -30,14 +30,14 @@
           </div>
         </div>
       </div>
-      <div class="list-item" *ngFor="let devices of devicesArray | filterPipe:searchTerm;let i = index"
+      <div class="list-item cursor-pointer" *ngFor="let devices of devicesArray | filterPipe:searchTerm;let i = index"
         [class.selected]="devices === selectedDevice" (click)=onSelect(devices)>
         <div class="columns is-mobile is-multiline is-centered">
           <div class="column is-1">
             {{i+1}}
           </div>
           <div class="column is-10">
-            {{devices.deviceLabel | labelLanguagePipe}}
+            {{devices.label | labelLanguagePipe}}
           </div>
           <div class="column is-1">
             <span class="fa fa-stack fa-xs" *ngIf="devices.validation[0]?.value == 'true'">

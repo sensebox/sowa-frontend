@@ -120,8 +120,8 @@
               <article class="tile is-child notification is-warning">
                 <p class="title">Description</p>
                 <div class="content">
-                  <strong>
-                    {{sensor.description.item[1].text}}
+                  <strong *ngIf="sensor.description">
+                    {{sensor.description.item | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
@@ -168,13 +168,14 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a class=""
-                        (click)="redirectDomain(sensorElement.phenomenonId, '/phenomenon/detail/')">{{sensorElement.phenomenonLabels | labelLanguagePipe}}</a>
+                      <a class="" (click)="redirectDomain(sensorElement.phenomenonSlug, '/phenomenon/detail/')">
+                        {{sensorElement.phenomenonLabels | labelLanguagePipe}}
+                      </a>
                     </p>
                   </div>
                   <div class="column is-fullwidth" *ngIf="sensorElement.unit != null">
                     <p class="bd-notification is-primary">
-                      <a class="" href="" target="_blank">
+                      <a class="" (click)="redirectDomain(sensorElement.unitSlug, '/unit/detail/')">
                         <!-- TODO: FIX link on unit ISSUE -->
                         <!-- {{searchUnit(sensor.sensorElements[i].unit, unitsArray)}} -->
                         {{sensorElement.unit}}
@@ -259,7 +260,7 @@
               <p class="subtitle">You can find the datasheet of this sensor at:</p>
               <div class="content">
                 <strong>
-                  <a *ngIf="sensor.datasheet != null" class="" href="{{sensor.datasheet}}" target="_blank">{{sensor.datasheet.value}}</a>
+                  <a *ngIf="sensor.datasheet != null" class="" href="{{sensor.datasheet}}" target="_blank">{{sensor.datasheet}}</a>
                   <p *ngIf="sensor.datasheet == null" class="">undefined</p>
                 </strong>
               </div>

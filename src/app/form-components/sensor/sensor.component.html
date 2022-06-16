@@ -17,17 +17,17 @@
                             <div class="field is-narrow">
                                 <div class="control">
                                     <div class="select ">
-                                        <select [id]="'sensorUri' + i" formControlName="sensorUri">
-                                            <option value=""> Choose a sensor</option>
-                                            <option *ngFor="let sensor of sensorsArray" [ngValue]="sensor.sensor.value">
-                                                {{sensor.sensorLabel[0]?.value}}
+                                        <select [id]="'sensor' + i" formControlName="sensor">
+                                            <option value="null">Choose a sensor</option>
+                                            <option *ngFor="let sensor of sensorsArray" [ngValue]="sensor.id">
+                                                {{sensor.label.item | labelLanguagePipe}}
                                             </option>
                                         </select>
                                     </div>
                                 </div>
                                 <span class="help-block error-block"
-                                    *ngIf="sensor.controls[i].get('sensorUri').errors?.required &&
-                                (sensor.controls[i].get('sensorUri').touched || !sensor.controls[i].get('sensorUri').pristine)">
+                                    *ngIf="sensor.controls[i].get('sensor').errors?.required &&
+                                (sensor.controls[i].get('sensor').touched || !sensor.controls[i].get('sensor').pristine)">
                                     {{validationMessages.sensor.required}}
                                 </span>
                             </div>

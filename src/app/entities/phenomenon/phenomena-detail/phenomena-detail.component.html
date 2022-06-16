@@ -122,8 +122,8 @@
               <article class="tile is-child notification is-warning">
                 <p class="title">Description</p>
                 <div class="content">
-                  <strong *ngIf="phenomenon.description">
-                    {{phenomenon.description.item[1].text}}
+                  <strong *ngIf="phenomenon.description && phenomenon.description.item[0]">
+                    {{phenomenon.description.item | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
@@ -163,8 +163,8 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a (click)="redirectDomain(domain.domain, '/domain/detail/')">
-                        {{domain.domainLabel | labelLanguagePipe}}
+                      <a (click)="redirectDomain(domain.domainSlug, '/domain/detail/')">
+                        {{domain.label | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>
@@ -216,8 +216,8 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary" >
-                      <a (click)="redirectDomain(unit.id, '/phenomenon/detail/')">
-                        {{unit.unitLabel}}
+                      <a (click)="redirectDomain(unit.unitSlug, '/unit/detail/')">
+                        {{unit.unitLabel}} ({{unit.unitNotation}})
                       </a>
                     </p>
                   </div>
@@ -241,9 +241,9 @@
           </div>
           
           <div class="tile is-parent">
-            <article *ngIf="phenomenon.markdown && phenomenon.markdown.value != ''" class="tile is-child notification">
+            <article *ngIf="phenomenon.markdown" class="tile is-child notification">
               <p class="title">Explanation</p>
-              <md-editor ngModel="{{phenomenon.markdown.value}}" name="Content" [upload]="doUpload" [height]="'auto'"
+              <md-editor ngModel="{{phenomenon.markdown.item | labelLanguagePipe}}" name="Content" [upload]="doUpload" [height]="'auto'"
                 mode="preview" [options]="markdownOptions">
               </md-editor>
             </article>

@@ -1,13 +1,69 @@
+import { ISensorElement } from "./ISensorElement";
+import { IRoV } from "./IRoV";
+
 export class IUnit {
     id: number;
-    unitLabel: string;
-    min: number;
-    max: number;
+    slug: string;
+    name: string;
+    notation: string;
+    description: Object;
+    sensorElements: ISensorElement[];
+    rovs: IRoV[];
 
-    constructor(resUnit: any) {
-        this.id = resUnit.unit.id;
-        this.unitLabel = resUnit.unit.name;
-        this.min = resUnit.min;
-        this.max = resUnit.max;
+    constructor(res: any) {
+
+        console.log(res)
+
+        this.sensorElements = [];
+        this.rovs = [];
+
+        for (let property in res) {
+            switch(property){
+      
+                case "id": {
+                    this.id = res[property];
+                    break;
+                }
+
+                case "slug": {
+                    this.slug = res[property];
+                    break;
+                  }
+        
+                case "name": {
+                    this.name = res[property];
+                    break;
+                }
+
+                case "notation": {
+                    this.notation = res[property];
+                    break;
+                }
+
+                case "description": {
+                    this.description = res[property];
+                    break;
+                  }
+        
+                case "Element": {
+                    res[property].forEach((element: any) => {
+                        this.sensorElements.push(new ISensorElement(element));
+                    })
+                    break;
+                }
+
+                case "rov": {
+                    res[property].forEach((element: any) => {
+                        this.rovs.push(new IRoV(element));
+                    })
+                    break;
+                }
+      
+      
+                default: {
+                    break;
+                }
+            }
+          }
     }
 }
