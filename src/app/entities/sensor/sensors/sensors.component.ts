@@ -22,7 +22,6 @@ export class SensorsComponent implements OnInit {
 
   ngOnInit() {
     this.api.getSensors().subscribe(res => {
-      console.log(res)
       var tempArray: any = res;
 
       tempArray.sort((a, b) => a.slug.localeCompare(b.slug));

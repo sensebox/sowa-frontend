@@ -64,7 +64,8 @@ export class IDevice {
         case "sensors": {
           res[property].forEach((element: any) => {
             this.sensors.push(new ISensors(element));
-          }) 
+          })
+          this.sensors.sort((a, b) => a.sensorSlug.localeCompare(b.sensorSlug));
           break;
         }
 

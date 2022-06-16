@@ -211,7 +211,7 @@ export class DevicesEditComponent implements OnInit {
   }
 
   editDevice(device) {
-    console.log(device)
+    // console.log(device)
     this.deviceForm.patchValue({
       id: device.id,
       slug: device.slug,

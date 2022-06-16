@@ -43,6 +43,7 @@ export class IDomain {
                 res[property].forEach((element: any) => {
                   this.phenomena.push(new IPhenomena(element));
                 }) 
+                this.phenomena.sort((a, b) => a.phenomenonSlug.localeCompare(b.phenomenonSlug));
                 break;
               }
       

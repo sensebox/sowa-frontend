@@ -169,7 +169,7 @@ export class DomainEditComponent implements OnInit {
   }
 
   editDomain(domain) {
-    console.log(domain)
+    // console.log(domain)
     this.domainForm.patchValue({
       id: domain.id,
       validation: domain.validation

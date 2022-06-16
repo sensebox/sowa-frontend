@@ -244,7 +244,7 @@ export class SensorEditComponent implements OnInit {
   }
 
   editSensor(sensor) {
-    console.log(sensor);
+    // console.log(sensor);
     this.sensorForm.patchValue({
       id: sensor.id,
       slug: sensor.slug,
@@ -477,6 +477,7 @@ export class SensorEditComponent implements OnInit {
           if (this.uploader.queue.length == 1) {
             this.uploader.uploadAll();
           } else {
+            console.log(this.shortUri)
             this.redirectDetails(this.shortUri);
           }
         },

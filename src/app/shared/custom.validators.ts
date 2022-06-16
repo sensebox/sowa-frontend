@@ -16,7 +16,7 @@ export class CustomValidators {
     }
 
     static englishLabel(control: FormGroup): { [key: string]: any} | null {
-      console.log(control)
+      // console.log(control)
       const labelArray = control.getRawValue().label;
       let isEnglishLabel = arr => arr.some(x => {
         // console.log(`Testing ${x.lang}`);

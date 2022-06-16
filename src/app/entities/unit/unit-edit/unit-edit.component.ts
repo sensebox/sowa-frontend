@@ -135,7 +135,7 @@ export class UnitEditComponent implements OnInit {
   
 
   editUnit(unit) {
-    console.log(unit)
+    // console.log(unit)
     this.unitForm.patchValue({
       id: unit.id,
       name: unit.name,
