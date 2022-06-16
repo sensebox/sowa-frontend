@@ -13,6 +13,7 @@ export class ISensorElement {
 
 
     constructor(resSensorElement: any) {
+        // console.log(resSensorElement)
         this.id = resSensorElement.id;
         this.accuracy = resSensorElement.accuracy;
         this.phenomenonLabels = resSensorElement.phenomena.label.item;
