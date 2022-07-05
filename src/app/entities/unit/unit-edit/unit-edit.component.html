@@ -23,13 +23,13 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control">
-                            <input type="text" [id]="id" formControlName="name" class="input is-normal">
+                            <input type="text" formControlName="name" class="input is-normal">
                         </div>
                     </div>
                 </div>
             </div>
-            <span class="help-block error-block" *ngIf="formErrors[id]">
-                {{formErrors[id]}}
+            <span class="help-block error-block" *ngIf="formErrors.name">
+                {{formErrors.name}}
             </span>
         </div>
 
@@ -42,13 +42,13 @@
               <div class="field-body">
                   <div class="field">
                       <div class="control">
-                          <input type="text" [id]="id" formControlName="notation" class="input is-normal">
+                          <input type="text" formControlName="notation" class="input is-normal">
                       </div>
                   </div>
               </div>
           </div>
-          <span class="help-block error-block" *ngIf="formErrors[id]">
-              {{formErrors[id]}}
+          <span class="help-block error-block" *ngIf="formErrors.notation">
+              {{formErrors.notation}}
           </span>
       </div>
   

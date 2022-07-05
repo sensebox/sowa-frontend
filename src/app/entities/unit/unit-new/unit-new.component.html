@@ -18,13 +18,13 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control">
-                            <input type="text" [id]="id" formControlName="name" class="input is-normal">
+                            <input type="text" formControlName="name" class="input is-normal">
                         </div>
                     </div>
                 </div>
             </div>
-            <span class="help-block error-block" *ngIf="formErrors[id]">
-                {{formErrors[id]}}
+            <span class="help-block error-block" *ngIf="formErrors.name">
+                {{formErrors.name}}
             </span>
         </div>
 
@@ -37,13 +37,13 @@
                 <div class="field-body">
                     <div class="field">
                         <div class="control">
-                            <input type="text" [id]="id" formControlName="notation" class="input is-normal">
+                            <input type="text" formControlName="notation" class="input is-normal">
                         </div>
                     </div>
                 </div>
             </div>
-            <span class="help-block error-block" *ngIf="formErrors[id]">
-                {{formErrors[id]}}
+            <span class="help-block error-block" *ngIf="formErrors.notation">
+                {{formErrors.notation}}
             </span>
         </div>
 
@@ -79,9 +79,7 @@
             <p class="control">
                 <button class="button is-success" type="submit">Save Changes</button>
             </p>
-            <p class="control">
-                <button class="button is-warning is-inverted" type="button" (click)="onLoadButtonClick()">Load data</button>
-            </p>
+            
         </div>
         <span class="help-block" *ngIf="submitted && unitForm.invalid">
             There are invalid fields in the form, please review your inputs to submit this form.
