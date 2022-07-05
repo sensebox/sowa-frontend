@@ -1,23 +1,14 @@
-import { ILabel } from './ILabel';
-
 export class ISensors {
-    sensor: {
-        type: string,
-        value: string,
-    };
-    sensorLabel: {
-        type: string,
-        value: string,
-        "xml:lang": string
-    };
-    validation: {
-        type: string,
-        value: string,
-    };
+    sensor: number;
+    sensorSlug: string;
+    label: string;
+    validation: boolean;
 
+    
     constructor(resSensor: any) {
-        this.sensor = resSensor.sensor;
-        this.sensorLabel = resSensor.sensorLabel;
+        this.sensor = resSensor.id;
+        this.sensorSlug = resSensor.slug;
+        this.label = resSensor.label.item;
         this.validation = resSensor.validation;
     }
 };

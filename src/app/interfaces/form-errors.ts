@@ -7,4 +7,6 @@ export interface FormErrors {
         datasheet?: any,
         lifeperiod?: any, 
         image?: any, 
+        name?: any,
+        notation?:any
 }

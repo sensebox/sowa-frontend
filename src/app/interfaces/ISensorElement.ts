@@ -1,33 +1,35 @@
-import { ILabel } from './ILabel';
-
 export class ISensorElement {
-    sensorElement: {
-        type: string,
-        value: string
-    };
-    accVal: {
-        datatype: string,
-        type: string,
-        value: string
-    };
-    phenomenon: {
-        type: string,
-        value: string
-    };
-    phenomenonName: {
-        type: string,
-        value: string
-    };
-    unit: {
-        type: string,
-        value: string
-    };
+    id: number
+    accuracy: number;
+    phenomenonLabels: string;
+    phenomenonId: number;
+    phenomenonSlug: string;
+    unit?: string
+    unitId: number;
+    unitSlug: string;
+    sensorId: number;
+    sensorSlug: string;
+    sensorLabels: string; 
+
 
     constructor(resSensorElement: any) {
-        this.accVal = resSensorElement.accVal;
-        this.phenomenon = resSensorElement.phenomenon;
-        this.sensorElement = resSensorElement.sensorElement;
-        this.unit = resSensorElement.unit;
-        this.phenomenonName = resSensorElement.phenomenonName;
+        // console.log(resSensorElement)
+        this.id = resSensorElement.id;
+        this.accuracy = resSensorElement.accuracy;
+        this.phenomenonLabels = resSensorElement.phenomena.label.item;
+        if (resSensorElement.accuracyUnit == null) {
+            this.unit = null;
+            this.unitId = null;
+            this.unitSlug = null;
+        } else {
+            this.unit = resSensorElement.accuracyUnit.name;
+            this.unitId = resSensorElement.accuracyUnit.id;
+            this.unitSlug = resSensorElement.accuracyUnit.slug;
+        };
+        this.phenomenonId = resSensorElement.phenomena.id,
+        this.phenomenonSlug = resSensorElement.phenomena.slug,
+        this.sensorId = resSensorElement.sensor.id,
+        this.sensorSlug = resSensorElement.sensor.slug,
+        this.sensorLabels = resSensorElement.sensor.label.item;
     }
 };

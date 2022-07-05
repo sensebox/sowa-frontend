@@ -1,12 +1,11 @@
 export class ILabel {
-        type: string;
-        value: string;
-        "xml:lang": string;
+        text: string;
+        languageCode: string;
+        translationId: number;
 
-    constructor(reslabel: any) {
-        // console.log(reslabel)
-        this.type = reslabel.label.type;
-        this.value = reslabel.label.value;
-        this["xml:lang"] = reslabel.label["xml:lang"];
+    constructor(resLabel: any) {
+        this.text = resLabel.text;
+        this.languageCode = resLabel.languageCode;
+        this.translationId = resLabel.translationId;
     }
 };

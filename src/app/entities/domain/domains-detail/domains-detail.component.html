@@ -1,6 +1,6 @@
 <div *ngIf="domain != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.value" [valid]="domain.validation?.value" [subtitle]="domain.iri.value"
+  <senph-hero-banner [title]="domain.labels | labelLanguagePipe" [valid]="domain.validation" [subtitle]="uri"
     (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
   </senph-hero-banner>
 
@@ -67,14 +67,13 @@
                 <p class="title">URI</p>
                 <div class="content">
                   <strong>
-                    {{domain.iri.value}}
+                    {{domain.labels | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
               <article class="tile is-child notification is-warning">
                 <p class="title">Labels</p>
-                <p class="subtitle">These are the available labels in various languages for the
-                  {{prefLabel?.value}}:</p>
+                <p class="subtitle">These are the available labels in various languages for the {{domain.labels | labelLanguagePipe}}:</p>
                 <div class="columns is-mobile is-multiline is-centered">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
@@ -107,12 +106,12 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{label.value}}
+                      {{label.text}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{search(label["xml:lang"], "val", languageArray, "show")}}
+                      {{search(label.languageCode, "val", languageArray, "show")}}
                     </p>
                   </div>
                 </div>
@@ -123,7 +122,7 @@
                 <p class="title">Description</p>
                 <div class="content">
                   <strong>
-                    {{domain.description.value}}
+                    {{domain.description.item | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
@@ -133,8 +132,7 @@
 
             <article class="tile is-child notification is-danger">
               <p class="title">Phenomena</p>
-              <p class="subtitle">These are the phenomena that can be measured using the {{prefLabel?.value}}
-                Sensor:
+              <p class="subtitle">These are the phenomena that can be measured using the {{domain.labels | labelLanguagePipe}} Sensor:
               </p>
               <div class="content">
                 <div class="columns is-mobile is-multiline is-centered">
@@ -147,17 +145,12 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <strong>URI</strong>
-                    </p>
-                  </div>
-                  <div class="column is-fullwidth">
-                    <p class="bd-notification is-primary">
                       <strong>Label</strong>
                     </p>
                   </div>
                 </div>
                 <div class="columns is-mobile is-multiline is-centered"
-                  *ngFor="let dom of domain.phenomenon;let i = index">
+                  *ngFor="let phenomenon of domain.phenomena;let i = index">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
                       <strong>
@@ -167,14 +160,8 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a class=""
-                        (click)="redirectDomain(dom.phenomenon.value, '/phenomenon/detail/')">{{dom.phenomenon.value}}</a>
-                    </p>
-                  </div>
-                  <div class="column is-fullwidth">
-                    <p class="bd-notification is-primary">
-                      <a class="" *ngIf="phenomenaArray" (click)="redirectDomain(dom.phenomenon.value, '/phenomenon/detail/')">
-                        {{searchPheno(dom.phenomenon.value, "phenomenon", phenomenaArray , "phenomenonLabel") | json}}
+                      <a class="" (click)="redirectDomain(phenomenon.phenomenonSlug, '/phenomenon/detail/')">
+                        {{phenomenon.label | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>

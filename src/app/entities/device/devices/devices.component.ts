@@ -23,29 +23,19 @@ export class DevicesComponent implements OnInit {
 
   ngOnInit() {
     this.api.getDevices().subscribe(res => {
-      // this.devicesArray = res;
       var tempArray: any = res;
 
-      tempArray = tempArray.filter(function (el) {
-        // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
-        return el.device.type === 'uri'
-
-        // return (el.deviceLabel != undefined && el.deviceLabel[0] != undefined)
-      })
-
-      // console.log(this.devicessArray);
-      tempArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
 
       this.devicesArray = Array.from(tempArray, x => new IDevices(x));
       console.dir(this.devicesArray);
-      // this.assignCopy();
     });
   }
 
   onSelect(device) {
     this.acitivatePageLoad();
     this.selectedDevice = device;
-    this._routerService.navigate(['/device/detail/', device.device.value.slice(this.senphurl.length)]);
+    this._routerService.navigate(['/device/detail/', device.deviceSlug]);
 
   }
 

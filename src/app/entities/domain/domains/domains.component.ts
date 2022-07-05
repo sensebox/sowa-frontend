@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
-import { IDomain } from 'src/app/interfaces/IDomain';
 import { IDomains } from 'src/app/interfaces/IDomains';
 
 @Component({
@@ -26,19 +25,18 @@ export class DomainsComponent implements OnInit {
   ngOnInit() {
     this.api.getDomains().subscribe(res => {
       var tempArray: any = res;
-      tempArray =  tempArray.filter(function (el){
-        return el.domain.type != 'bnode'
-      })
-      // console.log(tempArray);
-      tempArray.sort((a,b) => a.label[0].value.localeCompare(b.label[0].value));
+      
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+      
       this.domainsArray = Array.from(tempArray, x => new IDomains(x));
+      console.dir(this.domainsArray);
     });
   }
 
   onSelect(domain){
     this.acitivatePageLoad();
     this.selectedDomain = domain; 
-    this._routerService.navigate(['/domain/detail/', domain.domain.value.slice(this.senphurl.length)]);
+    this._routerService.navigate(['/domain/detail/', domain.domainSlug]);
 
   }
 

@@ -60,6 +60,11 @@ import { ToastrModule } from 'ngx-toastr';
 import { FileUploadModule } from 'ng2-file-upload';
 
 import { LMarkdownEditorModule } from 'ngx-markdown-editor';
+import { LabelLanguagePipePipe } from './pipes/label-language-pipe.pipe';
+import { UnitEditComponent } from './entities/unit/unit-edit/unit-edit.component';
+import { UnitNewComponent } from './entities/unit/unit-new/unit-new.component';
+import { UnitsComponent } from './entities/unit/units/units.component';
+import { UnitsDetailComponent } from './entities/unit/units-detail/units-detail.component';
 
 
 
@@ -108,7 +113,12 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
     LoadingComponent,
     ErrorLogComponent,
     ErrorLogContainerComponent,
-    ErrorLogModalComponent
+    ErrorLogModalComponent,
+    LabelLanguagePipePipe,
+    UnitEditComponent,
+    UnitNewComponent,
+    UnitsComponent,
+    UnitsDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -128,7 +138,8 @@ import { LMarkdownEditorModule } from 'ngx-markdown-editor';
       useClass: TokenInterceptor,
       multi: true
     },
-    AuthService
+    AuthService,
+    LabelLanguagePipePipe
   ],
   bootstrap: [AppComponent]
 

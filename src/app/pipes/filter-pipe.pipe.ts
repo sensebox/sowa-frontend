@@ -1,21 +1,36 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IPhenomena } from '../interfaces/IPhenomena';
-import { GenericEntityLabel } from '../interfaces/generic-entity-label';
+//import { IPhenomena } from '../interfaces/IPhenomena';
+//import { GenericEntityLabel } from '../interfaces/generic-entity-label';
 
 @Pipe({
   name: 'filterPipe'
 })
 export class FilterPipePipe implements PipeTransform {
 
-  transform(filterArray: GenericEntityLabel[], searchTerm: string): GenericEntityLabel[] {
+  transform(filterArray: Object[], searchTerm: string): Object[] {
+    // console.log(filterArray)
     if (!filterArray || !searchTerm) {
       return filterArray;
     }
-
+    // console.log(filterArray)
     return filterArray.filter(element => {
-      for (let obj of Object.values(element)) {
-        return ((Array.isArray(obj) && obj[0].value.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
-          || (!Array.isArray(obj)) && obj.value.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+      // console.log(element["label"].item)
+      let translationArray = element["label"];
+      if (Array.isArray(translationArray)) {
+        if (translationArray.length > 1) {
+          for (let i = 0; i < translationArray.length; i++) {
+            if(translationArray[i].languageCode === "en") {
+              // console.log(translationArray[i].text);
+              return (translationArray[i].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+            }
+          }
+        } else {
+          return (translationArray[0].text.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
+        }
+      }
+       else {
+        //console.log(translationArray)
+        return (translationArray.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1)
       }
     })
   }

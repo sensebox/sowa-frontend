@@ -4,7 +4,7 @@ import { CustomValidators } from "../../../shared/custom.validators";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
 import { IDomains } from "../../../interfaces/IDomains";
-import { IUnit } from "../../../interfaces/IUnit";
+import { IRoV } from "../../../interfaces/IRoV";
 import { ILabel } from "src/app/interfaces/ILabel";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
@@ -13,6 +13,9 @@ import * as bulmaToast from "bulma-toast";
 import { UploadResult } from "src/app/interfaces/uploadResult";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { IPhenomenon } from "src/app/interfaces/IPhenomenon";
+
+import { LabelLanguagePipePipe } from "src/app/pipes/label-language-pipe.pipe";
 
 @Component({
   selector: "senph-phenomena-edit",
@@ -20,20 +23,27 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./phenomena-edit.component.scss"],
 })
 export class PhenomenaEditComponent implements OnInit {
-  heroBannerString = "http://sensors.wiki/SENPH#";
+  // heroBannerString = "http://sensors.wiki/SENPH#";
   APIURL = environment.api_url;
 
   phenomenonForm: FormGroup;
+  deletePhenomenonForm: FormGroup;
   validationMessages = {
-    uri: {
-      required: "URI is required.",
-      uriSyntax: "No white spaces allowed in URI.",
-    },
+    // uri: {
+    //   required: "URI is required.",
+    //   uriSyntax: "No white spaces allowed in URI.",
+    // },
     label: {
       required: "Label is required.",
     },
     description: {
       required: "Description is required.",
+    },
+    translationId: {
+      required: 'Translation ID is required.'
+    },
+    translationIds: {
+      required: 'Translation IDs are required.'
     },
   };
 
@@ -47,21 +57,26 @@ export class PhenomenaEditComponent implements OnInit {
     private api: ApiService,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private http: HttpClient
+    private http: HttpClient,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) {
     this.doUpload = this.doUpload.bind(this);
   }
 
   ngOnInit() {
     this.phenomenonForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
+      id: [null, [Validators.required]],
       label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      markdown: [""],
+      description: this.addDescriptionFormGroup(),
+      markdown: this.addMarkdownFormGroup(),
       domain: this.fb.array([this.addDomainFormGroup()]),
       unit: this.fb.array([this.addUnitFormGroup()]),
       validation: [false, [Validators.required]],
-    });
+      deletedLabels: this.fb.array([]),
+      deletedDomains: this.fb.array([]),
+      deletedUnits: this.fb.array([]),
+      translationIds: [[], [Validators.required]]
+    }, {validators: CustomValidators.englishLabel});
 
     this.phenomenonForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.phenomenonForm);
@@ -82,14 +97,7 @@ export class PhenomenaEditComponent implements OnInit {
         this.logValidationErrors(abstractControl);
       } else {
         this.formErrors[key] = "";
-        if (
-          abstractControl &&
-          !abstractControl.valid &&
-          (abstractControl.touched ||
-            abstractControl.dirty ||
-            abstractControl.value !== "" ||
-            this.submitted)
-        ) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== "" || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -103,24 +111,40 @@ export class PhenomenaEditComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domainUri: ["", [Validators.required]],
+      domain: [null, [Validators.required]],
+      exists: [true, [Validators.required]]
     });
   }
 
   addUnitFormGroup(): FormGroup {
     return this.fb.group({
-      unitUri: ["", [Validators.required]],
-      min: ["", [Validators.required]],
-      max: ["", [Validators.required]],
+      unitUri: [null, [Validators.required]],
+      min: [null, [Validators.required]],
+      max: [null, [Validators.required]],
+      rovId: [null, [Validators.required]]
     });
   }
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
-      value: ["", [Validators.required]],
-      lang: ["", [Validators.required]],
+      translationId: [null, [Validators.required]],
+      value: [null, [Validators.required]],
+      lang: [null, [Validators.required]],
     });
+  }
+
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [null]
+    })
+  }
+
+  addMarkdownFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [null]
+    })
   }
 
   getPhenomenon(shortUri) {
@@ -133,14 +157,23 @@ export class PhenomenaEditComponent implements OnInit {
   editPhenomenon(phenomenon) {
     // console.log(phenomenon);
     this.phenomenonForm.patchValue({
-      uri: phenomenon.iri.value.slice(this.heroBannerString.length),
-      description: phenomenon.description ? phenomenon.description.value : '',
-      markdown: phenomenon.markdown ? phenomenon.markdown.value : '',
+      id: phenomenon.id,
     });
+
     this.phenomenonForm.setControl(
       "label",
       this.setExistingLabels(phenomenon.labels)
     );
+    
+    this.phenomenonForm.controls['description'].patchValue({
+      translationId: phenomenon.description.item[0].translationId,
+      text: phenomenon.description ? this.labelLanguagePipe.transform(phenomenon.description.item) : '',
+    });
+
+    this.phenomenonForm.controls['markdown'].patchValue({
+      translationId: phenomenon.markdown.item[0].translationId,
+      text: phenomenon.markdown ? this.labelLanguagePipe.transform(phenomenon.markdown.item) : '',
+    });
 
     this.phenomenonForm.setControl(
       "domain",
@@ -151,6 +184,12 @@ export class PhenomenaEditComponent implements OnInit {
       "unit",
       this.setExistingUnits(phenomenon.units)
     );
+
+    this.phenomenonForm.patchValue({
+      translationIds: this.setTranslationIds(phenomenon),
+    })
+
+    this.deletePhenomenonForm = this.phenomenonForm;
   }
 
   setExistingDomains(domainSet: IDomains[]): FormArray {
@@ -158,46 +197,52 @@ export class PhenomenaEditComponent implements OnInit {
     domainSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          domainUri: [s.domain.value, [Validators.required]],
+          domain: [{value: s.domain, disabled: true}, [Validators.required]],
+          exists: [true, [Validators.required]]
         })
       );
     });
-
     return formArray;
   }
 
-  setExistingUnits(unitSet: IUnit[]): FormArray {
+  setExistingUnits(unitSet: IRoV[]): FormArray {
     const formArray = new FormArray([]);
-    // console.log(unitSet);
-
     unitSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          unitUri: [s.unit.value, [Validators.required]],
-          min: [s.min.value, []],
-          max: [s.max.value, []],
+          unitUri: [s.unitId, [Validators.required]],
+          min: [s.min, []],
+          max: [s.max, []],
+          rovId: [s.rovId, [Validators.required]]
         })
       );
     });
 
     return formArray;
   }
+
 
   setExistingLabels(labelSet: ILabel[]): FormArray {
     const formArray = new FormArray([]);
-    // console.log(labelSet);
     labelSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          type: [s.type, [Validators.required]],
-          value: [s.value, [Validators.required]],
-          lang: [s["xml:lang"], [Validators.required]],
+          translationId: [s.translationId, [Validators.required]],
+          value: [s.text, [Validators.required]],
+          lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
         })
       );
     });
-
     return formArray;
   }
+
+  setTranslationIds(phenomenon: IPhenomenon) {
+    const array = [];
+    array.push(phenomenon.labels[0].translationId);
+    array.push(phenomenon.description["item"][0].translationId);
+    array.push(phenomenon.markdown["item"][0].translationId);
+    return array;
+  } 
 
   redirectDetails(uri) {
     this._routerService.navigate(["/phenomenon/detail", uri]);
@@ -221,7 +266,8 @@ export class PhenomenaEditComponent implements OnInit {
         duration: 5000,
       });
     } else {
-      this.api.editPhenomenon(this.phenomenonForm.value).subscribe(
+      //console.dir(this.phenomenonForm.value)
+      this.api.editPhenomenon(this.phenomenonForm.getRawValue()).subscribe(
         (res) => {
           bulmaToast.toast({
             message: "Edit successful!",
@@ -279,7 +325,7 @@ export class PhenomenaEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.api.deletePhenomenon(this.phenomenonForm.getRawValue()).subscribe(
+    this.api.deletePhenomenon(this.deletePhenomenonForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({
           message: "Delete successful!",

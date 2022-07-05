@@ -15,29 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class DevicesDetailComponent implements OnInit, AfterViewInit {
   device: IDevice;
-  // I2Device = {
-  //   website: '',
-  //   labels: '',
-  //   image: '',
-  //   description: '',
-  //   contact: '',
-  //   iri: {
-  //     type: '',
-  //     value: ''
-  //   },
-  //   sensors:[]
-  // };
-  // sensor = {
-  //   sensors: '',
-  //   sensorsLabel: ''
-  // };
   uri;
-  // names = [];
-  // descriptions = [];
-  // sensors =[];
-  // website =[];
-  // image =[];
-  // contact =[];
 
   languageArray = LANGUAGES;
   deviceHistory: Object;
@@ -60,8 +38,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getDeviceDetails();
-    this.retrieveSensors();
-
+    // this.retrieveSensors();
   }
 
   ngAfterViewInit() {
@@ -80,8 +57,9 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
       return this.route.params.subscribe(res => {
         this.api.getDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
-          this.setPrefLabel();
-          this.uri = this.device.iri.value.slice(this.senphurl.length);
+          console.log(this.device)
+          // this.setPrefLabel();
+          this.uri = this.device.slug;
         });
       })
     }
@@ -90,7 +68,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
         this.api.getHistoricDevice(res.iri).subscribe((response: IDevice) => {
           this.device = response;
           this.setPrefLabel();
-          this.uri = this.device.iri.value.slice(this.senphurl.length);
+          this.uri = this.device.slug;
         });
       })
     }
@@ -98,7 +76,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
   
   setPrefLabel(){
     this.device.labels.forEach(element => {
-      if (element["xml:lang"] == "en") {
+      if (element["languageCode"] == "en") {
         this.prefLabel = element
         return
       }
@@ -117,8 +95,8 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editButtonClick(shortUri) {
-    this._routerService.navigate(['/device/edit', shortUri]);
+  editButtonClick(uri) {
+    this._routerService.navigate(['/device/edit', this.device.slug]);
   }
 
   redirectHistoricDetails(uri, historicUri) {

@@ -6,7 +6,7 @@
 
 
     <!-- 1.1 BANNER -->
-    <senph-hero-banner title="Edit Domain:" [subtitle]="heroBannerString + domainForm.get('uri').value"
+    <senph-hero-banner title="Edit Domain:" [subtitle]="shortUri"
       button="Back to Detail-View" (myEvent)="redirectDetails(shortUri)">
     </senph-hero-banner>
 
@@ -15,7 +15,7 @@
     <div class="panel-body">
 
 
-      <!-- 1.2.1 URI -->
+      <!-- 1.2.1 URI
       <div class="container well some-space">
         <div class="field is-horizontal">
           <div class="field-label is-normal">
@@ -40,7 +40,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <!-- 1.2.2 LABELS -->
@@ -57,8 +57,8 @@
           </div>
           <div class="field-body">
             <div class="field">
-              <div class="control">
-                <textarea class="textarea is-normal" type="text" id="description" formControlName="description"
+              <div formGroupName="description" class="control">
+                <textarea class="textarea is-normal" type="text" id="description" formControlName="text"
                   (blur)="logValidationErrors()"></textarea>
               </div>
               <span class="help-block">Please enter a short description of the domain and its capabilities.</span>

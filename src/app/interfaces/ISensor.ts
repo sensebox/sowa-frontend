@@ -4,129 +4,108 @@ import { ISensorElement } from './ISensorElement';
 import { IDevice } from './IDevice';
 
 export class ISensor {
-  iri: {
-    type: string,
-    value: string
-  };
+  // iri: {
+  //   type: string,
+  //   value: string
+  // };
+  // sensorElements: ISensorElement[];
+  // devices: IDevices[];
+  // markdown: string,
+
+  id: number;
+  slug: string;
   labels: ILabel[];
-  description: {
-    type: string;
-    value: string;
-    "xml:lang": string;
-  };
+  description: Object;
+  price: null;
+  image: string;
+  manufacturer: string;
+  lifePeriod: number;
+  datasheet: string;
+  validation: boolean;
   sensorElements: ISensorElement[];
   devices: IDevices[];
-  manufacturer: {
-    datatype: string,
-    type: string,
-    value: string
-  };
-  price: {
-    datatype: string,
-    type: string,
-    value: string
-  };
-  datasheet: {
-    datatype: string,
-    type: string,
-    value: string
-  };
-  lifeperiod: {
-    datatype: string,
-    type: string,
-    value: string
-  };
-  image: {
-    datatype: string,
-    type: string,
-    value: string
-  };
-  markdown: {
-    datatype: string,
-    type: string,
-    value: string
-  }
-  validation: {
-    datatype: string,
-    type: string,
-    value: string
-  };
+  
+  
 
   constructor(res: any) {
     this.labels = [];
     this.sensorElements = [];
     this.devices = [];
 
-    res.forEach((element: any) => {
-      // console.log(element);
-      switch (Object.getOwnPropertyNames(element)[0]) {
+    for (let property in res) {
+      switch(property){
 
-        case "description": {
-          Object.assign(this, element);
+        case "id": {
+          this.id = res[property];
           break;
         }
 
-        case "iri": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "manufacturer": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "price": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "datasheet": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "lifeperiod": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "image": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "markdown": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "validation": {
-          Object.assign(this, element);
+        case "slug": {
+          this.slug = res[property];
           break;
         }
 
         case "label": {
-          this.labels.push(new ILabel(element));
+          res[property].item.forEach(element => {
+            this.labels.push(new ILabel(element))
+          })
           break;
         }
 
-        case "device": {
-          this.devices.push(new IDevices(element));
+        case "description": {
+          this.description = res[property];
           break;
         }
 
-        case "sensorElement": {
-          this.sensorElements.push(new ISensorElement(element));
+        case "price": {
+          this.price = res[property];
+          break;
+        }
+
+        case "image": {
+          this.image = res[property];
+          break;
+        }
+
+        case "manufacturer": {
+          this.manufacturer = res[property];
+          break;
+        }
+
+        case "lifePeriod": {
+          this.lifePeriod = res[property]
+          break;
+        }
+
+        case "datasheet": {
+          this.datasheet = res[property];
+          break;
+        }
+
+        case "validation": {
+          this.validation = res[property];
+          break;
+        }
+
+        case "elements": {
+          res[property].forEach((element: any) => {
+            this.sensorElements.push(new ISensorElement(element));
+          })
+          break;
+        }
+
+        case "devices": {
+          res[property].forEach((element: any) => {
+            this.devices.push(new IDevices(element));
+          })
           break;
         }
 
         default: {
-          console.log("Invalid attribute", element);
           break;
         }
       }
-    })
+    }
   }
 
 }

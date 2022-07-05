@@ -1,100 +1,83 @@
 import { ISensors } from "./ISensors";
 import { ILabel } from "./ILabel";
 export class IDevice {
-  iri: {
-    type: string;
-    value: string;
-  };
+  id: number;
+  slug: string
   labels: ILabel[];
-  description: {
-    type: string;
-    value: string;
-    "xml:lang": string;
-  };
-  website: {
-    datatype: string;
-    type: string;
-    value: string;
-  };
-  image: {
-    datatype: string;
-    type: string;
-    value: string;
-  };
-  markdown: {
-    datatype: string;
-    type: string;
-    value: string;
-  };
-  contact: {
-    datatype: string;
-    type: string;
-    value: string;
-  };
+  description: Object;
+  markdown: Object;
+  contact: String;
+  website: String;
+  image: String;
   sensors: ISensors[];
-  validation: {
-    datatype: string;
-    type: string;
-    value: string;
-  };
+  validation: boolean;
 
   constructor(res: any) {
     this.labels = [];
     this.sensors = [];
 
-    res.forEach((element: any) => {
-      console.log(element);
-      switch (Object.getOwnPropertyNames(element)[0]) {
-        case "description": {
-          Object.assign(this, element);
+    for (let property in res) {
+      switch(property){
+
+        case "id": {
+          this.id = res[property];
           break;
         }
 
-        case "iri": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "website": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "image": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "markdown": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "contact": {
-          Object.assign(this, element);
+        case "slug": {
+          this.slug = res[property];
           break;
         }
 
         case "label": {
-          this.labels.push(new ILabel(element));
+          res[property].item.forEach(item => {
+            this.labels.push(new ILabel(item))
+          })
           break;
         }
 
-        case "sensor": {
-          this.sensors.push(new ISensors(element));
+        case "description": {
+          this.description = res[property];
+          break;
+        }
+
+        case "markdown": {
+          this.markdown = res[property];
+          break;
+        }
+
+        case "image": {
+          this.image = res[property];
+          break;
+        }
+
+        case "website": {
+          this.website = res[property];
+          break;
+        }
+
+        case "contact": {
+          this.contact = res[property];
+          break;
+        }
+
+        case "sensors": {
+          res[property].forEach((element: any) => {
+            this.sensors.push(new ISensors(element));
+          })
+          this.sensors.sort((a, b) => a.sensorSlug.localeCompare(b.sensorSlug));
           break;
         }
 
         case "validation": {
-          Object.assign(this, element);
+          this.validation = res[property];
           break;
         }
 
         default: {
-          console.log("Invalid attribute");
           break;
         }
       }
-    });
+    }
   }
 }

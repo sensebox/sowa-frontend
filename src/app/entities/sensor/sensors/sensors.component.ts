@@ -24,22 +24,18 @@ export class SensorsComponent implements OnInit {
     this.api.getSensors().subscribe(res => {
       var tempArray: any = res;
 
-      tempArray = tempArray.filter(function (el) {
-        // return (el.sensorLabel != undefined && el.sensorLabel[0] != undefined)
-        return el.sensor.type === 'uri'
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
 
-      })
-      // console.log(this.sensorssArray);
-      tempArray.sort((a, b) => a.sensorLabel[0].value.localeCompare(b.sensorLabel[0].value));
       this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
       console.dir(this.sensorsArray);
+
     });
   }
 
   onSelect(sensor) {
     this.acitivatePageLoad();
     this.selectedSensor = sensor;
-    this._routerService.navigate(['/sensor/detail/', sensor.sensor.value.slice(this.senphurl.length)]);
+    this._routerService.navigate(['/sensor/detail/', sensor.sensorSlug]);
 
   }
 

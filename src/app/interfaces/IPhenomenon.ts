@@ -1,89 +1,68 @@
-import { IIri } from './IIri';
-import { IUnit } from './IUnit';
+import { IRoV } from './IRoV';
 import { IDomains } from './IDomains';
 import { ILabel } from './ILabel';
-import { ISensors } from './ISensors';
 
 export class IPhenomenon {
-  iri: {
-    type: string,
-    value: string,
-  };
-  labels?: ILabel[];
-  description: {
-    type: string;
-    value: string;
-    "xml:lang": string;
-  };
-  markdown: {
-    datatype: string,
-    type: string,
-    value: string
-  };
-  units?: IUnit[];
-  domains?: IDomains[];
-  sensors?: ISensors[];
-  validation: {
-    datatype: string,
-    type: string,
-    value: string
-  };
+  id: number;
+  slug: string;
+  labels: ILabel[];
+  description: Object
+  markdown: Object;
+  units: IRoV[];
+  domains: IDomains[];
+  validation: boolean;
 
   constructor(res: any) {
-    // console.log(phenomenonResponse);
-    // this.labels = phenomenonResponse.labels;
-    // this.description = phenomenonResponse.description;
-    // this.iri = phenomenonResponse.iri;
-    // this.units = phenomenonResponse.units;    
-    // this.domains = phenomenonResponse.domains;
-
     this.labels = [];
-    this.units = [];
     this.domains = [];
-    this.sensors = [];
+    this.units = [];
 
+    for (const property in res) {
+      switch(property){
 
-    res.forEach((element: any) => {
-      switch (Object.getOwnPropertyNames(element)[0]) {
-
-        case "description": {
-          Object.assign(this, element);
+        case "id": {
+          this.id = res[property];
           break;
         }
 
-        case "markdown": {
-          Object.assign(this, element);
-          break;
-        }
-
-        case "iri": {
-          Object.assign(this, element);
+        case "slug": {
+          this.slug = res[property];
           break;
         }
 
         case "label": {
-          this.labels.push(new ILabel(element));
+          res[property].item.forEach(item => {
+            this.labels.push(new ILabel(item))
+          })
+          break;
+        }
+
+        case "description": {
+          this.description = res[property];
+          break;
+        }
+
+        case "markdown": {
+          this.markdown = res[property];
           break;
         }
 
         case "rov": {
-          this.units.push(element);
+          res[property].forEach((element: any) => {
+            this.units.push(new IRoV(element));
+          });
           break;
         }
 
-        case "domain": {
-          this.domains.push(element);
+        case "domains": {
+          res[property].forEach((element: any) => {
+            this.domains.push(new IDomains(element));
+          });
           break;
         }
 
         case "validation": {
-          Object.assign(this, element);
-          break;
-        }
-
-
-        case "sensors": {
-          this.sensors.push(new ISensors(element));
+          this.validation = res[property];
           break;
         }
 
@@ -91,6 +70,6 @@ export class IPhenomenon {
           break;
         }
       }
-    })
+    }
   }
 }

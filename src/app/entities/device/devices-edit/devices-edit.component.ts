@@ -4,10 +4,13 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
 import { CustomValidators } from "../../../shared/custom.validators";
 import { ILabel } from "src/app/interfaces/ILabel";
+import { IDevice } from "src/app/interfaces/IDevice";
 import { ISensors } from "src/app/interfaces/ISensors";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
+
+import { LabelLanguagePipePipe } from 'src/app/pipes/label-language-pipe.pipe'
 
 import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -15,6 +18,7 @@ import { environment } from "src/environments/environment";
 
 import { HttpClient } from "@angular/common/http";
 import { UploadResult } from "src/app/interfaces/uploadResult";
+
 
 @Component({
   selector: "senph-devices-edit",
@@ -29,7 +33,8 @@ export class DevicesEditComponent implements OnInit {
     itemAlias: "image",
     authToken: window.localStorage.getItem("sb_accesstoken"),
     additionalParameter: {
-      uri: "",
+      uri: null,
+      name: null
     },
   });
 
@@ -37,32 +42,30 @@ export class DevicesEditComponent implements OnInit {
 
   heroBannerString = "http://sensors.wiki/SENPH#";
   deviceForm: FormGroup;
+  deleteDeviceForm: FormGroup;
 
   validationMessages = {
-    uri: {
-      required: "URI is required.",
-      uriSyntax: "No white spaces allowed in URI.",
-    },
+    // id: {
+    //   required: "URI is required.",
+    //   uriSyntax: "No white spaces allowed in URI.",
+    // },
     label: {
       required: "Label is required.",
     },
     description: {
       required: "Description is required.",
     },
-    website: {
-      required:
-        "Provide a datasheet link or use the checkbox to set its value to undefined.",
-      uriSyntax: "No white spaces allowed in Datasheet-URL.",
-    },
-    contact: {
-      required:
-        "Provide a lifeperiod or use the checkbox to set its value to undefined.",
-    },
     image: {
       required:
         "Provide an image link or use the checkbox to set its value to undefined.",
       uriSyntax: "No white spaces allowed in Image-URL.",
     },
+    sensor: {
+      required: "Sensors are required."
+    },
+    translationIds: {
+      required: "TranslationIds are required."
+    }
   };
 
   formErrors: FormErrors = {};
@@ -76,7 +79,8 @@ export class DevicesEditComponent implements OnInit {
     private _routerService: Router,
     private errorService: ErrorModalService,
     private sanitizer: DomSanitizer,
-    private http: HttpClient
+    private http: HttpClient,
+    private labelLanguagePipe: LabelLanguagePipePipe
   ) {
     this.doUpload = this.doUpload.bind(this);
   }
@@ -85,44 +89,51 @@ export class DevicesEditComponent implements OnInit {
     this.previewPath = "//:0";
 
     this.deviceForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
+      id: [null, [Validators.required]],
+      slug: [null, [Validators.required]],
       label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      markdown: [""],
-      website: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      image: [
-        { value: "", disabled: false },
-        [Validators.required, CustomValidators.uriSyntax],
-      ],
-      contact: [{ value: "", disabled: false }, [Validators.required]],
+      description: this.addDescriptionFormGroup(),
+      markdown: this.addMarkdownFormGroup(),
+      website: [{ value: null, disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
+      contact: [{ value: null, disabled: false }, [Validators.required]],
+      image: [{ value: null, disabled: false }],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
-    });
+      deletedLabels: this.fb.array([]),
+      deletedSensors: this.fb.array([]),
+      translationIds: [[], [Validators.required]]
+    }, {validators: CustomValidators.englishLabel});
 
     this.deviceForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.deviceForm);
     });
 
     this.uploader.onAfterAddingFile = (file) => {
+
+      var inputValue = (<HTMLInputElement>(
+        document.getElementById("imageUpload")
+      )).value;
+      var extension = inputValue.slice(inputValue.lastIndexOf("."));
+      // this.deviceForm.value.image = extension;
+      var imageFileName = this.deviceForm.get("slug").value + extension;
+      this.deviceForm.get("image").setValue(imageFileName, { emitEvent: false });
+      this.deviceForm.patchValue({
+        image: imageFileName,
+      });
+      console.log(this.deviceForm.get("image").value)
+
       this.uploader.queue = [];
       this.uploader.queue.push(file);
       file.withCredentials = false;
       this.previewPath = this.sanitizer.bypassSecurityTrustUrl(
         window.URL.createObjectURL(file._file)
       );
-      var inputValue = (<HTMLInputElement>(
-        document.getElementById("imageUpload")
-      )).value;
-      var extension = inputValue.slice(inputValue.lastIndexOf("."));
-      this.deviceForm.value.image = extension;
-      var imageFileName = this.deviceForm.get("uri").value + extension;
-      this.deviceForm
-        .get("image")
-        .setValue(imageFileName, { emitEvent: false });
+      
+      this.uploader.options.additionalParameter.uri = this.deviceForm.value.id;
+      this.uploader.options.additionalParameter.name = imageFileName;
+      
     };
+
     this.uploader.onCompleteItem = (item: any, status: any) => {
       bulmaToast.toast({
         message: "Image successfully uploaded!",
@@ -151,14 +162,7 @@ export class DevicesEditComponent implements OnInit {
         this.logValidationErrors(abstractControl);
       } else {
         this.formErrors[key] = "";
-        if (
-          abstractControl &&
-          !abstractControl.valid &&
-          (abstractControl.touched ||
-            abstractControl.dirty ||
-            abstractControl.value !== "" ||
-            this.submitted)
-        ) {
+        if (abstractControl && !abstractControl.valid && (abstractControl.touched || abstractControl.dirty || abstractControl.value !== null || this.submitted)) {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
@@ -172,15 +176,30 @@ export class DevicesEditComponent implements OnInit {
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
+      translationId: [null, [Validators.required]],
       value: ["", [Validators.required]],
       lang: ["", [Validators.required]],
     });
   }
 
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [""]
+    })
+  }
+
+  addMarkdownFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null, [Validators.required]],
+      text: [""]
+    })
+  }
+
   addSensorFormGroup(): FormGroup {
     return this.fb.group({
-      sensorUri: ["", [Validators.required]],
+      sensor: [null, [Validators.required]],
+      exists: [true, [Validators.required]]
     });
   }
 
@@ -192,22 +211,43 @@ export class DevicesEditComponent implements OnInit {
   }
 
   editDevice(device) {
+    // console.log(device)
     this.deviceForm.patchValue({
-      uri: device.iri.value.slice(this.heroBannerString.length),
-      description: device.description.value,
-      website: device.website ? device.website.value : "",
-      image: device.image ? device.image.value : "",
-      contact: device.contact ? device.contact.value : "",
-      markdown: device.markdown ? device.markdown.value : "",
+      id: device.id,
+      slug: device.slug,
+      image: device.image,
+      website: device.website,
+      contact: device.contact,      
     });
 
-    this.deviceForm.setControl("label", this.setExistingLabels(device.labels));
+    this.deviceForm.setControl(
+      "label", 
+      this.setExistingLabels(device.labels));
+
+    this.deviceForm.controls['description'].patchValue({
+      translationId: device.description.item[0].translationId,
+      text: device.description ? this.labelLanguagePipe.transform(device.description.item) : '',
+    });
+
+    this.deviceForm.controls['markdown'].patchValue({
+      translationId: device.markdown.item[0].translationId,
+      text: device.markdown ? this.labelLanguagePipe.transform(device.markdown.item) : '',
+    });
 
     this.deviceForm.setControl(
       "sensor",
       this.setExistingSensors(device.sensors)
     );
-    this.previewPath = this.APIURL + "/images/upload/" + device.image.value;
+
+    if (device.image !== null) {
+      this.previewPath = this.APIURL + "/images/upload/" + device.image;
+    }
+
+    this.deviceForm.patchValue({
+      translationIds: this.setTranslationIds(device),
+    })
+    
+    this.deleteDeviceForm = this.deviceForm
   }
 
   setExistingSensors(sensorSet: ISensors[]): FormArray {
@@ -216,11 +256,11 @@ export class DevicesEditComponent implements OnInit {
     sensorSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          sensorUri: [s.sensor.value, [Validators.required]],
+          sensor: [{value: s.sensor, disabled: true}, [Validators.required]],
+          exists: [true, [Validators.required]],
         })
       );
     });
-
     return formArray;
   }
 
@@ -229,15 +269,25 @@ export class DevicesEditComponent implements OnInit {
     labelSet.forEach((s) => {
       formArray.push(
         this.fb.group({
-          type: [s.type, [Validators.required]],
-          value: [s.value, [Validators.required]],
-          lang: [s["xml:lang"], [Validators.required]],
+          translationId: [s.translationId, [Validators.required]],
+          value: [s.text, [Validators.required]],
+          lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
         })
       );
+      // if (s.languageCode == 'en') {
+      //   formArray.controls[formArray.length-1].disable()//[formArray.length-1]) //.controls['value'].disable();
+      // };
     });
-
     return formArray;
   }
+
+  setTranslationIds(device: IDevice) {
+    const array = [];
+    array.push(device.labels[0].translationId);
+    array.push(device.description["item"][0].translationId);
+    array.push(device.markdown["item"][0].translationId);
+    return array;
+  } 
 
   redirectDetails(uri) {
     this._routerService.navigate(["/device/detail", uri]).then(() => {
@@ -252,7 +302,7 @@ export class DevicesEditComponent implements OnInit {
       .delete(this.APIURL + "/image/delete/" + this.deviceForm.value.image)
       .subscribe(
         (response) => {
-          this.deviceForm.get("image").patchValue("null");
+          this.deviceForm.get("image").patchValue(null);
           bulmaToast.toast({
             message: "Delete successful!",
             type: "is-success",
@@ -302,13 +352,15 @@ export class DevicesEditComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.deviceForm.value)
     this.submitted = true;
 
-    this.uploader.setOptions({
-      additionalParameter: {
-        uri: this.deviceForm.get("uri").value,
-      },
-    });
+    // this.uploader.setOptions({
+    //   additionalParameter: {
+    //     uri: this.deviceForm.value.id,
+    //     name: this.deviceForm.value.image,
+    //   },
+    // });
 
     if (this.deviceForm.invalid) {
       bulmaToast.toast({
@@ -349,7 +401,7 @@ export class DevicesEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.api.deleteDevice(this.deviceForm.getRawValue()).subscribe(
+    this.api.deleteDevice(this.deleteDeviceForm.getRawValue()).subscribe(
       (data) => {
         bulmaToast.toast({
           message: "Delete successful!",

@@ -25,7 +25,8 @@
                     <div class="field is-narrow">
                         <div class="control">
                             <label class="checkbox">
-                                <input type="checkbox" id="radio + {{id}}" (change)="toggleDisabled($event)">
+                                <input type="checkbox" id="radio + {{id}}" (change)="toggleDisabled($event)" [(ngModel)]="checkboxState"
+                                [ngModelOptions]="{standalone: true}">
                             </label>
                         </div>
                     </div>

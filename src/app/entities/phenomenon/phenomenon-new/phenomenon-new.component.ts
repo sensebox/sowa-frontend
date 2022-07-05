@@ -4,7 +4,7 @@ import { CustomValidators } from "../../../shared/custom.validators";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
 import { IDomains } from "../../../interfaces/IDomains";
-import { IUnit } from "../../../interfaces/IUnit";
+import { IRoV } from "../../../interfaces/IRoV";
 import { ILabel } from "src/app/interfaces/ILabel";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
@@ -28,7 +28,7 @@ export class PhenomenonNewComponent implements OnInit {
   shortUri: string;
 
   validationMessages = {
-    uri: {
+    id: {
       required: "URI is required.",
       uriSyntax: "No white spaces allowed in URI.",
     },
@@ -55,14 +55,13 @@ export class PhenomenonNewComponent implements OnInit {
 
   ngOnInit() {
     this.phenomenonForm = this.fb.group({
-      uri: ["", [Validators.required, CustomValidators.uriSyntax]],
       label: this.fb.array([this.addLabelFormGroup()]),
-      description: ["", [Validators.required]],
-      markdown: [""],
+      description: this.addDescriptionFormGroup(),
+      markdown: this.addMarkdownFormGroup(),
       domain: this.fb.array([this.addDomainFormGroup()]),
       unit: this.fb.array([this.addUnitFormGroup()]),
       validation: [false, [Validators.required]],
-    });
+    }, {validators: CustomValidators.englishLabel});
 
     this.phenomenonForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.phenomenonForm);
@@ -103,24 +102,40 @@ export class PhenomenonNewComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domainUri: ["", [Validators.required]],
+      domain: ["", [Validators.required]],
+      exists: [false, [Validators.required]]
     });
   }
 
   addUnitFormGroup(): FormGroup {
     return this.fb.group({
-      unitUri: ["", [Validators.required]],
-      min: ["", []],
-      max: ["", []],
+      unitUri: [""],
+      min: [null, [Validators.required]],
+      max: [null, [Validators.required]],
+      rovId: [null],
     });
   }
 
   addLabelFormGroup(): FormGroup {
     return this.fb.group({
-      type: "literal",
-      value: ["", [Validators.required]],
+      translationId: [null],
+      value: [null, [Validators.required]],
       lang: ["", [Validators.required]],
     });
+  }
+
+  addDescriptionFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null],
+      text: [""]
+    })
+  }
+
+  addMarkdownFormGroup(): FormGroup {
+    return this.fb.group({
+      translationId: [null],
+      text: [""]
+    })
   }
 
   onLoadButtonClick() {}
@@ -161,6 +176,7 @@ export class PhenomenonNewComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    console.log(this.phenomenonForm);
 
     if (this.phenomenonForm.invalid) {
       bulmaToast.toast({

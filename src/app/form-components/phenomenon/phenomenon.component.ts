@@ -22,6 +22,7 @@ export class PhenomenonComponent implements OnInit {
       'required': 'Please select a phenomenon.'
     }
   };
+  deletedPhenomena = new FormArray([]);
 
   ngOnInit() {
     this.retrievePhenomena();
@@ -37,33 +38,44 @@ export class PhenomenonComponent implements OnInit {
 
   addPhenomenonFormGroup(): FormGroup {
     return this.fb.group({
-      // phenomenonObject: [{
-        phenomenonURI: ['',
-        // phenomenonLabel: ''}, 
-        [Validators.required]]
+        phenomenon: [null, [Validators.required]],
+        exists: [false, [Validators.required]]
     });
   }
 
   getSelectedPhenomenon(id) {
-    return this.parentForm.value.phenomenon[id].phenomenonURI;
+    return this.parentForm.getRawValue().phenomenon[id].phenomenon;
   }
 
   getValueFor(value) {
   }
 
   retrievePhenomena() {
-    this.api.getPhenomenaAllLabels().subscribe(res => {
-      var tempArray: any = res;
+    this.api.getPhenomena().subscribe(res => {
+      this.phenomenaArray = res;
+      // console.log(this.phenomenaArray);
 
-      tempArray = tempArray.filter(function (el) {
-        return el.phenomenon.type != 'bnode'
-      })
-      tempArray.sort((a, b) => a.phenomenonLabel.value.localeCompare(b.phenomenonLabel.value));
-      this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
+      // var tempArray: any = res;
+      // tempArray = tempArray.filter(function (el) {
+      //   return el.phenomenon.type != 'bnode'
+      // })
+      // tempArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
     });
   }
 
   removePhenomenonButtonClick(skillGroupIndex: number): void {
+
+    let deletedPhenomenon = (<FormArray>this.parentForm.get('phenomenon')).at(skillGroupIndex);
+    console.log(deletedPhenomenon.value)
+    if (deletedPhenomenon.value.exists === true) {
+      this.deletedPhenomena.push(deletedPhenomenon);
+      console.log(this.deletedPhenomena)
+      this.parentForm.setControl(
+        "deletedPhenomena",
+        this.deletedPhenomena
+      )
+    }
+
     (<FormArray>this.parentForm.get('phenomenon')).removeAt(skillGroupIndex);
   }
 }

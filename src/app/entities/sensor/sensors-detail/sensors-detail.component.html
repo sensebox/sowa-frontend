@@ -1,6 +1,6 @@
 <div *ngIf="sensor != undefined">
 
-  <senph-hero-banner [title]="prefLabel?.value" [valid]="sensor.validation?.value" [subtitle]="sensor?.iri.value"
+  <senph-hero-banner [title]="sensor.labels | labelLanguagePipe" [valid]="sensor.validation" [subtitle]="uri"
     (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
   </senph-hero-banner>
 
@@ -66,14 +66,13 @@
                 <p class="title">URI</p>
                 <div class="content">
                   <strong>
-                    {{sensor.iri.value}}
+                    {{sensor.labels | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
               <article class="tile is-child notification is-warning">
                 <p class="title">Labels</p>
-                <p class="subtitle">These are the available labels in various languages for the
-                  {{prefLabel?.value}}:</p>
+                <p class="subtitle">These are the available labels in various languages for the {{sensor.labels | labelLanguagePipe}} Sensor:</p>
                 <div class="columns is-mobile is-multiline is-centered">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
@@ -106,12 +105,12 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{label.value}}
+                      {{label.text}}
                     </p>
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      {{search(label["xml:lang"], "val", languageArray)}}
+                      {{search(label.languageCode, "val", languageArray)}}
                     </p>
                   </div>
                 </div>
@@ -121,8 +120,8 @@
               <article class="tile is-child notification is-warning">
                 <p class="title">Description</p>
                 <div class="content">
-                  <strong>
-                    {{sensor.description.value}}
+                  <strong *ngIf="sensor.description">
+                    {{sensor.description.item | labelLanguagePipe}}
                   </strong>
                 </div>
               </article>
@@ -132,9 +131,7 @@
 
             <article class="tile is-child notification is-danger">
               <p class="title">Measurable Phenomena</p>
-              <p class="subtitle">These are the phenomena that can be measured using the {{prefLabel?.value}}
-                Sensor:
-              </p>
+              <p class="subtitle">These are the phenomena that can be measured using the {{sensor.labels | labelLanguagePipe}} Sensor:</p>
               <div class="content">
                 <div class="columns is-mobile is-multiline is-centered">
                   <div class="column is-1">
@@ -146,7 +143,7 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <strong>URI</strong>
+                      <strong>Name</strong>
                     </p>
                   </div>
                   <div class="column is-fullwidth">
@@ -161,7 +158,7 @@
                   </div>
                 </div>
                 <div class="columns is-mobile is-multiline is-centered"
-                  *ngFor="let selem of sensor.sensorElements;let i = index">
+                  *ngFor="let sensorElement of sensor.sensorElements;let i = index">
                   <div class="column is-1">
                     <p class="bd-notification is-primary">
                       <strong>
@@ -171,29 +168,31 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a class=""
-                        (click)="redirectDomain(selem.phenomenon.value, '/phenomenon/detail/')">{{selem.phenomenon.value}}</a>
-                    </p>
-                  </div>
-                  <div class="column is-fullwidth" *ngIf="selem.unit?.value != 'http://server/unset-base/undefined'">
-                    <p class="bd-notification is-primary">
-                      <a *ngIf="unitsArray" class="" href="{{selem.unit?.value}}" target="_blank">
-                        <!-- TODO: FIX REOLOADING ISSUE -->
-                        {{searchUnit(selem.unit?.value, unitsArray)}}
+                      <a class="" (click)="redirectDomain(sensorElement.phenomenonSlug, '/phenomenon/detail/')">
+                        {{sensorElement.phenomenonLabels | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="selem.unit?.value === 'http://server/unset-base/undefined'">
+                  <div class="column is-fullwidth" *ngIf="sensorElement.unit != null">
+                    <p class="bd-notification is-primary">
+                      <a class="" (click)="redirectDomain(sensorElement.unitSlug, '/unit/detail/')">
+                        <!-- TODO: FIX link on unit ISSUE -->
+                        <!-- {{searchUnit(sensor.sensorElements[i].unit, unitsArray)}} -->
+                        {{sensorElement.unit}}
+                      </a>
+                    </p>
+                  </div>
+                  <div class="column is-fullwidth" *ngIf="sensorElement.unit === null">
                     <p class="bd-notification is-primary">
                       Not specified.
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="selem.accVal?.value != 'undefined'">
+                  <div class="column is-fullwidth" *ngIf="sensorElement.accuracy != null">
                     <p class="bd-notification is-primary">
-                      &plusmn; {{selem.accVal?.value}}
+                      &plusmn; {{sensorElement.accuracy}}
                     </p>
                   </div>
-                  <div class="column is-fullwidth" *ngIf="selem.accVal?.value === 'undefined'">
+                  <div class="column is-fullwidth" *ngIf="sensorElement.accuracy === null">
                     <p class="bd-notification is-primary">
                       Not specified.
                     </p>
@@ -211,18 +210,19 @@
                 <p class="subtitle">The estimated price in euro is:</p>
                 <div class="content">
                   <strong>
-                    {{sensor.price.value}} €
+                    <p *ngIf="sensor.price != null">{{sensor.price}} €</p>
+                    <p *ngIf="sensor.price == null ">undefined</p>
                   </strong>
                 </div>
               </article>
             </div>
             <div class="tile is-parent">
-              <article *ngIf="sensor.image.value != 'null' else noImage" class=" tile is-child notification is-dark">
+              <article *ngIf="sensor.image != null else noImage" class=" tile is-child notification is-dark">
                 <figure class="image is-256x256">
-                  <img class="is-rounded" src="{{APIURL}}/images/upload/{{sensor.image.value}}">
+                  <img class="is-rounded" src="{{APIURL}}/images/upload/{{sensor.image}}">
                 </figure>
                 <p>
-                  The {{prefLabel?.value}}. <a href="{{sensor.image.value}}">Source</a>
+                  The {{prefLabel?.text}}. <a href="{{sensor.image}}">Source</a>
                 </p>
               </article>
             </div>
@@ -240,19 +240,18 @@
               <p class="subtitle">The manufacturer of this sensor is:</p>
               <div class="content">
                 <strong>
-                  {{sensor.manufacturer.value}}
+                  <p *ngIf="sensor.manufacturer != null">{{sensor.manufacturer}}</p>
+                  <p *ngIf="sensor.manufacturer == null ">Currently not specified.</p>
                 </strong>
               </div>
             </article>
             <article class="tile is-child notification is-dark">
               <p class="title">Life period</p>
-              <p class="subtitle">The estimated life period of the {{prefLabel?.value}} is:</p>
+              <p class="subtitle">The estimated life period of the {{prefLabel?.text}} is:</p>
               <div class="content">
                 <strong>
-                  <p *ngIf="sensor.lifeperiod && sensor.lifeperiod.value != 'undefined'">{{sensor.lifeperiod.value}}
-                    Days
-                  </p>
-                  <p *ngIf="!sensor.lifeperiod || sensor.lifeperiod.value == 'undefined' ">Currently not specified.</p>
+                  <p *ngIf="sensor.lifePeriod != null">{{sensor.lifePeriod}} Days</p>
+                  <p *ngIf="sensor.lifePeriod == null ">Currently not specified.</p>
                 </strong>
               </div>
             </article>
@@ -261,9 +260,8 @@
               <p class="subtitle">You can find the datasheet of this sensor at:</p>
               <div class="content">
                 <strong>
-                  <a class="" href="{{sensor.datasheet.value}}" target="_blank">
-                    {{sensor.datasheet.value}}
-                  </a>
+                  <a *ngIf="sensor.datasheet != null" class="" href="{{sensor.datasheet}}" target="_blank">{{sensor.datasheet}}</a>
+                  <p *ngIf="sensor.datasheet == null" class="">undefined</p>
                 </strong>
               </div>
             </article>

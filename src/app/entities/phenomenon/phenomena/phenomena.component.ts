@@ -24,17 +24,16 @@ export class PhenomenaComponent implements OnInit {
     this.api.getPhenomena().subscribe(res => {
       var tempArray: any = res;
     
-      tempArray =  tempArray.filter(function (el){
-        return el.phenomenon.type != 'bnode'
-      })
-      tempArray.sort((a,b) => a.phenomenonLabel[0].value.localeCompare(b.phenomenonLabel[0].value));
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+    
       this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
-      console.log(this.phenomenaArray);
+      console.log(this.phenomenaArray)
     });
   }
 
   onSelect(phenomenon){
     this.selectedPhenomenon = phenomenon;
-    this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenon.value.slice(this.senphurl.length)]);
+    // console.log(phenomenon)
+    this._routerService.navigate(['/phenomenon/detail/', phenomenon.phenomenonSlug]);
   }
 }

@@ -1,3 +1,13 @@
 hr{
     border: 1px solid silver;
 }
+
+.no-image {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 70px;
+    justify-content: center;
+    border-radius: 50%;
+    border: 5px solid #363636;
+  }

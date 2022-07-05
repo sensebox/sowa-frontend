@@ -1,23 +1,14 @@
 export class IDomains {
-    domain: {
-        type: string,
-        value: string,
-    };
-    domainLabel: {
-        type: string,
-        value: string,
-        "xml:lang": string
-    };
-    validation: {
-        type: string,
-        value: string,
-    };
+    domain: number
+    domainSlug: string
+    label: string;
+    validation: boolean;
 
 
-    constructor(res: any) {
-        this.domain = res.domain;
-        this.domainLabel = res.label;
-        this.validation = res.validation;
+    constructor(resDomain: any) {
+        this.domain = resDomain.id;
+        this.domainSlug = resDomain.slug;
+        this.label = resDomain.label.item;
+        this.validation = resDomain.validation;
     }
-
 }

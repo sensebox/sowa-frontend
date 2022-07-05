@@ -5,10 +5,10 @@ import { CustomValidators } from '../../../shared/custom.validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service'
 import { IDomains } from '../../../interfaces/IDomains';
-import { IUnit } from '../../../interfaces/IUnit';
+import { IRoV } from '../../../interfaces/IRoV';
 import { ILabel } from 'src/app/interfaces/ILabel';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
-import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
+import { redirectDomain, redirectUnit } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'senph-phenomena-detail',
@@ -28,6 +28,7 @@ export class PhenomenaDetailComponent implements OnInit {
   unitsArray;
 
   redirectDomain = redirectDomain;
+  redirectUnit = redirectUnit
 
 
   constructor(
@@ -69,7 +70,7 @@ export class PhenomenaDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getPhenomenonDetails();
-    this.retrieveUnits();
+    //this.retrieveUnits();
 
   }
 
@@ -86,14 +87,19 @@ export class PhenomenaDetailComponent implements OnInit {
       return this.route.params.subscribe(res => {
         this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
           this.phenomenon = response;
-          this.phenomenon.labels.forEach(element => {
-            if (element["xml:lang"] == "en") {
-              this.prefLabel = element
-              return
-            }
-            this.prefLabel = element;
-          });
-          this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
+          console.log(this.phenomenon)
+          // this.phenomenon.labels.forEach(element => {
+          //   if (element["languageCode"] == "de") {
+          //     this.prefLabel = element
+          //     return
+          //   }
+          //   if (element["languageCode"] == "en") {
+          //     this.prefLabel = element
+          //     return
+          //   }
+          // });
+          this.uri = this.phenomenon.slug;
+          //this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
         });
       })
     }
@@ -108,7 +114,7 @@ export class PhenomenaDetailComponent implements OnInit {
             }
             this.prefLabel = element;
           });
-          this.uri = this.phenomenon.iri.value.slice(this.heroBannerString.length);
+          this.uri = this.phenomenon.slug;
         });
       })
     }
@@ -126,7 +132,7 @@ export class PhenomenaDetailComponent implements OnInit {
   }
 
   editButtonClick(uri) {
-    this._routerService.navigate(['/phenomenon/edit', uri]);
+    this._routerService.navigate(['/phenomenon/edit', this.phenomenon.slug]);
   }
 
 
@@ -159,13 +165,23 @@ export class PhenomenaDetailComponent implements OnInit {
     }
   }
 
-  search(nameKey, myArray) {
+  search(nameKey, val1, myArray, val2) {
+    // console.log(nameKey)
     for (var i = 0; i < myArray.length; i++) {
-      if (myArray[i].val === nameKey["xml:lang"]) {
-        return myArray[i].show;
+      // console.log(myArray[i][val1])
+      if (myArray[i][val1] === nameKey) {
+        return myArray[i][val2];
       }
     }
   }
+
+  // search(nameKey, myArray) {
+  //   for (var i = 0; i < myArray.length; i++) {
+  //     if (myArray[i].val === nameKey["xml:lang"]) {
+  //       return myArray[i].show;
+  //     }
+  //   }
+  // }
 
   markdownOptions = {
     enablePreviewContentClick: true

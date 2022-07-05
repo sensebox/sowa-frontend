@@ -20,6 +20,7 @@ export class DomainComponent implements OnInit {
       'required': 'Please select a domain.'
     } 
   };
+  deletedDomains = new FormArray([]);
 
   ngOnInit() {
     this.retrieveDomains();
@@ -35,28 +36,42 @@ export class DomainComponent implements OnInit {
 
   addDomainFormGroup(): FormGroup {
     return this.fb.group({
-      domainUri: ['', [Validators.required]]
+      domain: ["", [Validators.required]],
+      exists: [false, [Validators.required]]
     });
   }
 
   getSelectedDomain(id) {
-    return this.parentForm.value.domain[id].domainUri;
+    return this.parentForm.getRawValue().domain[id].domain;
   }
 
   retrieveDomains() {
     this.api.getDomains().subscribe(res => {
       this.domainsArray = res;
-      this.domainsArray = this.domainsArray.filter(function (el) {
-        return el.domain.type != 'bnode'
-      })
+      // console.log("DOMAINS",res)
+      // this.domainsArray = this.domainsArray.filter(function (el) {
+      //   return el.domain.type != 'bnode'
+      // })
       // console.log(this.domainsArray);
-      this.domainsArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      // this.domainsArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
 
       // console.dir(this.domainsArray);
     });
   }
 
   removeDomainButtonClick(skillGroupIndex: number): void {
+
+    let deletedDomain = (<FormArray>this.parentForm.get('domain')).at(skillGroupIndex);
+    console.log(deletedDomain.value)
+    if (deletedDomain.value.exists === true) {
+      this.deletedDomains.push(deletedDomain);
+      console.log(this.deletedDomains)
+      this.parentForm.setControl(
+        "deletedDomains",
+        this.deletedDomains
+      )
+    }
+
     (<FormArray>this.parentForm.get('domain')).removeAt(skillGroupIndex);
   }
 }

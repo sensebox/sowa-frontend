@@ -1,4 +1,4 @@
-import { IUnit } from "./IUnit";
+import { IRoV } from "./IRoV";
 
 export interface IElements {
     iri: {
@@ -7,7 +7,7 @@ export interface IElements {
     }; 
     phenomenon: {
         uri: string,
-        uoa: IUnit,
+        uoa: IRoV,
         accVal: number
          };
 }
