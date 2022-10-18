@@ -125,8 +125,9 @@ export class SensorNewComponent implements OnInit {
         image: [{ value: null, disabled: false }],
         validation: [false, [Validators.required]],
       },
-      { updateOn: "blur",
-        validators: [CustomValidators.englishLabel],
+      { 
+        updateOn: "blur",
+        validators: CustomValidators.englishLabel,
       }
     );
 
@@ -192,6 +193,7 @@ export class SensorNewComponent implements OnInit {
           const messages = this.validationMessages[key];
           for (const errorKey in abstractControl.errors) {
             if (errorKey) {
+              console.log(errorKey);
               this.formErrors[key] += messages[errorKey] + " ";
             }
           }

@@ -270,7 +270,7 @@ export class DevicesEditComponent implements OnInit {
       formArray.push(
         this.fb.group({
           translationId: [s.translationId, [Validators.required]],
-          value: [s.text, [Validators.required]],
+          value: [{value: s.text, disabled: true}, [Validators.required]],
           lang: [{value: s["languageCode"], disabled: true}, [Validators.required]],
         })
       );

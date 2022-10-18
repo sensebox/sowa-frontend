@@ -4,7 +4,7 @@
             <article class="message is-small is-inverted ">
                 <div class="message-header">
                     <p></p>
-                    <button class="button is-small is-danger" (click)="removeLabelButtonClick(i)">
+                    <button *ngIf="parentForm.getRawValue().label[i].lang !== 'en'" class="button is-small is-danger" (click)="removeLabelButtonClick(i)">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </div>

@@ -54,14 +54,19 @@ export class PhenomenonNewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.phenomenonForm = this.fb.group({
-      label: this.fb.array([this.addLabelFormGroup()]),
-      description: this.addDescriptionFormGroup(),
-      markdown: this.addMarkdownFormGroup(),
-      domain: this.fb.array([this.addDomainFormGroup()]),
-      unit: this.fb.array([this.addUnitFormGroup()]),
-      validation: [false, [Validators.required]],
-    }, {validators: CustomValidators.englishLabel});
+    this.phenomenonForm = this.fb.group(
+      {
+        label: this.fb.array([this.addLabelFormGroup()]),
+        description: this.addDescriptionFormGroup(),
+        markdown: this.addMarkdownFormGroup(),
+        domain: this.fb.array([this.addDomainFormGroup()]),
+        unit: this.fb.array([this.addUnitFormGroup()]),
+        validation: [false, [Validators.required]],
+      },
+      {
+        validators: CustomValidators.englishLabel
+      }
+    );
 
     this.phenomenonForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.phenomenonForm);

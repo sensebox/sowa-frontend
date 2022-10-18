@@ -97,7 +97,7 @@ export class DeviceNewComponent implements OnInit {
       markdown: this.addMarkdownFormGroup(),
       website: [{ value: "", disabled: false }, [Validators.required, CustomValidators.uriSyntax]],
       contact: [{ value: "", disabled: false }, [Validators.required]],
-      image: [{ value: null, disabled: false }, [Validators.required]],
+      image: [{ value: null, disabled: false }],
       sensor: this.fb.array([this.addSensorFormGroup()]),
       validation: [false, [Validators.required]],
     }, {validators: CustomValidators.englishLabel});

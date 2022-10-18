@@ -45,14 +45,14 @@ export class LabelComponent implements OnInit {
 
   removeLabelButtonClick(skillGroupIndex: number): void {
     console.log(skillGroupIndex);
-    console.log(<FormArray>this.parentForm.get('label'))
+    console.log(<FormArray>this.parentForm.getRawValue().label[skillGroupIndex]);
 
     // console.log((<FormArray>this.parentForm.get('deletedLabels')).value);
     let deletedLabel = (<FormArray>this.parentForm.get('label')).at(skillGroupIndex);
     // console.log(deletedLabel.value.translationId)
     if (deletedLabel.value.translationId !== null) {
       this.deletedLabels.push(deletedLabel);
-      console.log(this.deletedLabels)
+      // console.log(this.deletedLabels)
       this.parentForm.setControl(
         "deletedLabels",
         this.deletedLabels
