@@ -27,7 +27,7 @@ export class UnitsComponent implements OnInit {
       tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
 
       this.unitsArray = Array.from(tempArray, x => new IUnits(x));
-      console.log(this.unitsArray)
+      // console.log(this.unitsArray)
     });
   }
 

@@ -12,7 +12,7 @@ export class IUnit {
 
     constructor(res: any) {
 
-        console.log(res)
+        // console.log(res)
 
         this.sensorElements = [];
         this.rovs = [];

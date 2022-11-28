@@ -54,7 +54,7 @@ export class DomainsDetailComponent implements OnInit {
       this.route.params.subscribe(res => {
         this.api.getDomain(res.iri).subscribe((response: IDomain) => {
           this.domain = response;
-          console.log(this.domain)
+          // console.log(this.domain)
           // this.domain.labels.forEach(element => {
           //   if (element["languageCode"] == "en") {
           //     this.prefLabel = element

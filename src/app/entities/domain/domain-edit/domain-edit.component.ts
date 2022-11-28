@@ -227,7 +227,7 @@ export class DomainEditComponent implements OnInit {
   }
 
   setTranslationIds(domain: IDomain) {
-    console.log(domain)
+    // console.log(domain)
     const array = [];
     array.push(domain.labels[0].translationId);
     array.push(domain.description["item"][0].translationId);

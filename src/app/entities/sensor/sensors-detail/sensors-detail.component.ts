@@ -85,7 +85,7 @@ export class SensorsDetailComponent implements OnInit {
       return this.route.params.subscribe(res => {
         this.api.getSensor(res.iri).subscribe((response: ISensor) => {
           this.sensor = response;
-          console.log(this.sensor)
+          // console.log(this.sensor)
           // this.sensor.labels.forEach(element => {
           //   if (element["languageCode"] == "en") {
           //     this.prefLabel = element

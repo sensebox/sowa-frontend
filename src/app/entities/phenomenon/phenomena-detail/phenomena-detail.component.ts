@@ -87,7 +87,7 @@ export class PhenomenaDetailComponent implements OnInit {
       return this.route.params.subscribe(res => {
         this.api.getPhenomenon(res.iri).subscribe((response: IPhenomenon) => {
           this.phenomenon = response;
-          console.log(this.phenomenon)
+          // console.log(this.phenomenon)
           // this.phenomenon.labels.forEach(element => {
           //   if (element["languageCode"] == "de") {
           //     this.prefLabel = element

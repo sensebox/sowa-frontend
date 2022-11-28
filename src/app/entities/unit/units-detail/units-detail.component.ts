@@ -55,7 +55,7 @@ export class UnitsDetailComponent implements OnInit, AfterViewInit {
       return this.route.params.subscribe(res => {
         this.api.getUnit(res.iri).subscribe((response: IUnit) => {
           this.unit = response;
-          console.log(this.unit)
+          // console.log(this.unit)
           // this.setPrefLabel();
           this.uri = this.unit.slug;
           //this.uri = this.device.iri.value.slice(this.senphurl.length);
