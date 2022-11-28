@@ -24,50 +24,50 @@ export class LandingpageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.api.getAllEntities().subscribe(res => {
-      var tempArray: any = res;
+    // this.api.getAllEntities().subscribe(res => {
+    //   var tempArray: any = res;
 
-      tempArray = tempArray.filter(function (el) {
-        return el.entity.type != 'bnode'
-      })
-      // console.log(tempArray);
-      tempArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
-      this.entityArray = tempArray;
-    });
+    //   tempArray = tempArray.filter(function (el) {
+    //     return el.entity.type != 'bnode'
+    //   })
+    //   // console.log(tempArray);
+    //   tempArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
+    //   this.entityArray = tempArray;
+    // });
   }
 
-  onSelect(entity) {
-    this.selectedEntity = entity;
-    this._routerService.navigate(['/' + entity.type.value.slice(this.senphurl.length) + '/detail/', entity.entity.value.slice(this.senphurl.length)]);
-  }
+  // onSelect(entity) {
+  //   this.selectedEntity = entity;
+  //   this._routerService.navigate(['/' + entity.type.value.slice(this.senphurl.length) + '/detail/', entity.entity.value.slice(this.senphurl.length)]);
+  // }
 
-  sortBy(category, array) {
-    if (this.sortCategory != category || !this.sortAsc) {
-      array.sort((a, b) => a[category].value.localeCompare(b[category].value));
-      this.sortCategory = category;
-      this.sortAsc = true;
-      // console.log(array);
-    }
-    else {
-      array.sort((a, b) => b[category].value.localeCompare(a[category].value));
-      this.sortAsc = false;
-      // console.log(array);
+  // sortBy(category, array) {
+  //   if (this.sortCategory != category || !this.sortAsc) {
+  //     array.sort((a, b) => a[category].value.localeCompare(b[category].value));
+  //     this.sortCategory = category;
+  //     this.sortAsc = true;
+  //     // console.log(array);
+  //   }
+  //   else {
+  //     array.sort((a, b) => b[category].value.localeCompare(a[category].value));
+  //     this.sortAsc = false;
+  //     // console.log(array);
 
-    }
-  }
+  //   }
+  // }
 
 
-  onFilterChange(e) {
-    if (e.target.checked) {
-      var tempArray = this.filterOptionsArray;
-      tempArray.push(e.target.value);
-      this.filterOptionsArray = Object.assign([], tempArray);
-    }
-    else {
-      this.filterOptionsArray = this.filterOptionsArray.filter(item => item !== e.target.value);
+  // onFilterChange(e) {
+  //   if (e.target.checked) {
+  //     var tempArray = this.filterOptionsArray;
+  //     tempArray.push(e.target.value);
+  //     this.filterOptionsArray = Object.assign([], tempArray);
+  //   }
+  //   else {
+  //     this.filterOptionsArray = this.filterOptionsArray.filter(item => item !== e.target.value);
 
-    }
-    console.log(this.filterOptionsArray);
-  }
+  //   }
+  //   console.log(this.filterOptionsArray);
+  // }
 
 }
