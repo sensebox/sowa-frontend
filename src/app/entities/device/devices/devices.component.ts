@@ -28,7 +28,7 @@ export class DevicesComponent implements OnInit {
       tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
 
       this.devicesArray = Array.from(tempArray, x => new IDevices(x));
-      console.dir(this.devicesArray);
+      // console.dir(this.devicesArray);
     });
   }
 

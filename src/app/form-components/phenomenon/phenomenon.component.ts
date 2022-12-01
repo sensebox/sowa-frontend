@@ -52,14 +52,11 @@ export class PhenomenonComponent implements OnInit {
 
   retrievePhenomena() {
     this.api.getPhenomena().subscribe(res => {
-      this.phenomenaArray = res;
-      // console.log(this.phenomenaArray);
+      var tempArray: any = res;
 
-      // var tempArray: any = res;
-      // tempArray = tempArray.filter(function (el) {
-      //   return el.phenomenon.type != 'bnode'
-      // })
-      // tempArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+
+      this.phenomenaArray = tempArray;
     });
   }
 

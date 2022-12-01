@@ -47,15 +47,11 @@ export class DomainComponent implements OnInit {
 
   retrieveDomains() {
     this.api.getDomains().subscribe(res => {
-      this.domainsArray = res;
-      // console.log("DOMAINS",res)
-      // this.domainsArray = this.domainsArray.filter(function (el) {
-      //   return el.domain.type != 'bnode'
-      // })
-      // console.log(this.domainsArray);
-      // this.domainsArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      var tempArray: any = res;
 
-      // console.dir(this.domainsArray);
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+
+      this.domainsArray = tempArray;
     });
   }
 

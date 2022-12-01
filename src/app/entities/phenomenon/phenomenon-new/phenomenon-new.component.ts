@@ -3,9 +3,6 @@ import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 import { CustomValidators } from "../../../shared/custom.validators";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
-import { IDomains } from "../../../interfaces/IDomains";
-import { IRoV } from "../../../interfaces/IRoV";
-import { ILabel } from "src/app/interfaces/ILabel";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "src/app/services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
@@ -54,14 +51,19 @@ export class PhenomenonNewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.phenomenonForm = this.fb.group({
-      label: this.fb.array([this.addLabelFormGroup()]),
-      description: this.addDescriptionFormGroup(),
-      markdown: this.addMarkdownFormGroup(),
-      domain: this.fb.array([this.addDomainFormGroup()]),
-      unit: this.fb.array([this.addUnitFormGroup()]),
-      validation: [false, [Validators.required]],
-    }, {validators: CustomValidators.englishLabel});
+    this.phenomenonForm = this.fb.group(
+      {
+        label: this.fb.array([this.addLabelFormGroup()]),
+        description: this.addDescriptionFormGroup(),
+        markdown: this.addMarkdownFormGroup(),
+        domain: this.fb.array([this.addDomainFormGroup()]),
+        unit: this.fb.array([this.addUnitFormGroup()]),
+        validation: [false, [Validators.required]],
+      },
+      {
+        validators: CustomValidators.englishLabel
+      }
+    );
 
     this.phenomenonForm.valueChanges.subscribe((data) => {
       this.logValidationErrors(this.phenomenonForm);

@@ -27,7 +27,7 @@ export class PhenomenaComponent implements OnInit {
       tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
     
       this.phenomenaArray = Array.from(tempArray, x => new IPhenomena(x));
-      console.log(this.phenomenaArray)
+      // console.log(this.phenomenaArray)
     });
   }
 

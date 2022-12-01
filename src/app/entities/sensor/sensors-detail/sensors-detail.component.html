@@ -1,61 +1,10 @@
 <div *ngIf="sensor != undefined">
 
   <senph-hero-banner [title]="sensor.labels | labelLanguagePipe" [valid]="sensor.validation" [subtitle]="uri"
-    (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
+    (myEvent)="button1(uri)" [button]="buttons.button1" >
   </senph-hero-banner>
 
-  <section *ngIf="sensorHistory">
-    <div class="list is-hoverable">
-      <div class="list-item">
-        <div class="columns is-mobile is-multiline is-centered">
-          <div class="column is-1">
-            Index
-          </div>
-          <div class="column is-5">
-            <strong>
-              URI
-            </strong>
-          </div>
-          <div class="column is-3">
-            <strong>
-              Timestamp:
-            </strong>
-          </div>
-          <div class="column is-3">
-            <strong>
-              Editor
-            </strong>
-          </div>
-        </div>
-      </div>
-      <div class="list-item" *ngFor="let version of sensorHistory;let i = index"
-        [class.selected]="version === selectedVersion" (click)=redirectHistoricDetails(uri,version.sensor.value)>
-        <div class="columns is-mobile is-multiline is-centered">
-          <div class="column is-1">
-            {{i+1}}
-          </div>
-          <div class="column is-5">
-            {{version.sensor.value}}
-          </div>
-          <div class="column is-3" *ngIf="version.dateTime">
-            {{version.dateTime.value | date:'long'}}
-          </div>
-          <div class="column is-3" style="color: darkred;" *ngIf="!version.dateTime">
-            Timestamp is missing
-          </div>
-          <div class="column is-3" *ngIf="version.user">
-            {{version.user.value}}
-          </div>
-          <div class="column is-3" style="color: darkred;" *ngIf="!version.user">
-            Editor is unknown
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <section class="section" *ngIf="!sensorHistory">
+  <section class="section">
     <div class="container is-fluid">
       <div class="tile is-ancestor">
         <div class="tile is-vertical is-8">
@@ -168,14 +117,14 @@
                   </div>
                   <div class="column is-fullwidth">
                     <p class="bd-notification is-primary">
-                      <a class="" (click)="redirectDomain(sensorElement.phenomenonSlug, '/phenomenon/detail/')">
+                      <a class="" (click)="redirectElement(sensorElement.phenomenonSlug, '/phenomenon/detail/')">
                         {{sensorElement.phenomenonLabels | labelLanguagePipe}}
                       </a>
                     </p>
                   </div>
                   <div class="column is-fullwidth" *ngIf="sensorElement.unit != null">
                     <p class="bd-notification is-primary">
-                      <a class="" (click)="redirectDomain(sensorElement.unitSlug, '/unit/detail/')">
+                      <a class="" (click)="redirectElement(sensorElement.unitSlug, '/unit/detail/')">
                         <!-- TODO: FIX link on unit ISSUE -->
                         <!-- {{searchUnit(sensor.sensorElements[i].unit, unitsArray)}} -->
                         {{sensorElement.unit}}
@@ -222,7 +171,7 @@
                   <img class="is-rounded" src="{{APIURL}}/images/upload/{{sensor.image}}">
                 </figure>
                 <p>
-                  The {{prefLabel?.text}}. <a href="{{sensor.image}}">Source</a>
+                  The {{sensor.labels | labelLanguagePipe}}. <a href="{{sensor.image}}">Source</a>
                 </p>
               </article>
             </div>
