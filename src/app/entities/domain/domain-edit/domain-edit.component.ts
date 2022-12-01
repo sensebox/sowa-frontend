@@ -19,41 +19,6 @@ import { LabelLanguagePipePipe } from 'src/app/pipes/label-language-pipe.pipe'
 })
 export class DomainEditComponent implements OnInit {
 
-  //   constructor(
-  //     private route:ActivatedRoute,
-  //     private api:ApiService
-  //   ) { }
-  //     // iri;
-  //   languageTags = [{name: 'english', short: 'en'}, {name: 'german', short: 'de'},
-  //   {name: 'spanish', short: 'es'}, {name: 'italian', short: 'it'}];
-
-  //   domainModel = new Domain(
-  //     "",
-  //     { 
-  //       label: "",
-  //       lang: this.languageTags[0].short
-  //     },
-  //     { 
-  //       comment: "",
-  //       lang: this.languageTags[0].short
-  //     }
-  //   );
-
-  //   submitted = false;
-  //   ngOnInit(){
-  //     // this.route.params.subscribe(res => {
-  //     //   this.iri = res.iri;
-  //     // });
-  //   }
-  //   onSubmit() { 
-  //     this.api.updateDomain(this.domainModel).subscribe(res => {(res)});
-  //     this.diagnostic(this.domainModel);
-  //   }
-
-  //   // TODO: Remove this when we're done
-  //   diagnostic(model) { (model); }
-  // }
-
   heroBannerString = "http://sensors.wiki/SENPH#";
   domainForm: FormGroup;
   deleteDomainForm: FormGroup;
@@ -227,7 +192,7 @@ export class DomainEditComponent implements OnInit {
   }
 
   setTranslationIds(domain: IDomain) {
-    console.log(domain)
+    // console.log(domain)
     const array = [];
     array.push(domain.labels[0].translationId);
     array.push(domain.description["item"][0].translationId);

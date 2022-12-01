@@ -193,7 +193,7 @@ export class UnitEditComponent implements OnInit {
   }
 
   setTranslationIds(unit: IUnit) {
-    console.log(unit)
+    // console.log(unit)
     const array = [];
     array.push(unit.description["item"][0].translationId);
     return array;

@@ -27,7 +27,7 @@ export class SensorsComponent implements OnInit {
       tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
 
       this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
-      console.dir(this.sensorsArray);
+      // console.dir(this.sensorsArray);
 
     });
   }
