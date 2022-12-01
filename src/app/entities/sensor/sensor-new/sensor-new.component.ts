@@ -4,13 +4,10 @@ import {
   FormBuilder,
   Validators,
   FormArray,
-  AbstractControl,
-  FormControl,
 } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute ,Router } from "@angular/router";
 import { ApiService } from "../../../services/api.service";
 import { CustomValidators } from "../../../shared/custom.validators";
-import { ILabel } from "src/app/interfaces/ILabel";
 import { FormErrors } from "src/app/interfaces/form-errors";
 import { ErrorModalService } from "./../../../services/error-modal.service";
 import * as bulmaToast from "bulma-toast";
@@ -18,9 +15,6 @@ import { environment } from "src/environments/environment";
 
 import { FileUploader } from "ng2-file-upload";
 import { DomSanitizer } from "@angular/platform-browser";
-import { isQuote } from "@angular/compiler";
-import { ValidatorFn } from "@angular/forms";
-import { ValidationServiceService } from "src/app/services/validation-service.service";
 import { HttpClient } from "@angular/common/http";
 
 import { UploadResult } from "src/app/interfaces/uploadResult";
@@ -96,12 +90,10 @@ export class SensorNewComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private api: ApiService,
+    private route: ActivatedRoute,
     private _routerService: Router,
     private errorService: ErrorModalService,
-    private validationService: ValidationServiceService,
-    private httpClient: HttpClient,
     private sanitizer: DomSanitizer,
     private http: HttpClient
   ) {
@@ -201,25 +193,6 @@ export class SensorNewComponent implements OnInit {
       }
     });
   }
-
-  // onUriChange(event: any) {
-  //   var currentUri = event.target.value;
-  //   this.api.getSensor(currentUri).subscribe({
-  //     next(res) {
-  //       if (res.labels.length >= 1) {
-  //         bulmaToast.toast({
-  //           message: "Uri already exists!",
-  //           type: "is-danger",
-  //           dismissible: true,
-  //           closeOnClick: true,
-  //           animate: { in: "fadeInLeftBig", out: "fadeOutRightBig" },
-  //           position: "top-center",
-  //           duration: 5000,
-  //         });
-  //       }
-  //     },
-  //   });
-  // }
 
   addSensorElementFormGroup(): FormGroup {
     return this.fb.group({
