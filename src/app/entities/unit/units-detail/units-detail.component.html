@@ -1,7 +1,7 @@
 <div *ngIf="unit != undefined">
 
     <senph-hero-banner [title]="unit.name" [valid]="" [subtitle]="uri"
-      (myEvent)="button1(uri)" [button]="historic.button1" (myEvent2)="getHistory(uri)" [button2]="historic.button2">
+      (myEvent)="button1(uri)" [button]="buttons.button1">
     </senph-hero-banner>
   
   
@@ -125,7 +125,7 @@
                     </div>
                     <div class="column is-3">
                       <p class="bd-notification is-primary">
-                        <a class="" (click)="redirectUnit(element.sensorSlug, '/sensor/detail/')">
+                        <a class="" (click)="redirectElement(element.sensorSlug, '/sensor/detail/')">
                           {{element.sensorLabels | labelLanguagePipe}}
                         </a>
                       </p>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="column is-fullwidth">
                         <p class="bd-notification is-primary">
-                          <a class="" (click)="redirectUnit(element.phenomenonSlug, '/phenomenon/detail/')">
+                          <a class="" (click)="redirectElement(element.phenomenonSlug, '/phenomenon/detail/')">
                             {{element.phenomenonLabels | labelLanguagePipe}}
                           </a>
                         </p>

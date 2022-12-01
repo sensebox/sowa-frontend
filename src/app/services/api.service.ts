@@ -42,6 +42,7 @@ export class ApiService {
     );
   }
 
+
   /**--------------Phenomena------------------------ */
   getPhenomena() {
     return this.http.get(this.APIURL + "/phenomena/all");
@@ -64,19 +65,6 @@ export class ApiService {
         return phenomenon;
       })
     );
-  }
-
-  getHistoricPhenomenon(iri): Observable<any> {
-    return this.http
-      .get(this.APIURL + "/phenomena/historic-phenomenon/" + iri)
-      .pipe(
-        map((res: Array<any>) => {
-          // console.log(res);
-          let phenomenon = new IPhenomenon(res);
-          // console.log(phenomenon);
-          return phenomenon;
-        })
-      );
   }
 
   createPhenomenon(phenomenon) {
@@ -103,17 +91,10 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
-  // getPhenomenonForSensor(sensor) {
-  //   return this.http.post(this.APIURL + '/phenomenaforsensor/' + sensor, { headers: this.createHeaders()});
-  // }
 
   /**--------------Sensors------------------------ */
   getSensors() {
     return this.http.get(this.APIURL + "/sensors/all");
-  }
-
-  getSensorHistory(iri) {
-    return this.http.get(this.APIURL + "/sensors/sensor-history/" + iri);
   }
 
   getSensor(iri): Observable<any> {
@@ -122,15 +103,6 @@ export class ApiService {
         // console.log(res)
         var I2Sensor = new ISensor(res);
         // console.log(I2Sensor);
-        return I2Sensor;
-      })
-    );
-  }
-
-  getHistoricSensor(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/sensors/historic-sensor/" + iri).pipe(
-      map((res: Array<any>) => {
-        var I2Sensor = new ISensor(res);
         return I2Sensor;
       })
     );
@@ -161,13 +133,10 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+
   /**--------------Devices------------------------ */
   getDevices() {
     return this.http.get(this.APIURL + "/devices/all");
-  }
-
-  getDeviceHistory(iri) {
-    return this.http.get(this.APIURL + "/devices/device-history/" + iri);
   }
 
   getDevice(iri): Observable<any> {
@@ -179,13 +148,12 @@ export class ApiService {
     );
   }
 
-  getHistoricDevice(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/devices/historic-device/" + iri).pipe(
-      map((res: Array<any>) => {
-        var I2Device = new IDevice(res);
-        return I2Device;
+  createDevice(device) {
+    return this.http
+      .post(this.APIURL + "/devices/device/create", device, {
+        headers: this.createHeaders(),
       })
-    );
+      .pipe(catchError(this.handleError));
   }
 
   editDevice(device) {
@@ -195,15 +163,7 @@ export class ApiService {
       })
       .pipe(catchError(this.handleError));
   }
-
-  createDevice(device) {
-    return this.http
-      .post(this.APIURL + "/devices/device/create", device, {
-        headers: this.createHeaders(),
-      })
-      .pipe(catchError(this.handleError));
-  }
-
+  
   deleteDevice(device) {
     return this.http
       .post(this.APIURL + "/devices/device/delete/", device, {
@@ -212,15 +172,12 @@ export class ApiService {
       .pipe(catchError(this.handleError));
   }
 
+
   /**--------------Domains------------------------ */
   getDomains() {
     return this.http.get(this.APIURL + "/domains/all", {
       headers: this.createHeaders(),
     });
-  }
-
-  getDomainHistory(iri) {
-    return this.http.get(this.APIURL + "/domains/domain-history/" + iri);
   }
 
   getDomain(iri): Observable<any> {
@@ -232,26 +189,17 @@ export class ApiService {
     );
   }
 
-  getHistoricDomain(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/domains/historic-domain/" + iri).pipe(
-      map((res: Array<any>) => {
-        let domain = new IDomain(res);
-        return domain;
-      })
-    );
-  }
-
-  editDomain(domain) {
+  createDomain(domain) {
     return this.http
-      .post(this.APIURL + "/domains/domain/edit", domain, {
+      .post(this.APIURL + "/domains/domain/create", domain, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
   }
 
-  createDomain(domain) {
+  editDomain(domain) {
     return this.http
-      .post(this.APIURL + "/domains/domain/create", domain, {
+      .post(this.APIURL + "/domains/domain/edit", domain, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -270,6 +218,7 @@ export class ApiService {
   getUnits() {
     return this.http.get(this.APIURL + "/units/all");
   }
+
   getUnit(iri): Observable<any> {
     return this.http.get(this.APIURL + "/units/unit/" + iri).pipe(
       map((res: Array<any>) => {
@@ -279,29 +228,23 @@ export class ApiService {
     );
   }
 
-  getUnitLabel(iri) {
-    return this.http.get(
-      this.APIURL + "/unit/http://purl.obolibrary.org/obo/" + iri.uri.slice(31)
-    );
-  }
+  // getUnitLabel(iri) {
+  //   return this.http.get(
+  //     this.APIURL + "/unit/http://purl.obolibrary.org/obo/" + iri.uri.slice(31)
+  //   );
+  // }
 
-  getAllEntities() {
-    return this.http.get(this.APIURL + "/all", {
-      headers: this.createHeaders(),
-    });
-  }
-
-  editUnit(unit) {
+  createUnit(unit) {
     return this.http
-      .post(this.APIURL + "/units/unit/edit", unit, {
+      .post(this.APIURL + "/units/unit/create", unit, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
   }
 
-  createUnit(unit) {
+  editUnit(unit) {
     return this.http
-      .post(this.APIURL + "/units/unit/create", unit, {
+      .post(this.APIURL + "/units/unit/edit", unit, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -313,6 +256,14 @@ export class ApiService {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
+  }
+
+
+  /**-------------------All entities------------------- */
+  getAllEntities() {
+    return this.http.get(this.APIURL + "/all", {
+      headers: this.createHeaders(),
+    });
   }
 
   private handleError(errorResponse: HttpErrorResponse) {

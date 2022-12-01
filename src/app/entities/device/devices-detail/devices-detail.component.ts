@@ -1,34 +1,26 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../services/api.service';
 import { IDevice } from '../../../interfaces/IDevice';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
-import { ILabel } from 'src/app/interfaces/ILabel';
-import { ISensors } from 'src/app/interfaces/ISensors';
-import { redirectDomain } from 'src/app/shared/helpers/helper-functions';
-import { environment } from 'src/environments/environment';
+import { redirectElement } from 'src/app/shared/helpers/helper-functions';
 
 @Component({
   selector: 'senph-devices-detail',
   templateUrl: './devices-detail.component.html',
   styleUrls: ['./devices-detail.component.scss', '../../../app.component.scss']
 })
-export class DevicesDetailComponent implements OnInit, AfterViewInit {
+
+export class DevicesDetailComponent implements OnInit {
+  
   device: IDevice;
   uri;
-
   languageArray = LANGUAGES;
-  deviceHistory: Object;
-  historic = {
+  buttons = {
     button1: undefined,
-    button2: undefined
   };
-  prefLabel: ILabel;
-  sensorsArray;
-  redirectDomain = redirectDomain;
-  senphurl = 'http://sensors.wiki/SENPH#';
 
-  APIURL = environment.api_url;
+  redirectElement = redirectElement;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,76 +30,35 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getDeviceDetails();
-    // this.retrieveSensors();
-  }
-
-  ngAfterViewInit() {
-
   }
 
   getDeviceDetails() {
-    if (this._routerService.url.search('/historic/') !== -1) {
-      this.historic.button1 = "Back to current version"
-    }
-    else {
-      this.historic.button1 = "Edit"
-      this.historic.button2 = "Log History"
-    };
-    if (this.historic.button2) {
-      return this.route.params.subscribe(res => {
-        this.api.getDevice(res.iri).subscribe((response: IDevice) => {
-          this.device = response;
-          // console.log(this.device)
-          // this.setPrefLabel();
-          this.uri = this.device.slug;
-        });
-      })
-    }
-    else {
-      this.route.params.subscribe(res => {
-        this.api.getHistoricDevice(res.iri).subscribe((response: IDevice) => {
-          this.device = response;
-          this.setPrefLabel();
-          this.uri = this.device.slug;
-        });
-      })
-    }
-  }
-  
-  setPrefLabel(){
-    this.device.labels.forEach(element => {
-      if (element["languageCode"] == "en") {
-        this.prefLabel = element
-        return
-      }
-      this.prefLabel = element;
-    });
+    this.buttons.button1 = "Edit";
+    return this.route.params.subscribe(res => {
+      this.api.getDevice(res.iri).subscribe((response: IDevice) => {
+        this.device = response;
+        this.uri = this.device.slug;
+      });
+    })
   }
 
   button1(uri) {
-    if (this.historic.button2) {
-      this.editButtonClick(uri)
-    }
-    else {
-      this.route.params.subscribe(res => {
-        this._routerService.navigate(['/device/detail/', res.uri]);
-      })
-    }
+    this.editButtonClick(uri)
   }
 
   editButtonClick(uri) {
     this._routerService.navigate(['/device/edit', this.device.slug]);
   }
 
-  redirectHistoricDetails(uri, historicUri) {
-    this._routerService.navigate(['/device/detail/' + uri + '/historic', historicUri.slice(this.senphurl.length)]);
-  }
-
-  getHistory(shortUri) {
-    this.api.getDeviceHistory(shortUri).subscribe(res => {
-      this.deviceHistory = res;
-    });
-  }
+  // searchPheno(nameKey, val1, myArray, val2) {
+  //   // console.log(nameKey)
+  //   for (var i = 0; i < myArray.length; i++) {
+  //     // console.log(myArray[i][val1])
+  //     if (myArray[i][val1].value === nameKey) {
+  //       return myArray[i][val2][0].value;
+  //     }
+  //   }
+  // }
 
   search(nameKey, val1, myArray, val2) {
     // console.log(nameKey)
@@ -119,30 +70,7 @@ export class DevicesDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  searchPheno(nameKey, val1, myArray, val2) {
-    // console.log(nameKey)
-    for (var i = 0; i < myArray.length; i++) {
-      // console.log(myArray[i][val1])
-      if (myArray[i][val1].value === nameKey) {
-        return myArray[i][val2][0].value;
-      }
-    }
-  }
-
-  retrieveSensors() {
-    this.api.getSensors().subscribe(res => {
-      var tempArray: any = res;
-      tempArray = tempArray.filter(function (el) {
-        return el.sensor.type != 'bnode'
-      })
-      // console.log(this.sensorsArray);
-      this.sensorsArray = Array.from(tempArray, x => new ISensors(x));
-      // console.dir(this.sensorsArray);
-    });
-  }
-
   markdownOptions = {
     enablePreviewContentClick: true
   }
-
 }
