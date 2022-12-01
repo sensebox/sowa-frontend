@@ -47,14 +47,11 @@ export class DeviceComponent implements OnInit {
 
   retrieveDevices() {
     this.api.getDevices().subscribe(res => {
-      this.devicesArray = res;
-      // console.log(this.devicesArray)
-      // this.devicesArray = this.devicesArray.filter(function (el) {
-      //   return el.device.type != 'bnode'
-      // })
-      // console.log(this.devicesArray);
-      // this.devicesArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
-      // console.dir(this.devicesArray);
+      var tempArray: any = res;
+
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+
+      this.devicesArray = tempArray;
     });
   }
 

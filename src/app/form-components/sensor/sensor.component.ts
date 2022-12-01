@@ -49,14 +49,11 @@ export class SensorComponent implements OnInit {
 
   retrieveSensors() {
     this.api.getSensors().subscribe(res => {
-      this.sensorsArray = res;
-      // console.log(res)
-      // this.sensorsArray = this.sensorsArray.filter(function (el) {
-      //   return el.sensor.type != 'bnode'
-      // })
-      // this.sensorsArray.sort((a, b) => a.label[0].value.localeCompare(b.label[0].value));
+      var tempArray: any = res;
 
-      // console.dir(this.sensorsArray);
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+
+      this.sensorsArray = tempArray;
     });
   }
 

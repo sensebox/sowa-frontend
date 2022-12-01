@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { IUnits } from 'src/app/interfaces/IUnits';
 import { ApiService } from '../../services/api.service'
 @Component({
   selector: 'senph-unit',
@@ -50,10 +51,11 @@ export class UnitComponent implements OnInit {
 
   retrieveUnits() {
     this.api.getUnits().subscribe(res => {
-      this.unitsArray = res;
-      // console.log(this.unitsArray);
-      // this.unitsArray.sort((a, b) => a.label.value.localeCompare(b.label.value));
-      // console.log(this.unitsArray);
+      var tempArray: any = res;
+
+      tempArray.sort((a, b) => a.slug.localeCompare(b.slug));
+
+      this.unitsArray = tempArray;
     });
   }
 
