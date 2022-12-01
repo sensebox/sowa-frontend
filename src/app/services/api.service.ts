@@ -10,7 +10,6 @@ import { IDevice } from "../interfaces/IDevice";
 import { IIri } from "../interfaces/IIri";
 import { IPhenomenon } from "../interfaces/IPhenomenon";
 import { ISensor } from "../interfaces/ISensor";
-import { Sensor } from "../phenomenon";
 import { IDomain } from "../interfaces/IDomain";
 import { environment } from "../../environments/environment";
 import { IRoV } from "../interfaces/IRoV";

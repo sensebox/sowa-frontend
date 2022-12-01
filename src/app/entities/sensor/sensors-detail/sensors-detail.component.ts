@@ -4,6 +4,7 @@ import { ApiService } from '../../../services/api.service';
 import { ISensor } from '../../../interfaces/ISensor';
 import { LANGUAGES } from 'src/app/shared/mock-languages';
 import { redirectElement } from 'src/app/shared/helpers/helper-functions';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'senph-sensors-detail',
@@ -21,6 +22,8 @@ export class SensorsDetailComponent implements OnInit {
   };
 
   redirectElement = redirectElement;
+
+  APIURL = environment.api_url;
 
   constructor(
     private route: ActivatedRoute,

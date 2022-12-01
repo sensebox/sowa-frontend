@@ -2,61 +2,9 @@
 
     <senph-hero-banner [title]="unit.name" [valid]="" [subtitle]="uri"
       (myEvent)="button1(uri)" [button]="buttons.button1">
-    </senph-hero-banner>
+    </senph-hero-banner>  
   
-  
-    <section *ngIf="domainHistory">
-      <div class="list is-hoverable">
-        <div class="list-item">
-          <div class="columns is-mobile is-multiline is-centered">
-            <div class="column is-1">
-              Index
-            </div>
-            <div class="column is-5">
-              <strong>
-                URI
-              </strong>
-            </div>
-            <div class="column is-3">
-              <strong>
-                Timestamp:
-              </strong>
-            </div>
-            <div class="column is-3">
-              <strong>
-                Editor
-              </strong>
-            </div>
-          </div>
-        </div>
-        <div class="list-item" *ngFor="let version of domainHistory;let i = index"
-          [class.selected]="version === selectedVersion" (click)=redirectHistoricDetails(uri,version.domain.value)>
-          <div class="columns is-mobile is-multiline is-centered">
-            <div class="column is-1">
-              {{i+1}}
-            </div>
-            <div class="column is-5">
-              {{version.domain.value}}
-            </div>
-            <div class="column is-3" *ngIf="version.dateTime">
-              {{version.dateTime.value | date:'long'}}
-            </div>
-            <div class="column is-3" style="color: darkred;" *ngIf="!version.dateTime">
-              Timestamp is missing
-            </div>
-            <div class="column is-3" *ngIf="version.user">
-              {{version.user.value}}
-            </div>
-            <div class="column is-3" style="color: darkred;" *ngIf="!version.user">
-              Editor is unknown
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  
-  
-    <section class="section" *ngIf="!domainHistory">
+    <section class="section">
       <div class="container is-fluid">
         <div class="tile is-ancestor">
           <div class="tile is-vertical">
