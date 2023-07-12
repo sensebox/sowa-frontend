@@ -44,19 +44,11 @@ export class ApiService {
 
   /**--------------Phenomena------------------------ */
   getPhenomena() {
-    return this.http.get(this.APIURL + "/phenomena/all");
-  }
-
-  getPhenomenaAllLabels() {
-    return this.http.get(this.APIURL + "/phenomena/all/labels");
-  }
-
-  getPhenomenonHistory(iri) {
-    return this.http.get(this.APIURL + "/phenomena/phenomenon-history/" + iri);
+    return this.http.get(this.APIURL + "/phenomena");
   }
 
   getPhenomenon(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/phenomena/phenomenon/" + iri).pipe(
+    return this.http.get(this.APIURL + "/phenomena/" + iri).pipe(
       map((res: Array<any>) => {
         // console.log(res)
         let phenomenon = new IPhenomenon(res);
@@ -68,7 +60,7 @@ export class ApiService {
 
   createPhenomenon(phenomenon) {
     return this.http
-      .post(this.APIURL + "/phenomena/phenomenon/create", phenomenon, {
+      .post(this.APIURL + "/phenomena/create", phenomenon, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -76,7 +68,7 @@ export class ApiService {
 
   editPhenomenon(phenomenon) {
     return this.http
-      .post(this.APIURL + "/phenomena/phenomenon/edit", phenomenon, {
+      .post(this.APIURL + "/phenomena/edit", phenomenon, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -84,7 +76,7 @@ export class ApiService {
 
   deletePhenomenon(phenomenon) {
     return this.http
-      .post(this.APIURL + "/phenomena/phenomenon/delete/", phenomenon, {
+      .post(this.APIURL + "/phenomena/delete", phenomenon, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -93,11 +85,11 @@ export class ApiService {
 
   /**--------------Sensors------------------------ */
   getSensors() {
-    return this.http.get(this.APIURL + "/sensors/all");
+    return this.http.get(this.APIURL + "/sensors");
   }
 
   getSensor(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/sensors/sensor/" + iri).pipe(
+    return this.http.get(this.APIURL + "/sensors/" + iri).pipe(
       map((res: Array<any>) => {
         // console.log(res)
         var I2Sensor = new ISensor(res);
@@ -109,7 +101,7 @@ export class ApiService {
 
   createSensor(sensor) {
     return this.http
-      .post(this.APIURL + "/sensors/sensor/create", sensor, {
+      .post(this.APIURL + "/sensors/create", sensor, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -117,7 +109,7 @@ export class ApiService {
 
   editSensor(sensor) {
     return this.http
-      .post(this.APIURL + "/sensors/sensor/edit", sensor, {
+      .post(this.APIURL + "/sensors/edit", sensor, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -126,7 +118,7 @@ export class ApiService {
 
   deleteSensor(sensor) {
     return this.http
-      .post(this.APIURL + "/sensors/sensor/delete/", sensor, {
+      .post(this.APIURL + "/sensors/delete", sensor, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -135,11 +127,11 @@ export class ApiService {
 
   /**--------------Devices------------------------ */
   getDevices() {
-    return this.http.get(this.APIURL + "/devices/all");
+    return this.http.get(this.APIURL + "/devices");
   }
 
   getDevice(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/devices/device/" + iri).pipe(
+    return this.http.get(this.APIURL + "/devices/" + iri).pipe(
       map((res: Array<any>) => {
         let I2Device = new IDevice(res);
         return I2Device;
@@ -149,7 +141,7 @@ export class ApiService {
 
   createDevice(device) {
     return this.http
-      .post(this.APIURL + "/devices/device/create", device, {
+      .post(this.APIURL + "/devices/create", device, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -157,7 +149,7 @@ export class ApiService {
 
   editDevice(device) {
     return this.http
-      .post(this.APIURL + "/devices/device/edit", device, {
+      .post(this.APIURL + "/devices/edit", device, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -165,7 +157,7 @@ export class ApiService {
   
   deleteDevice(device) {
     return this.http
-      .post(this.APIURL + "/devices/device/delete/", device, {
+      .post(this.APIURL + "/devices/delete", device, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -174,13 +166,13 @@ export class ApiService {
 
   /**--------------Domains------------------------ */
   getDomains() {
-    return this.http.get(this.APIURL + "/domains/all", {
+    return this.http.get(this.APIURL + "/domains", {
       headers: this.createHeaders(),
     });
   }
 
   getDomain(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/domains/domain/" + iri).pipe(
+    return this.http.get(this.APIURL + "/domains/" + iri).pipe(
       map((res: Array<any>) => {
         let I2Domain = new IDomain(res);
         return I2Domain;
@@ -190,7 +182,7 @@ export class ApiService {
 
   createDomain(domain) {
     return this.http
-      .post(this.APIURL + "/domains/domain/create", domain, {
+      .post(this.APIURL + "/domains/create", domain, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -198,7 +190,7 @@ export class ApiService {
 
   editDomain(domain) {
     return this.http
-      .post(this.APIURL + "/domains/domain/edit", domain, {
+      .post(this.APIURL + "/domains/edit", domain, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -206,7 +198,7 @@ export class ApiService {
 
   deleteDomain(domain) {
     return this.http
-      .post(this.APIURL + "/domains/domain/delete/", domain, {
+      .post(this.APIURL + "/domains/delete", domain, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -215,11 +207,11 @@ export class ApiService {
   /**-------------------Units------------------- */
 
   getUnits() {
-    return this.http.get(this.APIURL + "/units/all");
+    return this.http.get(this.APIURL + "/units");
   }
 
   getUnit(iri): Observable<any> {
-    return this.http.get(this.APIURL + "/units/unit/" + iri).pipe(
+    return this.http.get(this.APIURL + "/units/" + iri).pipe(
       map((res: Array<any>) => {
         let I2Unit = new IUnit(res);
         return I2Unit;
@@ -235,7 +227,7 @@ export class ApiService {
 
   createUnit(unit) {
     return this.http
-      .post(this.APIURL + "/units/unit/create", unit, {
+      .post(this.APIURL + "/units/create", unit, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -243,7 +235,7 @@ export class ApiService {
 
   editUnit(unit) {
     return this.http
-      .post(this.APIURL + "/units/unit/edit", unit, {
+      .post(this.APIURL + "/units/edit", unit, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
@@ -251,7 +243,7 @@ export class ApiService {
 
   deleteUnit(unit) {
     return this.http
-      .post(this.APIURL + "/units/unit/delete/", unit, {
+      .post(this.APIURL + "/units/delete", unit, {
         headers: this.createHeaders(),
       })
       .pipe(catchError(this.handleError));
